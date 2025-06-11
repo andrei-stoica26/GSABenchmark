@@ -64,5 +64,3 @@ centersAnalysis <- function(seuratObj, clusters, gsaMethods){
   names(res) <- clusters
   return(res)
 }
-
-

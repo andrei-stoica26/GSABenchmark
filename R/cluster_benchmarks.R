@@ -63,8 +63,8 @@ centerDistances <- function(centersList){
 #' @export
 #'
 accuracyScores <- function(seuratObj, groups, gsaMethods, centersDF){
-  return(list(clusterBenchmark(seuratObj, clusterScorePerc, clusters, gsaMethods)[[2]],
-              clusterBenchmark(seuratObj, clusterSilhouetteMean, clusters, gsaMethods)[[2]],
-              clusterBenchmark(seuratObj, outclusterLowPerc, clusters, gsaMethods)[[2]],
+  return(list(clusterBenchmark(seuratObj, clusterScorePerc, groups, gsaMethods)[[2]],
+              clusterBenchmark(seuratObj, clusterSilhouetteMean, groups, gsaMethods)[[2]],
+              clusterBenchmark(seuratObj, outclusterLowPerc, groups, gsaMethods)[[2]],
               centerDistances(centersDF)[[2]]))
 }

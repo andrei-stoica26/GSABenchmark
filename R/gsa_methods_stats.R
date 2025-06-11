@@ -20,19 +20,6 @@ methodsCor <- function(seuratObj, gsaMethods, joinChar = '', group = NULL, corMe
   return(corMat)
 }
 
-#' Add two objects as if using the + operator
-#'
-#' This function adds two objects as if using the + operator. Useful to use in
-#' functions like Reduce
-#'
-#' @param x First object
-#' @param y Second object
-#'
-#' @return Sum of the two objects
-#'
-plus <- function(x, y)
-  return(x + y)
-
 #' Calculate correlation matrix for method results for multiple identity classes
 #' and Seurat objects
 #'

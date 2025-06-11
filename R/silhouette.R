@@ -9,41 +9,49 @@ NULL
 #' This function computes the silhouette for each cell in the Seurat object
 #'
 #' @param seuratObj A Seurat object
+#' @param idClass Seurat identity class
 #' @param distMetric A distance metric. Must be one of "cosine", euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski"
 #'
 #' @return A Seurat object with a silhouette column in the metadata
 #'
 #' @export
 #'
-computeSilhouette <- function(seuratObj, distMetric = 'cosine'){
+computeSilhouette <- function(seuratObj, idClass = 'seurat_clusters', distMetric = 'cosine'){
   pcaMat <- as.matrix(Embeddings(seuratObj, reduction = "pca"))
   message('Computing distance matrix...')
   if (distMetric == 'cosine') distMat <- stylo::dist.cosine(pcaMat) else distMat <- stats::dist(x=pcaMat, method=distMetric)
-  message('Computing silhouette...')
-  clusters <- as.integer(seuratObj$seurat_clusters) - 1L
-  seuratObj$silhouette <- cluster::silhouette(clusters, distMat)[, 3]
+  message(paste0('Computing silhouette for identity class: ', idClass, '...'))
+  groupVals <- unclass(factor(seuratObj@meta.data[[idClass]]))
+  seuratObj$silhouette <- cluster::silhouette(groupVals, distMat)[, 3]
   return(seuratObj)
 }
 
-#' Normalize silhouette by cluster for Seurat object
+#' Normalize silhouette by identity class for Seurat object
 #'
-#' This function normalized the already computed silhouette for each cluster in
-#' a Seurat object
+#' This function normalizes the already computed silhouette for each identity
+#' class in a Seurat object
 #'
-#' @param seuratObj A Seurat object with a silhouette metadata column
+#' @inheritParams computeSilhouette
 #'
-#' @return A Seurat object with a normSilhouette column in the metadata
+#' @return A data frame with normalized silhouettes for each unique element in the
+#' identity class
 #'
 #' @export
 #'
-normalizeSilhouette <- function(seuratObj){
-  seuratObj$normSilhouette <- 0
-  for (i in levels(seuratObj)){
-    message(paste0('Normalizing silhouette: Cluster ', i, '...'))
-    clusterSubset <- subset(seuratObj, seurat_clusters == i)
-    seuratObj$normSilhouette[colnames(clusterSubset)] <- liver::minmax(clusterSubset$silhouette)
+normalizeSilhouette <- function(seuratObj, idClass){
+  df <- seuratObj@meta.data[, c(idClass, 'silhouette')]
+  colnames(df)[1] <- 'label'
+  groups <- unique(df[[idClass]])
+  res <- data.frame(matrix(0, nrow(df), length(groups)))
+  rownames(res) <- rownames(df)
+  colnames(res) <- groups
+  for (group in groups){
+    dfSub <- subset(df, label == group)
+    normSilVals <- liver::minmax(dfSub$silhouette)
+    res[rownames(dfSub), group] <- normSilVals
+    res[rownames(dfSub), setdiff(groups, group)] <- -normSilVals
   }
-  return(seuratObj)
+  return(res)
 }
 
 #' Calculate silhouette-weighted mean for column

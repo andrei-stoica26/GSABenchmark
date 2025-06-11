@@ -1,4 +1,6 @@
 .Rbuildignore
 .Rhistory
 .Rproj.user
+R/.recipes.R
+R/.test_code.R
 GSABenchmark.Rproj

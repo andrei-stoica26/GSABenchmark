@@ -2,17 +2,20 @@
 % Please edit documentation in R/silhouette.R
 \name{normalizeSilhouette}
 \alias{normalizeSilhouette}
-\title{Normalize silhouette by cluster for Seurat object}
+\title{Normalize silhouette by identity class for Seurat object}
 \usage{
-normalizeSilhouette(seuratObj)
+normalizeSilhouette(seuratObj, idClass)
 }
 \arguments{
-\item{seuratObj}{A Seurat object with a silhouette metadata column}
+\item{seuratObj}{A Seurat object}
+
+\item{idClass}{Seurat identity class}
 }
 \value{
-A Seurat object with a normSilhouette column in the metadata
+A data frame with normalized silhouettes for each unique element in the
+identity class
 }
 \description{
-This function normalized the already computed silhouette for each cluster in
-a Seurat object
+This function normalizes the already computed silhouette for each identity
+class in a Seurat object
 }
