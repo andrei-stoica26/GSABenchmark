@@ -9,8 +9,9 @@ identityClassMatch(
   labelCol,
   scoreCol,
   normSilDF,
+  dimMat,
   label,
-  nMetrics = 5
+  nMetrics
 )
 }
 \arguments{
@@ -21,6 +22,8 @@ identityClassMatch(
 \item{scoreCol}{The Seurat metadata column containing the gene set analysis method score}
 
 \item{normSilDF}{Data frame of normalized silhouettes}
+
+\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object}
 
 \item{label}{The identity assessed from the labelCol column}
 

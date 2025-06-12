@@ -10,6 +10,8 @@ identityClassBenchmark(
   markerNames,
   gsaMethods,
   normSilDF,
+  dimMat,
+  nMetrics = 6,
   labels = markerNames
 )
 }
@@ -23,6 +25,10 @@ identityClassBenchmark(
 \item{gsaMethods}{The assessed gene set analysis methods}
 
 \item{normSilDF}{Data frame of normalized silhouettes}
+
+\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object}
+
+\item{nMetrics}{Number of metrics}
 
 \item{labels}{The assessed labels. Must be a subset of the values in labelCol}
 }

@@ -78,24 +78,34 @@ addScoreMetric <- function(df){
 #'
 #' @param df A benchmark data frame
 #' @param normSilDF Data frame of normalized silhouettes
+#' @param dimMat UMAP dimensionality reduction matrix of the Seurat object
 #'
 #' @return A benchmark data frame with added silhouette-based metrics
 #'
-addCentralityMetric <- function(df, normSilDF){
+addCentralityMetrics <- function(df, normSilDF, dimMat){
   label <- str_split(colnames(df)[2], '_')[[1]][2]
   sil <- normSilDF[label]
-  sil <- sil[order(sil[, 1], decreasing=TRUE), drop = FALSE, ]
+  sil <- sil[order(sil[, 1], decreasing=TRUE), drop=FALSE, ]
 
-  silPos <- sil[sil >= 0]
-  maxSilWS <- sqrt(sum(df[seq_along(silPos), 2], silPos))
+  silPos <- subset(sil, sil[, 1] >= 0)
+  maxSilWS <- sqrt(sum(df[seq_len(nrow(silPos)), 2], silPos[, 1]))
 
-  silNeg <- rev(sil[sil < 0])
-  minSilWS <- sqrt2(sum(df[seq_along(silNeg), 2], silNeg))
+  silNeg <- subset(sil, sil[, 1] < 0)
+  silNeg <- silNeg[order(silNeg[, 1]), drop=FALSE, ]
+  minSilWS <- sqrt2(sum(df[seq_len(nrow(silNeg)), 2], silNeg[, 1]))
 
   sil <- sil[rownames(df), drop = F, ]
   silScore <- sapply(cumsum(df[, 2] * sil[, 1]), sqrt2)
 
-  df$centrality <- sapply(silScore, function(x) liver::minmax(c(minSilWS, x, maxSilWS))[2] * 100)
+  df$silhouetteCoverage <- sapply(silScore, function(x) liver::minmax(c(minSilWS, x, maxSilWS))[2] * 100)
+
+  maxDist <- max(dist(dimMat))
+  silCM <- centerOfMass(dimMat[rownames(silPos), ], silPos[, 1])
+
+  centers <- centerOfMassV(dimMat[rownames(df), ], df[, 2])
+  distances <- apply(centers, 1, function(x) nnspat::euc.dist(x, silCM))
+  df$centrality <- (1 - distances / maxDist) * 100
+
   return(df)
 }
 
@@ -108,20 +118,20 @@ addCentralityMetric <- function(df, normSilDF){
 #' @param scoreCol The Seurat metadata column containing the gene set analysis method score
 #' @param label The identity assessed from the labelCol column
 #' @param nMetrics Number of metrics
-#' @inheritParams addCentralityMetric
+#' @inheritParams addCentralityMetrics
 #'
 #' @return A benchmark data frame
 #'
 #' @export
 #'
-identityClassMatch <- function(seuratObj, labelCol, scoreCol, normSilDF, label, nMetrics = 5){
+identityClassMatch <- function(seuratObj, labelCol, scoreCol, normSilDF, dimMat, label, nMetrics){
   df <- seuratObj@meta.data[, c(labelCol, scoreCol)]
   df$label <- as.integer(df[, 1] %in% label)
   df <- df[order(df[, scoreCol], decreasing=TRUE),]
 
   df <- addCellCountMetrics(df)
   df <- addScoreMetric(df)
-  df <- addCentralityMetric(df, normSilDF)
+  df <- addCentralityMetrics(df, normSilDF, dimMat)
 
   df$accuracy <- rowMeans(df[, 2 + seq_len(nMetrics)])
   df <- df[order(df$accuracy, decreasing=TRUE),]
@@ -144,13 +154,13 @@ identityClassMatch <- function(seuratObj, labelCol, scoreCol, normSilDF, label, 
 #'
 #' @export
 #'
-identityClassBenchmark <- function(seuratObj, labelCol, markerNames, gsaMethods, normSilDF, labels = markerNames){
+identityClassBenchmark <- function(seuratObj, labelCol, markerNames, gsaMethods, normSilDF, dimMat, nMetrics = 6, labels = markerNames){
   res <- lapply(seq_along(markerNames), function(i) {
     setName <- markerNames[i]
     setRes <- lapply(seq_along(gsaMethods), function(j){
       method <- gsaMethods[j]
       scoreCol <- paste0(method, '_', setName)
-      df <- identityClassMatch(seuratObj, labelCol, scoreCol, normSilDF, labels[i])
+      df <- identityClassMatch(seuratObj, labelCol, scoreCol, normSilDF, dimMat, labels[i], nMetrics)
       return(df)
     })
     names(setRes) <- gsaMethods
@@ -173,7 +183,7 @@ identityClassBenchmark <- function(seuratObj, labelCol, markerNames, gsaMethods,
 #'
 #' @export
 #'
-identityClassBenchmarkSummary <- function(icBenchmark, nMetrics = 5){
+identityClassBenchmarkSummary <- function(icBenchmark, nMetrics = 6){
   markerNames <- names(icBenchmark)
   gsaMethods <- names(icBenchmark[[1]])
   metrics <- colnames(icBenchmark[[1]][[1]])[2 + seq_len(nMetrics + 1)]
@@ -192,4 +202,25 @@ identityClassBenchmarkSummary <- function(icBenchmark, nMetrics = 5){
   df <- df[order(df$accuracy, decreasing=TRUE), ]
   smr <- c(smr, list(total = df))
   return(smr)
+}
+
+#' Calculate the summary of the results based on the minmax normalization
+#'
+#' This function strips the last column of the results (accuracy), minmax-normalizes
+#' the results of each metric, then defines the accuracy as the minmax-normalized
+#' mean of the results
+#'
+#' @param df A data frame with metric results and accuracy
+#'
+#' @return A minmax-normalized summary data frame
+#'
+#' @export
+#'
+minmaxSummary <- function(df){
+  df <- df[ , seq_len(ncol(df) - 1)]
+  df <- data.frame(apply(df, 2, liver::minmax))
+  df$accuracy <- rowSums(df)
+  df$accuracy <- liver::minmax(df$accuracy)
+  df <- df[order(df$accuracy, decreasing = TRUE), ]
+  return(df)
 }

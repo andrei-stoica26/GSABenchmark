@@ -5,7 +5,7 @@
 \title{Compares the identification of different labels through different gene set
 analysis methods}
 \usage{
-identityClassBenchmarkSummary(icBenchmark, nMetrics = 5)
+identityClassBenchmarkSummary(icBenchmark, nMetrics = 6)
 }
 \arguments{
 \item{icBenchmark}{A list of benchmark data frames}
