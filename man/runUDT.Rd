@@ -4,7 +4,7 @@
 \alias{runUDT}
 \title{Run UDT using decoupleR}
 \usage{
-runUDT(seuratObj, genes, colStr = "UDT")
+runUDT(seuratObj, genes, colStr = "UDT", ...)
 }
 \arguments{
 \item{seuratObj}{A Seurat object}
@@ -12,6 +12,8 @@ runUDT(seuratObj, genes, colStr = "UDT")
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
+
+\item{...}{Additional arguments passed to gene set analysis function}
 }
 \value{
 A Seurat object with the results saved as a metadata column

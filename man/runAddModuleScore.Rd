@@ -4,7 +4,7 @@
 \alias{runAddModuleScore}
 \title{Run AddModuleScore}
 \usage{
-runAddModuleScore(seuratObj, genes, colStr = "AddModuleScore")
+runAddModuleScore(seuratObj, genes, colStr = "AddModuleScore", ...)
 }
 \arguments{
 \item{seuratObj}{A Seurat object}
@@ -12,6 +12,8 @@ runAddModuleScore(seuratObj, genes, colStr = "AddModuleScore")
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
+
+\item{...}{Additional arguments passed to AddModuleScore}
 }
 \value{
 A Seurat object with the results saved as a metadata column

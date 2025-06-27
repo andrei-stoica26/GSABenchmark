@@ -9,7 +9,6 @@
 #'
 #' @return Messaged (default) or printed output
 #'
-#'
 messageMethod <- function(funStr, group, messageFun = message)
   return(messageFun(paste0(str_replace(funStr, 'Run', 'Running '), ' for identity: ', group, '...')))
 
@@ -34,6 +33,8 @@ plus <- function(x, y)
 #' square root of the additive inverse of a negative number
 #'
 #' @param x A numeric variable
+#'
+#' @return The square root of x if positive and of -x if negative
 #'
 #' @export
 #'

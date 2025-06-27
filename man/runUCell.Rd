@@ -4,7 +4,7 @@
 \alias{runUCell}
 \title{Run UCell}
 \usage{
-runUCell(seuratObj, genes, colStr = "UCell")
+runUCell(seuratObj, genes, colStr = "UCell", ...)
 }
 \arguments{
 \item{seuratObj}{A Seurat object}
@@ -12,6 +12,8 @@ runUCell(seuratObj, genes, colStr = "UCell")
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
+
+\item{...}{Additional parameters passed to runEscapeMethod}
 }
 \value{
 A Seurat object with the results saved as a metadata column

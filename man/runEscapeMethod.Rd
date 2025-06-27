@@ -4,7 +4,7 @@
 \alias{runEscapeMethod}
 \title{Run a gene set analysis method using escape}
 \usage{
-runEscapeMethod(seuratObj, genes, method, colStr = method)
+runEscapeMethod(seuratObj, genes, method, colStr = method, ...)
 }
 \arguments{
 \item{seuratObj}{A Seurat object}
@@ -14,6 +14,8 @@ runEscapeMethod(seuratObj, genes, method, colStr = method)
 \item{method}{Gene set analysis method}
 
 \item{colStr}{Name of the results column}
+
+\item{...}{Additional arguments passed to gene set analysis function}
 }
 \value{
 A Seurat object with the results saved as a metadata column

@@ -11,12 +11,14 @@ NULL
 #' @param genes A vector of genes
 #' @param method Gene set analysis method
 #' @param colStr Name of the results column
+#' @param ... Additional arguments passed to gene set analysis function
 #'
 #' @return A Seurat object with the results saved as a metadata column
 #'
-runDecoupleRMethod <- function(seuratObj, genes, method, colStr = method){
+runDecoupleRMethod <- function(seuratObj, genes, method, colStr = method, ...){
   mat <- suppressWarnings(as.matrix(LayerData(seuratObj, layer = 'data')))
-  scores <- do.call(paste0('run_', tolower(method)), list(mat, network = data.frame(source='geneSet', target=genes, mor=1)))$score
+  scores <- do.call(paste0('run_', tolower(method)),
+                    list(mat, network = data.frame(source='geneSet', target=genes, mor=1, ...)))$score
   seuratObj@meta.data[[colStr]] <- liver::minmax(scores)
   return(seuratObj)
 }
@@ -26,36 +28,37 @@ runDecoupleRMethod <- function(seuratObj, genes, method, colStr = method){
 #' This function runs MDT using decoupleR
 #'
 #' @inheritParams runDecoupleRMethod
+#' @param Additional parameters passed to runDecoupleRMethod
 #'
 #' @return A Seurat object with the results saved as a metadata column
 #'
 #' @export
 #'
-runMDT <- function(seuratObj, genes, colStr = 'MDT')
-  return(runDecoupleRMethod(seuratObj, genes, 'MDT', colStr))
+runMDT <- function(seuratObj, genes, colStr = 'MDT', ...)
+  return(runDecoupleRMethod(seuratObj, genes, 'MDT', colStr, ...))
 
 #' Run ORA using decoupleR
 #'
 #' This function runs ORA using decoupleR
 #'
-#' @inheritParams runDecoupleRMethod
+#' @inheritParams runMDT
 #'
 #' @return A Seurat object with the results saved as a metadata column
 #'
 #' @export
 #'
-runORA <- function(seuratObj, genes, colStr = 'ORA')
-  return(runDecoupleRMethod(seuratObj, genes, 'ORA', colStr))
+runORA <- function(seuratObj, genes, colStr = 'ORA', ...)
+  return(runDecoupleRMethod(seuratObj, genes, 'ORA', colStr, ...))
 
 #' Run UDT using decoupleR
 #'
 #' This function runs UDT using decoupleR
 #'
-#' @inheritParams runDecoupleRMethod
+#' @inheritParams runMDT
 #'
 #' @return A Seurat object with the results saved as a metadata column
 #'
 #' @export
 #'
-runUDT <- function(seuratObj, genes, colStr = 'UDT')
-  return(runDecoupleRMethod(seuratObj, genes, 'UDT', colStr))
+runUDT <- function(seuratObj, genes, colStr = 'UDT', ...)
+  return(runDecoupleRMethod(seuratObj, genes, 'UDT', colStr, ...))

@@ -4,7 +4,7 @@
 \alias{runssGSEA}
 \title{Run ssGSEA}
 \usage{
-runssGSEA(seuratObj, genes, colStr = "ssGSEA")
+runssGSEA(seuratObj, genes, colStr = "ssGSEA", ...)
 }
 \arguments{
 \item{seuratObj}{A Seurat object}
@@ -12,6 +12,8 @@ runssGSEA(seuratObj, genes, colStr = "ssGSEA")
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
+
+\item{...}{Additional parameters passed to runEscapeMethod}
 }
 \value{
 A Seurat object with the results saved as a metadata column

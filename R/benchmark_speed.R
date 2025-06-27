@@ -1,6 +1,5 @@
 #' @importFrom stringr str_remove str_split str_sub str_replace
 #' @importFrom pracma Reshape
-#' @importFrom nnspat euc.dist
 #'
 NULL
 

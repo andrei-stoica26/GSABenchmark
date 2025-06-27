@@ -4,7 +4,7 @@
 \alias{runORA}
 \title{Run ORA using decoupleR}
 \usage{
-runORA(seuratObj, genes, colStr = "ORA")
+runORA(seuratObj, genes, colStr = "ORA", ...)
 }
 \arguments{
 \item{seuratObj}{A Seurat object}
@@ -12,6 +12,8 @@ runORA(seuratObj, genes, colStr = "ORA")
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
+
+\item{...}{Additional arguments passed to gene set analysis function}
 }
 \value{
 A Seurat object with the results saved as a metadata column

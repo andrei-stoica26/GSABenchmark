@@ -10,6 +10,9 @@ sqrt2(x)
 \arguments{
 \item{x}{A numeric variable}
 }
+\value{
+The square root of x if positive and of -x if negative
+}
 \description{
 This function takes the square root of a non-negative number or the additive inverse of the
 square root of the additive inverse of a negative number

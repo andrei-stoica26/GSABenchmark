@@ -4,7 +4,7 @@
 \alias{runSiPSiC}
 \title{Run SiPSiC}
 \usage{
-runSiPSiC(seuratObj, genes, colStr = "SiPSiC", slot = "counts")
+runSiPSiC(seuratObj, genes, colStr = "SiPSiC", ...)
 }
 \arguments{
 \item{seuratObj}{A Seurat object}
@@ -13,7 +13,7 @@ runSiPSiC(seuratObj, genes, colStr = "SiPSiC", slot = "counts")
 
 \item{colStr}{Name of the results column}
 
-\item{slot}{Seurat slot}
+\item{...}{Additional arguments passed to getPathwayScores}
 }
 \value{
 A Seurat object with the results saved as a metadata column

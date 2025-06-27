@@ -1,3 +1,8 @@
+#' @importFrom abdiv cosine_distance euclidean
+#'
+NULL
+
+
 #' Add the cell count based-metrics to the benchmark
 #'
 #' This function adds the cell count based-based metrics to the benchmark
@@ -66,7 +71,7 @@ addCentralityMetrics <- function(df, normSilDF, dimMat){
   silCM <- centerOfMass(dimMat[rownames(silPos), ], silPos[, 1])
 
   centers <- centerOfMassV(dimMat[rownames(df), ], df[, 2])
-  distances <- apply(centers, 1, function(x) nnspat::euc.dist(x, silCM))
+  distances <- apply(centers, 1, function(x) euclidean(x, silCM))
   df$centrality <- (1 - distances / maxDist) * 100
 
   return(df)

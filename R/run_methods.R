@@ -34,3 +34,14 @@ runGSAMethods <- function(seuratObj, markerList, markerNames, gsaMethods, logFil
   log_close(footer=F)
   return(seuratObj)
 }
+
+#' Show supported methods
+#'
+#' This function shows methods currently supported by GSABenchmark
+#'
+#' @return A character vector of supported methods
+#'
+#' @export
+#'
+supportedMethods <- function()
+  return(c('AddModuleScore', 'AUCell','MDT', 'ORA', 'SiPSiC', 'ssGSEA', 'UCell', 'UDT', 'VAM'))

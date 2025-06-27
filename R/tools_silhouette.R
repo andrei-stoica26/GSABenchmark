@@ -1,6 +1,6 @@
+#' @importFrom abdiv cosine_distance
 #' @importFrom cluster silhouette
 #' @importFrom liver minmax
-#' @importFrom stylo dist.cosine
 #' @importFrom stats cor dist weighted.mean
 NULL
 
@@ -19,7 +19,7 @@ NULL
 computeSilhouette <- function(seuratObj, idClass = 'seurat_clusters', distMetric = 'cosine'){
   pcaMat <- as.matrix(Embeddings(seuratObj, reduction = "pca"))
   message('Computing distance matrix...')
-  if (distMetric == 'cosine') distMat <- stylo::dist.cosine(pcaMat) else distMat <- stats::dist(x=pcaMat, method=distMetric)
+  if (distMetric == 'cosine') distMat <- cosine_distance(pcaMat) else distMat <- stats::dist(x=pcaMat, method=distMetric)
   message(paste0('Computing silhouette for identity class: ', idClass, '...'))
   groupVals <- unclass(factor(seuratObj@meta.data[[idClass]]))
   seuratObj$silhouette <- cluster::silhouette(groupVals, distMat)[, 3]
