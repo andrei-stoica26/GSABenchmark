@@ -28,27 +28,22 @@ clusterRunTimes <- function(fileName){
   return(df)
 }
 
-#' Print a function's running time
+#' Time code to run a function and optionally save the results in a log file
 #'
-#' This function prints a function's running time, also offering an option to
-#' message the time. The latter allows users to redirect the output to a file
-#' while still visualizing it as a message in the console.
+#' This function times the code to run a function and either prints the output
+#' into the console or saves in a logFile
 #'
-#' @param fun Function
-#' @param doMessage Whether the time should be messaged in addition to being
-#' printed
-#' @param ... Function parameters
-#'
-#' @return What the input function returns
+#' @param fun The function that will be tamed
+#' @param logPrint Whether to print to a log file
+#' @param ... Parameters passed to the time function
 #'
 #' @export
 #'
-timeCode <- function(fun, doMessage = FALSE, ...){
+timeCode <- function(fun, logPrint = FALSE, ...){
   x <- Sys.time()
   res <- fun(...)
   y <- Sys.time()
-  print(y - x)
-  if(doMessage)
-    message(y - x)
+  if(!logPrint)
+    print(y - x) else log_print(y - x, console=F)
   return(res)
 }

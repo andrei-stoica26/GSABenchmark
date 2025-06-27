@@ -1,7 +1,7 @@
-#' @importFrom CSOA featureWes titlePlot
-#' @importFrom SeuratObject Embeddings
-#' @importFrom ggplot2 aes geom_point
+#' @importFrom ggplot2 aes geom_point ggtitle
 #' @importFrom ggrepel geom_text_repel
+#' @importFrom Seurat FeaturePlot
+#' @importFrom SeuratObject Embeddings
 NULL
 
 #' Plot centers of mass of all methods over the feature plot of a method of
@@ -22,10 +22,9 @@ NULL
 #' @export
 #'
 cmPlot <- function(seuratObj, method, centersDF, plotTitle = method){
-  p <- featureWes(seuratObj, method, label=T, label.size=2.2, repel=T) +
+  p <- FeaturePlot(seuratObj, method, label=T, label.size=2.2, repel=T) +
     geom_point(aes(umap_1, umap_2), data=centersDF, shape=4, size=2) +
-    geom_text_repel(aes(umap_1, umap_2), data=centersDF, label=rownames(centersDF), size=2.5, max.overlaps=30)
-  p <- titlePlot(p, plotTitle)
+    geom_text_repel(aes(umap_1, umap_2), data=centersDF, label=rownames(centersDF), size=2.5, max.overlaps=30) + ggtitle(plotTitle)
   return(p)
 }
 

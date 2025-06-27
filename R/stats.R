@@ -4,7 +4,8 @@
 #' This function calculates the correlation matrix for all the methods for an
 #' identity class
 #'
-#' @inheritParams runMethods
+#' @param seuratObj A Seurat object
+#' @param gsaMethods Gene set analysis methods
 #' @param group Identity class
 #' @param corMethod Correlation method
 #'
@@ -12,8 +13,8 @@
 #'
 #' @export
 #'
-methodsCor <- function(seuratObj, gsaMethods, joinChar = '', group = NULL, corMethod = 'pearson'){
-  m <- as.matrix(seuratObj@meta.data[, paste0(gsaMethods, joinChar, group)])
+methodsCor <- function(seuratObj, gsaMethods, group = NULL, corMethod = 'pearson'){
+  m <- as.matrix(seuratObj@meta.data[, paste0(gsaMethods, group)])
   corMat <- cor(m, method = corMethod)
   rownames(corMat) <- gsaMethods
   colnames(corMat) <- gsaMethods
@@ -27,7 +28,8 @@ methodsCor <- function(seuratObj, gsaMethods, joinChar = '', group = NULL, corMe
 #' results for multiple identity classes and Seurat objects
 #'
 #' @param seurats List of Seurat objets
-#' @inheritParams clusterBenchmark
+#' @inheritParams methodsCor
+#' @param groups Identity classes
 #'
 #' @return A correlation matrix
 #'

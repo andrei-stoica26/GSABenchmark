@@ -27,26 +27,6 @@ plus <- function(x, y)
   return(x + y)
 
 
-#' Time code to run a function and optionally save the results in a log file
-#'
-#' This function times the code to run a function and either prints the output
-#' into the console or saves in a logFile
-#'
-#' @param fun The function that will be tamed
-#' @param logPrint Whether to print to a log file
-#' @param ... Parameters passed to the time function
-#'
-#' @export
-#'
-timeCode <- function(fun, logPrint = FALSE, ...){
-  x <- Sys.time()
-  res <- fun(...)
-  y <- Sys.time()
-  if(!logPrint)
-    print(y - x) else log_print(y - x, console=F)
-  return(res)
-}
-
 #' Take the square root of a non-negative number or the additive inverse of the
 #' square root of the additive inverse of a negative number
 #'
