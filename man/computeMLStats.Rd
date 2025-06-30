@@ -6,7 +6,7 @@
 \usage{
 computeMLStats(
   icBenchmark,
-  metrics = c("AUC", "F1_Score", "GainAUC", "Gini", "KS_Stat", "PRAUC")
+  metrics = c("AUC", "GainAUC", "Gini", "KS_Stat", "PRAUC")
 )
 }
 \arguments{

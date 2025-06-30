@@ -1,4 +1,4 @@
-#' @importFrom MLmetrics AUC F1_Score GainAUC Gini KS_Stat PRAUC
+#' @importFrom MLmetrics AUC GainAUC Gini KS_Stat PRAUC
 #'
 NULL
 
@@ -108,7 +108,7 @@ identityClassBenchmarkSummary <- function(icBenchmark){
 #'
 #' @export
 #'
-computeMLStats <- function(icBenchmark, metrics = c('AUC', 'F1_Score', 'GainAUC', 'Gini', 'KS_Stat', 'PRAUC')){
+computeMLStats <- function(icBenchmark, metrics = c('AUC', 'GainAUC', 'Gini', 'KS_Stat', 'PRAUC')){
   markerNames <- names(icBenchmark)
   gsaMethods <- names(icBenchmark[[1]])
   smr <- lapply(metrics, function(metric){
@@ -117,10 +117,10 @@ computeMLStats <- function(icBenchmark, metrics = c('AUC', 'F1_Score', 'GainAUC'
         benchmarkDF <- icBenchmark[[setName]][[method]]
         return(do.call(metric, list(benchmarkDF[[paste0(method, '_', setName)]], benchmarkDF$label)))
       }))))
-      rownames(df) <- gsaMethods
-      df$avg <- rowMeans(df)
-      df <- df[order(df$avg, decreasing=TRUE), ]
-      return(df)
+    rownames(df) <- gsaMethods
+    df$avg <- rowMeans(df)
+    df <- df[order(df$avg, decreasing=TRUE), ]
+    return(df)
   })
   names(smr) <- metrics
   df <- data.frame(lapply(smr, function(x) x[gsaMethods, ]$avg))
