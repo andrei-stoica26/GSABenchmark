@@ -4,4 +4,4 @@
 R/.recipes.R
 R/.test_code.R
 GSABenchmark.Rproj
-*.log
+gsa.log

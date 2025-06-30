@@ -44,4 +44,5 @@ runGSAMethods <- function(seuratObj, markerList, markerNames, gsaMethods, logFil
 #' @export
 #'
 supportedMethods <- function()
-  return(c('AddModuleScore', 'AUCell','MDT', 'ORA', 'SiPSiC', 'ssGSEA', 'UCell', 'UDT', 'VAM'))
+  return(c('AddModuleScore', 'AUCell', 'MDT', 'MLM', 'ORA', 'SiPSiC', 'ssGSEA', 'UCell',
+           'UDT', 'VAM'))

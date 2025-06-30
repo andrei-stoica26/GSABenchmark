@@ -1,4 +1,4 @@
-#' @importFrom decoupleR run_mdt run_ora run_udt
+#' @importFrom decoupleR run_mdt run_mlm run_ora run_udt run_ulm
 #' @importFrom SeuratObject LayerData
 #'
 NULL
@@ -37,6 +37,20 @@ runDecoupleRMethod <- function(seuratObj, genes, method, colStr = method, ...){
 runMDT <- function(seuratObj, genes, colStr = 'MDT', ...)
   return(runDecoupleRMethod(seuratObj, genes, 'MDT', colStr, ...))
 
+#' Run MLM using decoupleR
+#'
+#' This function runs MLM using decoupleR
+#'
+#' @inheritParams runDecoupleRMethod
+#' @param ... Additional parameters passed to runDecoupleRMethod
+#'
+#' @return A Seurat object with the results saved as a metadata column
+#'
+#' @export
+#'
+runMLM <- function(seuratObj, genes, colStr = 'MLM', ...)
+  return(runDecoupleRMethod(seuratObj, genes, 'MLM', colStr, ...))
+
 #' Run ORA using decoupleR
 #'
 #' This function runs ORA using decoupleR
@@ -62,3 +76,4 @@ runORA <- function(seuratObj, genes, colStr = 'ORA', ...)
 #'
 runUDT <- function(seuratObj, genes, colStr = 'UDT', ...)
   return(runDecoupleRMethod(seuratObj, genes, 'UDT', colStr, ...))
+
