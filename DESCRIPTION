@@ -17,9 +17,12 @@ Imports:
     liver,
     logr,
     pracma,
+    pROC,
+    reshape2,
     Seurat,
     SeuratObject,
     SiPSiC,
+    spatstat.utils,
     stringr,
     stats,
     VAM

@@ -1,3 +1,6 @@
+#' @importFrom pROC auc
+#'
+NULL
 
 #' Add the score-based metrics to the benchmark
 #'
@@ -7,15 +10,15 @@
 #' @param labelCol The Seurat metadata column containing the ground truth annotation
 #' @param scoreCol The Seurat metadata column containing the gene set analysis method score
 #' @param label The identity assessed from the labelCol column
-#' @param nMetrics Number of metrics
 #' @inheritParams addCentralityMetrics
 #'
 #' @return A benchmark data frame
 #'
 #' @export
 #'
-identityClassMatch <- function(seuratObj, labelCol, scoreCol, normSilDF, dimMat, label, nMetrics){
+identityClassMatch <- function(seuratObj, labelCol, scoreCol, normSilDF, dimMat, label){
   df <- seuratObj@meta.data[, c(labelCol, scoreCol)]
+  colnames(df)[1] <- 'label'
   df$label <- as.integer(df[, 1] %in% label)
   df <- df[order(df[, scoreCol], decreasing=TRUE),]
 
@@ -23,7 +26,7 @@ identityClassMatch <- function(seuratObj, labelCol, scoreCol, normSilDF, dimMat,
   df <- addScoreMetric(df)
   df <- addCentralityMetrics(df, normSilDF, dimMat)
 
-  df$accuracy <- rowMeans(df[, 2 + seq_len(nMetrics)])
+  df$accuracy <- rowMeans(df[, seq(3, ncol(df))])
   df <- df[order(df$accuracy, decreasing=TRUE),]
   return(df)
 }
@@ -44,13 +47,13 @@ identityClassMatch <- function(seuratObj, labelCol, scoreCol, normSilDF, dimMat,
 #'
 #' @export
 #'
-identityClassBenchmark <- function(seuratObj, labelCol, markerNames, gsaMethods, normSilDF, dimMat, nMetrics = 6, labels = markerNames){
+identityClassBenchmark <- function(seuratObj, labelCol, markerNames, gsaMethods, normSilDF, dimMat, labels = markerNames){
   res <- lapply(seq_along(markerNames), function(i) {
     setName <- markerNames[i]
     setRes <- lapply(seq_along(gsaMethods), function(j){
       method <- gsaMethods[j]
       scoreCol <- paste0(method, '_', setName)
-      df <- identityClassMatch(seuratObj, labelCol, scoreCol, normSilDF, dimMat, labels[i], nMetrics)
+      df <- identityClassMatch(seuratObj, labelCol, scoreCol, normSilDF, dimMat, labels[i])
       return(df)
     })
     names(setRes) <- gsaMethods
@@ -67,16 +70,16 @@ identityClassBenchmark <- function(seuratObj, labelCol, markerNames, gsaMethods,
 #' analysis methods.
 #'
 #' @param icBenchmark A list of benchmark data frames
-#' @inheritParams identityClassMatch
 #'
 #' @return Summary data frames
 #'
 #' @export
 #'
-identityClassBenchmarkSummary <- function(icBenchmark, nMetrics = 6){
+identityClassBenchmarkSummary <- function(icBenchmark){
   markerNames <- names(icBenchmark)
   gsaMethods <- names(icBenchmark[[1]])
-  metrics <- colnames(icBenchmark[[1]][[1]])[2 + seq_len(nMetrics + 1)]
+  tableCols <- colnames(icBenchmark[[1]][[1]])
+  metrics <- tableCols[seq(3, length(tableCols))]
   smr <- lapply(metrics, function(metric){
     df <- data.frame(Reduce(rbind, lapply(gsaMethods, function(method)
       sapply(markerNames, function(setName)
@@ -92,6 +95,30 @@ identityClassBenchmarkSummary <- function(icBenchmark, nMetrics = 6){
   df <- df[order(df$accuracy, decreasing=TRUE), ]
   smr <- c(smr, list(total = df))
   return(smr)
+}
+
+#' Compute AUROC scores
+#'
+#' This function computes AUROC scores
+#'
+#' @inheritParams identityClassBenchmarkSummary
+#'
+#' @return A date frame with AUROC scores
+#'
+#' @export
+#'
+computeAUROC <- function(icBenchmark){
+  markerNames <- names(icBenchmark)
+  gsaMethods <- names(icBenchmark[[1]])
+  aurocDF <- data.frame(Reduce(rbind, lapply(gsaMethods, function(method)
+    sapply(markerNames, function(setName){
+      df <- icBenchmark[[setName]][[method]]
+      return(fabR::silently_run(pROC::auc(df$label, df[[paste0(method, '_', setName)]])))
+    }))))
+  rownames(aurocDF) <- gsaMethods
+  aurocDF$avg <- rowMeans(aurocDF)
+  aurocDF <- aurocDF[order(aurocDF$avg, decreasing=TRUE), ]
+  return(aurocDF)
 }
 
 #' Calculate the summary of the results based on the minmax normalization

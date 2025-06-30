@@ -28,7 +28,7 @@ runDecoupleRMethod <- function(seuratObj, genes, method, colStr = method, ...){
 #' This function runs MDT using decoupleR
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param Additional parameters passed to runDecoupleRMethod
+#' @param ... Additional parameters passed to runDecoupleRMethod
 #'
 #' @return A Seurat object with the results saved as a metadata column
 #'

@@ -5,12 +5,10 @@
 \title{Compares the identification of different labels through different gene set
 analysis methods}
 \usage{
-identityClassBenchmarkSummary(icBenchmark, nMetrics = 6)
+identityClassBenchmarkSummary(icBenchmark)
 }
 \arguments{
 \item{icBenchmark}{A list of benchmark data frames}
-
-\item{nMetrics}{Number of metrics}
 }
 \value{
 Summary data frames

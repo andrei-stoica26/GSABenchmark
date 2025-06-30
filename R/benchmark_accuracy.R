@@ -1,7 +1,7 @@
 #' @importFrom abdiv cosine_distance euclidean
+#' @importFrom spatstat.utils revcumsum
 #'
 NULL
-
 
 #' Add the cell count based-metrics to the benchmark
 #'
@@ -12,16 +12,20 @@ NULL
 #' @return A benchmark data frame with added cell count-based metrics
 #'
 addCellCountMetrics <- function(df){
-  nLabel <- cumsum(df$label)
+  nPos <- cumsum(df$label)
+  totalPos <- nPos[length(nPos)]
+  df$sensitivity <- nPos / totalPos * 100
+
   totalCells <- nrow(df)
+  nNegUnselected <- revcumsum(1 - df$label)
+  totalNeg <- totalCells - totalPos
+  df$specificity <- nNegUnselected / totalNeg * 100
+
   nCells <- seq_len(totalCells)
-  df$specificity <- nLabel / nCells * 100
+  df$selectivity <- nPos / nCells * 100
 
-  totalLabel <- nLabel[length(nLabel)]
-  df$coverage <- nLabel / totalLabel * 100
-
-  maxDiff <- max(totalLabel, totalCells - totalLabel)
-  df$sizeProximity <- (1 - abs(nCells - totalLabel) / maxDiff) * 100
+  maxDiff <- max(totalPos, totalCells - totalPos)
+  df$sizeProximity <- (1 - abs(nCells - totalPos) / maxDiff) * 100
   return(df)
 }
 

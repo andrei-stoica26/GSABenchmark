@@ -13,9 +13,7 @@ runMDT(seuratObj, genes, colStr = "MDT", ...)
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional arguments passed to gene set analysis function}
-
-\item{Additional}{parameters passed to runDecoupleRMethod}
+\item{...}{Additional parameters passed to runDecoupleRMethod}
 }
 \value{
 A Seurat object with the results saved as a metadata column

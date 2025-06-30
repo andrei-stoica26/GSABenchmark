@@ -4,15 +4,7 @@
 \alias{identityClassMatch}
 \title{Add the score-based metrics to the benchmark}
 \usage{
-identityClassMatch(
-  seuratObj,
-  labelCol,
-  scoreCol,
-  normSilDF,
-  dimMat,
-  label,
-  nMetrics
-)
+identityClassMatch(seuratObj, labelCol, scoreCol, normSilDF, dimMat, label)
 }
 \arguments{
 \item{seuratObj}{A Seurat object}
@@ -26,8 +18,6 @@ identityClassMatch(
 \item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object}
 
 \item{label}{The identity assessed from the labelCol column}
-
-\item{nMetrics}{Number of metrics}
 }
 \value{
 A benchmark data frame
