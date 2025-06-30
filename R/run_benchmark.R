@@ -1,4 +1,4 @@
-#' @importFrom pROC auc
+#' @importFrom MLmetrics AUC F1_Score GainAUC Gini KS_Stat PRAUC
 #'
 NULL
 
@@ -26,8 +26,8 @@ identityClassMatch <- function(seuratObj, labelCol, scoreCol, normSilDF, dimMat,
   df <- addScoreMetric(df)
   df <- addCentralityMetrics(df, normSilDF, dimMat)
 
-  df$accuracy <- rowMeans(df[, seq(3, ncol(df))])
-  df <- df[order(df$accuracy, decreasing=TRUE),]
+  df$score <- rowMeans(df[, seq(3, ncol(df))])
+  df <- df[order(df$score, decreasing=TRUE),]
   return(df)
 }
 
@@ -92,33 +92,43 @@ identityClassBenchmarkSummary <- function(icBenchmark){
   names(smr) <- metrics
   df <- data.frame(lapply(smr, function(x) x[gsaMethods, ]$avg))
   rownames(df) <- gsaMethods
-  df <- df[order(df$accuracy, decreasing=TRUE), ]
-  smr <- c(smr, list(total = df))
+  df <- df[order(df$score, decreasing=TRUE), ]
+  smr <- c(smr, list(total=df))
   return(smr)
 }
 
-#' Compute AUROC scores
+#' Compute ML stats scores
 #'
-#' This function computes AUROC scores
+#' This function computes ML stats
 #'
 #' @inheritParams identityClassBenchmarkSummary
+#' @param metrics ML metrics
 #'
-#' @return A date frame with AUROC scores
+#' @return A date frame with ML metrics
 #'
 #' @export
 #'
-computeAUROC <- function(icBenchmark){
+computeMLStats <- function(icBenchmark, metrics = c('AUC', 'F1_Score', 'GainAUC', 'Gini', 'KS_Stat', 'PRAUC')){
   markerNames <- names(icBenchmark)
   gsaMethods <- names(icBenchmark[[1]])
-  aurocDF <- data.frame(Reduce(rbind, lapply(gsaMethods, function(method)
-    sapply(markerNames, function(setName){
-      df <- icBenchmark[[setName]][[method]]
-      return(fabR::silently_run(pROC::auc(df$label, df[[paste0(method, '_', setName)]])))
-    }))))
-  rownames(aurocDF) <- gsaMethods
-  aurocDF$avg <- rowMeans(aurocDF)
-  aurocDF <- aurocDF[order(aurocDF$avg, decreasing=TRUE), ]
-  return(aurocDF)
+  smr <- lapply(metrics, function(metric){
+    df <- data.frame(Reduce(rbind, lapply(gsaMethods, function(method)
+      sapply(markerNames, function(setName){
+        benchmarkDF <- icBenchmark[[setName]][[method]]
+        return(do.call(metric, list(benchmarkDF[[paste0(method, '_', setName)]], benchmarkDF$label)))
+      }))))
+      rownames(df) <- gsaMethods
+      df$avg <- rowMeans(df)
+      df <- df[order(df$avg, decreasing=TRUE), ]
+      return(df)
+  })
+  names(smr) <- metrics
+  df <- data.frame(lapply(smr, function(x) x[gsaMethods, ]$avg))
+  df$avg <- rowMeans(df)
+  rownames(df) <- gsaMethods
+  df <- df[order(df$avg, decreasing=TRUE), ]
+  smr <- c(smr, list(total=df))
+  return(smr)
 }
 
 #' Calculate the summary of the results based on the minmax normalization
@@ -136,8 +146,8 @@ computeAUROC <- function(icBenchmark){
 minmaxSummary <- function(df){
   df <- df[ , seq_len(ncol(df) - 1)]
   df <- data.frame(apply(df, 2, liver::minmax))
-  df$accuracy <- rowSums(df)
-  df$accuracy <- liver::minmax(df$accuracy)
-  df <- df[order(df$accuracy, decreasing = TRUE), ]
+  df$score <- rowSums(df)
+  df$score <- liver::minmax(df$score)
+  df <- df[order(df$score, decreasing = TRUE), ]
   return(df)
 }

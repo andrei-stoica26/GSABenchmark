@@ -1,5 +1,7 @@
-#' @importFrom ggplot2 aes geom_point ggtitle
+#' @importFrom ggplot2 aes geom_point ggtitle scale_color_manual theme theme_linedraw
 #' @importFrom ggrepel geom_text_repel
+#' @importFrom grDevices rainbow
+#' @importFrom reshape2 melt
 #' @importFrom Seurat FeaturePlot
 #' @importFrom SeuratObject Embeddings
 NULL
@@ -56,5 +58,29 @@ cmPlotClusters <- function(seuratObj, method, cluster, centersList, plotTitle=NU
       plotTitle <- paste0(plotTitle, ' - ', suffix)
   }
   p <- cmPlot(seuratObj, paste0(method, cluster), df, plotTitle)
+  return(p)
+}
+
+#' Plot a data frame score
+#'
+#' This function plots a dataframe score with methods as rows, gene sets and the
+#' average of scores across all gene sets as columns.
+#'
+#' @param scoreDF A score data frame
+#' @param title Plot title
+#'
+#' @return A ggplot object
+#'
+#' @export
+#'
+scorePlot <- function(scoreDF, title){
+  scoreDF <- scoreDF[order(scoreDF$avg), ]
+  longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF)]))
+  pal <- rainbow(length(rownames(scoreDF )))
+  p <- ggplot(data=longDF) +
+    geom_point(mapping=aes(x=value, y=Var1, color=Var1)) +
+    labs(y = 'Score', x = 'Method', color = 'Method', title = title) +
+    theme_linedraw() + scale_color_manual(values=pal, breaks = rev(rownames(scoreDF))) +
+    theme(plot.title = element_text(hjust = 0.5))
   return(p)
 }

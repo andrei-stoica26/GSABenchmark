@@ -12,20 +12,21 @@ NULL
 #' @return A benchmark data frame with added cell count-based metrics
 #'
 addCellCountMetrics <- function(df){
-  nPos <- cumsum(df$label)
-  totalPos <- nPos[length(nPos)]
-  df$sensitivity <- nPos / totalPos * 100
+  truePos <- cumsum(df$label)
+  totalTrue <- truePos[nrow(df)]
+  df$sensitivity <- truePos / totalTrue
 
-  totalCells <- nrow(df)
-  nNegUnselected <- revcumsum(1 - df$label)
-  totalNeg <- totalCells - totalPos
-  df$specificity <- nNegUnselected / totalNeg * 100
+  trueNeg <- revcumsum(1 - df$label)
+  totalFalse <- nrow(df) - totalTrue
+  df$specificity <- trueNeg / totalFalse
 
-  nCells <- seq_len(totalCells)
-  df$selectivity <- nPos / nCells * 100
+  pos <- seq_len(nrow(df))
+  df$precision <- truePos / pos
 
-  maxDiff <- max(totalPos, totalCells - totalPos)
-  df$sizeProximity <- (1 - abs(nCells - totalPos) / maxDiff) * 100
+  df$accuracy <- (truePos + trueNeg) / nrow(df)
+
+  maxDiff <- max(totalTrue, nrow(df) - totalTrue)
+  df$sizeProximity <- 1 - abs(pos - totalTrue) / maxDiff
   return(df)
 }
 
@@ -40,7 +41,7 @@ addCellCountMetrics <- function(df){
 addScoreMetric <- function(df){
   score <- cumsum(df[, 2])
   totalScore <- score[length(score)]
-  df$scoreCoverage <- score / totalScore * 100
+  df$scoreSpecificity <- score / totalScore
   return(df)
 }
 
@@ -69,14 +70,14 @@ addCentralityMetrics <- function(df, normSilDF, dimMat){
   sil <- sil[rownames(df), drop = F, ]
   silScore <- sapply(cumsum(df[, 2] * sil[, 1]), sqrt2)
 
-  df$silhouetteCoverage <- sapply(silScore, function(x) liver::minmax(c(minSilWS, x, maxSilWS))[2] * 100)
+  df$silhouetteCoverage <- sapply(silScore, function(x) liver::minmax(c(minSilWS, x, maxSilWS))[2])
 
   maxDist <- max(dist(dimMat))
   silCM <- centerOfMass(dimMat[rownames(silPos), ], silPos[, 1])
 
   centers <- centerOfMassV(dimMat[rownames(df), ], df[, 2])
   distances <- apply(centers, 1, function(x) euclidean(x, silCM))
-  df$centrality <- (1 - distances / maxDist) * 100
+  df$centrality <- 1 - distances / maxDist
 
   return(df)
 }
