@@ -5,14 +5,14 @@
 \title{Calculate correlation matrix for method results for multiple identity classes
 and Seurat objects}
 \usage{
-allCor(seurats, gsaMethods, groups)
+allCor(seuratObj, gsaMethods, scoreColList)
 }
 \arguments{
-\item{seurats}{List of Seurat objets}
+\item{seuratObj}{A Seurat object.}
 
-\item{gsaMethods}{Gene set analysis methods}
+\item{gsaMethods}{Gene set analysis methods.}
 
-\item{groups}{Identity classes}
+\item{scoreColList}{List of equally-sized character vectors}
 }
 \value{
 A correlation matrix

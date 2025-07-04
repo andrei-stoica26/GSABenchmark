@@ -19,7 +19,8 @@ NULL
 computeSilhouette <- function(seuratObj, idClass = 'seurat_clusters', distMetric = 'cosine'){
   pcaMat <- as.matrix(Embeddings(seuratObj, reduction = "pca"))
   message('Computing distance matrix...')
-  if (distMetric == 'cosine') distMat <- cosine_distance(pcaMat) else distMat <- stats::dist(x=pcaMat, method=distMetric)
+  if (distMetric == 'cosine') distMat <- cosine_distance(pcaMat) else
+    distMat <- stats::dist(x=pcaMat, method=distMetric)
   message(paste0('Computing silhouette for identity class: ', idClass, '...'))
   groupVals <- unclass(factor(seuratObj@meta.data[[idClass]]))
   seuratObj$silhouette <- cluster::silhouette(groupVals, distMat)[, 3]
@@ -53,18 +54,3 @@ normalizeSilhouette <- function(seuratObj, idClass){
   }
   return(res)
 }
-
-#' Calculate silhouette-weighted mean for column
-#'
-#' This function computed the silhouette-weighted mean for the column in a
-#' dataframe having normSilhouette as a column
-#'
-#' @param df Data frame
-#' @param colStr Name of column
-#'
-#' @return A numeric vector
-#'
-#' @export
-#'
-silhouetteWeightedMean <- function(df, colStr)
-  return(weighted.mean(df[, colStr], df$normSilhouette))

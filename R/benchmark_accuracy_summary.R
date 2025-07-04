@@ -1,4 +1,3 @@
-
 #' Compares the identification of different labels through different gene set
 #' analysis methods
 #'
@@ -28,25 +27,3 @@ benchmarkSummary <- function(benchmarkLL){
   smr <- addMetricSummary(smr, metrics, gsaMethods)
   return(smr)
 }
-
-#' Calculate the summary of the results based on the minmax normalization
-#'
-#' This function strips the last column of the results (accuracy), minmax-normalizes
-#' the results of each metric, then defines the accuracy as the minmax-normalized
-#' mean of the results
-#'
-#' @param df A data frame with metric results and accuracy
-#'
-#' @return A minmax-normalized summary data frame
-#'
-#' @export
-#'
-minmaxSummary <- function(df){
-  df <- df[ , seq_len(ncol(df) - 1)]
-  df <- data.frame(apply(df, 2, liver::minmax))
-  df$score <- rowSums(df)
-  df$score <- liver::minmax(df$score)
-  df <- df[order(df$score, decreasing = TRUE), ]
-  return(df)
-}
-

@@ -4,16 +4,21 @@
 \alias{methodsCor}
 \title{Calculate correlation matrix for method results}
 \usage{
-methodsCor(seuratObj, gsaMethods, group = NULL, corMethod = "pearson")
+methodsCor(
+  seuratObj,
+  gsaMethods,
+  scoreCols = gsaMethods,
+  corMethod = "pearson"
+)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{seuratObj}{A Seurat object.}
 
-\item{gsaMethods}{Gene set analysis methods}
+\item{gsaMethods}{Gene set analysis methods.}
 
-\item{group}{Identity class}
+\item{scoreCols}{Gene set analysis method score columns.}
 
-\item{corMethod}{Correlation method}
+\item{corMethod}{Correlation method.}
 }
 \value{
 A correlation matrix
