@@ -1,0 +1,80 @@
+#' Extract GSA method scores and truth labels from Seurat object
+#'
+#' This function extracts GSA method scores and truth labels from a Seurat object
+#'
+#' @param seuratObj A Seurat object
+#' @param labelCol The Seurat metadata column containing the ground truth annotation
+#' @param scoreCol The Seurat metadata column containing the gene set analysis method score
+#' @param label The identity assessed from the labelCol column
+#'
+#' @return A data frame with two columns: truth labels (1 or 0) and GSA method scores
+#'
+#' @export
+#'
+extractCellScores <- function(seuratObj, labelCol, scoreCol, label){
+  df <- seuratObj@meta.data[, c(labelCol, scoreCol)]
+  colnames(df)[1] <- 'label'
+  df$label <- as.integer(df[, 1] %in% label)
+  df <- df[order(df[, scoreCol], decreasing=TRUE),]
+  return(df)
+}
+
+#' Add overall scores to a benchmark data frame
+#'
+#' This function adds overlap scores to a benchmark data frame
+#'
+#' @param df Data frame
+#' @param startCol Column at which metric scores start
+#'
+#' @return The input data frame sorted decreasingly by the newly added overall column
+#'
+#'
+computeMetricOveralls <- function(df, startCol){
+  df$overall <- rowMeans(df[, seq(startCol, ncol(df))])
+  df <- df[order(df$overall, decreasing=TRUE),]
+  return(df)
+}
+
+#' Extends summary by addding overall results for each metric
+#'
+#' This function extends summary by addding overall results for each metric.
+#'
+#' @param smr List of result data frames for each metrics. Each data frame contains
+#' the results for each tested gene set analysis method for each gene set for the
+#' corresponding gmethod.
+#' @param metrics Metrics.
+#' @inheritParams computeMethodMeans
+#'
+#' @return Extended summary list with an additional data frame showing the average
+#' results obtained for each metric.
+#'
+#' @export
+#'
+addMetricSummary <- function(smr, metrics, gsaMethods){
+  names(smr) <- metrics
+  df <- data.frame(lapply(smr, function(x) x[gsaMethods, ]$avg))
+  rownames(df) <- gsaMethods
+  df <- df[order(df$overall, decreasing=TRUE), ]
+  smr <- c(smr, list(metricSummary=df))
+  return(smr)
+}
+
+#' Add means for metric results data frame
+#'
+#' This function adds means for a data frame of metric results.
+#'
+#' @param df A data frame where the values represent the scores obtained by a gene
+#' set analysis method (row) on a gene set (column) for a metric.
+#' @param gsaMethods Gene set analysis methods.
+#'
+#' @return A metric results data frame with added means, sorted decreasingly by
+#' these means.
+#'
+#' @export
+#'
+computeMethodMeans <- function(df, gsaMethods){
+  rownames(df) <- gsaMethods
+  df$avg <- rowMeans(df)
+  df <- df[order(df$avg, decreasing=TRUE), ]
+  return(df)
+}

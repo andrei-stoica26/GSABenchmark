@@ -1,4 +1,4 @@
-#' @importFrom ggplot2 aes geom_point ggtitle scale_color_manual theme theme_linedraw
+#' @importFrom ggplot2 aes geom_point ggplot ggtitle labs scale_color_manual theme theme_linedraw
 #' @importFrom ggrepel geom_text_repel
 #' @importFrom grDevices rainbow
 #' @importFrom reshape2 melt
