@@ -49,3 +49,4 @@ minmaxSummary <- function(df){
   df <- df[order(df$score, decreasing = TRUE), ]
   return(df)
 }
+

@@ -11,7 +11,10 @@ NULL
 #' @param df A data frame consisting of cells with a binary label column (1) and
 #' a column containing the scores obtained by a gene set analysis method (2)
 #' @param normSilDF Data frame of normalized silhouettes
-#' @param dimMat UMAP dimensionality reduction matrix of the Seurat object
+#' @param dimMat UMAP dimensionality reduction matrix of the Seurat object. Unused
+#' if normSilDF is NULL.
+#' @param maxDist Maximum UMAP distance in the Seurat object. Unused in normSilDF
+#' or dimMat is NULL
 #' @param metrics Metrics used to evaluate the accuracy of the class boundary.
 #' Must be a character vector containing at least two methods among 'sensitivity',
 #' 'specificity', 'precision', 'accuracy', 'sizeProximity' and 'scoreSpecificity'.
@@ -27,6 +30,7 @@ NULL
 computeBoundaryMetrics <- function(df,
                                    normSilDF = NULL,
                                    dimMat = NULL,
+                                   maxDist = NULL,
                                    metrics = c('sensitivity', 'specificity',
                                                'precision','accuracy',
                                                'sizeProximity','scoreSpecificity')){
@@ -34,32 +38,34 @@ computeBoundaryMetrics <- function(df,
                       'accuracy', 'sizeProximity', 'scoreSpecificity')
   metrics <- checkMetrics(metrics, supportedMetrics)
 
-  truePos <- cumsum(df[, 1])
-  totalTrue <- truePos[nrow(df)]
-  if ('sensitivity' %in% metrics)
-    df$sensitivity <- truePos / totalTrue
+  denseDF <- condenseRepeatedScores(df)
 
-  trueNeg <- revcumsum(1 - df[, 1])
+  truePos <- cumsum(denseDF[, 1])
+  totalTrue <- truePos[nrow(denseDF)]
+  if ('sensitivity' %in% metrics)
+    df$sensitivity <- rep(truePos / totalTrue, denseDF[, 3])
+
+  trueNeg <- revcumsum(denseDF[, 3] - denseDF[, 1])
   totalFalse <- nrow(df) - totalTrue
   if ('specificity' %in% metrics)
-    df$specificity <- trueNeg / totalFalse
+    df$specificity <- rep(trueNeg / totalFalse, denseDF[, 3])
 
-  pos <- seq_len(nrow(df))
+  pos <- cumsum(denseDF[, 3])
   if ('precision' %in% metrics)
-    df$precision <- truePos / pos
+    df$precision <- rep(truePos / pos, denseDF[, 3])
 
   if ('accuracy' %in% metrics)
-    df$accuracy <- (truePos + trueNeg) / nrow(df)
+    df$accuracy <- rep((truePos + trueNeg) / nrow(df), denseDF[, 3])
 
   if ('sizeProximity' %in% metrics){
     maxDiff <- max(totalTrue, nrow(df) - totalTrue)
-    df$sizeProximity <- 1 - abs(pos - totalTrue) / maxDiff
+    df$sizeProximity <- rep(1 - abs(pos - totalTrue) / maxDiff, denseDF[, 3])
   }
 
   if ('scoreSpecificity' %in% metrics){
-    score <- cumsum(df[, 2])
+    score <- cumsum(denseDF[, 2] * denseDF[, 3])
     totalScore <- score[length(score)]
-    df$scoreSpecificity <- score / totalScore
+    df$scoreSpecificity <- rep(score / totalScore, denseDF[, 3])
   }
 
   if(!is.null(normSilDF)){
@@ -67,29 +73,30 @@ computeBoundaryMetrics <- function(df,
     sil <- normSilDF[label]
     sil <- sil[order(sil[, 1], decreasing=TRUE), drop=FALSE, ]
 
-    silPos <- subset(sil, sil[, 1] >= 0)
-    maxSilWS <- sqrt(sum(df[seq_len(nrow(silPos)), 2], silPos[, 1]))
+    silPos <- subset(sil, sil[, 1] > 0)
+    maxSilWS <- sum(df[seq_len(nrow(silPos)), 2] * silPos[, 1])
 
     silNeg <- subset(sil, sil[, 1] < 0)
     silNeg <- silNeg[order(silNeg[, 1]), drop=FALSE, ]
-    minSilWS <- sqrt2(sum(df[seq_len(nrow(silNeg)), 2], silNeg[, 1]))
+    minSilWS <- sum(df[seq_len(nrow(silNeg)), 2] * silNeg[, 1])
 
-    sil <- sil[rownames(df), drop = F, ]
-    silScore <- sapply(cumsum(df[, 2] * sil[, 1]), sqrt2)
+    silDF <- data.frame(sil[rownames(df), 1], df[[2]])
+    colnames(silDF) <- colnames(df)[c(1, 2)]
+    denseSilDF <- condenseRepeatedScores(silDF)
+    silScore <- cumsum(denseSilDF[, 1] * denseSilDF[, 2])
 
-    df$silhouetteCoverage <- sapply(silScore, function(x) liver::minmax(c(minSilWS, x, maxSilWS))[2])
-
-    if (!is.null(dimMat)){
-      maxDist <- max(dist(dimMat))
+    df$silhouetteCoverage <- rep(sapply(silScore,
+                                        function(x) liver::minmax(c(minSilWS, x, maxSilWS))[2]), denseSilDF[, 3])
+    if (!is.null(dimMat) & !is.null(maxDist)){
       silCM <- centerOfMass(dimMat[rownames(silPos), ], silPos[, 1])
-
       centers <- centerOfMassV(dimMat[rownames(df), ], df[, 2])
+      centers <- centers[findLastApps(df[, 2]), ]
       distances <- apply(centers, 1, function(x) euclidean(x, silCM))
-      df$centrality <- 1 - distances / maxDist
+      df$centrality <- rep(1 - distances / maxDist, denseDF[, 3])
     }
   }
 
-  df <- computeMetricOveralls(df, 3)
+  df <- computeMetricMeans(df, 3)
   return(df)
 }
 
@@ -112,6 +119,6 @@ computeDistributionMetrics <- function(df, metrics = c('AUC', 'Gini', 'KS_Stat',
   metrics <- checkMetrics(metrics, supportedMetrics)
   df <- data.frame(lapply(metrics, function(x) do.call(x, list(df[, 2], df[, 1]))))
   colnames(df) <- metrics
-  df <- computeMetricOveralls(df, 1)
+  df <- computeMetricMeans(df, 1)
   return(df)
 }

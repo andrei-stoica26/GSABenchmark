@@ -1,4 +1,4 @@
-#' @importFrom ggplot2 aes geom_point ggplot ggtitle labs scale_color_manual theme theme_linedraw
+#' @importFrom ggplot2 aes geom_point ggplot ggtitle labs scale_color_manual theme theme_minimal
 #' @importFrom ggrepel geom_text_repel
 #' @importFrom grDevices rainbow
 #' @importFrom reshape2 melt
@@ -80,7 +80,39 @@ scorePlot <- function(scoreDF, title){
   p <- ggplot(data=longDF) +
     geom_point(mapping=aes(x=value, y=Var1, color=Var1)) +
     labs(y = 'Score', x = 'Method', color = 'Method', title = title) +
-    theme_linedraw() + scale_color_manual(values=pal, breaks = rev(rownames(scoreDF))) +
+    theme_minimal() + scale_color_manual(values=pal, breaks = rev(rownames(scoreDF))) +
     theme(plot.title = element_text(hjust = 0.5))
   return(p)
+}
+
+#' Plot a data frame score
+#'
+#' This function plots a dataframe score with methods as rows, gene sets and the
+#' average of scores across all gene sets as columns.
+#'
+#' @param smr Summary list
+#' @param datasetName Dataset name
+#'
+#' @return A list of ggplot objects
+#'
+#' @export
+#'
+benchmarkPlots <- function(smr, datasetName = NULL){
+  v <- c('Sensitivity', 'Specificity', 'Precision', 'Accuracy', 'Size proximity',
+         'Score specificity', 'Silhouette coverage', 'Centrality', 'AUROC',
+         'Gini coefficient', 'Kolgomorov-Smirnov statistics', 'PRAUC')
+  if (!length(intersect(names(smr), c('AUC', 'Gini', 'KS_Stat', 'PRAUC'))))
+    v <- c(v, c('Class boundary benchmark gene set summary',
+           'Class boundary benchmark metric summary')) else
+             v <- c(v, c('Distribution benchmark gene set summary',
+                    'Distribution benchmark metric summary'))
+
+  if(!is.null(datasetName))
+    v <- paste0(v, ' - ', datasetName)
+  names(v) <- c('sensitivity', 'specificity', 'precision', 'accuracy',
+                'sizeProximity','scoreSpecificity', 'silhouetteCoverage',
+                'centrality', 'AUC','Gini', 'KS_Stat', 'PRAUC',
+                'avg', 'metricSummary')
+  plots <- lapply(seq_len(length(smr)), function(i) scorePlot(smr[[i]], v[names(smr)[i]]))
+  return(plots)
 }

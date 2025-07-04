@@ -30,11 +30,13 @@ accuracyBenchmark <- function(seuratObj, labelCol, scoreCol, label, computeMetri
 #'
 #' @export
 #'
-boundaryBenchmark <- function(seuratObj, labelCol, scoreCol, label, normSilDF = NULL, dimMat = NULL,
+boundaryBenchmark <- function(seuratObj, labelCol, scoreCol, label,
+                              normSilDF = NULL, dimMat = NULL, maxDist = NULL,
                               metrics = c('sensitivity', 'specificity', 'precision',
                                           'accuracy', 'sizeProximity', 'scoreSpecificity')
                                           )
-  return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeBoundaryMetrics, normSilDF, dimMat, metrics))
+  return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeBoundaryMetrics,
+                           normSilDF, dimMat, maxDist, metrics))
 
 #' Perform a distribution benchmark on a set of GSA method scores
 #'

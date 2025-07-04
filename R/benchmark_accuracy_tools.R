@@ -1,3 +1,7 @@
+#' @importFrom plyr count
+#'
+NULL
+
 #' Extract GSA method scores and truth labels from Seurat object
 #'
 #' This function extracts GSA method scores and truth labels from a Seurat object
@@ -19,6 +23,26 @@ extractCellScores <- function(seuratObj, labelCol, scoreCol, label){
   return(df)
 }
 
+#' Condense repeated GSA method scores
+#'
+#' This function condenses repeated GSA method scores, summing labels and recording
+#' frequencies in the process.
+#'
+#' @param df A data frame with two columns: truth labels (1 or 0) and GSA method scores
+#'
+#' @return A condensed scores data frame
+#'
+#' @export
+#'
+condenseRepeatedScores <- function(df){
+  denseDF <- plyr::count(df[, 2])
+  denseDF$label <- sapply(denseDF[, 1], function(score) sum(df[, 1][which(df[, 2] == score)]))
+  denseDF <- denseDF[, c(3, 1, 2)]
+  denseDF <- denseDF[order(denseDF[, 2], decreasing=TRUE), ]
+  colnames(denseDF)[2] <- c(colnames(df)[2])
+  return(denseDF)
+}
+
 #' Add overall scores to a benchmark data frame
 #'
 #' This function adds overlap scores to a benchmark data frame
@@ -29,9 +53,9 @@ extractCellScores <- function(seuratObj, labelCol, scoreCol, label){
 #' @return The input data frame sorted decreasingly by the newly added overall column
 #'
 #'
-computeMetricOveralls <- function(df, startCol){
-  df$overall <- rowMeans(df[, seq(startCol, ncol(df))])
-  df <- df[order(df$overall, decreasing=TRUE),]
+computeMetricMeans <- function(df, startCol){
+  df$avg <- rowMeans(df[, seq(startCol, ncol(df))])
+  df <- df[order(df$avg, decreasing=TRUE),]
   return(df)
 }
 
@@ -54,7 +78,7 @@ addMetricSummary <- function(smr, metrics, gsaMethods){
   names(smr) <- metrics
   df <- data.frame(lapply(smr, function(x) x[gsaMethods, ]$avg))
   rownames(df) <- gsaMethods
-  df <- df[order(df$overall, decreasing=TRUE), ]
+  df <- df[order(df$avg, decreasing=TRUE), ]
   smr <- c(smr, list(metricSummary=df))
   return(smr)
 }

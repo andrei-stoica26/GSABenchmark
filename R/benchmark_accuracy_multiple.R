@@ -18,6 +18,7 @@ accuracyBenchmarkMultiple <- function(seuratObj, labelCol, geneSetNames, gsaMeth
                                       labels = geneSetNames, benchmarkFun, ...){
   res <- lapply(seq_along(geneSetNames), function(i) {
     setName <- geneSetNames[i]
+    message('Running benchmark on gene set: ', geneSetNames[i], '...')
     setRes <- lapply(seq_along(gsaMethods), function(j){
       method <- gsaMethods[j]
       scoreCol <- paste0(method, '_', setName)
@@ -45,11 +46,12 @@ accuracyBenchmarkMultiple <- function(seuratObj, labelCol, geneSetNames, gsaMeth
 #' @export
 #'
 boundaryBenchmarkMultiple <- function(seuratObj, labelCol, geneSetNames, gsaMethods,
-                                      labels = geneSetNames, normSilDF = NULL, dimMat = NULL,
+                                      labels = geneSetNames, normSilDF = NULL,
+                                      dimMat = NULL, maxDist = NULL,
                                       metrics = c('sensitivity', 'specificity', 'precision',
                                                   'accuracy', 'sizeProximity', 'scoreSpecificity'))
   return(accuracyBenchmarkMultiple(seuratObj, labelCol, geneSetNames, gsaMethods, labels,
-                                   boundaryBenchmark, normSilDF, dimMat, metrics))
+                                   boundaryBenchmark, normSilDF, dimMat, maxDist, metrics))
 
 #' Perform distribution accuracy benchmarks for multiple sets of GSA method scores
 #' and class labels
