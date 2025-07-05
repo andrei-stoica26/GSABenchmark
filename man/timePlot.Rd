@@ -6,10 +6,11 @@
 This function plots data frame consisting of method running times with methods
 as rows, gene sets and the gene set average as columns.}
 \usage{
-timePlot(scoreDF, dataset = NULL)
+timePlot(efBenchmark, dataset = NULL)
 }
 \arguments{
-\item{scoreDF}{A score data frame.}
+\item{A}{list of dataframes generated with efficiencyBenchmark, containing an
+element labeled "time".}
 }
 \value{
 A ggplot object.

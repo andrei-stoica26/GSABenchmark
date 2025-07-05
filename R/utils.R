@@ -55,3 +55,26 @@ sqrt2 <- function(x)
 #'
 findLastApps <- function(v)
   return(sapply(lapply(unique(v), function(x) which(v %in% x)), function(y) y[length(y)]))
+
+#' Convert a vector to a data frame based on input row and column names
+#'
+#' This function converts a vector to a data frame based on input row and column names.
+#' Optionally, it also calculates the row means.
+#'
+#' @param v A vector.
+#' @param rowNames A character vector.
+#' @param colNames A character vector.
+#' @param addRowMeans Whether to add the row means to the data frame
+#'
+#' @return A data frame
+#'
+#' @export
+#'
+tabulateVector <- function(v, rowNames, colNames, addRowMeans=FALSE){
+  df <- data.frame(matrix(v, length(rowNames), length(colNames)))
+  rownames(df) <- rowNames
+  colnames(df) <- colNames
+  if(addRowMeans)
+    df$avg <- rowMeans(df)
+  return(df)
+}

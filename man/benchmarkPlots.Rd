@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualization.R
 \name{benchmarkPlots}
 \alias{benchmarkPlots}
-\title{Plot a data frame score}
+\title{Plot a list of data frame scores}
 \usage{
 benchmarkPlots(smr, datasetName = NULL)
 }
@@ -15,6 +15,6 @@ benchmarkPlots(smr, datasetName = NULL)
 A list of ggplot objects
 }
 \description{
-This function plots a dataframe score with methods as rows, gene sets and the
+This function plots a list of dataframe scores with methods as rows, gene sets and the
 average of scores across all gene sets as columns.
 }

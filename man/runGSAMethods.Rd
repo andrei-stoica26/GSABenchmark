@@ -4,7 +4,7 @@
 \alias{runGSAMethods}
 \title{Run gene set analysis methods}
 \usage{
-runGSAMethods(seuratObj, geneSets, geneSetNames, gsaMethods, logFile = "gsa")
+runGSAMethods(seuratObj, geneSets, geneSetNames, gsaMethods)
 }
 \arguments{
 \item{seuratObj}{A Seurat object.}
@@ -14,8 +14,6 @@ runGSAMethods(seuratObj, geneSets, geneSetNames, gsaMethods, logFile = "gsa")
 \item{geneSetNames}{The names of the gene sets.}
 
 \item{gsaMethods}{Character vector of gene set analysis methods.}
-
-\item{logFile}{Name of the log file saving running times.}
 }
 \value{
 A Seurat object with the results of the runs stored as metadata columns.

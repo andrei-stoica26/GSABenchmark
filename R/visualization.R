@@ -86,30 +86,50 @@ scorePlot <- function(scoreDF, title, xLabel = 'Score'){
   return(p)
 }
 
+
 #' Plot a data frame consisting of gene set analysis method running times
 #
 #' This function plots data frame consisting of method running times with methods
 #' as rows, gene sets and the gene set average as columns.
 #'
-#' @inheritParams scorePlot
+#' @param A list of dataframes generated with efficiencyBenchmark, containing an
+#' element labeled "time".
 #'
 #' @return A ggplot object.
 #'
 #' @export
 #'
-timePlot <- function(scoreDF, dataset = NULL){
+timePlot <- function(efBenchmark, dataset = NULL){
   title <- 'Running times'
   if (!is.null(dataset))
-    title <- paste0(title, ' - ', dataset)
-  p <- scorePlot(scoreDF, title, 'Running time (s)')
+    title <- paste0(title, ' - ', dataset, ' dataset')
+  p <- scorePlot(efBenchmark$time, title, 'Running time (s)')
   return(p)
 }
 
-
-
-#' Plot a data frame score
+#' Plot a data frame consisting of gene set analysis method peak memory usage
+#
+#' This function plots data frame consisting of method peak memory usages with
+#' methods as rows, gene sets and the gene set average as columns.
 #'
-#' This function plots a dataframe score with methods as rows, gene sets and the
+#' @param A list of dataframes generated with efficiencyBenchmark, containing an
+#' element labeled "space".
+#'
+#' @return A ggplot object.
+#'
+#' @export
+#'
+memoryPlot <- function(efBenchmark, dataset = NULL){
+  title <- 'Peak memory usage'
+  if (!is.null(dataset))
+    title <- paste0(title, ' - ', dataset, ' dataset')
+  p <- scorePlot(efBenchmark$space, title, 'Peak memory usage (MiB)')
+  return(p)
+}
+
+#' Plot a list of data frame scores
+#'
+#' This function plots a list of dataframe scores with methods as rows, gene sets and the
 #' average of scores across all gene sets as columns.
 #'
 #' @param smr Summary list
@@ -130,7 +150,7 @@ benchmarkPlots <- function(smr, datasetName = NULL){
                     'Distribution benchmark metric summary'))
 
   if(!is.null(datasetName))
-    v <- paste0(v, ' - ', datasetName)
+    v <- paste0(v, ' - ', datasetName, ' dataset')
   names(v) <- c('sensitivity', 'specificity', 'precision', 'accuracy',
                 'sizeProximity','scoreSpecificity', 'silhouetteCoverage',
                 'centrality', 'AUC','Gini', 'KS_Stat', 'PRAUC',
