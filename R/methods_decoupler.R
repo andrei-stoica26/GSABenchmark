@@ -11,12 +11,12 @@ NULL
 #' @param genes A vector of genes
 #' @param method Gene set analysis method
 #' @param colStr Name of the results column
-#' @param ... Additional arguments passed to gene set analysis function
+#' @param ... Additional arguments passed to gene set analysis methiod
 #'
 #' @return A Seurat object with the results saved as a metadata column
 #'
 runDecoupleRMethod <- function(seuratObj, genes, method, colStr = method, ...){
-  mat <- suppressWarnings(as.matrix(LayerData(seuratObj, layer = 'data')))
+  mat <- suppressWarnings(as.matrix(LayerData(seuratObj, layer='data')))
   scores <- do.call(paste0('run_', tolower(method)),
                     list(mat, network = data.frame(source='geneSet', target=genes, mor=1, ...)))$score
   seuratObj@meta.data[[colStr]] <- liver::minmax(scores)

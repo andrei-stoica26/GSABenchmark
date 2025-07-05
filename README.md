@@ -20,18 +20,21 @@ Distribution metrics directly provide single-value scores that can be compared w
 
 ## Methods
 
-Currently, GSABenchmark supports 12 gene set analysis methods:
+Currently, GSABenchmark supports 15 gene set analysis methods:
 
 - `AddModuleScore`
 - `AUCell`
+- `GSVA`
 - `MDT`
 - `MLM`
 - `ORA`
 - `Pagoda2`
+- `PLAGE`
 - `Singscore`
 - `SiPSiC`
 - `ssGSEA`
 - `UCell`
 - `UDT`
 - `VAM`
+- `Zscore`
 

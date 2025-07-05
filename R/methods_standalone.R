@@ -4,6 +4,7 @@
 #' @importFrom singscore rankGenes simpleScore
 #' @importFrom SiPSiC getPathwayScores
 #' @importFrom VAM vam
+#'
 NULL
 
 #' Run AddModuleScore

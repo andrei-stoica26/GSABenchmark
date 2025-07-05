@@ -15,7 +15,7 @@ runDecoupleRMethod(seuratObj, genes, method, colStr = method, ...)
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional arguments passed to gene set analysis function}
+\item{...}{Additional arguments passed to gene set analysis methiod}
 }
 \value{
 A Seurat object with the results saved as a metadata column
