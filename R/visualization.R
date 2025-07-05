@@ -14,19 +14,20 @@ NULL
 #' @param scoreDF A score data frame.
 #' @param title Plot title.
 #' @param xLabel x axis label.
+#' @param legendTitle Legend title.
 #'
 #' @return A ggplot object.
 #'
 #' @export
 #'
-scorePlot <- function(scoreDF, title, xLabel = 'Score'){
+scorePlot <- function(scoreDF, title, xLabel = 'Score', legendTitle = 'Gene set'){
   scoreDF <- scoreDF[order(scoreDF$avg), ]
   longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF)]))
-  pal <- rainbow(length(rownames(scoreDF )))
+  pal <- rainbow(length(colnames(scoreDF)))
   p <- ggplot(data=longDF) +
-    geom_point(mapping=aes(x=value, y=Var1, color=Var1)) +
-    labs(x = xLabel, y = 'Method', color = 'Method', title = title) +
-    theme_minimal() + scale_color_manual(values=pal, breaks = rev(rownames(scoreDF))) +
+    geom_point(mapping=aes(x=value, y=Var1, color=Var2), size=2.5, shape=4) +
+    labs(x=xLabel, y ='Method', color=legendTitle, title=title) +
+    theme_minimal() + scale_color_manual(values=pal, breaks=colnames(scoreDF)) +
     theme(plot.title = element_text(hjust = 0.5))
   return(p)
 }
@@ -103,5 +104,6 @@ benchmarkPlots <- function(smr, datasetName = NULL){
                 'centrality', 'AUC','Gini', 'KS_Stat', 'PRAUC',
                 'avg', 'metricSummary')
   plots <- lapply(seq_len(length(smr)), function(i) scorePlot(smr[[i]], v[names(smr)[i]]))
+  plots[[length(plots)]] <- plots[[length(plots)]] + labs(color='Metric')
   return(plots)
 }

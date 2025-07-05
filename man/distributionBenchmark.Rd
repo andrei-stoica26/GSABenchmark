@@ -22,8 +22,8 @@ distributionBenchmark(
 \item{label}{The identity assessed from the labelCol column}
 
 \item{metrics}{Metrics used to evaluate the accuracy of the class boundary.
-Must be a character vector containing at least two methods among 'AUC',
-'Gini', 'KS_Stat' and 'PRAUC'.}
+Must be a character vector containing at least two methods among "AUC",
+"Gini", "KS_Stat" and "PRAUC".}
 }
 \value{
 A one-row benchmark data frame with distribution metric scores as columns.

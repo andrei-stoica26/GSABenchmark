@@ -6,7 +6,7 @@
 This function plots data frame consisting of method scores with methods
 as rows, gene sets and the gene set average as columns.}
 \usage{
-scorePlot(scoreDF, title, xLabel = "Score")
+scorePlot(scoreDF, title, xLabel = "Score", legendTitle = "Gene set")
 }
 \arguments{
 \item{scoreDF}{A score data frame.}
@@ -14,6 +14,8 @@ scorePlot(scoreDF, title, xLabel = "Score")
 \item{title}{Plot title.}
 
 \item{xLabel}{x axis label.}
+
+\item{legendTitle}{Legend title.}
 }
 \value{
 A ggplot object.

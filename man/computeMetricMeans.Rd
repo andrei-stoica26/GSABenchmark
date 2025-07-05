@@ -7,13 +7,13 @@
 computeMetricMeans(df, startCol)
 }
 \arguments{
-\item{df}{Data frame}
+\item{df}{Benchmark data frame.}
 
-\item{startCol}{Column at which metric scores start}
+\item{startCol}{Column where metric scores start.}
 }
 \value{
-The input data frame sorted decreasingly by the newly added overall column
+The input data frame sorted decreasingly by the newly added overall column.
 }
 \description{
-This function adds overlap scores to a benchmark data frame
+This function adds overlap scores to a benchmark data frame.
 }

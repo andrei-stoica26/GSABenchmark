@@ -7,7 +7,7 @@
 condenseRepeatedScores(df)
 }
 \arguments{
-\item{df}{A data frame with two columns: truth labels (1 or 0) and GSA method scores}
+\item{df}{A data frame with two columns: truth labels (1 or 0) and GSA method scores.}
 }
 \value{
 A condensed scores data frame

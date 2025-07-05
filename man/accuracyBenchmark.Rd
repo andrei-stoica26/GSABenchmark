@@ -2,7 +2,7 @@
 % Please edit documentation in R/benchmark_accuracy.R
 \name{accuracyBenchmark}
 \alias{accuracyBenchmark}
-\title{Perform an accuracy benchmark on a set of GSA method scores}
+\title{Perform an accuracy benchmark on a set of gene set analysis method scores}
 \usage{
 accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeMetricsFun, ...)
 }
@@ -16,13 +16,13 @@ accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeMetricsFun, ...)
 \item{label}{The identity assessed from the labelCol column}
 
 \item{computeMetricsFun}{Function used to compute metrics. Options are
-computeBoundaryMetrics and computeDistributionMetrics}
+computeBoundaryMetrics and computeDistributionMetrics.}
 
-\item{...}{Additional paramters passed to fun.}
+\item{...}{Additional parameters passed to computeMetricsFun.}
 }
 \value{
 A benchmark data frame
 }
 \description{
-This function perform an accuracy benchmark on a set of GSA method scores
+This function perform an accuracy benchmark on a set of gene set analysis method scores
 }

@@ -7,9 +7,9 @@
 normalizeSilhouette(seuratObj, idClass)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{seuratObj}{A Seurat object.}
 
-\item{idClass}{Seurat identity class}
+\item{idClass}{Seurat identity class.}
 }
 \value{
 A data frame with normalized silhouettes for each unique element in the

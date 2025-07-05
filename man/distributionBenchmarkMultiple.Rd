@@ -26,8 +26,8 @@ distributionBenchmarkMultiple(
 \item{labels}{The assessed labels. Must be a subset of the values in labelCol.}
 
 \item{metrics}{Metrics used to evaluate the accuracy of the class boundary.
-Must be a character vector containing at least two methods among 'AUC',
-'Gini', 'KS_Stat' and 'PRAUC'.}
+Must be a character vector containing at least two methods among "AUC",
+"Gini", "KS_Stat" and "PRAUC".}
 }
 \value{
 A list of lists of distribution benchmark data frames

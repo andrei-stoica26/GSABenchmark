@@ -11,15 +11,15 @@ computeSilhouette(
 )
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{seuratObj}{A Seurat object.}
 
-\item{idClass}{Seurat identity class}
+\item{idClass}{Seurat identity class.}
 
-\item{distMetric}{A distance metric. Must be one of "cosine", euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski"}
+\item{distMetric}{A distance metric. Must be one of "cosine", euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".}
 }
 \value{
-A Seurat object with a silhouette column in the metadata
+A Seurat object with a metadata silhouette column.
 }
 \description{
-This function computes the silhouette for each cell in the Seurat object
+This function computes the silhouette for each cell in the Seurat object.
 }

@@ -11,8 +11,8 @@ computeDistributionMetrics(df, metrics = c("AUC", "Gini", "KS_Stat", "PRAUC"))
 a column containing the scores obtained by a gene set analysis method (2)}
 
 \item{metrics}{Metrics used to evaluate the accuracy of the class boundary.
-Must be a character vector containing at least two methods among 'AUC',
-'Gini', 'KS_Stat' and 'PRAUC'.}
+Must be a character vector containing at least two methods among "AUC",
+"Gini", "KS_Stat" and "PRAUC".}
 }
 \value{
 A benchmark data frame with one row and computed metric scores in the

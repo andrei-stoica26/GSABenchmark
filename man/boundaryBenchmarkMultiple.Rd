@@ -38,8 +38,8 @@ if normSilDF is NULL.}
 or dimMat is NULL}
 
 \item{metrics}{Metrics used to evaluate the accuracy of the class boundary.
-Must be a character vector containing at least two methods among 'sensitivity',
-'specificity', 'precision', 'accuracy', 'sizeProximity' and 'scoreSpecificity'.
+Must be a character vector containing at least two methods among "sensitivity",
+"specificity", "precision", "accuracy", "sizeProximity" and "scoreSpecificity".
 Additionally, silhouette coverage will be automatically computed if normSilDF
 is provided, and centrality will be automatically computed if dimMat is also
 provided.}

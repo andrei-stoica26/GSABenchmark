@@ -27,14 +27,14 @@ accuracyBenchmarkMultiple(
 \item{labels}{The assessed labels. Must be a subset of the values in labelCol.}
 
 \item{benchmarkFun}{Benchmark function. Must be either boundaryBenchmark or
-distributionBenchmark}
+distributionBenchmark.}
 
-\item{...}{Additional paramters passed to benchmarkFun}
+\item{...}{Additional paramters passed to benchmarkFun.}
 }
 \value{
-A list of lists of benchmark data frames
+A list of lists of benchmark data frames.
 }
 \description{
 This function performs accuracy benchmarks for multiple sets of GSA method scores
-and class labels
+and class labels.
 }
