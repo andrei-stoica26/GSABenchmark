@@ -40,3 +40,18 @@ Currently, GSABenchmark supports 15 gene set analysis methods:
 - `VAM`
 - `Zscore`
 
+Additionally, **users can define their own gene set analysis methods to be assessed with GSABenchmark**. User-defined methods must meet the following criteria:
+
+- The name of the method starts with `run`.
+- The first parameter is a Seurat object.
+- The second parameter is a character vector of genes.
+- The third parameter is a character.
+- The method returns a Seurat object with cell scores in the metadata column denoted by the third parameter. 
+
+Additional parameters are allowed. This is an example of a function heading that will be recognized by GSABenchmark's relevant functions (`runGSAMethods` and `efficiencyBenchmark`): 
+
+`runCustomMethod(seuratObj, genes, colStr, tol = 0.2, verbose = TRUE)`. 
+
+**!** Note: When calling `runGSAMethods` or `efficiencyBenchmark`, the method needs to be referred to as `CustomMethod` (no `run`).
+
+GSABenchmark min-max-normalizes the per-cell gene set analysis scores of all supported methods, returning scores between 0 and 1. It is recommended, though not required, that user-defined methods follow the same convention.

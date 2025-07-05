@@ -16,8 +16,8 @@ NULL
 #' @param maxDist Maximum UMAP distance in the Seurat object. Unused in normSilDF
 #' or dimMat is NULL
 #' @param metrics Metrics used to evaluate the accuracy of the class boundary.
-#' Must be a character vector containing at least two methods among 'sensitivity',
-#' 'specificity', 'precision', 'accuracy', 'sizeProximity' and 'scoreSpecificity'.
+#' Must be a character vector containing at least two methods among "sensitivity",
+#' "specificity", "precision", "accuracy", "sizeProximity" and "scoreSpecificity".
 #' Additionally, silhouette coverage will be automatically computed if normSilDF
 #' is provided, and centrality will be automatically computed if dimMat is also
 #' provided.
@@ -106,8 +106,8 @@ computeBoundaryMetrics <- function(df,
 #'
 #' @inheritParams computeBoundaryMetrics
 #' @param metrics Metrics used to evaluate the accuracy of the class boundary.
-#' Must be a character vector containing at least two methods among 'AUC',
-#' 'Gini', 'KS_Stat' and 'PRAUC'.
+#' Must be a character vector containing at least two methods among "AUC",
+#' "Gini", "KS_Stat" and "PRAUC".
 #'
 #' @return A benchmark data frame with one row and computed metric scores in the
 #' columns.

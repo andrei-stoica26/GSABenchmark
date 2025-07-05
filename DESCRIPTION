@@ -4,7 +4,7 @@ Title: Tools for Benchmarking Gene Set Analysis Methods
 Version: 0.1.0
 Author: Andrei-Florian Stoica
 Maintainer: Andrei-Florian Stoica <andrei@gibh.ac.cn>
-Description: GSABenchmark is a tool for benchmarking gene set analysis methods. A distinctive feature of the package is the inclusion of benchmarks designed to work with top markers of Seurat identity classes, which makes evaluating the accuracy of different methods possible even without relying on biological knowledge. Currently, GSABenchmark supports 14 gene set analysis methods. 
+Description: GSABenchmark is a tool for benchmarking gene set analysis methods. Currently, GSABenchmark supports 15 gene set analysis methods. 
 License: MIT + file LICENSE
 Imports:
     abdiv,

@@ -6,17 +6,21 @@ NULL
 
 #' Compute cluster silhouette for Seurat object
 #'
-#' This function computes the silhouette for each cell in the Seurat object
+#' This function computes the silhouette for each cell in the Seurat object.
 #'
-#' @param seuratObj A Seurat object
-#' @param idClass Seurat identity class
-#' @param distMetric A distance metric. Must be one of "cosine", euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski"
+#' @param seuratObj A Seurat object.
+#' @param idClass Seurat identity class.
+#' @param distMetric A distance metric. Must be one of "cosine", euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".
 #'
-#' @return A Seurat object with a silhouette column in the metadata
+#' @return A Seurat object with a metadata silhouette column.
 #'
 #' @export
 #'
 computeSilhouette <- function(seuratObj, idClass = 'seurat_clusters', distMetric = 'cosine'){
+  if (!idClass %in% colnames(seuratObj@meta.data))
+    stop(paste0(idClass, ' not found in the metadata of the Seurat object'))
+  if (!distMetric %in% c('cosine', 'euclidean', 'maximum', 'manhattan', 'canberra', 'binary', 'minkowski'))
+    stop('Unknown distance metric. See ?GSABenchmark::computeSilhouette for supported metrics')
   pcaMat <- as.matrix(Embeddings(seuratObj, reduction = "pca"))
   message('Computing distance matrix...')
   if (distMetric == 'cosine') distMat <- cosine_distance(pcaMat) else

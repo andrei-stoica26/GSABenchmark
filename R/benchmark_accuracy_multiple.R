@@ -2,16 +2,16 @@
 #' labels
 #'
 #' This function performs accuracy benchmarks for multiple sets of GSA method scores
-#' and class labels
+#' and class labels.
 #'
 #' @inheritParams accuracyBenchmark
 #' @inheritParams runGSAMethods
 #' @param labels The assessed labels. Must be a subset of the values in labelCol.
 #' @param benchmarkFun Benchmark function. Must be either boundaryBenchmark or
-#' distributionBenchmark
-#' @param ... Additional paramters passed to benchmarkFun
+#' distributionBenchmark.
+#' @param ... Additional paramters passed to benchmarkFun.
 #'
-#' @return A list of lists of benchmark data frames
+#' @return A list of lists of benchmark data frames.
 #'
 #'
 accuracyBenchmarkMultiple <- function(seuratObj, labelCol, geneSetNames, gsaMethods,

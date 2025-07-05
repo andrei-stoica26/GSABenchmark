@@ -12,7 +12,7 @@ memoryPlot(efBenchmark, datasetName = NULL)
 \item{efBenchmark}{A list of dataframes generated with efficiencyBenchmark, containing an
 element labeled "space".}
 
-\item{inheritParams}{timePlot}
+\item{datasetName}{Dataset name}
 }
 \value{
 A ggplot object.

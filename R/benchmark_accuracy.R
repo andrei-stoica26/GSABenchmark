@@ -1,12 +1,12 @@
-#' Perform an accuracy benchmark on a set of GSA method scores
+#' Perform an accuracy benchmark on a set of gene set analysis method scores
 #'
-#' This function perform an accuracy benchmark on a set of GSA method scores
+#' This function perform an accuracy benchmark on a set of gene set analysis method scores
 #'
 #' @inheritParams extractCellScores
 #' @param computeMetricsFun Function used to compute metrics. Options are
-#' computeBoundaryMetrics and computeDistributionMetrics
+#' computeBoundaryMetrics and computeDistributionMetrics.
 #' @inheritParams computeOveralls
-#' @param ... Additional paramters passed to fun.
+#' @param ... Additional parameters passed to computeMetricsFun.
 #'
 #' @return A benchmark data frame
 #'

@@ -47,7 +47,7 @@ scorePlot <- function(scoreDF, title, xLabel = 'Score'){
 #'
 timePlot <- function(efBenchmark, datasetName = NULL){
   title <- 'Running times'
-  if (!is.null(dataset))
+  if (!is.null(datasetName))
     title <- paste0(title, ' - ', datasetName, ' dataset')
   p <- scorePlot(efBenchmark$time, title, 'Running time (s)')
   return(p)
@@ -60,7 +60,7 @@ timePlot <- function(efBenchmark, datasetName = NULL){
 #'
 #' @param efBenchmark A list of dataframes generated with efficiencyBenchmark, containing an
 #' element labeled "space".
-#' @param inheritParams timePlot
+#' @inheritParams timePlot
 #'
 #' @return A ggplot object.
 #'
@@ -68,7 +68,7 @@ timePlot <- function(efBenchmark, datasetName = NULL){
 #'
 memoryPlot <- function(efBenchmark, datasetName = NULL){
   title <- 'Peak memory usage'
-  if (!is.null(dataset))
+  if (!is.null(datasetName))
     title <- paste0(title, ' - ', datasetName, ' dataset')
   p <- scorePlot(efBenchmark$space, title, 'Peak memory usage (MiB)')
   return(p)

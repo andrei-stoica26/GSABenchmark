@@ -28,11 +28,9 @@ extractCellScores <- function(seuratObj, labelCol, scoreCol, label){
 #' This function condenses repeated GSA method scores, summing labels and recording
 #' frequencies in the process.
 #'
-#' @param df A data frame with two columns: truth labels (1 or 0) and GSA method scores
+#' @param df A data frame with two columns: truth labels (1 or 0) and GSA method scores.
 #'
 #' @return A condensed scores data frame
-#'
-#' @export
 #'
 condenseRepeatedScores <- function(df){
   denseDF <- plyr::count(df[, 2])
@@ -45,12 +43,12 @@ condenseRepeatedScores <- function(df){
 
 #' Add overall scores to a benchmark data frame
 #'
-#' This function adds overlap scores to a benchmark data frame
+#' This function adds overlap scores to a benchmark data frame.
 #'
-#' @param df Data frame
-#' @param startCol Column at which metric scores start
+#' @param df Benchmark data frame.
+#' @param startCol Column where metric scores start.
 #'
-#' @return The input data frame sorted decreasingly by the newly added overall column
+#' @return The input data frame sorted decreasingly by the newly added overall column.
 #'
 #'
 computeMetricMeans <- function(df, startCol){
@@ -71,8 +69,6 @@ computeMetricMeans <- function(df, startCol){
 #'
 #' @return Extended summary list with an additional data frame showing the average
 #' results obtained for each metric.
-#'
-#' @export
 #'
 addMetricSummary <- function(smr, metrics, gsaMethods){
   names(smr) <- metrics
