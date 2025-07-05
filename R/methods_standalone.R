@@ -92,8 +92,7 @@ runSiPSiC <- function(seuratObj, genes, colStr = 'SiPSiC', ...){
 #' @export
 #'
 runVAM <- function(seuratObj, genes, colStr = 'VAM', ...){
-  seuratSubs <- subset(seuratObj, features = genes)
-  mat <- t(as.matrix(LayerData(seuratSubs, layer = 'data')))
+  mat <- t(as.matrix(LayerData(seuratObj, layer='data')[genes, ]))
   v <- vam(mat, ...)
   seuratObj@meta.data[[colStr]] <- v$cdf.value
   return(seuratObj)

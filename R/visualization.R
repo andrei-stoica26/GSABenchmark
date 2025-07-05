@@ -61,29 +61,51 @@ cmPlotClusters <- function(seuratObj, method, cluster, centersList, plotTitle=NU
   return(p)
 }
 
-#' Plot a data frame score
+#' Plot a data frame consisting of gene set analysis method scores
+#
+#' This function plots data frame consisting of method scores with methods
+#' as rows, gene sets and the gene set average as columns.
 #'
-#' This function plots a dataframe score with methods as rows, gene sets and the
-#' average of scores across all gene sets as columns.
+#' @param scoreDF A score data frame.
+#' @param title Plot title.
+#' @param xLabel x axis label.
 #'
-#' @param scoreDF A score data frame
-#' @param title Plot title
-#'
-#' @return A ggplot object
+#' @return A ggplot object.
 #'
 #' @export
 #'
-scorePlot <- function(scoreDF, title){
+scorePlot <- function(scoreDF, title, xLabel = 'Score'){
   scoreDF <- scoreDF[order(scoreDF$avg), ]
   longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF)]))
   pal <- rainbow(length(rownames(scoreDF )))
   p <- ggplot(data=longDF) +
     geom_point(mapping=aes(x=value, y=Var1, color=Var1)) +
-    labs(x = 'Score', y = 'Method', color = 'Method', title = title) +
+    labs(x = xLabel, y = 'Method', color = 'Method', title = title) +
     theme_minimal() + scale_color_manual(values=pal, breaks = rev(rownames(scoreDF))) +
     theme(plot.title = element_text(hjust = 0.5))
   return(p)
 }
+
+#' Plot a data frame consisting of gene set analysis method running times
+#
+#' This function plots data frame consisting of method running times with methods
+#' as rows, gene sets and the gene set average as columns.
+#'
+#' @inheritParams scorePlot
+#'
+#' @return A ggplot object.
+#'
+#' @export
+#'
+timePlot <- function(scoreDF, dataset = NULL){
+  title <- 'Running times'
+  if (!is.null(dataset))
+    title <- paste0(title, ' - ', dataset)
+  p <- scorePlot(scoreDF, title, 'Running time (s)')
+  return(p)
+}
+
+
 
 #' Plot a data frame score
 #'

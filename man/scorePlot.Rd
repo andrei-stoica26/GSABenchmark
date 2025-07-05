@@ -2,19 +2,24 @@
 % Please edit documentation in R/visualization.R
 \name{scorePlot}
 \alias{scorePlot}
-\title{Plot a data frame score}
+\title{Plot a data frame consisting of gene set analysis method scores
+This function plots data frame consisting of method scores with methods
+as rows, gene sets and the gene set average as columns.}
 \usage{
-scorePlot(scoreDF, title)
+scorePlot(scoreDF, title, xLabel = "Score")
 }
 \arguments{
-\item{scoreDF}{A score data frame}
+\item{scoreDF}{A score data frame.}
 
-\item{title}{Plot title}
+\item{title}{Plot title.}
+
+\item{xLabel}{x axis label.}
 }
 \value{
-A ggplot object
+A ggplot object.
 }
 \description{
-This function plots a dataframe score with methods as rows, gene sets and the
-average of scores across all gene sets as columns.
+Plot a data frame consisting of gene set analysis method scores
+This function plots data frame consisting of method scores with methods
+as rows, gene sets and the gene set average as columns.
 }

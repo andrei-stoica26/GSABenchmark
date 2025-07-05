@@ -10,21 +10,28 @@ NULL
 #'
 #' @param fileName A text file generated with clusterRun
 #'
-#' @return An expression matrix of matrix class
+#' @return A data frame listing run times
 #'
 #' @export
 #'
-clusterRunTimes <- function(fileName){
+extractRunTimes <- function(fileName){
   logLines <- readLines(fileName)
-  logLines <- logLines[grep('Using', logLines, invert = T)]
   messages <- logLines[seq(1, length(logLines), 2)]
-  methods <- unique(sapply(messages, function(x) str_split(x, ' ')[[1]][3], USE.NAMES = F))
-  clusters <- paste0('Cluster', unique(sapply(messages, function(x) str_sub(str_split(x, ' ')[[1]][6], end = -5), USE.NAMES = F)))
-  runTimes <- sapply(logLines[seq(2, length(logLines), 2)], function(x) str_remove(x, 'Time difference of '), USE.NAMES = F)
-  df <- data.frame(t(pracma::Reshape(runTimes, length(methods), length(clusters))))
-  rownames(df) <- clusters
-  colnames(df) <- methods
+  methods <- unique(sapply(messages, function(x) str_split(x, ' ')[[1]][2]))
+  geneSets <- unique(sapply(messages, function(x) str_split(x, ' ')[[1]][4]))
+  runTimes <- sapply(logLines[seq(2, length(logLines), 2)], function(x) str_remove(x, 'Time difference of '), USE.NAMES=FALSE)
+  runTimes <- sapply(runTimes, timeToSeconds, USE.NAMES=FALSE)
+  df <- data.frame(pracma::Reshape(runTimes, length(methods), length(geneSets)))
+  rownames(df) <- methods
+  colnames(df) <- geneSets
+  df$avg <- rowMeans(df)
   return(df)
+}
+
+timeToSeconds <- function(timeStr){
+  splitTime <- str_split(timeStr, ' ')[[1]]
+  timeDict <- setNames(c(1, 60, 3600), c('secs', 'mins', 'hours'))
+  return(as.numeric(splitTime[1]) * timeDict[splitTime[2]])
 }
 
 #' Time code to run a function and optionally save the results in a log file
