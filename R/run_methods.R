@@ -44,5 +44,5 @@ runGSAMethods <- function(seuratObj, geneSets, geneSetNames, gsaMethods, logFile
 #' @export
 #'
 supportedMethods <- function()
-  return(c('AddModuleScore', 'AUCell', 'MDT', 'MLM', 'ORA', 'SiPSiC', 'ssGSEA', 'UCell',
+  return(c('AddModuleScore', 'AUCell', 'MDT', 'MLM', 'ORA', 'Pagoda2', 'SiPSiC', 'ssGSEA', 'UCell',
            'UDT', 'VAM'))

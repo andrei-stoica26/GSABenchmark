@@ -79,7 +79,7 @@ scorePlot <- function(scoreDF, title){
   pal <- rainbow(length(rownames(scoreDF )))
   p <- ggplot(data=longDF) +
     geom_point(mapping=aes(x=value, y=Var1, color=Var1)) +
-    labs(y = 'Score', x = 'Method', color = 'Method', title = title) +
+    labs(x = 'Score', y = 'Method', color = 'Method', title = title) +
     theme_minimal() + scale_color_manual(values=pal, breaks = rev(rownames(scoreDF))) +
     theme(plot.title = element_text(hjust = 0.5))
   return(p)

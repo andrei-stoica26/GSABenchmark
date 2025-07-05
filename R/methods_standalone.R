@@ -1,3 +1,5 @@
+#' @importFrom Matrix t
+#' @importFrom pagoda2 score.cells.puram
 #' @importFrom Seurat AddModuleScore
 #' @importFrom SiPSiC getPathwayScores
 #' @importFrom VAM vam
@@ -18,6 +20,24 @@ runAddModuleScore <- function(seuratObj, genes, colStr = 'AddModuleScore', ...){
   seuratObj <- AddModuleScore(seuratObj, features = list(genes), name = colStr, ...)
   seuratObj@meta.data[[colStr]] <- liver::minmax(seuratObj@meta.data[[paste0(colStr, 1)]])
   seuratObj@meta.data[[paste0(colStr, 1)]] <- c()
+  return(seuratObj)
+}
+
+#' Run pagoda2
+#'
+#' This function runs pagoda2
+#'
+#' @inheritParams runDecoupleRMethod
+#' @param ... Additional arguments passed to score.cells.puram
+#'
+#' @return A Seurat object with the results saved as a metadata column
+#'
+#' @export
+#'
+runPagoda2 <- function(seuratObj, genes, colStr = 'pagoda2', ...){
+  mat <- Matrix::t(LayerData(seuratObj, layer = 'data'))
+  scores <- pagoda2::score.cells.puram(mat, genes, ...)
+  seuratObj@meta.data[[colStr]] <- liver::minmax(scores)
   return(seuratObj)
 }
 
