@@ -21,6 +21,7 @@ Imports:
     MLmetrics,
     pagoda2,
     peakRAM,
+    plyr,
     reshape2,
     Seurat,
     SeuratObject,

@@ -1,4 +1,5 @@
 #' @importFrom GSVA gsva gsvaParam plageParam zscoreParam
+#' @importFrom stats setNames
 #'
 NULL
 

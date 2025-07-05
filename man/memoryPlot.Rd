@@ -6,11 +6,13 @@
 This function plots data frame consisting of method peak memory usages with
 methods as rows, gene sets and the gene set average as columns.}
 \usage{
-memoryPlot(efBenchmark, dataset = NULL)
+memoryPlot(efBenchmark, datasetName = NULL)
 }
 \arguments{
-\item{A}{list of dataframes generated with efficiencyBenchmark, containing an
+\item{efBenchmark}{A list of dataframes generated with efficiencyBenchmark, containing an
 element labeled "space".}
+
+\item{inheritParams}{timePlot}
 }
 \value{
 A ggplot object.
