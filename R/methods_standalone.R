@@ -1,6 +1,7 @@
 #' @importFrom Matrix t
 #' @importFrom pagoda2 score.cells.puram
 #' @importFrom Seurat AddModuleScore
+#' @importFrom singscore rankGenes simpleScore
 #' @importFrom SiPSiC getPathwayScores
 #' @importFrom VAM vam
 NULL
@@ -28,15 +29,34 @@ runAddModuleScore <- function(seuratObj, genes, colStr = 'AddModuleScore', ...){
 #' This function runs pagoda2
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param ... Additional arguments passed to score.cells.puram
+#' @param ... Additional arguments passed to pagoda2::score.cells.puram
 #'
 #' @return A Seurat object with the results saved as a metadata column
 #'
 #' @export
 #'
-runPagoda2 <- function(seuratObj, genes, colStr = 'pagoda2', ...){
+runPagoda2 <- function(seuratObj, genes, colStr = 'Pagoda2', ...){
   mat <- Matrix::t(LayerData(seuratObj, layer = 'data'))
   scores <- pagoda2::score.cells.puram(mat, genes, ...)
+  seuratObj@meta.data[[colStr]] <- liver::minmax(scores)
+  return(seuratObj)
+}
+
+#' Run Singscore
+#'
+#' This function runs Singscore
+#'
+#' @inheritParams runDecoupleRMethod
+#' @param ... Additional arguments passed to singscore::simpleScore
+#'
+#' @return A Seurat object with the results saved as a metadata column
+#'
+#' @export
+#'
+runSingscore <- function(seuratObj, genes, colStr = 'Singscore', ...){
+  mat <- as.matrix(LayerData(seuratObj, layer = 'data'))
+  mat <- singscore::rankGenes(mat)
+  scores <- singscore::simpleScore(mat, genes, ...)$TotalScore
   seuratObj@meta.data[[colStr]] <- liver::minmax(scores)
   return(seuratObj)
 }
@@ -46,7 +66,7 @@ runPagoda2 <- function(seuratObj, genes, colStr = 'pagoda2', ...){
 #' This function runs SiPSiC
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param ... Additional arguments passed to getPathwayScores
+#' @param ... Additional arguments passed to SiPSiC::getPathwayScores
 #'
 #' @return A Seurat object with the results saved as a metadata column
 #'
@@ -64,7 +84,7 @@ runSiPSiC <- function(seuratObj, genes, colStr = 'SiPSiC', ...){
 #' This function runs VAM
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param ... Additional arguments passed to VAM
+#' @param ... Additional arguments passed to VAM::vam
 #'
 #' @return A Seurat object with the results saved as a metadata column
 #'

@@ -13,7 +13,7 @@ runVAM(seuratObj, genes, colStr = "VAM", ...)
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional arguments passed to VAM}
+\item{...}{Additional arguments passed to VAM::vam}
 }
 \value{
 A Seurat object with the results saved as a metadata column

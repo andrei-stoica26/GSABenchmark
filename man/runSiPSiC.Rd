@@ -13,7 +13,7 @@ runSiPSiC(seuratObj, genes, colStr = "SiPSiC", ...)
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional arguments passed to getPathwayScores}
+\item{...}{Additional arguments passed to SiPSiC::getPathwayScores}
 }
 \value{
 A Seurat object with the results saved as a metadata column

@@ -24,6 +24,7 @@ Imports:
     reshape2,
     Seurat,
     SeuratObject,
+    singscore,
     SiPSiC,
     spatstat.utils,
     stringr,
