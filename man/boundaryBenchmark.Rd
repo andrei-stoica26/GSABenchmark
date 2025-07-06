@@ -4,17 +4,7 @@
 \alias{boundaryBenchmark}
 \title{Perform a class boundary accuracy benchmark on a set of GSA method scores}
 \usage{
-boundaryBenchmark(
-  seuratObj,
-  labelCol,
-  scoreCol,
-  label,
-  normSilDF = NULL,
-  dimMat = NULL,
-  maxDist = NULL,
-  metrics = c("sensitivity", "specificity", "precision", "accuracy", "sizeProximity",
-    "scoreSpecificity")
-)
+boundaryBenchmark(seuratObj, labelCol, scoreCol, label)
 }
 \arguments{
 \item{seuratObj}{A Seurat object}
@@ -24,21 +14,6 @@ boundaryBenchmark(
 \item{scoreCol}{The Seurat metadata column containing the gene set analysis method score}
 
 \item{label}{The identity assessed from the labelCol column}
-
-\item{normSilDF}{Data frame of normalized silhouettes}
-
-\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object. Unused
-if normSilDF is NULL.}
-
-\item{maxDist}{Maximum UMAP distance in the Seurat object. Unused in normSilDF
-or dimMat is NULL}
-
-\item{metrics}{Metrics used to evaluate the accuracy of the class boundary.
-Must be a character vector containing at least two methods among "sensitivity",
-"specificity", "precision", "accuracy", "sizeProximity" and "scoreSpecificity".
-Additionally, silhouette coverage will be automatically computed if normSilDF
-is provided, and centrality will be automatically computed if dimMat is also
-provided.}
 }
 \value{
 A benchmark data frame with cells as row names, and labels, GSA scores,

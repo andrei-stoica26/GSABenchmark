@@ -1,4 +1,3 @@
-
 #' Calculate correlation matrix for method results
 #'
 #' This function calculates the correlation matrix for all the methods for an

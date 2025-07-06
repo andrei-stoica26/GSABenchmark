@@ -4,33 +4,11 @@
 \alias{computeBoundaryMetrics}
 \title{Compute the class boundary metrics}
 \usage{
-computeBoundaryMetrics(
-  df,
-  normSilDF = NULL,
-  dimMat = NULL,
-  maxDist = NULL,
-  metrics = c("sensitivity", "specificity", "precision", "accuracy", "sizeProximity",
-    "scoreSpecificity")
-)
+computeBoundaryMetrics(df)
 }
 \arguments{
 \item{df}{A data frame consisting of cells with a binary label column (1) and
 a column containing the scores obtained by a gene set analysis method (2)}
-
-\item{normSilDF}{Data frame of normalized silhouettes}
-
-\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object. Unused
-if normSilDF is NULL.}
-
-\item{maxDist}{Maximum UMAP distance in the Seurat object. Unused in normSilDF
-or dimMat is NULL}
-
-\item{metrics}{Metrics used to evaluate the accuracy of the class boundary.
-Must be a character vector containing at least two methods among "sensitivity",
-"specificity", "precision", "accuracy", "sizeProximity" and "scoreSpecificity".
-Additionally, silhouette coverage will be automatically computed if normSilDF
-is provided, and centrality will be automatically computed if dimMat is also
-provided.}
 }
 \value{
 A benchmark data frame with cells as row names, labels in the first column,

@@ -10,12 +10,7 @@ boundaryBenchmarkMultiple(
   labelCol,
   geneSetNames,
   gsaMethods,
-  labels = geneSetNames,
-  normSilDF = NULL,
-  dimMat = NULL,
-  maxDist = NULL,
-  metrics = c("sensitivity", "specificity", "precision", "accuracy", "sizeProximity",
-    "scoreSpecificity")
+  labels = geneSetNames
 )
 }
 \arguments{
@@ -28,21 +23,6 @@ boundaryBenchmarkMultiple(
 \item{gsaMethods}{Character vector of gene set analysis methods.}
 
 \item{labels}{The assessed labels. Must be a subset of the values in labelCol.}
-
-\item{normSilDF}{Data frame of normalized silhouettes}
-
-\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object. Unused
-if normSilDF is NULL.}
-
-\item{maxDist}{Maximum UMAP distance in the Seurat object. Unused in normSilDF
-or dimMat is NULL}
-
-\item{metrics}{Metrics used to evaluate the accuracy of the class boundary.
-Must be a character vector containing at least two methods among "sensitivity",
-"specificity", "precision", "accuracy", "sizeProximity" and "scoreSpecificity".
-Additionally, silhouette coverage will be automatically computed if normSilDF
-is provided, and centrality will be automatically computed if dimMat is also
-provided.}
 }
 \value{
 A list of lists of boundary benchmark data frames

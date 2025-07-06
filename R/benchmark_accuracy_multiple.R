@@ -46,12 +46,9 @@ accuracyBenchmarkMultiple <- function(seuratObj, labelCol, geneSetNames, gsaMeth
 #' @export
 #'
 boundaryBenchmarkMultiple <- function(seuratObj, labelCol, geneSetNames, gsaMethods,
-                                      labels = geneSetNames, normSilDF = NULL,
-                                      dimMat = NULL, maxDist = NULL,
-                                      metrics = c('sensitivity', 'specificity', 'precision',
-                                                  'accuracy', 'sizeProximity', 'scoreSpecificity'))
+                                      labels = geneSetNames)
   return(accuracyBenchmarkMultiple(seuratObj, labelCol, geneSetNames, gsaMethods, labels,
-                                   boundaryBenchmark, normSilDF, dimMat, maxDist, metrics))
+                                   boundaryBenchmark))
 
 #' Perform distribution accuracy benchmarks for multiple sets of GSA method scores
 #' and class labels
@@ -60,14 +57,14 @@ boundaryBenchmarkMultiple <- function(seuratObj, labelCol, geneSetNames, gsaMeth
 #' method scores and class labels.
 #'
 #' @inheritParams accuracyBenchmarkMultiple
-#' @inheritParams distributionBenchmark
+#' @inheritParams globalBenchmark
 #'
 #' @return A list of lists of distribution benchmark data frames
 #'
 #' @export
 #'
-distributionBenchmarkMultiple <- function(seuratObj, labelCol, geneSetNames, gsaMethods,
-                                          labels = geneSetNames,
-                                          metrics = c('AUC', 'Gini', 'KS_Stat', 'PRAUC'))
+globalBenchmarkMultiple <- function(seuratObj, labelCol, geneSetNames, gsaMethods,
+                                          labels = geneSetNames, normSilDF = NULL,
+                                          dimMat = NULL, maxDist = NULL)
   return(accuracyBenchmarkMultiple(seuratObj, labelCol, geneSetNames, gsaMethods, labels,
-                                   distributionBenchmark, metrics))
+                                   globalBenchmark, normSilDF, dimMat, maxDist))

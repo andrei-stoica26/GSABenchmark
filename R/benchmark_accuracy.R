@@ -30,24 +30,33 @@ accuracyBenchmark <- function(seuratObj, labelCol, scoreCol, label, computeMetri
 #'
 #' @export
 #'
-boundaryBenchmark <- function(seuratObj, labelCol, scoreCol, label,
-                              normSilDF = NULL, dimMat = NULL, maxDist = NULL,
-                              metrics = c('sensitivity', 'specificity', 'precision',
-                                          'accuracy', 'sizeProximity', 'scoreSpecificity')
-                                          )
-  return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeBoundaryMetrics,
-                           normSilDF, dimMat, maxDist, metrics))
+boundaryBenchmark <- function(seuratObj, labelCol, scoreCol, label)
+  return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeBoundaryMetrics))
 
 #' Perform a distribution benchmark on a set of GSA method scores
 #'
 #' This function performs a distribution benchmark on a set of GSA method scores.
 #'
 #' @inheritParams accuracyBenchmark
-#' @inheritParams computeDistributionMetrics
+#' @inheritParams computeGlobalMetrics
 #'
 #' @return A one-row benchmark data frame with distribution metric scores as columns.
 #'
 #' @export
 #'
-distributionBenchmark <- function(seuratObj, labelCol, scoreCol, label, metrics = c('AUC', 'Gini', 'KS_Stat', 'PRAUC'))
-  return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeDistributionMetrics, metrics))
+globalBenchmark <- function(seuratObj, labelCol, scoreCol, label,
+                            normSilDF = NULL, dimMat = NULL, maxDist = NULL)
+  return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeGlobalMetrics,
+                           normSilDF, dimMat, maxDist))
+
+mccBenchmark <- function(boundaryBenchmarkLL){
+  mccValues <- c()
+  geneSetNames <- names(boundaryBenchmarkLL)
+  gsaMethods <- names(boundaryBenchmarkLL[[1]])
+  for (setName in geneSetNames)
+    mccValues <- c(mccValues, sapply(boundaryBenchmarkLL[[setName]], computeMCC))
+  mccValues <- data.frame(matrix(mccValues, length(gsaMethods), length(geneSetNames)))
+  colnames(mccValues) <- geneSetNames
+  mccValues <- computeMethodMeans(mccValues, gsaMethods)
+  return(mccValues)
+}

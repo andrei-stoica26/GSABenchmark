@@ -19,6 +19,7 @@ Imports:
     liver,
     Matrix,
     MLmetrics,
+    mltools,
     pagoda2,
     peakRAM,
     plyr,

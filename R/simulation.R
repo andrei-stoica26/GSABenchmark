@@ -35,7 +35,7 @@ replaceGenes <- function(seuratObj, genes, fraction = 0.5){
   genesComplement <- setdiff(rownames(seuratObj), genes)
   nReplacedGenes <- round(fraction * length(genes))
   if (nReplacedGenes < 1)
-    stop(paste0('No genes can be removed at an input fraction of ', fraction, '. Choose a higher value'))
+    stop(paste0('No genes can be replaced at an input fraction of ', fraction, '. Choose a higher value'))
   if (nReplacedGenes > length(genes))
     stop(paste0('No genes can be retained at input fraction of ', fraction, '. Choose a lower value'))
   newGenes <- c(sample(genes, length(genes) - nReplacedGenes),

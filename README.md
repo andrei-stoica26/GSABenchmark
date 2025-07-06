@@ -14,14 +14,17 @@ BiocManager::install('andrei-stoica26/GSABenchmark')
 
 ## Contents
 
-The package provides two types of correctness metrics:
+Three types of correctness metrics are implemented in GSABenchmark:
 
-1. **Class boundary metrics (8)** : `sensitivity`, `specificity`, `precision`, `accuracy`, `size proximity`, `score specificity`, `silhouette coverage` and `centrality`.
-2. **Distribution metrics (4)**: `AUROC`, `Gini coefficient`, `Kolmogorov-Smirnov statistic` and `PRAUC`.
+1. **Class boundary determination metrics (6)** : `sensitivity`, `specificity`, `precision`, `accuracy`, `size proximity` and `score coverage`.
+2. **Class boundary validation metric (1)**: `Matthews correlation coefficient`.
+3. **Global evaluation metrics (6)**: `AUROC`, `PRAUC`, `rank log score`, `label rank alignment`, `silhouette rank alignment` and `centrality`.
 
-Class boundary metrics provide values for each cell in the input dataset. These signify the metric results obtained if the class identification cutoff were set at the score recorded for the cell by the cell set analysis method. Subsequently, the gene set analysis method score of the cell with the highest average over all class boundary metrics is identified as the class boundary score, and this average is used for comparisons with other methods.
+Class boundary metrics provide values for each cell in the input dataset, representing values obtained if the class identification cutoff were set at the gene set analysis score recorded by the corresponding cell. Subsequently, the results of the six metrics are averaged and the gene set analysis method score corresponding to the highest average is taken to determine the class boundary cutoff.
 
-Distribution metrics directly provide single-value scores that can be compared with the scores returned for other gene set analysis methods.
+The class boundary validation metric uses the identified class boundary cutoff to assess the quality of the prediction.
+
+Global evaluation metrics provide threshold-independent assessments of prediction quality.
 
 In addition, GSABenchmark uses [peakRAM](https://cran.r-project.org/web//packages//peakRAM/index.html) to assess the efficiency of the gene set analysis methods in terms of both running time and peak memory usage.
 
@@ -57,6 +60,6 @@ Additional parameters are allowed. For instance, this function heading would be 
 
 `runCustomMethod(seuratObj, genes, colStr, tol = 0.2, verbose = TRUE)`. 
 
-**!Note** : When calling `runGSAMethods` or `efficiencyBenchmark`, the method needs to be referred to as `CustomMethod` (no `run`).
+**! Note** : When calling `runGSAMethods` or `efficiencyBenchmark`, the method needs to be referred to as `CustomMethod` (no `run`).
 
 GSABenchmark min-max-normalizes the per-cell gene set analysis scores of all supported methods, returning scores between 0 and 1. It is recommended that user-defined methods follow the same convention.

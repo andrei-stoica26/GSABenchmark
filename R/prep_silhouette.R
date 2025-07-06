@@ -52,9 +52,10 @@ normalizeSilhouette <- function(seuratObj, idClass){
   colnames(res) <- groups
   for (group in groups){
     dfSub <- subset(df, label == group)
-    normSilVals <- liver::minmax(dfSub$silhouette)
+    sortedSil <- dfSub$silhouette
+    auxMin <- 2 * sortedSil[1] - sortedSil[2]
+    normSilVals <- liver::minmax(c(dfSub$silhouette, auxMin))[seq_along(dfSub$silhouette)]
     res[rownames(dfSub), group] <- normSilVals
-    res[rownames(dfSub), setdiff(groups, group)] <- -normSilVals
   }
   return(res)
 }

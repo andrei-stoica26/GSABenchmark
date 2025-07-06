@@ -91,7 +91,7 @@ benchmarkPlots <- function(smr, datasetName = NULL){
   v <- c('Sensitivity', 'Specificity', 'Precision', 'Accuracy', 'Size proximity',
          'Score specificity', 'Silhouette coverage', 'Centrality', 'AUROC',
          'Gini coefficient', 'Kolgomorov-Smirnov statistics', 'PRAUC')
-  if (!length(intersect(names(smr), c('AUC', 'Gini', 'KS_Stat', 'PRAUC'))))
+  if (!length(intersect(names(smr), c('AUROC', 'MCC', 'KS', 'PRAUC'))))
     v <- c(v, c('Class boundary benchmark gene set summary',
            'Class boundary benchmark metric summary')) else
              v <- c(v, c('Distribution benchmark gene set summary',
@@ -101,7 +101,7 @@ benchmarkPlots <- function(smr, datasetName = NULL){
     v <- paste0(v, ' - ', datasetName, ' dataset')
   names(v) <- c('sensitivity', 'specificity', 'precision', 'accuracy',
                 'sizeProximity','scoreSpecificity', 'silhouetteCoverage',
-                'centrality', 'AUC','Gini', 'KS_Stat', 'PRAUC',
+                'centrality', 'AUROC','MCC', 'KS', 'PRAUC',
                 'avg', 'metricSummary')
   plots <- lapply(seq_len(length(smr)), function(i) scorePlot(smr[[i]], v[names(smr)[i]]))
   plots[[length(plots)]] <- plots[[length(plots)]] + labs(color='Metric')

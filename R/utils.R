@@ -78,3 +78,34 @@ tabulateVector <- function(v, rowNames, colNames, addRowMeans=FALSE){
     df$avg <- rowMeans(df)
   return(df)
 }
+
+#' Calculate the alignment between two numeric vectors
+#'
+#' This function calculates the alignment between two numeric vectors
+#'
+#' @param x A vector.
+#' @param y A vector
+#'
+#' @return Alignment score
+#'
+#' @export
+#'
+alignmentScore <- function(x, y)
+  return(sum(x * y) / sum(sort(x) * sort(y)))
+
+#' Calculate the rank alignment between two numeric vectors
+#'
+#' This function calculates the rank alignment between two numeric vectors
+#'
+#' @param x A vector.
+#' @param y A vector
+#'
+#' @return Alignment score
+#'
+#' @export
+#'
+rankAlignmentScore <- function(x, y){
+  x <- liver::minmax(rank(x))
+  y <- liver::minmax(rank(y))
+  return(alignmentScore(x, y))
+}

@@ -11,15 +11,15 @@
 #' @export
 #'
 benchmarkSummary <- function(benchmarkLL){
-  markerNames <- names(benchmarkLL)
+  geneSetNames <- names(benchmarkLL)
   gsaMethods <- names(benchmarkLL[[1]])
   tableCols <- colnames(benchmarkLL[[1]][[1]])
-  if (length(intersect(tableCols, c('AUC', 'Gini', 'KS_Stat', 'PRAUC'))) > 0)
+  if (length(intersect(tableCols, c('AUC', 'PRAUC'))) > 0)
     metrics <- tableCols else
       metrics <- tableCols[seq(3, length(tableCols))]
   smr <- lapply(metrics, function(metric){
     df <- data.frame(Reduce(rbind, lapply(gsaMethods, function(method)
-      sapply(markerNames, function(setName)
+      sapply(geneSetNames, function(setName)
         benchmarkLL[[setName]][[method]][[metric]][1]))))
     df <- computeMethodMeans(df, gsaMethods)
     return(df)
