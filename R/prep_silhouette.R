@@ -1,4 +1,4 @@
-#' @importFrom abdiv cosine_distance
+#' @importFrom text2vec sim2
 #' @importFrom cluster silhouette
 #' @importFrom liver minmax
 #' @importFrom stats cor dist weighted.mean
@@ -10,24 +10,20 @@ NULL
 #'
 #' @param seuratObj A Seurat object.
 #' @param idClass Seurat identity class.
-#' @param distMetric A distance metric. Must be one of "cosine", euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".
 #'
 #' @return A Seurat object with a metadata silhouette column.
 #'
 #' @export
 #'
-computeSilhouette <- function(seuratObj, idClass = 'seurat_clusters', distMetric = 'cosine'){
+computeSilhouette <- function(seuratObj, idClass = 'seurat_clusters'){
   if (!idClass %in% colnames(seuratObj@meta.data))
     stop(paste0(idClass, ' not found in the metadata of the Seurat object'))
-  if (!distMetric %in% c('cosine', 'euclidean', 'maximum', 'manhattan', 'canberra', 'binary', 'minkowski'))
-    stop('Unknown distance metric. See ?GSABenchmark::computeSilhouette for supported metrics')
   pcaMat <- as.matrix(Embeddings(seuratObj, reduction = "pca"))
   message('Computing distance matrix...')
-  if (distMetric == 'cosine') distMat <- cosine_distance(pcaMat) else
-    distMat <- stats::dist(x=pcaMat, method=distMetric)
+  distMat <- 1 - text2vec::sim2(pcaMat, method='cosine', norm = 'l2')
   message(paste0('Computing silhouette for identity class: ', idClass, '...'))
   groupVals <- unclass(factor(seuratObj@meta.data[[idClass]]))
-  seuratObj$silhouette <- cluster::silhouette(groupVals, distMat)[, 3]
+  seuratObj$silhouette <- cluster::silhouette(groupVals, dmatrix=distMat)[, 3]
   return(seuratObj)
 }
 

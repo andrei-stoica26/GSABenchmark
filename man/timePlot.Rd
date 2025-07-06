@@ -6,13 +6,13 @@
 This function plots data frame consisting of method running times with methods
 as rows, gene sets and the gene set average as columns.}
 \usage{
-timePlot(efBenchmark, datasetName = NULL)
+timePlot(efBenchmark, titleSuffix = NULL)
 }
 \arguments{
 \item{efBenchmark}{A list of dataframes generated with efficiencyBenchmark, containing an
 element labeled "time".}
 
-\item{datasetName}{Dataset name}
+\item{titleSuffix}{Plot title suffix to be appended to the default title}
 }
 \value{
 A ggplot object.

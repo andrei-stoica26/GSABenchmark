@@ -4,7 +4,13 @@
 \alias{noisifyGenes}
 \title{Replaces genes from vector}
 \usage{
-noisifyGenes(seuratObj, genes, lossFraction = 0.5, finalSizeFactor = 1)
+noisifyGenes(
+  seuratObj,
+  genes,
+  lossFraction = 0.5,
+  finalSizeFactor = 1,
+  geneCountThresh = 10
+)
 }
 \arguments{
 \item{seuratObj}{A Seurat object}
@@ -14,6 +20,9 @@ noisifyGenes(seuratObj, genes, lossFraction = 0.5, finalSizeFactor = 1)
 \item{finalSizeFactor}{The size of the final vector relative to the original
 one. Values greater than 1 indicate that more genes will be added than removed,
 while values greater lower than 1 indicate otherwise}
+
+\item{geneCountThresh}{Minimum number of cells in which newly added genes must
+be expressed}
 
 \item{lossfraction}{Fraction of genes to be replaced}
 }

@@ -6,13 +6,13 @@
 This function plots data frame consisting of method peak memory usages with
 methods as rows, gene sets and the gene set average as columns.}
 \usage{
-memoryPlot(efBenchmark, datasetName = NULL)
+memoryPlot(efBenchmark, titleSuffix = NULL)
 }
 \arguments{
 \item{efBenchmark}{A list of dataframes generated with efficiencyBenchmark, containing an
 element labeled "space".}
 
-\item{datasetName}{Dataset name}
+\item{titleSuffix}{Plot title suffix to be appended to the default title}
 }
 \value{
 A ggplot object.

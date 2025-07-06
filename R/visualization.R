@@ -40,16 +40,16 @@ scorePlot <- function(scoreDF, title, xLabel = 'Score', legendTitle = 'Gene set'
 #'
 #' @param efBenchmark A list of dataframes generated with efficiencyBenchmark, containing an
 #' element labeled "time".
-#' @param datasetName Dataset name
+#' @param titleSuffix Plot title suffix to be appended to the default title
 #'
 #' @return A ggplot object.
 #'
 #' @export
 #'
-timePlot <- function(efBenchmark, datasetName = NULL){
+timePlot <- function(efBenchmark, titleSuffix = NULL){
   title <- 'Running times'
-  if (!is.null(datasetName))
-    title <- paste0(title, ' - ', datasetName, ' dataset')
+  if (!is.null(titleSuffix))
+    title <- paste0(title, ' - ', titleSuffix)
   p <- scorePlot(efBenchmark$time, title, 'Running time (s)')
   return(p)
 }
@@ -67,10 +67,10 @@ timePlot <- function(efBenchmark, datasetName = NULL){
 #'
 #' @export
 #'
-memoryPlot <- function(efBenchmark, datasetName = NULL){
+memoryPlot <- function(efBenchmark, titleSuffix = NULL){
   title <- 'Peak memory usage'
-  if (!is.null(datasetName))
-    title <- paste0(title, ' - ', datasetName, ' dataset')
+  if (!is.null(titleSuffix))
+    title <- paste0(title, ' - ', titleSuffix)
   p <- scorePlot(efBenchmark$space, title, 'Peak memory usage (MiB)')
   return(p)
 }
@@ -87,22 +87,29 @@ memoryPlot <- function(efBenchmark, datasetName = NULL){
 #'
 #' @export
 #'
-benchmarkPlots <- function(smr, datasetName = NULL){
-  v <- c('Sensitivity', 'Specificity', 'Precision', 'Accuracy', 'Size proximity',
-         'Score specificity', 'Silhouette coverage', 'Centrality', 'AUROC',
-         'Gini coefficient', 'Kolgomorov-Smirnov statistics', 'PRAUC')
-  if (!length(intersect(names(smr), c('AUROC', 'MCC', 'KS', 'PRAUC'))))
-    v <- c(v, c('Class boundary benchmark gene set summary',
-           'Class boundary benchmark metric summary')) else
-             v <- c(v, c('Distribution benchmark gene set summary',
-                    'Distribution benchmark metric summary'))
+benchmarkPlots <- function(smr, titleSuffix = NULL){
+  boundaryMetrics <- c('Sensitivity', 'Specificity', 'Precision', 'Accuracy', 'Size proximity',
+                       'Score coverage')
+  globalMetrics <- c('AUROC', 'PRAUC', 'rankLogScore', 'labRankAlignment', 'silRankAlignment', 'centrality')
 
-  if(!is.null(datasetName))
-    v <- paste0(v, ' - ', datasetName, ' dataset')
-  names(v) <- c('sensitivity', 'specificity', 'precision', 'accuracy',
-                'sizeProximity','scoreSpecificity', 'silhouetteCoverage',
-                'centrality', 'AUROC','MCC', 'KS', 'PRAUC',
-                'avg', 'metricSummary')
+  boundarySummaries <- c('Class boundary determination gene set summary',
+                         'Class boundary determination metric summary')
+  globalSummaries <- c('Global evaluation gene set summary',
+                        'Global evaluation metric summary')
+
+  if ('sensitivity' %in% names(smr)){
+    v <- c(boundaryMetrics, boundarySummaries)
+    names(v) <- c('sensitivity', 'specificity', 'precision', 'accuracy',
+                  'sizeProximity','scoreCoverage', 'avg', 'metricSummary')
+  } else{
+    v <- c(globalMetrics, globalSummaries)
+    names(v) <- c('AUROC', 'PRAUC', 'rankLogScore', 'labRankAlignment',
+                  'silRankAlignment', 'centrality', 'avg', 'metricSummary')
+    }
+
+  if(!is.null(titleSuffix))
+    v <- paste0(v, ' - ', titleSuffix)
+
   plots <- lapply(seq_len(length(smr)), function(i) scorePlot(smr[[i]], v[names(smr)[i]]))
   plots[[length(plots)]] <- plots[[length(plots)]] + labs(color='Metric')
   return(plots)

@@ -1,4 +1,4 @@
-#' @importFrom Matrix t
+#' @importFrom Matrix rowSums t
 #' @importFrom pagoda2 score.cells.puram
 #' @importFrom Seurat AddModuleScore
 #' @importFrom singscore rankGenes simpleScore

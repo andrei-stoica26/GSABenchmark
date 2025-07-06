@@ -1,5 +1,4 @@
-#' @importFrom abdiv cosine_distance euclidean
-#' @importFrom spatstat.utils revcumsum
+#' @importFrom abdiv euclidean
 #' @importFrom MLmetrics AUC LogLoss PRAUC
 #' @importFrom mltools mcc
 #'
@@ -18,28 +17,33 @@ NULL
 #' @export
 #'
 computeBoundaryMetrics <- function(df){
-
   denseDF <- condenseRepeatedScores(df)
 
-  truePos <- cumsum(denseDF[, 1])
-  totalTrue <- truePos[nrow(denseDF)]
-  df$sensitivity <- rep(truePos / totalTrue, denseDF[, 3])
+  labelSumsPerScore <- denseDF[, 1]
+  scoreThresholds <- denseDF[, 2]
+  frequencies <- denseDF[, 3]
+  nThresholds <- nrow(denseDF)
 
-  trueNeg <- revcumsum(denseDF[, 3] - denseDF[, 1])
-  totalFalse <- nrow(df) - totalTrue
-  df$specificity <- rep(trueNeg / totalFalse, denseDF[, 3])
+  Total <- nrow(df)
+  TP <- cumsum(labelSumsPerScore)
+  FP <- cumsum(frequencies) - TP
 
-  pos <- cumsum(denseDF[, 3])
-  df$precision <- rep(truePos / pos, denseDF[, 3])
+  True <- TP[nThresholds]
+  False <- Total - True
+  TN <- False - FP
 
-  df$accuracy <- rep((truePos + trueNeg) / nrow(df), denseDF[, 3])
+  Positive <- TP + FP
+  Largest <- max(True, False)
 
-  maxDiff <- max(totalTrue, nrow(df) - totalTrue)
-  df$sizeProximity <- rep(1 - abs(pos - totalTrue) / maxDiff, denseDF[, 3])
+  df$sensitivity <- rep(TP / True, frequencies)
+  df$specificity <- rep(TN / False, frequencies)
+  df$precision <- rep(TP / Positive, frequencies)
+  df$accuracy <- rep((TP + TN) / Total, frequencies)
+  df$sizeProximity <- rep(1 - abs(Positive - True) / Largest, frequencies)
 
-  score <- cumsum(denseDF[, 2] * denseDF[, 3])
+  score <- cumsum(scoreThresholds * frequencies)
   totalScore <- score[length(score)]
-  df$scoreCoverage <- rep(score / totalScore, denseDF[, 3])
+  df$scoreCoverage <- rep(score / totalScore, frequencies)
 
   df <- computeMetricMeans(df, 3)
   return(df)

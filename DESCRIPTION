@@ -28,9 +28,9 @@ Imports:
     SeuratObject,
     singscore,
     SiPSiC,
-    spatstat.utils,
     stringr,
     stats,
+    text2vec,
     VAM
 Encoding: UTF-8
 LazyData: true

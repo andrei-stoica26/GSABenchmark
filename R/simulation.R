@@ -29,18 +29,21 @@ removeGenes <- function(genes, lossFraction = 0.5){
 #' @param finalSizeFactor The size of the final vector relative to the original
 #' one. Values greater than 1 indicate that more genes will be added than removed,
 #' while values greater lower than 1 indicate otherwise
+#' @param geneCountThresh Minimum number of cells in which newly added genes must
+#' be expressed
 #'
 #' @return Genes vector after the replacements
 #'
 #' @export
 #'
-noisifyGenes <- function(seuratObj, genes, lossFraction = 0.5, finalSizeFactor = 1){
-  genesComplement <- setdiff(rownames(seuratObj), genes)
+noisifyGenes <- function(seuratObj, genes, lossFraction = 0.5, finalSizeFactor = 1, geneCountThresh = 10){
+  expression <- LayerData(seuratObj, layer='counts')
+  freq <- rowSums(expression != 0)
+  suitableGenes <- names(freq[freq >= geneCountThresh])
+  genesComplement <- setdiff(suitableGenes, genes)
   nRemovedGenes <- round(lossFraction * length(genes))
   if(finalSizeFactor < 1 - lossFraction)
     stop('finalSizeFactor must be greater than 1 - lossFraction')
-  if (nRemovedGenes < 1)
-    stop(paste0('No genes can be removed at an input loss fraction of ', lossFraction, '. Choose a higher value'))
   if (nRemovedGenes > length(genes))
     stop(paste0('No genes can be retained at input loss fraction of ', lossFraction, '. Choose a lower value'))
   nRetainedGenes <- length(genes) - nRemovedGenes

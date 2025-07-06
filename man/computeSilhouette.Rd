@@ -4,18 +4,12 @@
 \alias{computeSilhouette}
 \title{Compute cluster silhouette for Seurat object}
 \usage{
-computeSilhouette(
-  seuratObj,
-  idClass = "seurat_clusters",
-  distMetric = "cosine"
-)
+computeSilhouette(seuratObj, idClass = "seurat_clusters")
 }
 \arguments{
 \item{seuratObj}{A Seurat object.}
 
 \item{idClass}{Seurat identity class.}
-
-\item{distMetric}{A distance metric. Must be one of "cosine", euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".}
 }
 \value{
 A Seurat object with a metadata silhouette column.
