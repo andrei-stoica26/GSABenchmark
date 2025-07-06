@@ -42,20 +42,6 @@ sqrt2 <- function(x)
   if (x >= 0) return(sqrt(x)) else return(-sqrt(-x))
 
 
-#' Find the last appearances of elements in vector
-#'
-#' This function finds the indices at which each element in the vector makes its
-#' last appearance.
-#'
-#' @param v A vector.
-#'
-#' @return A vector of indices.
-#'
-#' @export
-#'
-findLastApps <- function(v)
-  return(sapply(lapply(unique(v), function(x) which(v %in% x)), function(y) y[length(y)]))
-
 #' Convert a vector to a data frame based on input row and column names
 #'
 #' This function converts a vector to a data frame based on input row and column names.

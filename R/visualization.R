@@ -25,7 +25,7 @@ scorePlot <- function(scoreDF, title, xLabel = 'Score', legendTitle = 'Gene set'
   longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF)]))
   pal <- rainbow(length(colnames(scoreDF)))
   p <- ggplot(data=longDF) +
-    geom_point(mapping=aes(x=value, y=Var1, color=Var2), size=2.5, shape=4) +
+    geom_point(mapping=aes(x=value, y=Var1, color=Var2), size=2.5) +
     labs(x=xLabel, y ='Method', color=legendTitle, title=title) +
     theme_minimal() + scale_color_manual(values=pal, breaks=colnames(scoreDF)) +
     theme(plot.title = element_text(hjust = 0.5))

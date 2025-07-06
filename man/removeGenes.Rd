@@ -4,7 +4,7 @@
 \alias{removeGenes}
 \title{Removes genes from vector}
 \usage{
-removeGenes(genes, fraction = 0.5)
+removeGenes(genes, lossFraction = 0.5)
 }
 \arguments{
 \item{genes}{A vector of genes}

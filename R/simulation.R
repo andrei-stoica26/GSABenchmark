@@ -9,38 +9,42 @@
 #'
 #' @export
 #'
-removeGenes <- function(genes, fraction = 0.5){
-  nRemovedGenes <- round(fraction * length(genes))
+removeGenes <- function(genes, lossFraction = 0.5){
+  nRemovedGenes <- round(lossFraction * length(genes))
   if (nRemovedGenes < 1)
-    stop(paste0('No genes can be removed at an input fraction of ', fraction, '. Choose a higher value'))
+    stop(paste0('No genes can be removed at an input loss fraction of ', lossFraction, '. Choose a higher value'))
   if (nRemovedGenes > length(genes))
-    stop(paste0('No genes can be retained at input fraction of ', fraction, '. Choose a lower value'))
+    stop(paste0('No genes can be retained at input loss fraction of ', lossFraction, '. Choose a lower value'))
   newGenes <- c(sample(genes, length(genes) - nRemovedGenes))
   return(newGenes)
 }
 
 #' Replaces genes from vector
 #'
-#' This function replaces a fraction of genes from vector with other genes from
-#' the Seurat object
+#' This function removes a fraction of genes from vector and adds other genes from
+#' the Seurat object to the vector (not necessarily as many as the removed genes).
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param fraction Fraction of genes to be replaced
+#' @param lossfraction Fraction of genes to be replaced
+#' @param finalSizeFactor The size of the final vector relative to the original
+#' one. Values greater than 1 indicate that more genes will be added than removed,
+#' while values greater lower than 1 indicate otherwise
 #'
 #' @return Genes vector after the replacements
 #'
 #' @export
 #'
-replaceGenes <- function(seuratObj, genes, fraction = 0.5){
+noisifyGenes <- function(seuratObj, genes, lossFraction = 0.5, finalSizeFactor = 1){
   genesComplement <- setdiff(rownames(seuratObj), genes)
-  nReplacedGenes <- round(fraction * length(genes))
-  if (nReplacedGenes < 1)
-    stop(paste0('No genes can be replaced at an input fraction of ', fraction, '. Choose a higher value'))
-  if (nReplacedGenes > length(genes))
-    stop(paste0('No genes can be retained at input fraction of ', fraction, '. Choose a lower value'))
-  newGenes <- c(sample(genes, length(genes) - nReplacedGenes),
-                sample(genesComplement, nReplacedGenes))
+  nRemovedGenes <- round(lossFraction * length(genes))
+  if(finalSizeFactor < 1 - lossFraction)
+    stop('finalSizeFactor must be greater than 1 - lossFraction')
+  if (nRemovedGenes < 1)
+    stop(paste0('No genes can be removed at an input loss fraction of ', lossFraction, '. Choose a higher value'))
+  if (nRemovedGenes > length(genes))
+    stop(paste0('No genes can be retained at input loss fraction of ', lossFraction, '. Choose a lower value'))
+  nRetainedGenes <- length(genes) - nRemovedGenes
+  nAddedGenes <- round(finalSizeFactor * length(genes)) - nRetainedGenes
+  newGenes <- c(sample(genes, nRetainedGenes), sample(genesComplement, nAddedGenes))
   return(newGenes)
 }
-
-
