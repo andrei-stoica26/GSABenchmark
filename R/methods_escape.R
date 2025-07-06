@@ -13,7 +13,7 @@ NULL
 runEscapeMethod <- function(seuratObj, genes, method, colStr = method, ...){
   mat <- suppressWarnings(as.matrix(LayerData(seuratObj, layer = 'data')))
   scores <- escape.matrix(mat, list(set1 = genes), method = method, ...)[, 1]
-  seuratObj@meta.data[[colStr]] <- liver::minmax(scores)
+  seuratObj@meta.data[[colStr]] <- safeMinmax(scores)
   return(seuratObj)
 }
 

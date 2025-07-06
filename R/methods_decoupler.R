@@ -19,7 +19,7 @@ runDecoupleRMethod <- function(seuratObj, genes, method, colStr = method, ...){
   mat <- suppressWarnings(as.matrix(LayerData(seuratObj, layer='data')))
   scores <- do.call(paste0('run_', tolower(method)),
                     list(mat, network = data.frame(source='geneSet', target=genes, mor=1, ...)))$score
-  seuratObj@meta.data[[colStr]] <- liver::minmax(scores)
+  seuratObj@meta.data[[colStr]] <- safeMinmax(scores)
   return(seuratObj)
 }
 

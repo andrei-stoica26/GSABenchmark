@@ -23,7 +23,7 @@ runGSVAMethod <- function(seuratObj, genes, method, colStr = method,
   geneSet <- setNames(list(genes), 'sigScore')
   gsvaPar <- do.call(paste0(tolower(method), 'Param'), list(mat, geneSet, ...))
   scores <- gsva(gsvaPar)[1, ]
-  scores <- liver::minmax(scores)
+  scores <- safeMinmax(scores)
   if (invert)
     scores <- 1 - scores
   seuratObj@meta.data[[colStr]] <- scores

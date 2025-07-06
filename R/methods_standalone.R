@@ -20,7 +20,7 @@ NULL
 #'
 runAddModuleScore <- function(seuratObj, genes, colStr = 'AddModuleScore', ...){
   seuratObj <- AddModuleScore(seuratObj, features = list(genes), name = colStr, ...)
-  seuratObj@meta.data[[colStr]] <- liver::minmax(seuratObj@meta.data[[paste0(colStr, 1)]])
+  seuratObj@meta.data[[colStr]] <- safeMinmax(seuratObj@meta.data[[paste0(colStr, 1)]])
   seuratObj@meta.data[[paste0(colStr, 1)]] <- c()
   return(seuratObj)
 }
@@ -39,7 +39,7 @@ runAddModuleScore <- function(seuratObj, genes, colStr = 'AddModuleScore', ...){
 runPagoda2 <- function(seuratObj, genes, colStr = 'Pagoda2', ...){
   mat <- Matrix::t(LayerData(seuratObj, layer = 'data'))
   scores <- pagoda2::score.cells.puram(mat, genes, ...)
-  seuratObj@meta.data[[colStr]] <- liver::minmax(scores)
+  seuratObj@meta.data[[colStr]] <- safeMinmax(scores)
   return(seuratObj)
 }
 
@@ -58,7 +58,7 @@ runSingscore <- function(seuratObj, genes, colStr = 'Singscore', ...){
   mat <- as.matrix(LayerData(seuratObj, layer = 'data'))
   mat <- singscore::rankGenes(mat)
   scores <- singscore::simpleScore(mat, genes, ...)$TotalScore
-  seuratObj@meta.data[[colStr]] <- liver::minmax(scores)
+  seuratObj@meta.data[[colStr]] <- safeMinmax(scores)
   return(seuratObj)
 }
 
@@ -76,7 +76,7 @@ runSingscore <- function(seuratObj, genes, colStr = 'Singscore', ...){
 runSiPSiC <- function(seuratObj, genes, colStr = 'SiPSiC', ...){
   mat <- LayerData(seuratObj, layer = 'counts')
   scores <- SiPSiC::getPathwayScores(mat, genes, ...)[[2]]
-  seuratObj@meta.data[[colStr]] <- liver::minmax(scores)
+  seuratObj@meta.data[[colStr]] <- safeMinmax(scores)
   return(seuratObj)
 }
 

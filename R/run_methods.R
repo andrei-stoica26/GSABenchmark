@@ -41,3 +41,20 @@ runGSAMethods <- function(seuratObj, geneSets, geneSetNames, gsaMethods){
 supportedMethods <- function()
   return(c('AddModuleScore', 'AUCell', 'GSVA', 'MDT', 'MLM', 'ORA', 'Pagoda2', 'PLAGE', 'Singscore', 'SiPSiC', 'ssGSEA', 'UCell',
            'UDT', 'VAM', 'Zscore'))
+
+#' Perform min-max normalization when possible; otherwise return a zero-vector
+#'
+#' This function min-max-normalizes a vector when possible, and otherwise returns
+#' the zero vector
+#'
+#' @param scores Numeric vector
+#'
+#' @return Min-max-normalized scores or the zero vector
+#'
+#' @export
+#'
+safeMinmax <- function(scores){
+  if(length(unique(scores)) < 2)
+    return(rep(0, length(scores)))
+  return(liver::minmax(scores))
+}
