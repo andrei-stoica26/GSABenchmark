@@ -14,7 +14,7 @@ allBenchmarkResults <- function(seuratObj, labelCol, gsaMethods, labels = geneSe
   x <- Sys.time()
   message('Running class determination boundary benchmark...')
   boundaryRes <- boundaryBenchmarkMultiple(seuratObj, 'label', geneSetNames, gsaMethods, labels = geneSetNames)
-  boundarySmr <- benchmarkSummary(res)
+  boundarySmr <- benchmarkSummary(boundaryRes)
   message('Running MCC benchmark...')
   directMCCRes <- directMCCBenchmarkMultiple(seuratObj, 'label', geneSetNames, gsaMethods)
   directMCCSmr <- benchmarkSummary(directMCCRes, F)
