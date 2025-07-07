@@ -12,6 +12,7 @@ accuracyBenchmarkMultiple(
   gsaMethods,
   labels = geneSetNames,
   benchmarkFun,
+  verbose = FALSE,
   ...
 )
 }
@@ -28,6 +29,9 @@ accuracyBenchmarkMultiple(
 
 \item{benchmarkFun}{Benchmark function. Must be either boundaryBenchmark or
 distributionBenchmark.}
+
+\item{verbose}{Whether to output a message whenever the benchmarking starts on
+a gene set}
 
 \item{...}{Additional paramters passed to benchmarkFun.}
 }

@@ -4,10 +4,12 @@
 \alias{computeMCC}
 \title{Compute the Matthews correlation coefficient}
 \usage{
-computeMCC(boundaryResDF)
+computeMCC(boundaryResDF, threshold = boundaryResDF[1, 2])
 }
 \arguments{
-\item{boundaryResDF}{}
+\item{boundaryResDF}{A data frame generated with the boundary benchmark}
+
+\item{threshold}{Threshold that determines class boundary}
 }
 \value{
 The Matthews correlation coefficient

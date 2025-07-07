@@ -4,7 +4,13 @@
 \alias{tabulateVector}
 \title{Convert a vector to a data frame based on input row and column names}
 \usage{
-tabulateVector(v, rowNames, colNames, addRowMeans = FALSE)
+tabulateVector(
+  v,
+  rowNames,
+  colNames,
+  addRowMeans = FALSE,
+  sortByRowMeans = FALSE
+)
 }
 \arguments{
 \item{v}{A vector.}
@@ -14,6 +20,8 @@ tabulateVector(v, rowNames, colNames, addRowMeans = FALSE)
 \item{colNames}{A character vector.}
 
 \item{addRowMeans}{Whether to add the row means to the data frame}
+
+\item{sortByRowMeans}{Whether to sort by row means}
 }
 \value{
 A data frame

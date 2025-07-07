@@ -47,9 +47,7 @@ scorePlot <- function(scoreDF, title, xLabel = 'Score', legendTitle = 'Gene set'
 #' @export
 #'
 timePlot <- function(efBenchmark, titleSuffix = NULL){
-  title <- 'Running times'
-  if (!is.null(titleSuffix))
-    title <- paste0(title, ' - ', titleSuffix)
+  title <- paste0('Running times', titleSuffix)
   p <- scorePlot(efBenchmark$time, title, 'Running time (s)')
   return(p)
 }
@@ -68,9 +66,7 @@ timePlot <- function(efBenchmark, titleSuffix = NULL){
 #' @export
 #'
 memoryPlot <- function(efBenchmark, titleSuffix = NULL){
-  title <- 'Peak memory usage'
-  if (!is.null(titleSuffix))
-    title <- paste0(title, ' - ', titleSuffix)
+  title <- paste0('Peak memory usage', titleSuffix)
   p <- scorePlot(efBenchmark$space, title, 'Peak memory usage (MiB)')
   return(p)
 }
@@ -97,6 +93,8 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
   globalSummaries <- c('Global evaluation gene set summary',
                         'Global evaluation metric summary')
 
+
+
   if ('sensitivity' %in% names(smr)){
     v <- c(boundaryMetrics, boundarySummaries)
     names(v) <- c('sensitivity', 'specificity', 'precision', 'accuracy',
@@ -105,12 +103,34 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
     v <- c(globalMetrics, globalSummaries)
     names(v) <- c('AUROC', 'PRAUC', 'rankLogScore', 'labRankAlignment',
                   'silRankAlignment', 'centrality', 'avg', 'metricSummary')
-    }
+  }
 
   if(!is.null(titleSuffix))
-    v <- paste0(v, ' - ', titleSuffix)
+    v <- setNames(paste0(v, titleSuffix), names(v))
 
   plots <- lapply(seq_len(length(smr)), function(i) scorePlot(smr[[i]], v[names(smr)[i]]))
   plots[[length(plots)]] <- plots[[length(plots)]] + labs(color='Metric')
   return(plots)
+}
+
+#' Plot the complete list of benchmark summaries
+#'
+#' This function plots the complete list of benchmark summaries.
+#'
+#' @param smr Complete summary list generated with allBenchmarkResults.
+#' @inheritParams timePlot
+#'
+#' @return A list of ggplot objects
+#'
+#' @export
+#'
+allBenchmarkPlots <- function(smr, titleSuffix = NULL){
+  p1 <- benchmarkPlots(smr$boundary, titleSuffix)
+  p2 <- list(scorePlot(smr$MCC$boundary, paste0('MCC using boundary threshold', titleSuffix)),
+             scorePlot(smr$MCC$boundary, paste0('Comprehensive MCC', titleSuffix)))
+  p3 <- benchmarkPlots(smr$global, titleSuffix)
+  p4 <- list(timePlot(smr$efficiency, titleSuffix),
+             memoryPlot(smr$efficiency, titleSuffix))
+  p <- c(p1, p2, p2, p3)
+  return(p)
 }

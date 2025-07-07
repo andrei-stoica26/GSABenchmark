@@ -49,6 +49,48 @@ computeBoundaryMetrics <- function(df){
   return(df)
 }
 
+#' Compute the MCC at each threshold
+#'
+#' This function computes the MCC at each threshold
+#'
+#' @inheritParams computeBoundaryMetrics
+#'
+#' @return A benchmark data frame with cells as row names, labels in the first column,
+#' gene set analysis method scores in the second column, and MCC scores in the third
+#' column
+#'
+#' @export
+#'
+computeMCCMetric <- function(df){
+  denseDF <- condenseRepeatedScores(df)
+
+  labelSumsPerScore <- denseDF[, 1]
+  scoreThresholds <- denseDF[, 2]
+  frequencies <- denseDF[, 3]
+  nThresholds <- nrow(denseDF)
+
+  Total <- nrow(df)
+  Positives <- cumsum(frequencies)
+  Negatives <- Total - Positives
+  TP <- cumsum(labelSumsPerScore)
+  FP <- Positives - TP
+
+  True <- TP[nThresholds]
+  False <- Total - True
+  classGeomMean <- sqrt(True * False)
+
+  denseDF$x <- TP * False - FP * True
+  denseDF$y <- classGeomMean * sqrt(Positives * Negatives)
+  denseDF$y[nrow(denseDF)] <- -1
+
+  thresholdMCC <- denseDF$x / denseDF$y
+  df$MCC <- rep(thresholdMCC, frequencies)
+  df <- df[order(df$MCC, decreasing=TRUE),]
+
+  return(df)
+}
+
+
 #' Compute the global evaluation metrics
 #'
 #' This function computes the global evaluation metrics
@@ -91,15 +133,16 @@ computeGlobalMetrics <- function(df, normSilDF = NULL, dimMat = NULL, maxDist = 
 #' first column contains labels while the second is binarized based on the previously
 #' determined cutoff (the first element in the second column).
 #'
-#' @param boundaryResDF
+#' @param boundaryResDF A data frame generated with the boundary benchmark
+#' @param threshold Threshold that determines class boundary
 #'
 #' @return The Matthews correlation coefficient
 #'
 #' @export
 #'
-computeMCC <- function(boundaryResDF){
+computeMCC <- function(boundaryResDF, threshold = boundaryResDF[1, 2]){
   boundaryResDF <- boundaryResDF[, c(1, 2)]
   boundaryResDF$prediction <- 0
-  boundaryResDF[which(boundaryResDF[, 2] >= boundaryResDF[1, 2]), 3] <- 1
+  boundaryResDF$prediction[which(boundaryResDF[, 2] >= threshold)] <- 1
   return(mltools::mcc(boundaryResDF[, 1], boundaryResDF[, 3]))
 }

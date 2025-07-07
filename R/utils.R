@@ -51,17 +51,21 @@ sqrt2 <- function(x)
 #' @param rowNames A character vector.
 #' @param colNames A character vector.
 #' @param addRowMeans Whether to add the row means to the data frame
+#' @param sortByRowMeans Whether to sort by row means
 #'
 #' @return A data frame
 #'
 #' @export
 #'
-tabulateVector <- function(v, rowNames, colNames, addRowMeans=FALSE){
+tabulateVector <- function(v, rowNames, colNames, addRowMeans=FALSE, sortByRowMeans=FALSE){
   df <- data.frame(matrix(v, length(rowNames), length(colNames)))
   rownames(df) <- rowNames
   colnames(df) <- colNames
-  if(addRowMeans)
+  if(addRowMeans){
     df$avg <- rowMeans(df)
+    if(sortByRowMeans)
+      df <- df[order(df$avg), ]
+  }
   return(df)
 }
 

@@ -23,7 +23,6 @@ accuracyBenchmark <- function(seuratObj, labelCol, scoreCol, label, computeMetri
 #' method scores
 #'
 #' @inheritParams accuracyBenchmark
-#' @inheritParams computeBoundaryMetrics
 #'
 #' @return A benchmark data frame with cells as row names, and labels, GSA scores,
 #' and class boundary metric scores as columns
@@ -33,14 +32,14 @@ accuracyBenchmark <- function(seuratObj, labelCol, scoreCol, label, computeMetri
 boundaryBenchmark <- function(seuratObj, labelCol, scoreCol, label)
   return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeBoundaryMetrics))
 
-#' Perform a distribution benchmark on a set of GSA method scores
+#' Perform a global evaluation benchmark on a set of GSA method scores
 #'
-#' This function performs a distribution benchmark on a set of GSA method scores.
+#' This function performs a global evaluation benchmark on a set of GSA method scores.
 #'
 #' @inheritParams accuracyBenchmark
 #' @inheritParams computeGlobalMetrics
 #'
-#' @return A one-row benchmark data frame with distribution metric scores as columns.
+#' @return A one-row benchmark data frame with global metric scores as columns.
 #'
 #' @export
 #'
@@ -49,7 +48,18 @@ globalBenchmark <- function(seuratObj, labelCol, scoreCol, label,
   return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeGlobalMetrics,
                            normSilDF, dimMat, maxDist))
 
-mccBenchmark <- function(boundaryBenchmarkLL){
+#' Compute the MCC based on the previously identified boundary cutoff
+#'
+#' This function computes the MCC based on the previously identified boundary cutoff
+#'
+#' @param boundaryBenchmarkLL A list of lists of data frames generated with boundaryBenchmarkMultiple
+#'
+#' @return A benchmark data frame with cells as row names, and labels, GSA scores,
+#' and MCC scores as columns
+#'
+#' @export
+#'
+boundaryMCCBenchmark <- function(boundaryBenchmarkLL){
   mccValues <- c()
   geneSetNames <- names(boundaryBenchmarkLL)
   gsaMethods <- names(boundaryBenchmarkLL[[1]])
@@ -60,3 +70,18 @@ mccBenchmark <- function(boundaryBenchmarkLL){
   mccValues <- computeMethodMeans(mccValues, gsaMethods)
   return(mccValues)
 }
+
+#' Perform a direct MCC benchmark on a set of GSA method scores
+#'
+#' This function performs a direct MCC benchmark on a set of GSA
+#' method scores
+#'
+#' @inheritParams accuracyBenchmark
+#'
+#' @return A benchmark data frame with cells as row names, and labels, GSA scores,
+#' and MCC scores as columns
+#'
+#' @export
+#'
+directMCCBenchmark <- function(seuratObj, labelCol, scoreCol, label)
+  return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeMCCMetric))

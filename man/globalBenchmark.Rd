@@ -2,7 +2,7 @@
 % Please edit documentation in R/benchmark_accuracy.R
 \name{globalBenchmark}
 \alias{globalBenchmark}
-\title{Perform a distribution benchmark on a set of GSA method scores}
+\title{Perform a global evaluation benchmark on a set of GSA method scores}
 \usage{
 globalBenchmark(
   seuratObj,
@@ -32,8 +32,8 @@ if normSilDF is NULL.}
 or dimMat is NULL}
 }
 \value{
-A one-row benchmark data frame with distribution metric scores as columns.
+A one-row benchmark data frame with global metric scores as columns.
 }
 \description{
-This function performs a distribution benchmark on a set of GSA method scores.
+This function performs a global evaluation benchmark on a set of GSA method scores.
 }

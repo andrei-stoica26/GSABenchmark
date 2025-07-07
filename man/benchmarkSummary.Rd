@@ -5,10 +5,13 @@
 \title{Compares the identification of different labels through different gene set
 analysis methods}
 \usage{
-benchmarkSummary(benchmarkLL)
+benchmarkSummary(benchmarkLL, summarizeMetrics = TRUE)
 }
 \arguments{
 \item{benchmarkLL}{A list of lists of benchmark data frames}
+
+\item{summarizeMetrics}{Whether to add a metric summary. Must be set to FALSE
+when summarizing a MCC benchmark list of lists}
 }
 \value{
 Summary data frames

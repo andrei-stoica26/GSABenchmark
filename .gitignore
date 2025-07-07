@@ -1,7 +1,7 @@
 .Rbuildignore
 .Rhistory
 .Rproj.user
+R/.extras.R
 R/.recipes.R
 R/.test_code.R
 GSABenchmark.Rproj
-gsa.log
