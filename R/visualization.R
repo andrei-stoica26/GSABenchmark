@@ -86,7 +86,7 @@ memoryPlot <- function(efBenchmark, titleSuffix = NULL){
 benchmarkPlots <- function(smr, titleSuffix = NULL){
   boundaryMetrics <- c('Sensitivity', 'Specificity', 'Precision', 'Accuracy', 'Size proximity',
                        'Score coverage')
-  globalMetrics <- c('AUROC', 'PRAUC', 'rankLogScore', 'labRankAlignment', 'silRankAlignment', 'centrality')
+  globalMetrics <- c('AUROC', 'PRAUC', 'Label rank alignment', 'Silhouette rank alignment', 'Centrality')
 
   boundarySummaries <- c('Class boundary determination gene set summary',
                          'Class boundary determination metric summary')
@@ -101,8 +101,8 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
                   'sizeProximity','scoreCoverage', 'avg', 'metricSummary')
   } else{
     v <- c(globalMetrics, globalSummaries)
-    names(v) <- c('AUROC', 'PRAUC', 'rankLogScore', 'labRankAlignment',
-                  'silRankAlignment', 'centrality', 'avg', 'metricSummary')
+    names(v) <- c('AUROC', 'PRAUC', 'labRankAlignment', 'silRankAlignment',
+                  'centrality', 'avg', 'metricSummary')
   }
 
   if(!is.null(titleSuffix))
@@ -126,11 +126,11 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
 #'
 allBenchmarkPlots <- function(smr, titleSuffix = NULL){
   p1 <- benchmarkPlots(smr$boundary, titleSuffix)
-  p2 <- list(scorePlot(smr$MCC$boundary, paste0('MCC using boundary threshold', titleSuffix)),
-             scorePlot(smr$MCC$boundary, paste0('Comprehensive MCC', titleSuffix)))
+  p2 <- list(scorePlot(smr$MCC$boundary, paste0('MCC with boundary threshold', titleSuffix)),
+             scorePlot(smr$MCC$direct, paste0('Comprehensive MCC', titleSuffix)))
   p3 <- benchmarkPlots(smr$global, titleSuffix)
   p4 <- list(timePlot(smr$efficiency, titleSuffix),
              memoryPlot(smr$efficiency, titleSuffix))
-  p <- c(p1, p2, p2, p3)
+  p <- c(p1, p2, p3, p4)
   return(p)
 }

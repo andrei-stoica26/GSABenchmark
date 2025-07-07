@@ -9,19 +9,19 @@
 #'
 #' @export
 #'
-allBenchmarkResults <- function(seuratObj, labelCol, gsaMethods, labels = geneSetNames,
+allBenchmarkResults <- function(seuratObj, labelCol, geneSetNames, gsaMethods, labels = geneSetNames,
                                 normSilDF, dimMat, maxDist, efBenchmark = NULL){
   x <- Sys.time()
   message('Running class determination boundary benchmark...')
-  boundaryRes <- boundaryBenchmarkMultiple(seuratObj, 'label', geneSetNames, gsaMethods, labels = geneSetNames)
+  boundaryRes <- boundaryBenchmarkMultiple(seuratObj, labelCol, geneSetNames, gsaMethods, labels = geneSetNames)
   boundarySmr <- benchmarkSummary(boundaryRes)
   message('Running MCC benchmark...')
-  directMCCRes <- directMCCBenchmarkMultiple(seuratObj, 'label', geneSetNames, gsaMethods)
+  directMCCRes <- directMCCBenchmarkMultiple(seuratObj, labelCol, geneSetNames, gsaMethods)
   directMCCSmr <- benchmarkSummary(directMCCRes, F)
   mccSmr <- list(boundary = boundaryMCCBenchmark(boundaryRes),
                  direct = directMCCSmr)
   message('Running global evaluation benchmark...')
-  globalRes <- globalBenchmarkMultiple(seuratObj, 'label', geneSetNames, gsaMethods, labels = geneSetNames,
+  globalRes <- globalBenchmarkMultiple(seuratObj, labelCol, geneSetNames, gsaMethods, labels = geneSetNames,
                                        normSilDF, dimMat, maxDist)
   globalSmr <- benchmarkSummary(globalRes)
   if(is.null(efBenchmark)){

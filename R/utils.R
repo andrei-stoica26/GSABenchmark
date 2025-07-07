@@ -95,7 +95,27 @@ alignmentScore <- function(x, y)
 #' @export
 #'
 rankAlignmentScore <- function(x, y){
-  x <- liver::minmax(rank(x))
-  y <- liver::minmax(rank(y))
+  x <- safeMinmax(rank(x), 1 / length(x))
+  y <- safeMinmax(rank(y), 1 / length(y))
   return(alignmentScore(x, y))
+}
+
+
+#' Perform min-max normalization when possible; otherwise return a zero-vector
+#'
+#' This function min-max-normalizes a vector when possible, and otherwise returns
+#' the zero vector
+#'
+#' @param scores Numeric vector
+#' @param safeVal Value to replace all values with when all values in the vector
+#' are the same
+#'
+#' @return Min-max-normalized scores or the zero vector
+#'
+#' @export
+#'
+safeMinmax <- function(scores, safeVal = 0){
+  if(length(unique(scores)) < 2)
+    return(rep(safeVal, length(scores)))
+  return(liver::minmax(scores))
 }

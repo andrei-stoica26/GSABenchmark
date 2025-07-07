@@ -43,7 +43,9 @@ computeBoundaryMetrics <- function(df){
 
   score <- cumsum(scoreThresholds * frequencies)
   totalScore <- score[length(score)]
-  df$scoreCoverage <- rep(score / totalScore, frequencies)
+  if (totalScore > 0)
+    df$scoreCoverage <- rep(score / totalScore, frequencies) else
+      df$scoreCoverage <- rep(0, frequencies)
 
   df <- computeMetricMeans(df, 3)
   return(df)
@@ -107,19 +109,22 @@ computeMCCMetric <- function(df){
 #'
 #' @export
 #'
+
 computeGlobalMetrics <- function(df, normSilDF = NULL, dimMat = NULL, maxDist = NULL){
   resDF <- data.frame(AUROC = AUC(df[, 2], df[, 1]),
                       PRAUC = PRAUC(df[, 2], df[, 1]),
-                      rankLogScore = 1 - LogLoss(liver::minmax(rank(df[, 2])), df[, 1]),
                       labRankAlignment = rankAlignmentScore(df[, 1], df[, 2]))
   if(!is.null(normSilDF)){
     label <- str_split(colnames(df)[2], '_')[[1]][2]
     sil <- normSilDF[label]
     resDF$silRankAlignment <- rankAlignmentScore(sil[rownames(df), 1], df[, 2])
     if (!is.null(dimMat) & !is.null(maxDist)){
-      silCM <- centerOfMass(dimMat, sil[rownames(dimMat), 1])
       scoreCM <- centerOfMass(dimMat, df[rownames(dimMat), 2])
-      resDF$centrality <- 1 - euclidean(scoreCM, silCM) / maxDist
+      if (length(intersect(scoreCM, NaN)))
+        resDF$centrality <- 0 else{
+          silCM <- centerOfMass(dimMat, sil[rownames(dimMat), 1])
+          resDF$centrality <- 1 - euclidean(scoreCM, silCM) / maxDist
+      }
     }
   }
   resDF <- computeMetricMeans(resDF, 1)

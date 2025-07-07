@@ -8,6 +8,7 @@ This function generates all benchmark results.}
 allBenchmarkResults(
   seuratObj,
   labelCol,
+  geneSetNames,
   gsaMethods,
   labels = geneSetNames,
   normSilDF,
@@ -20,6 +21,8 @@ allBenchmarkResults(
 \item{seuratObj}{A Seurat object}
 
 \item{labelCol}{The Seurat metadata column containing the ground truth annotation}
+
+\item{geneSetNames}{The names of the gene sets.}
 
 \item{gsaMethods}{Character vector of gene set analysis methods.}
 
