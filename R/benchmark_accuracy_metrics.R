@@ -41,11 +41,11 @@ computeBoundaryMetrics <- function(df){
   df$accuracy <- rep((TP + TN) / Total, frequencies)
   df$sizeProximity <- rep(1 - abs(Positive - True) / Largest, frequencies)
 
-  score <- cumsum(scoreThresholds * frequencies)
-  totalScore <- score[length(score)]
+  score <- cumsum(scoreThresholds * labelSumsPerScore)
+  totalScore <- sum(df[, 2])
   if (totalScore > 0)
     df$scoreCoverage <- rep(score / totalScore, frequencies) else
-      df$scoreCoverage <- rep(0, frequencies)
+      df$scoreCoverage <- 0
 
   df <- computeMetricMeans(df, 3)
   return(df)

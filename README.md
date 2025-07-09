@@ -17,14 +17,10 @@ BiocManager::install('andrei-stoica26/GSABenchmark')
 Three types of correctness metrics are implemented in GSABenchmark:
 
 1. **Class boundary determination metrics (6)** : `sensitivity`, `specificity`, `precision`, `accuracy`, `size proximity` and `score coverage`.
-2. **Class boundary validation metric (1)**: `Matthews correlation coefficient`.
-3. **Global evaluation metrics (6)**: `AUROC`, `PRAUC`, `rank log score`, `label rank alignment`, `silhouette rank alignment` and `centrality`.
+2. **Matthews correlation coefficient-based metrics (2)**: `Threshold-based MCC`, `Comprehensive MCC`
+3. **Global evaluation metrics (5)**: `AUROC`, `PRAUC`, `label rank alignment`, `silhouette rank alignment` and `centrality`.
 
-Class boundary metrics provide values for each cell in the input dataset, representing values obtained if the class identification cutoff were set at the gene set analysis score recorded by the corresponding cell. Subsequently, the results of the six metrics are averaged and the gene set analysis method score corresponding to the highest average is taken to determine the class boundary cutoff.
-
-The class boundary validation metric uses the identified class boundary cutoff to assess the quality of the prediction.
-
-Global evaluation metrics provide threshold-independent assessments of prediction quality.
+Class boundary metrics provide values for each cell in the input dataset, representing values obtained if the class identification cutoff were set at the gene set analysis score recorded by the corresponding cell. Subsequently, the results of the six metrics are averaged and the gene set analysis method score corresponding to the highest average is taken to determine the class boundary cutoff. Global evaluation metrics provide threshold-independent assessments of prediction quality. As the gold standard in binary classification, the Matthews correlation coefficient is used separetely both as a class boundary metric and as a global evaluation metrics.
 
 In addition, GSABenchmark uses [peakRAM](https://cran.r-project.org/web//packages//peakRAM/index.html) to assess the efficiency of the gene set analysis methods in terms of both running time and peak memory usage.
 
