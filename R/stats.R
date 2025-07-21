@@ -35,5 +35,5 @@ methodsCor <- function(seuratObj, gsaMethods, scoreCols = gsaMethods, corMethod 
 #'
 allCor <- function(seuratObj, gsaMethods, scoreColList){
   corMats <- lapply(scoreColList, function(x) methodsCor(seuratObj, gsaMethods, x))
-  return(Reduce(plus, corMats) / length(corMats))
+  return(Reduce(`+`, corMats) / length(corMats))
 }

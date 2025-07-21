@@ -12,20 +12,6 @@
 messageMethod <- function(funStr, group, messageFun = message)
   return(messageFun(paste0(str_replace(funStr, 'Run', 'Running '), ' for identity: ', group, '...')))
 
-#' Add two objects as if using the + operator
-#'
-#' This function adds two objects as if using the + operator. Useful to use in
-#' functions like Reduce
-#'
-#' @param x First object
-#' @param y Second object
-#'
-#' @return Sum of the two objects
-#'
-plus <- function(x, y)
-  return(x + y)
-
-
 #' Take the square root of a non-negative number or the additive inverse of the
 #' square root of the additive inverse of a negative number
 #'
