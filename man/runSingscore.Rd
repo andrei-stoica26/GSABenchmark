@@ -4,20 +4,21 @@
 \alias{runSingscore}
 \title{Run Singscore}
 \usage{
-runSingscore(seuratObj, genes, colStr = "Singscore", ...)
+runSingscore(scObj, genes, colStr = "Singscore", ...)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional arguments passed to singscore::simpleScore}
+\item{...}{Additional arguments passed to \code{singscore::simpleScore}}
 }
 \value{
-A Seurat object with the results saved as a metadata column
+A single-cell expression object with the results saved as a metadata
+column.
 }
 \description{
-This function runs Singscore
+This function runs \code{Singscore}.
 }

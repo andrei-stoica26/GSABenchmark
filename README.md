@@ -26,9 +26,9 @@ In addition, GSABenchmark uses [peakRAM](https://cran.r-project.org/web//package
 
 ## Methods
 
-Currently, GSABenchmark supports 15 gene set analysis methods:
+Currently, GSABenchmark supports 14 gene set analysis methods for both `Seurat` 
+and `SingleCellExperiment` objects:
 
-- `AddModuleScore`
 - `AUCell`
 - `GSVA`
 - `MDT`

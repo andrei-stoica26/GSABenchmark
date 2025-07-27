@@ -1,6 +1,7 @@
 #' Perform an accuracy benchmark on a set of gene set analysis method scores
 #'
-#' This function perform an accuracy benchmark on a set of gene set analysis method scores
+#' This function perform an accuracy benchmark on a set of gene set analysis
+#' method scores
 #'
 #' @inheritParams extractCellScores
 #' @param computeMetricsFun Function used to compute metrics. Options are
@@ -11,8 +12,9 @@
 #' @return A benchmark data frame
 #'
 #'
-accuracyBenchmark <- function(seuratObj, labelCol, scoreCol, label, computeMetricsFun, ...){
-  df <- extractCellScores(seuratObj, labelCol, scoreCol, label)
+accuracyBenchmark <- function(scObj, labelCol, scoreCol, label,
+                              computeMetricsFun, ...){
+  df <- extractCellScores(scObj, labelCol, scoreCol, label)
   df <- computeMetricsFun(df, ...)
   return(df)
 }
@@ -20,21 +22,22 @@ accuracyBenchmark <- function(seuratObj, labelCol, scoreCol, label, computeMetri
 #' Perform a class boundary accuracy benchmark on a set of GSA method scores
 #'
 #' This function performs a class boundary accuracy benchmark on a set of GSA
-#' method scores
+#' method scores.
 #'
 #' @inheritParams accuracyBenchmark
 #'
-#' @return A benchmark data frame with cells as row names, and labels, GSA scores,
-#' and class boundary metric scores as columns
+#' @return A benchmark data frame with cells as row names, and labels,
+#' GSA scores, and class boundary metric scores as columns.
 #'
 #' @export
 #'
-boundaryBenchmark <- function(seuratObj, labelCol, scoreCol, label)
-  return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeBoundaryMetrics))
+boundaryBenchmark <- function(scObj, labelCol, scoreCol, label)
+  return(accuracyBenchmark(scObj, labelCol, scoreCol, label, computeBoundaryMetrics))
 
 #' Perform a global evaluation benchmark on a set of GSA method scores
 #'
-#' This function performs a global evaluation benchmark on a set of GSA method scores.
+#' This function performs a global evaluation benchmark on a set of GSA
+#' method scores.
 #'
 #' @inheritParams accuracyBenchmark
 #' @inheritParams computeGlobalMetrics
@@ -43,9 +46,10 @@ boundaryBenchmark <- function(seuratObj, labelCol, scoreCol, label)
 #'
 #' @export
 #'
-globalBenchmark <- function(seuratObj, labelCol, scoreCol, label,
+globalBenchmark <- function(scObj, labelCol, scoreCol, label,
                             normSilDF = NULL, dimMat = NULL, maxDist = NULL)
-  return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeGlobalMetrics,
+  return(accuracyBenchmark(scObj, labelCol, scoreCol, label,
+                           computeGlobalMetrics,
                            normSilDF, dimMat, maxDist))
 
 #' Compute the MCC based on the previously identified boundary cutoff
@@ -64,8 +68,10 @@ boundaryMCCBenchmark <- function(boundaryBenchmarkLL){
   geneSetNames <- names(boundaryBenchmarkLL)
   gsaMethods <- names(boundaryBenchmarkLL[[1]])
   for (setName in geneSetNames)
-    mccValues <- c(mccValues, sapply(boundaryBenchmarkLL[[setName]], computeMCC))
-  mccValues <- data.frame(matrix(mccValues, length(gsaMethods), length(geneSetNames)))
+    mccValues <- c(mccValues, sapply(boundaryBenchmarkLL[[setName]],
+                                     computeMCC))
+  mccValues <- data.frame(matrix(mccValues, length(gsaMethods),
+                                 length(geneSetNames)))
   colnames(mccValues) <- geneSetNames
   mccValues <- computeMethodMeans(mccValues, gsaMethods)
   return(mccValues)
@@ -83,5 +89,6 @@ boundaryMCCBenchmark <- function(boundaryBenchmarkLL){
 #'
 #' @export
 #'
-directMCCBenchmark <- function(seuratObj, labelCol, scoreCol, label)
-  return(accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeMCCMetric))
+directMCCBenchmark <- function(scObj, labelCol, scoreCol, label)
+  return(accuracyBenchmark(scObj, labelCol, scoreCol, label,
+                           computeMCCMetric))

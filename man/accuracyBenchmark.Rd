@@ -4,16 +4,17 @@
 \alias{accuracyBenchmark}
 \title{Perform an accuracy benchmark on a set of gene set analysis method scores}
 \usage{
-accuracyBenchmark(seuratObj, labelCol, scoreCol, label, computeMetricsFun, ...)
+accuracyBenchmark(scObj, labelCol, scoreCol, label, computeMetricsFun, ...)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{labelCol}{The Seurat metadata column containing the ground truth annotation}
+\item{labelCol}{The metadata column containing the ground truth annotation.}
 
-\item{scoreCol}{The Seurat metadata column containing the gene set analysis method score}
+\item{scoreCol}{The metadata column containing the gene set analysis method
+score.}
 
-\item{label}{The identity assessed from the labelCol column}
+\item{label}{The identity assessed from the labelCol column.}
 
 \item{computeMetricsFun}{Function used to compute metrics. Options are
 computeBoundaryMetrics and computeDistributionMetrics.}
@@ -24,5 +25,6 @@ computeBoundaryMetrics and computeDistributionMetrics.}
 A benchmark data frame
 }
 \description{
-This function perform an accuracy benchmark on a set of gene set analysis method scores
+This function perform an accuracy benchmark on a set of gene set analysis
+method scores
 }

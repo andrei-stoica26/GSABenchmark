@@ -2,10 +2,10 @@
 % Please edit documentation in R/methods_gsva.R
 \name{runGSVAMethod}
 \alias{runGSVAMethod}
-\title{Run a gene set analysis method using GSVA}
+\title{Run a gene set analysis method using \code{GSVA}}
 \usage{
 runGSVAMethod(
-  seuratObj,
+  scObj,
   genes,
   method,
   colStr = method,
@@ -15,7 +15,7 @@ runGSVAMethod(
 )
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{genes}{A vector of genes}
 
@@ -23,16 +23,18 @@ runGSVAMethod(
 
 \item{colStr}{Name of the results column}
 
-\item{invert}{Whether to transform the scores from x to 1 - x}
+\item{invert}{Whether to transform the scores from x to 1 - x.}
 
 \item{filter}{Whether to filter the expression matrix as to contain only
-signature genes}
+signature genes.}
 
 \item{...}{Additional arguments passed to gene set analysis methiod}
 }
 \value{
-A Seurat object with the results saved as a metadata column
+A single-cell expression object with the results saved as a metadata
+column.
 }
 \description{
-This function runs one of the gene set analysis methods supported by escape
+This function runs one of the gene set analysis methods supported
+by \code{GSVA}.
 }

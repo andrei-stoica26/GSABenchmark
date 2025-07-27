@@ -4,20 +4,21 @@
 \alias{runVAM}
 \title{Run VAM}
 \usage{
-runVAM(seuratObj, genes, colStr = "VAM", ...)
+runVAM(scObj, genes, colStr = "VAM", ...)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional arguments passed to VAM::vam}
+\item{...}{Additional arguments passed to \code{VAM::vam}.}
 }
 \value{
-A Seurat object with the results saved as a metadata column
+A single-cell expression object with the results saved as a metadata
+column
 }
 \description{
-This function runs VAM
+This function runs \code{VAM}.
 }

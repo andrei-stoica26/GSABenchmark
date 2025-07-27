@@ -4,20 +4,21 @@
 \alias{runMLM}
 \title{Run MLM using decoupleR}
 \usage{
-runMLM(seuratObj, genes, colStr = "MLM", ...)
+runMLM(scObj, genes, colStr = "MLM", ...)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional parameters passed to runDecoupleRMethod}
+\item{...}{Additional parameters passed to \code{runDecoupleRMethod}.}
 }
 \value{
-A Seurat object with the results saved as a metadata column
+A single-cell expression object with the results saved as a
+metadata column.
 }
 \description{
-This function runs MLM using decoupleR
+This function runs \code{MLM} using \code{decoupleR}.
 }

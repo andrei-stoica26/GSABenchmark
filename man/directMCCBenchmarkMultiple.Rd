@@ -6,7 +6,7 @@
 and class labels}
 \usage{
 directMCCBenchmarkMultiple(
-  seuratObj,
+  scObj,
   labelCol,
   geneSetNames,
   gsaMethods,
@@ -14,18 +14,19 @@ directMCCBenchmarkMultiple(
 )
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{labelCol}{The Seurat metadata column containing the ground truth annotation}
+\item{labelCol}{The metadata column containing the ground truth annotation.}
 
 \item{geneSetNames}{The names of the gene sets.}
 
 \item{gsaMethods}{Character vector of gene set analysis methods.}
 
-\item{labels}{The assessed labels. Must be a subset of the values in labelCol.}
+\item{labels}{The assessed labels. Must be a subset of the values in
+labelCol.}
 }
 \value{
-A list of lists of boundary benchmark data frames
+A list of lists of boundary benchmark data frames.
 }
 \description{
 This function performs direct MCC benchmarks for multiple sets of GSA

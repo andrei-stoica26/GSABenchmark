@@ -7,7 +7,7 @@ NULL
 #'
 #' This function runs the gene set analysis methods.
 #'
-#' @param seuratObj A Seurat object.
+#' @inheritParams extractCellScores
 #' @param geneSets A list of gene sets.
 #' @param geneSetNames The names of the gene sets.
 #' @param gsaMethods Character vector of gene set analysis methods.
@@ -16,7 +16,7 @@ NULL
 #'
 #' @export
 #'
-runGSAMethods <- function(seuratObj, geneSets, geneSetNames, gsaMethods){
+runGSAMethods <- function(scObj, geneSets, geneSetNames, gsaMethods){
   for (i in seq_along(geneSets)){
     setName <- geneSetNames[i]
     for (j in seq_along(gsaMethods)){
@@ -24,10 +24,10 @@ runGSAMethods <- function(seuratObj, geneSets, geneSetNames, gsaMethods){
       message(paste0('Running ', method, ' for ', setName, ' genes...'))
       fun <- eval(as.name(paste0('run', method)))
       colStr <- paste0(method, '_', setName)
-      seuratObj <- silently_run(fun(seuratObj, geneSets[[i]], colStr))
+      scObj <- silently_run(fun(scObj, geneSets[[i]], colStr))
     }
   }
-  return(seuratObj)
+  return(scObj)
 }
 
 #' Show supported methods
@@ -39,6 +39,6 @@ runGSAMethods <- function(seuratObj, geneSets, geneSetNames, gsaMethods){
 #' @export
 #'
 supportedMethods <- function()
-  return(c('AddModuleScore', 'AUCell', 'GSVA', 'MDT', 'MLM', 'ORA', 'Pagoda2', 'PLAGE', 'Singscore', 'SiPSiC', 'ssGSEA', 'UCell',
+  return(c('AUCell', 'GSVA', 'MDT', 'MLM', 'ORA', 'Pagoda2', 'PLAGE', 'Singscore', 'SiPSiC', 'ssGSEA', 'UCell',
            'UDT', 'VAM', 'Zscore'))
 

@@ -4,20 +4,21 @@
 \alias{runssGSEA}
 \title{Run ssGSEA}
 \usage{
-runssGSEA(seuratObj, genes, colStr = "ssGSEA", ...)
+runssGSEA(scObj, genes, colStr = "ssGSEA", ...)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional parameters passed to runEscapeMethod}
+\item{...}{Additional parameters passed to \code{runEscapeMethod}.}
 }
 \value{
-A Seurat object with the results saved as a metadata column
+A single-cell expression object with the results saved as a metadata
+column.
 }
 \description{
-This function runs ssGSEA using escape
+This function runs \code{ssGSEA} using \code{escape}.
 }

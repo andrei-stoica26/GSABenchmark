@@ -1,0 +1,70 @@
+---
+title: "GSABenchmark"
+author: "Andrei-Florian Stoica"
+package: CSOA
+date: July 27, 2025
+output: BiocStyle::html_document
+vignette: >
+    %\VignetteIndexEntry{GSABenchmark}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+GSABenchmark is a package designed for benchmarking scRNA-seq gene 
+set analysis methods. It provides both traditional and novel benchmark 
+metrics, as well as visualization tools. Currently, GSABenchmark supports 
+15 gene set analysis methods. 
+
+# Installation
+To install GSABenchmark, run the following commands in an R session:
+```{r setup, eval=FALSE}
+if (!require("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("andrei-stoica26/GSABenchmark")
+```
+
+# Prerequisites
+In addition to GSABenchmark, you need to install 
+[scRNAseq](https://bioconductor.org/packages/release/data/experiment/html/scRNAseq.html) 
+and 
+[scuttle](https://www.bioconductor.org/packages/release/bioc/html/scuttle.html) 
+for this tutorial.
+
+# Dataset loading
+
+This tutorial uses an scRNA-seq human pancreas dataset with provided cell type 
+annotations. 
+
+After loading the required packages, download the dataset using the 
+`BaronPancreasData` function from `scRNAseq`. The dataset will be stored as 
+a `SingleCellExperiment` object. 
+
+```{r message=FALSE, warning=FALSE, results=FALSE}
+library(ggplot2)
+library(scRNAseq)
+library(scuttle)
+library(Seurat)
+
+sceObj <- BaronPancreasData('human')
+
+```
+
+# Input preparation
+
+GSABenchmark requires normalized and log-transformed data. We will employ the 
+`logNormCounts` function from `scuttle` for this step:
+
+```{r message=FALSE, warning=FALSE, results=FALSE}
+sceObj <- logNormCounts(sceObj)
+```
+

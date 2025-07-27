@@ -109,7 +109,6 @@ computeMCCMetric <- function(df){
 #'
 #' @export
 #'
-
 computeGlobalMetrics <- function(df, normSilDF = NULL, dimMat = NULL, maxDist = NULL){
   resDF <- data.frame(AUROC = AUC(df[, 2], df[, 1]),
                       PRAUC = PRAUC(df[, 2], df[, 1]),

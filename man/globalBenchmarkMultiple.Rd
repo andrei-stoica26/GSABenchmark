@@ -2,11 +2,11 @@
 % Please edit documentation in R/benchmark_accuracy_multiple.R
 \name{globalBenchmarkMultiple}
 \alias{globalBenchmarkMultiple}
-\title{Perform distribution accuracy benchmarks for multiple sets of GSA method scores
-and class labels}
+\title{Perform distribution accuracy benchmarks for multiple sets of GSA method
+scores and class labels}
 \usage{
 globalBenchmarkMultiple(
-  seuratObj,
+  scObj,
   labelCol,
   geneSetNames,
   gsaMethods,
@@ -17,15 +17,16 @@ globalBenchmarkMultiple(
 )
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{labelCol}{The Seurat metadata column containing the ground truth annotation}
+\item{labelCol}{The metadata column containing the ground truth annotation.}
 
 \item{geneSetNames}{The names of the gene sets.}
 
 \item{gsaMethods}{Character vector of gene set analysis methods.}
 
-\item{labels}{The assessed labels. Must be a subset of the values in labelCol.}
+\item{labels}{The assessed labels. Must be a subset of the values in
+labelCol.}
 
 \item{normSilDF}{Data frame of normalized silhouettes}
 
@@ -36,9 +37,9 @@ if normSilDF is NULL.}
 or dimMat is NULL}
 }
 \value{
-A list of lists of distribution benchmark data frames
+A list of lists of distribution benchmark data frames.
 }
 \description{
-This function performs distribution accuracy benchmarks for multiple sets of GSA
-method scores and class labels.
+This function performs distribution accuracy benchmarks for multiple sets
+of GSA method scores and class labels.
 }

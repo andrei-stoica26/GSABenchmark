@@ -1,99 +1,84 @@
 #' @importFrom Matrix rowSums t
 #' @importFrom pagoda2 score.cells.puram
-#' @importFrom Seurat AddModuleScore
 #' @importFrom singscore rankGenes simpleScore
 #' @importFrom SiPSiC getPathwayScores
 #' @importFrom VAM vam
 #'
 NULL
 
-#' Run AddModuleScore
-#'
-#' This function runs AddModuleScore
-#'
-#' @inheritParams runDecoupleRMethod
-#' @param ... Additional arguments passed to AddModuleScore
-#'
-#' @return A Seurat object with the results saved as a metadata column
-#'
-#' @export
-#'
-runAddModuleScore <- function(seuratObj, genes, colStr = 'AddModuleScore', ...){
-  seuratObj <- AddModuleScore(seuratObj, features = list(genes), name = colStr, ...)
-  seuratObj@meta.data[[colStr]] <- safeMinmax(seuratObj@meta.data[[paste0(colStr, 1)]])
-  seuratObj@meta.data[[paste0(colStr, 1)]] <- c()
-  return(seuratObj)
-}
-
 #' Run pagoda2
 #'
 #' This function runs pagoda2
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param ... Additional arguments passed to pagoda2::score.cells.puram
+#' @param ... Additional arguments passed to \code{pagoda2::score.cells.puram}.
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
 #'
 #' @export
 #'
-runPagoda2 <- function(seuratObj, genes, colStr = 'Pagoda2', ...){
-  mat <- Matrix::t(LayerData(seuratObj, layer = 'data'))
+runPagoda2 <- function(scObj, genes, colStr = 'Pagoda2', ...){
+  mat <- Matrix::t(scExpMat(scObj, 'data', densify=FALSE))
   scores <- pagoda2::score.cells.puram(mat, genes, ...)
-  seuratObj@meta.data[[colStr]] <- safeMinmax(scores)
-  return(seuratObj)
+  scObj[[colStr]] <- safeMinmax(scores)
+  return(scObj)
 }
 
 #' Run Singscore
 #'
-#' This function runs Singscore
+#' This function runs \code{Singscore}.
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param ... Additional arguments passed to singscore::simpleScore
+#' @param ... Additional arguments passed to \code{singscore::simpleScore}
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
 #'
 #' @export
 #'
-runSingscore <- function(seuratObj, genes, colStr = 'Singscore', ...){
-  mat <- as.matrix(LayerData(seuratObj, layer = 'data'))
+runSingscore <- function(scObj, genes, colStr = 'Singscore', ...){
+  mat <- scExpMat(scObj, 'data')
   mat <- singscore::rankGenes(mat)
   scores <- singscore::simpleScore(mat, genes, ...)$TotalScore
-  seuratObj@meta.data[[colStr]] <- safeMinmax(scores)
-  return(seuratObj)
+  scObj[[colStr]] <- safeMinmax(scores)
+  return(scObj)
 }
 
 #' Run SiPSiC
 #'
-#' This function runs SiPSiC
+#' This function runs \code{SiPSiC}.
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param ... Additional arguments passed to SiPSiC::getPathwayScores
+#' @param ... Additional arguments passed to \code{SiPSiC::getPathwayScores}
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column
 #'
 #' @export
 #'
-runSiPSiC <- function(seuratObj, genes, colStr = 'SiPSiC', ...){
-  mat <- LayerData(seuratObj, layer = 'counts')
+runSiPSiC <- function(scObj, genes, colStr = 'SiPSiC', ...){
+  mat <- scExpMat(scObj, 'counts', densify=FALSE)
   scores <- SiPSiC::getPathwayScores(mat, genes, ...)[[2]]
-  seuratObj@meta.data[[colStr]] <- safeMinmax(scores)
-  return(seuratObj)
+  scObj[[colStr]] <- safeMinmax(scores)
+  return(scObj)
 }
 
 #' Run VAM
 #'
-#' This function runs VAM
+#' This function runs \code{VAM}.
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param ... Additional arguments passed to VAM::vam
+#' @param ... Additional arguments passed to \code{VAM::vam}.
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column
 #'
 #' @export
 #'
-runVAM <- function(seuratObj, genes, colStr = 'VAM', ...){
-  mat <- t(as.matrix(LayerData(seuratObj, layer='data')[genes, ]))
+runVAM <- function(scObj, genes, colStr = 'VAM', ...){
+  mat <- t(scExpMat(scObj, 'data', genes))
   v <- vam(mat, ...)
-  seuratObj@meta.data[[colStr]] <- v$cdf.value
-  return(seuratObj)
+  scObj[[colStr]] <- v$cdf.value
+  return(scObj)
 }

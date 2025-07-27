@@ -4,20 +4,21 @@
 \alias{runPLAGE}
 \title{Run PLAGE}
 \usage{
-runPLAGE(seuratObj, genes, colStr = "PLAGE", ...)
+runPLAGE(scObj, genes, colStr = "PLAGE", ...)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional parameters passed to runGSVAMethod}
+\item{...}{Additional parameters passed to \code{runGSVAMethod}.}
 }
 \value{
-A Seurat object with the results saved as a metadata column
+A single-cell expression object with the results saved as a metadata
+column.
 }
 \description{
-This function runs PLAGE using GSVA
+This function runs \code{PLAGE} using \code{GSVA}.
 }

@@ -1,24 +1,25 @@
 #' @importFrom GSVA gsva gsvaParam plageParam zscoreParam
-#' @importFrom stats setNames
 #'
 NULL
 
-#' Run a gene set analysis method using GSVA
+#' Run a gene set analysis method using \code{GSVA}
 #'
-#' This function runs one of the gene set analysis methods supported by escape
+#' This function runs one of the gene set analysis methods supported
+#' by \code{GSVA}.
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param invert Whether to transform the scores from x to 1 - x
+#' @param invert Whether to transform the scores from x to 1 - x.
 #' @param filter Whether to filter the expression matrix as to contain only
-#' signature genes
+#' signature genes.
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
 #'
-runGSVAMethod <- function(seuratObj, genes, method, colStr = method,
+runGSVAMethod <- function(scObj, genes, method, colStr = method,
                           invert = FALSE, filter = FALSE, ...){
   if(filter)
-    mat <- as.matrix(LayerData(seuratObj, layer='data')[genes, ]) else
-      mat <- as.matrix(LayerData(seuratObj, layer='data'))
+      mat <- scExpMat(scObj, 'data', genes) else
+          mat <- scExpMat(scObj, 'data')
 
   geneSet <- setNames(list(genes), 'sigScore')
   gsvaPar <- do.call(paste0(tolower(method), 'Param'), list(mat, geneSet, ...))
@@ -26,48 +27,51 @@ runGSVAMethod <- function(seuratObj, genes, method, colStr = method,
   scores <- safeMinmax(scores)
   if (invert)
     scores <- 1 - scores
-  seuratObj@meta.data[[colStr]] <- scores
-  return(seuratObj)
+  scObj[[colStr]] <- scores
+  return(scObj)
 }
 
 #' Run GSVA
 #'
-#' This function runs GSVA using GSVA
+#' This function runs \code{GSVA} using \code{GSVA}.
 #'
 #' @inheritParams runGSVAMethod
-#' @param ... Additional parameters passed to runGSVAMethod
+#' @param ... Additional parameters passed to \code{runGSVAMethod}.
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
 #'
 #' @export
 #'
-runGSVA <- function(seuratObj, genes, colStr = 'GSVA', ...)
-  return(runGSVAMethod(seuratObj, genes, 'GSVA', colStr, ...))
+runGSVA <- function(scObj, genes, colStr = 'GSVA', ...)
+  return(runGSVAMethod(scObj, genes, 'GSVA', colStr, ...))
 
 #' Run PLAGE
 #'
-#' This function runs PLAGE using GSVA
+#' This function runs \code{PLAGE} using \code{GSVA}.
 #'
 #' @inheritParams runGSVAMethod
-#' @param ... Additional parameters passed to runGSVAMethod
+#' @param ... Additional parameters passed to \code{runGSVAMethod}.
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
 #'
 #' @export
 #'
-runPLAGE <- function(seuratObj, genes, colStr = 'PLAGE', ...)
-  return(runGSVAMethod(seuratObj, genes, 'PLAGE', colStr, TRUE, TRUE, ...))
+runPLAGE <- function(scObj, genes, colStr = 'PLAGE', ...)
+  return(runGSVAMethod(scObj, genes, 'PLAGE', colStr, TRUE, TRUE, ...))
 
 #' Run Zscore
 #'
-#' This function runs Zscore using GSVA
+#' This function runs \code{Zscore} using \code{GSVA}.
 #'
 #' @inheritParams runGSVAMethod
-#' @param ... Additional parameters passed to runGSVAMethod
+#' @param ... Additional parameters passed to \code{runGSVAMethod}.
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
 #'
 #' @export
 #'
-runZscore <- function(seuratObj, genes, colStr = 'Zscore', ...)
-  return(runGSVAMethod(seuratObj, genes, 'Zscore', colStr, FALSE, TRUE, ...))
+runZscore <- function(scObj, genes, colStr = 'Zscore', ...)
+  return(runGSVAMethod(scObj, genes, 'Zscore', colStr, FALSE, TRUE, ...))

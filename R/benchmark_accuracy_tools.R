@@ -1,22 +1,27 @@
+#' @importFrom hammers centerOfMass metadataDF metadataNames scCol scPCAMat scExpMat
 #' @importFrom plyr count
 #'
 NULL
 
-#' Extract GSA method scores and truth labels from Seurat object
+#' Extract GSA method scores and truth labels from single-cell
+#' expression object.
 #'
-#' This function extracts GSA method scores and truth labels from a Seurat object
+#' This function extracts GSA method scores and truth labels from a single-cell
+#' expression object.
 #'
-#' @param seuratObj A Seurat object
-#' @param labelCol The Seurat metadata column containing the ground truth annotation
-#' @param scoreCol The Seurat metadata column containing the gene set analysis method score
-#' @param label The identity assessed from the labelCol column
+#' @param scObj A \code{Seurat} or \code{SingleCellExperiment} object.
+#' @param labelCol The metadata column containing the ground truth annotation.
+#' @param scoreCol The metadata column containing the gene set analysis method
+#' score.
+#' @param label The identity assessed from the labelCol column.
 #'
-#' @return A data frame with two columns: truth labels (1 or 0) and GSA method scores
+#' @return A data frame with two columns: truth labels (1 or 0) and
+#' GSA method scores,
 #'
 #' @export
 #'
-extractCellScores <- function(seuratObj, labelCol, scoreCol, label){
-  df <- seuratObj@meta.data[, c(labelCol, scoreCol)]
+extractCellScores <- function(scObj, labelCol, scoreCol, label){
+  df <- metadataDF(scObj)[, c(labelCol, scoreCol)]
   colnames(df)[1] <- 'label'
   df$label <- as.integer(df[, 1] %in% label)
   df <- df[order(df[, scoreCol], decreasing=TRUE),]

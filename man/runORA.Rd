@@ -4,20 +4,21 @@
 \alias{runORA}
 \title{Run ORA using decoupleR}
 \usage{
-runORA(seuratObj, genes, colStr = "ORA", ...)
+runORA(scObj, genes, colStr = "ORA", ...)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional parameters passed to runDecoupleRMethod}
+\item{...}{Additional parameters passed to \code{runDecoupleRMethod}.}
 }
 \value{
-A Seurat object with the results saved as a metadata column
+A single-cell expression object with the results saved as a metadata
+column.
 }
 \description{
-This function runs ORA using decoupleR
+This function runs \code{ORA} using \code{decoupleR}.
 }

@@ -5,3 +5,4 @@ R/.extras.R
 R/.recipes.R
 R/.test_code.R
 GSABenchmark.Rproj
+inst/doc

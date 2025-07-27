@@ -6,7 +6,7 @@
 labels}
 \usage{
 accuracyBenchmarkMultiple(
-  seuratObj,
+  scObj,
   labelCol,
   geneSetNames,
   gsaMethods,
@@ -17,21 +17,22 @@ accuracyBenchmarkMultiple(
 )
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{labelCol}{The Seurat metadata column containing the ground truth annotation}
+\item{labelCol}{The metadata column containing the ground truth annotation.}
 
 \item{geneSetNames}{The names of the gene sets.}
 
 \item{gsaMethods}{Character vector of gene set analysis methods.}
 
-\item{labels}{The assessed labels. Must be a subset of the values in labelCol.}
+\item{labels}{The assessed labels. Must be a subset of the values in
+labelCol.}
 
 \item{benchmarkFun}{Benchmark function. Must be either boundaryBenchmark or
 distributionBenchmark.}
 
-\item{verbose}{Whether to output a message whenever the benchmarking starts on
-a gene set}
+\item{verbose}{Whether to output a message whenever the benchmarking
+begins for a gene set.}
 
 \item{...}{Additional paramters passed to benchmarkFun.}
 }
@@ -39,6 +40,6 @@ a gene set}
 A list of lists of benchmark data frames.
 }
 \description{
-This function performs accuracy benchmarks for multiple sets of GSA method scores
-and class labels.
+This function performs accuracy benchmarks for multiple sets of GSA method
+scores and class labels.
 }

@@ -4,19 +4,20 @@
 \alias{runPagoda2}
 \title{Run pagoda2}
 \usage{
-runPagoda2(seuratObj, genes, colStr = "Pagoda2", ...)
+runPagoda2(scObj, genes, colStr = "Pagoda2", ...)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional arguments passed to pagoda2::score.cells.puram}
+\item{...}{Additional arguments passed to \code{pagoda2::score.cells.puram}.}
 }
 \value{
-A Seurat object with the results saved as a metadata column
+A single-cell expression object with the results saved as a metadata
+column.
 }
 \description{
 This function runs pagoda2

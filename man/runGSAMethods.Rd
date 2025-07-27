@@ -4,10 +4,10 @@
 \alias{runGSAMethods}
 \title{Run gene set analysis methods}
 \usage{
-runGSAMethods(seuratObj, geneSets, geneSetNames, gsaMethods)
+runGSAMethods(scObj, geneSets, geneSetNames, gsaMethods)
 }
 \arguments{
-\item{seuratObj}{A Seurat object.}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{geneSets}{A list of gene sets.}
 

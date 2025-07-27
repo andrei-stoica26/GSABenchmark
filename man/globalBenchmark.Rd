@@ -5,7 +5,7 @@
 \title{Perform a global evaluation benchmark on a set of GSA method scores}
 \usage{
 globalBenchmark(
-  seuratObj,
+  scObj,
   labelCol,
   scoreCol,
   label,
@@ -15,13 +15,14 @@ globalBenchmark(
 )
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{labelCol}{The Seurat metadata column containing the ground truth annotation}
+\item{labelCol}{The metadata column containing the ground truth annotation.}
 
-\item{scoreCol}{The Seurat metadata column containing the gene set analysis method score}
+\item{scoreCol}{The metadata column containing the gene set analysis method
+score.}
 
-\item{label}{The identity assessed from the labelCol column}
+\item{label}{The identity assessed from the labelCol column.}
 
 \item{normSilDF}{Data frame of normalized silhouettes}
 
@@ -35,5 +36,6 @@ or dimMat is NULL}
 A one-row benchmark data frame with global metric scores as columns.
 }
 \description{
-This function performs a global evaluation benchmark on a set of GSA method scores.
+This function performs a global evaluation benchmark on a set of GSA
+method scores.
 }

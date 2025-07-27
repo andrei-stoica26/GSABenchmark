@@ -4,10 +4,10 @@
 \alias{runDecoupleRMethod}
 \title{Run a gene set analysis method using decoupleR}
 \usage{
-runDecoupleRMethod(seuratObj, genes, method, colStr = method, ...)
+runDecoupleRMethod(scObj, genes, method, colStr = method, ...)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{genes}{A vector of genes}
 
@@ -18,8 +18,9 @@ runDecoupleRMethod(seuratObj, genes, method, colStr = method, ...)
 \item{...}{Additional arguments passed to gene set analysis methiod}
 }
 \value{
-A Seurat object with the results saved as a metadata column
+A single-cell expression object with the results saved as a metadata column.
 }
 \description{
-This function runs one of the gene set analysis methods supported by decoupleR
+This function runs one of the gene set analysis methods supported
+by \code{decoupleR}.
 }

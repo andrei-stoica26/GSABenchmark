@@ -6,8 +6,9 @@
 This function generates all benchmark results.}
 \usage{
 allBenchmarkResults(
-  seuratObj,
+  scObj,
   labelCol,
+  geneSets,
   geneSetNames,
   gsaMethods,
   labels = geneSetNames,
@@ -18,15 +19,18 @@ allBenchmarkResults(
 )
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{labelCol}{The Seurat metadata column containing the ground truth annotation}
+\item{labelCol}{The metadata column containing the ground truth annotation.}
+
+\item{geneSets}{A list of gene sets.}
 
 \item{geneSetNames}{The names of the gene sets.}
 
 \item{gsaMethods}{Character vector of gene set analysis methods.}
 
-\item{labels}{The assessed labels. Must be a subset of the values in labelCol.}
+\item{labels}{The assessed labels. Must be a subset of the values in
+labelCol.}
 
 \item{normSilDF}{Data frame of normalized silhouettes}
 

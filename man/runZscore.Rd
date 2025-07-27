@@ -4,20 +4,21 @@
 \alias{runZscore}
 \title{Run Zscore}
 \usage{
-runZscore(seuratObj, genes, colStr = "Zscore", ...)
+runZscore(scObj, genes, colStr = "Zscore", ...)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional parameters passed to runGSVAMethod}
+\item{...}{Additional parameters passed to \code{runGSVAMethod}.}
 }
 \value{
-A Seurat object with the results saved as a metadata column
+A single-cell expression object with the results saved as a metadata
+column.
 }
 \description{
-This function runs Zscore using GSVA
+This function runs \code{Zscore} using \code{GSVA}.
 }

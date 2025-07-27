@@ -1,9 +1,14 @@
+#' @importFrom stats cor setNames
+#'
+NULL
+
+
 #' Calculate correlation matrix for method results
 #'
 #' This function calculates the correlation matrix for all the methods for an
 #' identity class
 #'
-#' @param seuratObj A Seurat object.
+#' @inheritParams extractCellScores
 #' @param gsaMethods Gene set analysis methods.
 #' @param scoreCols Gene set analysis method score columns.
 #' @param corMethod Correlation method.
@@ -12,8 +17,8 @@
 #'
 #' @export
 #'
-methodsCor <- function(seuratObj, gsaMethods, scoreCols = gsaMethods, corMethod = 'pearson'){
-  m <- as.matrix(seuratObj@meta.data[, scoreCols])
+methodsCor <- function(scObj, gsaMethods, scoreCols = gsaMethods, corMethod = 'pearson'){
+  m <- as.matrix(metadataDF(scObj)[, scoreCols])
   corMat <- cor(m, method = corMethod)
   rownames(corMat) <- gsaMethods
   colnames(corMat) <- gsaMethods
@@ -33,7 +38,7 @@ methodsCor <- function(seuratObj, gsaMethods, scoreCols = gsaMethods, corMethod 
 #'
 #' @export
 #'
-allCor <- function(seuratObj, gsaMethods, scoreColList){
-  corMats <- lapply(scoreColList, function(x) methodsCor(seuratObj, gsaMethods, x))
+allCor <- function(scObj, gsaMethods, scoreColList){
+  corMats <- lapply(scoreColList, function(x) methodsCor(scObj, gsaMethods, x))
   return(Reduce(`+`, corMats) / length(corMats))
 }

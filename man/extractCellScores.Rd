@@ -2,22 +2,26 @@
 % Please edit documentation in R/benchmark_accuracy_tools.R
 \name{extractCellScores}
 \alias{extractCellScores}
-\title{Extract GSA method scores and truth labels from Seurat object}
+\title{Extract GSA method scores and truth labels from single-cell
+expression object.}
 \usage{
-extractCellScores(seuratObj, labelCol, scoreCol, label)
+extractCellScores(scObj, labelCol, scoreCol, label)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{labelCol}{The Seurat metadata column containing the ground truth annotation}
+\item{labelCol}{The metadata column containing the ground truth annotation.}
 
-\item{scoreCol}{The Seurat metadata column containing the gene set analysis method score}
+\item{scoreCol}{The metadata column containing the gene set analysis method
+score.}
 
-\item{label}{The identity assessed from the labelCol column}
+\item{label}{The identity assessed from the labelCol column.}
 }
 \value{
-A data frame with two columns: truth labels (1 or 0) and GSA method scores
+A data frame with two columns: truth labels (1 or 0) and
+GSA method scores,
 }
 \description{
-This function extracts GSA method scores and truth labels from a Seurat object
+This function extracts GSA method scores and truth labels from a single-cell
+expression object.
 }

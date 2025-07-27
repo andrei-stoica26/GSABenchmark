@@ -4,55 +4,60 @@ NULL
 
 #' Run a gene set analysis method using escape
 #'
-#' This function runs one of the gene set analysis methods supported by escape
+#' This function runs one of the gene set analysis methods supported
+#' by \code{escape}.
 #'
 #' @inheritParams runDecoupleRMethod
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
 #'
-runEscapeMethod <- function(seuratObj, genes, method, colStr = method, ...){
-  mat <- suppressWarnings(as.matrix(LayerData(seuratObj, layer = 'data')))
+runEscapeMethod <- function(scObj, genes, method, colStr = method, ...){
+  mat <- scExpMat(scObj, 'data')
   scores <- escape.matrix(mat, list(set1 = genes), method = method, ...)[, 1]
-  seuratObj@meta.data[[colStr]] <- safeMinmax(scores)
-  return(seuratObj)
+  scObj[[colStr]] <- safeMinmax(scores)
+  return(scObj)
 }
 
 #' Run AUCell
 #'
-#' This function runs AUCell using escape
+#' This function runs \code{AUCell} using \code{escape}.
 #'
 #' @inheritParams runEscapeMethod
-#' @param ... Additional parameters passed to runEscapeMethod
+#' @param ... Additional parameters passed to \code{runEscapeMethod}.
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
 #'
 #' @export
 #'
-runAUCell <- function(seuratObj, genes, colStr = 'AUCell', ...)
-  return(runEscapeMethod(seuratObj, genes, 'AUCell', colStr, ...))
+runAUCell <- function(scObj, genes, colStr = 'AUCell', ...)
+  return(runEscapeMethod(scObj, genes, 'AUCell', colStr, ...))
 
 #' Run ssGSEA
 #'
-#' This function runs ssGSEA using escape
+#' This function runs \code{ssGSEA} using \code{escape}.
 #'
 #' @inheritParams runAUCell
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
 #'
 #' @export
 #'
-runssGSEA <- function(seuratObj, genes, colStr = 'ssGSEA', ...)
-  return(runEscapeMethod(seuratObj, genes, 'ssGSEA', colStr, ...))
+runssGSEA <- function(scObj, genes, colStr = 'ssGSEA', ...)
+  return(runEscapeMethod(scObj, genes, 'ssGSEA', colStr, ...))
 
 #' Run UCell
 #'
-#' This function runs UCell using escape
+#' This function runs \code{UCell} using \code{escape}.
 #'
 #' @inheritParams runAUCell
 #'
-#' @return A Seurat object with the results saved as a metadata column
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
 #'
 #' @export
 #'
-runUCell <- function(seuratObj, genes, colStr = 'UCell', ...)
-  return(runEscapeMethod(seuratObj, genes, 'UCell', colStr, ...))
+runUCell <- function(scObj, genes, colStr = 'UCell', ...)
+  return(runEscapeMethod(scObj, genes, 'UCell', colStr, ...))

@@ -4,20 +4,21 @@
 \alias{runAUCell}
 \title{Run AUCell}
 \usage{
-runAUCell(seuratObj, genes, colStr = "AUCell", ...)
+runAUCell(scObj, genes, colStr = "AUCell", ...)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{genes}{A vector of genes}
 
 \item{colStr}{Name of the results column}
 
-\item{...}{Additional parameters passed to runEscapeMethod}
+\item{...}{Additional parameters passed to \code{runEscapeMethod}.}
 }
 \value{
-A Seurat object with the results saved as a metadata column
+A single-cell expression object with the results saved as a metadata
+column.
 }
 \description{
-This function runs AUCell using escape
+This function runs \code{AUCell} using \code{escape}.
 }

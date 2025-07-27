@@ -10,7 +10,9 @@
 #' @return Messaged (default) or printed output
 #'
 messageMethod <- function(funStr, group, messageFun = message)
-  return(messageFun(paste0(str_replace(funStr, 'Run', 'Running '), ' for identity: ', group, '...')))
+  return(messageFun(paste0(str_replace(funStr,
+                                       'Run', 'Running '), ' for identity: ',
+                           group, '...')))
 
 #' Take the square root of a non-negative number or the additive inverse of the
 #' square root of the additive inverse of a negative number
@@ -26,7 +28,6 @@ messageMethod <- function(funStr, group, messageFun = message)
 #'
 sqrt2 <- function(x)
   if (x >= 0) return(sqrt(x)) else return(-sqrt(-x))
-
 
 #' Convert a vector to a data frame based on input row and column names
 #'

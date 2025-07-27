@@ -4,22 +4,23 @@
 \alias{boundaryBenchmark}
 \title{Perform a class boundary accuracy benchmark on a set of GSA method scores}
 \usage{
-boundaryBenchmark(seuratObj, labelCol, scoreCol, label)
+boundaryBenchmark(scObj, labelCol, scoreCol, label)
 }
 \arguments{
-\item{seuratObj}{A Seurat object}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{labelCol}{The Seurat metadata column containing the ground truth annotation}
+\item{labelCol}{The metadata column containing the ground truth annotation.}
 
-\item{scoreCol}{The Seurat metadata column containing the gene set analysis method score}
+\item{scoreCol}{The metadata column containing the gene set analysis method
+score.}
 
-\item{label}{The identity assessed from the labelCol column}
+\item{label}{The identity assessed from the labelCol column.}
 }
 \value{
-A benchmark data frame with cells as row names, and labels, GSA scores,
-and class boundary metric scores as columns
+A benchmark data frame with cells as row names, and labels,
+GSA scores, and class boundary metric scores as columns.
 }
 \description{
 This function performs a class boundary accuracy benchmark on a set of GSA
-method scores
+method scores.
 }

@@ -2,8 +2,7 @@
 #' @importFrom ggrepel geom_text_repel
 #' @importFrom grDevices rainbow
 #' @importFrom reshape2 melt
-#' @importFrom Seurat FeaturePlot
-#' @importFrom SeuratObject Embeddings
+#'
 NULL
 
 #' Plot a data frame consisting of gene set analysis method scores

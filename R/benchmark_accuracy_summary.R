@@ -1,12 +1,12 @@
 #' Compares the identification of different labels through different gene set
 #' analysis methods
 #'
-#' This function compares the identification of different labels through different gene set
-#' analysis methods.
+#' This function compares the identification of different labels through
+#' different gene set analysis methods.
 #'
 #' @param benchmarkLL A list of lists of benchmark data frames
-#' @param summarizeMetrics Whether to add a metric summary. Must be set to FALSE
-#' when summarizing a MCC benchmark list of lists
+#' @param summarizeMetrics Whether to add a metric summary. Must be set to
+#' FALSE when summarizing a MCC benchmark list of lists
 #'
 #' @return Summary data frames
 #'
@@ -17,7 +17,8 @@ benchmarkSummary <- function(benchmarkLL, summarizeMetrics=TRUE){
   gsaMethods <- names(benchmarkLL[[1]])
   tableCols <- colnames(benchmarkLL[[1]][[1]])
   if('MCC' %in% tableCols & summarizeMetrics)
-    stop('You are summarizing an MCC benchmark, which only has one metric. Set summarizeMetrics to FALSE')
+    stop('You are summarizing an MCC benchmark, which only has one ',
+    'metric. Set summarizeMetrics to FALSE')
   if (length(intersect(tableCols, c('AUC', 'PRAUC'))) > 0)
     metrics <- tableCols else
       metrics <- tableCols[seq(3, length(tableCols))]

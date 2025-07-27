@@ -4,10 +4,10 @@
 \alias{efficiencyBenchmark}
 \title{Extract running times and peak memory usage for gene set analysis methods}
 \usage{
-efficiencyBenchmark(seuratObj, geneSets, geneSetNames, gsaMethods)
+efficiencyBenchmark(scObj, geneSets, geneSetNames, gsaMethods)
 }
 \arguments{
-\item{seuratObj}{A Seurat object.}
+\item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{geneSets}{A list of gene sets.}
 
