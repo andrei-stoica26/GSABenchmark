@@ -2,8 +2,9 @@
 % Please edit documentation in R/run_benchmark.R
 \name{allBenchmarkResults}
 \alias{allBenchmarkResults}
-\title{Generate all benchmark results
-This function generates all benchmark results.}
+\title{Generate all benchmark results with some precomputed arguments.
+This function generates all benchmark results by using precomputed values
+for \code{normSilDF}, \code{dimMat} and \code{maxDist}.}
 \usage{
 allBenchmarkResults(
   scObj,
@@ -46,6 +47,16 @@ or dimMat is NULL}
 A list of benchmark results.
 }
 \description{
-Generate all benchmark results
-This function generates all benchmark results.
+Generate all benchmark results with some precomputed arguments.
+This function generates all benchmark results by using precomputed values
+for \code{normSilDF}, \code{dimMat} and \code{maxDist}.
+}
+\details{
+This function is designed to save some computational time when
+multiple runs are sequentially performed for the same single-cell expression
+object and cell identity classes, but different choices of gene sets
+(so long as they still describe the same classes) or methods. If a single
+run is planned rather than multiple ones, \code{runBenchmark} is a more
+straightforward choice, as it takes care of generating
+\code{normSilDF}, \code{dimMat} and \code{dimMat}.
 }

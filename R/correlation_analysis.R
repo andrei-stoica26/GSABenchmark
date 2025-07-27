@@ -1,4 +1,4 @@
-#' @importFrom stats cor setNames
+#' @importFrom stats cor dist setNames
 #'
 NULL
 
