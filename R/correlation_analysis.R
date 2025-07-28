@@ -1,4 +1,4 @@
-#' @importFrom stats cor dist setNames
+#' @importFrom stats cmdscale cor dist setNames
 #'
 NULL
 

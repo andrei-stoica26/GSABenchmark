@@ -4,11 +4,11 @@
 #' This function compares the identification of different labels through
 #' different gene set analysis methods.
 #'
-#' @param benchmarkLL A list of lists of benchmark data frames
+#' @param benchmarkLL A list of lists of benchmark data frames.
 #' @param summarizeMetrics Whether to add a metric summary. Must be set to
-#' FALSE when summarizing a MCC benchmark list of lists
+#' FALSE when summarizing a MCC benchmark list of lists.
 #'
-#' @return Summary data frames
+#' @return Summary data frames.
 #'
 #' @export
 #'
@@ -32,4 +32,56 @@ benchmarkSummary <- function(benchmarkLL, summarizeMetrics=TRUE){
   if(summarizeMetrics)
     return(addMetricSummary(smr, metrics, gsaMethods))
   return(smr[[1]])
+}
+
+#' Compute the scored MDS summary
+#'
+#' This function computes the score MDS summary. For each gene set, MDS is
+#' performed for the cell-level method predicted scores. The resulting
+#' two-column data frame is appended the average accuracy benchmark score
+#' of each method, obtained on the gene set.
+#'
+#' @inheritParams runBenchmark
+#' @param boundarySmr Class boundary determination summary.
+#' @param mccSmr MCC summary.
+#' @param globalSmr Global evaluation summary.
+#'
+#' @return A list containing a data frame with three columns (two MDS
+#' coordinates and method score) for each gene set.
+#'
+#' @export
+#'
+mdsScoreSummary <- function(scObj,
+                            gsaMethods,
+                            geneSetNames,
+                            boundarySmr,
+                            mccSmr,
+                            globalSmr){
+    mdsScoreSmr <- lapply(geneSetNames, function(gsName){
+        setDF <- metadataDF(scObj)[, joinCharCombs(gsaMethods, gsName)]
+        distMat <- as.matrix(stats::dist(base::t(setDF)))
+        mdsMat <- as.data.frame(cmdscale(distMat))
+
+        colnames(mdsMat) <- c('x', 'y')
+        rownames(mdsMat) <- vapply(str_split(rownames(mdsMat), '_'),
+                                   function(v) v[[1]], character(1))
+
+        summaryMat <- do.call(cbind, list(
+            vapply(boundarySmr[seq(length(boundarySmr) - 2)],
+                   function(x) x[gsaMethods, gsName],
+                   numeric(length(gsaMethods))),
+            vapply(mccSmr[seq(length(mccSmr))],
+                   function(x) x[gsaMethods, gsName],
+                   numeric(length(gsaMethods))),
+            vapply(globalSmr[seq(length(globalSmr) - 2)],
+                   function(x) x[gsaMethods, gsName],
+                   numeric(length(gsaMethods)))
+        ))
+
+        mdsMat$Score <- rowMeans(summaryMat)
+        mdsMat <- mdsMat[order(mdsMat$Score, decreasing=TRUE), ]
+        return(mdsMat)
+    })
+    names(mdsScoreSmr) <- geneSetNames
+    return(mdsScoreSmr)
 }

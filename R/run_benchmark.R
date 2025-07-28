@@ -77,11 +77,16 @@ allBenchmarkResults <- function(scObj,
                                            checkLabels=FALSE)
     } else message('Loading efficiency benchmark...')
 
+    message('Computing scored MDS summary...')
+    mdsScoreSmr <- mdsScoreSummary(scObj, gsaMethods, geneSetNames,
+                                   boundarySmr, mccSmr, globalSmr)
+
     message('Collating results...')
     smr <- list(boundary = boundarySmr,
                 MCC = mccSmr,
                 global = globalSmr,
-                efficiency = efBenchmark)
+                efficiency = efBenchmark,
+                MDS = mdsScoreSmr)
 
     y <- Sys.time()
     print(y - x)

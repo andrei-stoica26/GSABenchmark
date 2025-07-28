@@ -1,4 +1,4 @@
-#' @importFrom hammers centerOfMass computeSilhouette metadataDF metadataNames normalizeSilhouette scCol scPCAMat scExpMat
+#' @importFrom hammers centerOfMass computeSilhouette joinCharCombs metadataDF metadataNames normalizeSilhouette scCol scPCAMat scExpMat
 #' @importFrom plyr count
 #'
 NULL

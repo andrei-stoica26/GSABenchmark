@@ -51,9 +51,8 @@ a `SingleCellExperiment` object.
 
 ```{r message=FALSE, warning=FALSE, results=FALSE}
 library(GSABenchmark)
-library(scRNAseq)
-library(scuttle)
 library(scater)
+library(scRNAseq)
 
 scObj <- BaronPancreasData('human')
 
