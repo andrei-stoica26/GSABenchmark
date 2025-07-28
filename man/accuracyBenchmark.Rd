@@ -4,7 +4,15 @@
 \alias{accuracyBenchmark}
 \title{Perform an accuracy benchmark on a set of gene set analysis method scores}
 \usage{
-accuracyBenchmark(scObj, labelCol, scoreCol, label, computeMetricsFun, ...)
+accuracyBenchmark(
+  scObj,
+  labelCol,
+  scoreCol,
+  label,
+  checkLabel = TRUE,
+  computeMetricsFun,
+  ...
+)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
@@ -15,6 +23,9 @@ accuracyBenchmark(scObj, labelCol, scoreCol, label, computeMetricsFun, ...)
 score.}
 
 \item{label}{The identity assessed from the labelCol column.}
+
+\item{checkLabel}{Whether to check that \code{label} is found
+in \code{labelCol}.}
 
 \item{computeMetricsFun}{Function used to compute metrics. Options are
 computeBoundaryMetrics and computeDistributionMetrics.}

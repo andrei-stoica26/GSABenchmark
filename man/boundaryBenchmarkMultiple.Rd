@@ -8,9 +8,9 @@ and class labels}
 boundaryBenchmarkMultiple(
   scObj,
   labelCol,
-  geneSetNames,
   gsaMethods,
-  labels = geneSetNames,
+  geneSetNames,
+  checkLabels = TRUE,
   verbose = FALSE
 )
 }
@@ -19,12 +19,12 @@ boundaryBenchmarkMultiple(
 
 \item{labelCol}{The metadata column containing the ground truth annotation.}
 
-\item{geneSetNames}{The names of the gene sets.}
-
 \item{gsaMethods}{Character vector of gene set analysis methods.}
 
-\item{labels}{The assessed labels. Must be a subset of the values in
-labelCol.}
+\item{geneSetNames}{The names of the gene sets.}
+
+\item{checkLabels}{Whether to check that \code{geneSetNames} is a subset of
+the values in \code{labelCol}.}
 
 \item{verbose}{Whether to output a message whenever the benchmarking
 begins for a gene set.}

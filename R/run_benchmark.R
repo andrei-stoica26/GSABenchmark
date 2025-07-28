@@ -22,52 +22,70 @@
 allBenchmarkResults <- function(scObj,
                                 labelCol,
                                 geneSets,
-                                geneSetNames,
                                 gsaMethods,
-                                labels = geneSetNames,
+                                geneSetNames,
+                                checkLabels = TRUE,
                                 normSilDF,
                                 dimMat,
                                 maxDist,
                                 efBenchmark = NULL){
-  x <- Sys.time()
-  message('Running class determination boundary benchmark...')
-  boundaryRes <- boundaryBenchmarkMultiple(scObj,
-                                           labelCol,
-                                           geneSetNames,
-                                           gsaMethods,
-                                           labels = geneSetNames)
-  boundarySmr <- benchmarkSummary(boundaryRes)
-  message('Running MCC benchmark...')
-  directMCCRes <- directMCCBenchmarkMultiple(scObj,
+    x <- Sys.time()
+    if(checkLabels)
+        checkSetNames(scObj, labelCol, geneSetNames)
+
+    message('Running class determination boundary benchmark...')
+    boundaryRes <- boundaryBenchmarkMultiple(scObj,
                                              labelCol,
+                                             gsaMethods,
                                              geneSetNames,
-                                             gsaMethods)
-  directMCCSmr <- benchmarkSummary(directMCCRes, FALSE)
-  mccSmr <- list(boundary = boundaryMCCBenchmark(boundaryRes),
+                                             checkLabels=FALSE,
+                                             verbose=FALSE)
+    boundarySmr <- benchmarkSummary(boundaryRes)
+
+    message('Running MCC benchmark...')
+    directMCCRes <- directMCCBenchmarkMultiple(scObj,
+                                               labelCol,
+                                               gsaMethods,
+                                               geneSetNames,
+                                               checkLabels=FALSE,
+                                               verbose=FALSE)
+
+    directMCCSmr <- benchmarkSummary(directMCCRes,
+                                     summarizeMetrics=FALSE)
+    mccSmr <- list(boundary = boundaryMCCBenchmark(boundaryRes),
                  direct = directMCCSmr)
-  message('Running global evaluation benchmark...')
-  globalRes <- globalBenchmarkMultiple(scObj,
-                                       labelCol,
-                                       geneSetNames,
-                                       gsaMethods,
-                                       labels = geneSetNames,
-                                       normSilDF,
-                                       dimMat,
-                                       maxDist)
-  globalSmr <- benchmarkSummary(globalRes)
-  if(is.null(efBenchmark)){
-    message('Running efficiency benchmark. This may take a long time...')
-    efBenchmark <- efficiencyBenchmark(scObj, geneSets,
-                                       geneSetNames, gsaMethods)
-  } else message('Loading efficiency benchmark...')
-  message('Collating results...')
-  smr <- list(boundary = boundarySmr,
-              MCC = mccSmr,
-              global = globalSmr,
-              efficiency = efBenchmark)
-  y <- Sys.time()
-  print(y - x)
-  return(smr)
+
+    message('Running global evaluation benchmark...')
+    globalRes <- globalBenchmarkMultiple(scObj,
+                                         labelCol,
+                                         gsaMethods,
+                                         geneSetNames,
+                                         checkLabels=FALSE,
+                                         verbose=FALSE,
+                                         normSilDF,
+                                         dimMat,
+                                         maxDist)
+    globalSmr <- benchmarkSummary(globalRes)
+
+    if(is.null(efBenchmark)){
+        message('Running efficiency benchmark. This may take a long time...')
+        efBenchmark <- efficiencyBenchmark(scObj,
+                                           labelCol,
+                                           geneSets,
+                                           gsaMethods,
+                                           geneSetNames,
+                                           checkLabels=FALSE)
+    } else message('Loading efficiency benchmark...')
+
+    message('Collating results...')
+    smr <- list(boundary = boundarySmr,
+                MCC = mccSmr,
+                global = globalSmr,
+                efficiency = efBenchmark)
+
+    y <- Sys.time()
+    print(y - x)
+    return(smr)
 }
 
 #' Generate all benchmark results
@@ -87,9 +105,10 @@ allBenchmarkResults <- function(scObj,
 runBenchmark <- function(scObj,
                          labelCol,
                          geneSets,
-                         geneSetNames,
                          gsaMethods,
-                         labels = geneSetNames){
+                         geneSetNames){
+
+    checkSetNames(scObj, labelCol, geneSetNames)
     scObj <- computeSilhouette(scObj, labelCol)
     message('Computing identity class-normalized silhouette...')
     normSilDF <- normalizeSilhouette(scObj, labelCol)
@@ -99,9 +118,9 @@ runBenchmark <- function(scObj,
     res <- allBenchmarkResults(scObj,
                                labelCol,
                                geneSets,
-                               geneSetNames,
                                gsaMethods,
-                               labels,
+                               geneSetNames,
+                               checkLabels = FALSE,
                                normSilDF,
                                dimMat,
                                maxDist)

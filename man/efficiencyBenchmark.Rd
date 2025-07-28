@@ -4,16 +4,25 @@
 \alias{efficiencyBenchmark}
 \title{Extract running times and peak memory usage for gene set analysis methods}
 \usage{
-efficiencyBenchmark(scObj, geneSets, geneSetNames, gsaMethods)
+efficiencyBenchmark(
+  scObj,
+  labelCol,
+  geneSets,
+  gsaMethods,
+  geneSetNames,
+  checkLabels = TRUE
+)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
+\item{labelCol}{The metadata column containing the ground truth annotation.}
+
 \item{geneSets}{A list of gene sets.}
 
-\item{geneSetNames}{The names of the gene sets.}
-
 \item{gsaMethods}{Character vector of gene set analysis methods.}
+
+\item{geneSetNames}{The names of the gene sets.}
 }
 \value{
 A list of two data frames, the first comprising running times in seconds,

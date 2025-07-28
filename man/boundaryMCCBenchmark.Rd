@@ -7,12 +7,14 @@
 boundaryMCCBenchmark(boundaryBenchmarkLL)
 }
 \arguments{
-\item{boundaryBenchmarkLL}{A list of lists of data frames generated with boundaryBenchmarkMultiple}
+\item{boundaryBenchmarkLL}{A list of lists of data frames generated with
+boundaryBenchmarkMultiple.}
 }
 \value{
-A benchmark data frame with cells as row names, and labels, GSA scores,
-and MCC scores as columns
+A benchmark data frame with cells as row names, and labels,
+GSA scores, and MCC scores as columns.
 }
 \description{
-This function computes the MCC based on the previously identified boundary cutoff
+This function computes the MCC based on the previously identified boundary
+cutoff
 }

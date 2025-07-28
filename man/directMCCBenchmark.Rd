@@ -4,7 +4,7 @@
 \alias{directMCCBenchmark}
 \title{Perform a direct MCC benchmark on a set of GSA method scores}
 \usage{
-directMCCBenchmark(scObj, labelCol, scoreCol, label)
+directMCCBenchmark(scObj, labelCol, scoreCol, label, checkLabel = TRUE)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
@@ -15,10 +15,13 @@ directMCCBenchmark(scObj, labelCol, scoreCol, label)
 score.}
 
 \item{label}{The identity assessed from the labelCol column.}
+
+\item{checkLabel}{Whether to check that \code{label} is found
+in \code{labelCol}.}
 }
 \value{
-A benchmark data frame with cells as row names, and labels, GSA scores,
-and MCC scores as columns
+A benchmark data frame with cells as row names, and labels,
+GSA scores, and MCC scores as columns
 }
 \description{
 This function performs a direct MCC benchmark on a set of GSA

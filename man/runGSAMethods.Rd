@@ -4,19 +4,22 @@
 \alias{runGSAMethods}
 \title{Run gene set analysis methods}
 \usage{
-runGSAMethods(scObj, geneSets, geneSetNames, gsaMethods)
+runGSAMethods(scObj, labelCol, geneSets, gsaMethods, geneSetNames)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
+\item{labelCol}{The metadata column containing the ground truth annotation.}
+
 \item{geneSets}{A list of gene sets.}
 
-\item{geneSetNames}{The names of the gene sets.}
-
 \item{gsaMethods}{Character vector of gene set analysis methods.}
+
+\item{geneSetNames}{The names of the gene sets.}
 }
 \value{
-A Seurat object with the results of the runs stored as metadata columns.
+A \code{Seurat} or \code{SingleCellExpression} object
+with the results of the runs stored as metadata columns.
 }
 \description{
 This function runs the gene set analysis methods.

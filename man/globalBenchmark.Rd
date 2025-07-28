@@ -9,6 +9,7 @@ globalBenchmark(
   labelCol,
   scoreCol,
   label,
+  checkLabel = TRUE,
   normSilDF = NULL,
   dimMat = NULL,
   maxDist = NULL
@@ -23,6 +24,9 @@ globalBenchmark(
 score.}
 
 \item{label}{The identity assessed from the labelCol column.}
+
+\item{checkLabel}{Whether to check that \code{label} is found
+in \code{labelCol}.}
 
 \item{normSilDF}{Data frame of normalized silhouettes}
 

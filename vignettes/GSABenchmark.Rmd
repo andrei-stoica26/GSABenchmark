@@ -79,7 +79,7 @@ First, we will take a look at the cell types found in this dataset:
 table(colData(scObj)$label)
 ```
 
-We will create gene sets for three cell types found in the data, using
+We will create gene sets for four cell types found in the data, using
 cell type markers from [PanglaoDB](https://www.panglaodb.se/markers.html):
 
 ```{r}
@@ -101,20 +101,34 @@ alphaMarkers <- c('GCG', 'TTR', 'PCSK2', 'FXYD5', 'LDB2', 'MAFB',
                   'PCSK1', 'PRRG2', 'IRX2', 'ALDH1A1','PEMT', 'SMIM24',
                   'F10', 'SCGN', 'SLC30A8')
 
-betaMarkers <- c('INS', 'IAPP', 'GJD2', 'PDX1', 'SLC2A2', 'NPY', 'MAFA', 'PFKFB2',
-                 'HOPX', 'PAX6', 'MAFB', 'CASR', 'EDARADD', 'SCGB2A1', 'TGFBR3',
-                 'ADCYAP1', 'SH3GL2', 'NEUROD1','ISL1', 'RGS16', 'SMAD9', 'SIX3',
-                 'BMP5', 'PIR', 'STXBP5', 'DLK1', 'MEG3', 'GCGR', 'LMX1A', 'JPH3',
-                 'CD40', 'HAMP','EZH1', 'NTRK1','FXYD2', 'RIMS1', 'EFNA5', 'NPTX2',
-                 'PAX4', 'PCSK2', 'G6PC2', 'SLC30A8', 'PCSK1', 'SCGN', 'IGF2',
-                 'SYT13', 'FFAR2', 'SIX2')
+betaMarkers <- c('INS', 'IAPP', 'GJD2', 'PDX1', 'SLC2A2', 'NPY', 'MAFA', 
+                 'PFKFB2','HOPX', 'PAX6', 'MAFB', 'CASR', 'EDARADD', 
+                 'SCGB2A1', 'TGFBR3','ADCYAP1', 'SH3GL2', 'NEUROD1','ISL1', 
+                 'RGS16', 'SMAD9', 'SIX3','BMP5', 'PIR', 'STXBP5', 'DLK1', 
+                 'MEG3', 'GCGR', 'LMX1A', 'JPH3','CD40', 'HAMP','EZH1', 
+                 'NTRK1','FXYD2', 'RIMS1', 'EFNA5', 'NPTX2','PAX4', 'PCSK2', 
+                 'G6PC2', 'SLC30A8', 'PCSK1', 'SCGN', 'IGF2','SYT13', 'FFAR2', 
+                 'SIX2')
+
+deltaMarkers <- c('SST', 'GABRB3', 'FRZB', 'MS4A8', 'BAIAP3', 'CASR', 'BCHE',
+                  'UNC5B','EDN3', 'GHSR', 'PCSK1', 'GABRG2', 'POU3F1',
+                  'BHLHE41', 'EHF', 'LCORL', 'ETV1', 'PDX1', 'LEPR', 'UCP2',
+                  'NPTX2', 'FXYD2', 'IAPP', 'KCNK16', 'SCGN', 'ISL1', 'HHEX',
+                  'RESP18', 'PAX4', 'RBP4', 'PCSK9', 'FFAR4')
 ```
 
 Now we gather the gene sets and we declare their names:
 
 ```{r}
-geneSets <- list(acinarMarkers, alphaMarkers, betaMarkers)
-geneSetNames <- c('acinar', 'alpha', 'beta')
+geneSets <- list(acinarMarkers, alphaMarkers, betaMarkers, deltaMarkers)
+geneSetNames <- c('acinar', 'alpha', 'beta', 'delta')
+```
+
+**!* Note: The gene set names must all be found in the column of assessed
+class identities. For this dataset, this column is named `label`:
+
+```{r}
+setdiff(geneSetNames, colData(scObj)[['label']])
 ```
 
 # Running the methods
@@ -126,16 +140,16 @@ The `supportedMethods` function lists all the methods currently available in
 supportedMethods()
 ```
 
-For the purposes of this tutorial, we will select four of these methods:
+For the purposes of this tutorial, we will select five of these methods:
 
 ```{r}
-gsaMethods <- c('CSOA', 'PLAGE', 'VAM', 'Zscore')
+gsaMethods <- c('CSOA', 'PLAGE', 'VAM', 'SiPSiC', 'Zscore')
 ```
 
-We now run the four methods for each gene set:
+We now run the five methods for each gene set:
 
 ```{r}
-scObj <- runGSAMethods(scObj, geneSets, geneSetNames, gsaMethods)
+scObj <- runGSAMethods(scObj, 'label', geneSets, gsaMethods, geneSetNames)
 ```
 
 # Running the benchmark
@@ -143,7 +157,7 @@ scObj <- runGSAMethods(scObj, geneSets, geneSetNames, gsaMethods)
 The benchmark is run in a single line of code:
 
 ```{r}
-smr <- runBenchmark(scObj, 'label', geneSets, geneSetNames, gsaMethods)
+smr <- runBenchmark(scObj, 'label', geneSets, gsaMethods, geneSetNames)
 ```
 
 **!** Note: While this tutorial illustrates using `GSABenchmark` with 
@@ -154,7 +168,7 @@ Seurat object as their first argument.
 # Exploring the results
 
 `runBenchmark` returns a list object with four elements. We can further explore
-the structure of this object
+the structure of this object:
 
 ```{r}
 names(smr)
@@ -163,7 +177,6 @@ names(smr$MCC)
 names(smr$global)
 names(smr$efficiency)
 ```
-
 
 We can look at summaries in terms of correctness, speed, and memory usage:
 
@@ -185,7 +198,7 @@ length(plots)
 Below, we display one of the resulting plots:
 
 ```{r, out.height='100%', out.width='100%', fig.height=6, fig.width=6}
-plots[[13]]
+plots[[3]]
 ```
 
 # Session information {-}

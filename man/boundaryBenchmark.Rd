@@ -4,7 +4,7 @@
 \alias{boundaryBenchmark}
 \title{Perform a class boundary accuracy benchmark on a set of GSA method scores}
 \usage{
-boundaryBenchmark(scObj, labelCol, scoreCol, label)
+boundaryBenchmark(scObj, labelCol, scoreCol, label, checkLabel = TRUE)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
@@ -15,6 +15,9 @@ boundaryBenchmark(scObj, labelCol, scoreCol, label)
 score.}
 
 \item{label}{The identity assessed from the labelCol column.}
+
+\item{checkLabel}{Whether to check that \code{label} is found
+in \code{labelCol}.}
 }
 \value{
 A benchmark data frame with cells as row names, and labels,

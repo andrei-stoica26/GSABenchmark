@@ -10,25 +10,27 @@ NULL
 #'
 #' @inheritParams extractCellScores
 #' @param geneSets A list of gene sets.
-#' @param geneSetNames The names of the gene sets.
 #' @param gsaMethods Character vector of gene set analysis methods.
+#' @param geneSetNames The names of the gene sets.
 #'
-#' @return A Seurat object with the results of the runs stored as metadata columns.
+#' @return A \code{Seurat} or \code{SingleCellExpression} object
+#' with the results of the runs stored as metadata columns.
 #'
 #' @export
 #'
-runGSAMethods <- function(scObj, geneSets, geneSetNames, gsaMethods){
-  for (i in seq_along(geneSets)){
-    setName <- geneSetNames[i]
-    for (j in seq_along(gsaMethods)){
-      method <- gsaMethods[j]
-      message(paste0('Running ', method, ' for ', setName, ' genes...'))
-      fun <- eval(as.name(paste0('run', method)))
-      colStr <- paste0(method, '_', setName)
-      scObj <- silently_run(fun(scObj, geneSets[[i]], colStr))
+runGSAMethods <- function(scObj, labelCol, geneSets, gsaMethods, geneSetNames){
+    checkSetNames(scObj, labelCol, geneSetNames)
+    for (i in seq_along(geneSets)){
+        setName <- geneSetNames[i]
+        for (j in seq_along(gsaMethods)){
+            method <- gsaMethods[j]
+            message(paste0('Running ', method, ' for ', setName, ' genes...'))
+            fun <- eval(as.name(paste0('run', method)))
+            colStr <- paste0(method, '_', setName)
+            scObj <- silently_run(fun(scObj, geneSets[[i]], colStr))
+        }
     }
-  }
-  return(scObj)
+    return(scObj)
 }
 
 #' Show supported methods

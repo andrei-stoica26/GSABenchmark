@@ -15,21 +15,29 @@ NULL
 #'
 #' @export
 #'
-efficiencyBenchmark <- function(scObj, geneSets, geneSetNames, gsaMethods){
-  elapsedTime <- c()
-  peakMemory <- c()
-  for (i in seq_along(geneSets))
-    for (method in gsaMethods){
-      methodCall <- paste0('run', method)
-      message(paste0('Computing running time and peak memory usage for ',
-                     method, ' on ', geneSetNames[i], ' genes...'))
-      df <- peakRAM(silently_run(do.call(methodCall, list(scObj,
-                                                          geneSets[[i]]))))
-      message(paste0('Time elapsed: ', round(df$Elapsed_Time_sec, 4), ' seconds'))
-      elapsedTime <- c(elapsedTime, df$Elapsed_Time_sec)
-      peakMemory <- c(peakMemory, df$Peak_RAM_Used_MiB)
-    }
-  time <- tabulateVector(elapsedTime, gsaMethods, geneSetNames, TRUE)
-  space <- tabulateVector(peakMemory, gsaMethods, geneSetNames, TRUE)
-  return(list(time = time, space = space))
+efficiencyBenchmark <- function(scObj,
+                                labelCol,
+                                geneSets,
+                                gsaMethods,
+                                geneSetNames,
+                                checkLabels = TRUE){
+    if (checkLabels)
+        checkSetNames(scObj, labelCol, geneSetNames)
+
+    elapsedTime <- c()
+    peakMemory <- c()
+    for (i in seq_along(geneSets))
+        for (method in gsaMethods){
+            methodCall <- paste0('run', method)
+            message(paste0('Computing running time and peak memory usage for ',
+                           method, ' on ', geneSetNames[i], ' genes...'))
+            df <- peakRAM(silently_run(do.call(methodCall,
+                                               list(scObj, geneSets[[i]]))))
+            message(paste0('Time elapsed: ', round(df$Elapsed_Time_sec, 4), ' seconds'))
+            elapsedTime <- c(elapsedTime, df$Elapsed_Time_sec)
+            peakMemory <- c(peakMemory, df$Peak_RAM_Used_MiB)
+            }
+    time <- tabulateVector(elapsedTime, gsaMethods, geneSetNames, TRUE)
+    space <- tabulateVector(peakMemory, gsaMethods, geneSetNames, TRUE)
+    return(list(time = time, space = space))
 }
