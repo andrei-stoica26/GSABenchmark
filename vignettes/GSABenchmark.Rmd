@@ -37,7 +37,7 @@ BiocManager::install("andrei-stoica26/GSABenchmark")
 In addition to GSABenchmark, you need to install 
 [scRNAseq](https://bioconductor.org/packages/release/data/experiment/html/scRNAseq.html) 
 and 
-[scuttle](https://www.bioconductor.org/packages/release/bioc/html/scuttle.html) 
+[scater](https://bioconductor.org/packages/release/bioc/html/scater.html) 
 for this tutorial.
 
 # Dataset loading
