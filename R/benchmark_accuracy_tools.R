@@ -103,3 +103,22 @@ computeMethodMeans <- function(df, gsaMethods){
   df <- df[order(df$avg, decreasing=TRUE), ]
   return(df)
 }
+
+#' Extract gene set results from a list of summary data frames
+#'
+#' This function extracts gene set results from a list of summary data frames.
+#'
+#' @param smr List of summary data frames.
+#' @inheritParams mdsScoreSummary
+#' @param gsName Gene set name.
+#' @param nAggCols Number of columns of aggregate results in the list of
+#' summary data frames.
+#'
+#' @return A matrix of gene set summary results.
+#'
+#' @noRd
+#'
+geneSetMetrics <- function(smr, gsaMethods, gsName, nAggCols)
+    return(vapply(smr[seq(length(smr) - nAggCols)],
+                  function(x) x[gsaMethods, gsName],
+                  numeric(length(gsaMethods))))

@@ -11,8 +11,8 @@ Description: GSABenchmark is a package designed for benchmarking scRNA-seq gene
 License: MIT + file LICENSE
 Imports:
     abdiv,
-    decoupleR,
     CSOA,
+    decoupleR,
     escape,
     fabR,
     ggplot2,
@@ -20,6 +20,7 @@ Imports:
     grDevices,
     GSVA,
     hammers,
+    henna,
     liver,
     Matrix,
     MLmetrics,

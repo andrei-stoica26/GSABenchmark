@@ -8,7 +8,7 @@ NULL
 #' This function extracts running times and peak memory usage for gene set analysis
 #' methods.
 #'
-#' @inheritParams runGSAMethods
+#' @inheritParams allBenchmarkResults
 #'
 #' @return A list of two data frames, the first comprising running times in seconds,
 #' the second comprising peak memory usage in mebibytes.

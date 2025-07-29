@@ -1,3 +1,7 @@
+#' @importFrom methods is
+#'
+NULL
+
 #' Message information on gene set analysis method run
 #'
 #' This function messages or prints information on the gene set analysis method
@@ -10,9 +14,9 @@
 #' @return Messaged (default) or printed output
 #'
 messageMethod <- function(funStr, group, messageFun = message)
-  return(messageFun(paste0(str_replace(funStr,
-                                       'Run', 'Running '), ' for identity: ',
-                           group, '...')))
+    return(messageFun(paste0(str_replace(funStr,
+                                         'Run', 'Running '), ' for identity: ',
+                             group, '...')))
 
 #' Take the square root of a non-negative number or the additive inverse of the
 #' square root of the additive inverse of a negative number
@@ -27,7 +31,7 @@ messageMethod <- function(funStr, group, messageFun = message)
 #' @export
 #'
 sqrt2 <- function(x)
-  if (x >= 0) return(sqrt(x)) else return(-sqrt(-x))
+    if (x >= 0) return(sqrt(x)) else return(-sqrt(-x))
 
 #' Convert a vector to a data frame based on input row and column names
 #'
@@ -44,16 +48,20 @@ sqrt2 <- function(x)
 #'
 #' @export
 #'
-tabulateVector <- function(v, rowNames, colNames, addRowMeans=FALSE, sortByRowMeans=FALSE){
-  df <- data.frame(matrix(v, length(rowNames), length(colNames)))
-  rownames(df) <- rowNames
-  colnames(df) <- colNames
-  if(addRowMeans){
-    df$avg <- rowMeans(df)
-    if(sortByRowMeans)
-      df <- df[order(df$avg), ]
-  }
-  return(df)
+tabulateVector <- function(v,
+                           rowNames,
+                           colNames,
+                           addRowMeans=FALSE,
+                           sortByRowMeans=FALSE){
+    df <- data.frame(matrix(v, length(rowNames), length(colNames)))
+    rownames(df) <- rowNames
+    colnames(df) <- colNames
+    if(addRowMeans){
+        df$avg <- rowMeans(df)
+        if(sortByRowMeans)
+        df <- df[order(df$avg), ]
+    }
+    return(df)
 }
 
 #' Calculate the alignment between two numeric vectors
@@ -68,7 +76,7 @@ tabulateVector <- function(v, rowNames, colNames, addRowMeans=FALSE, sortByRowMe
 #' @export
 #'
 alignmentScore <- function(x, y)
-  return(sum(x * y) / sum(sort(x) * sort(y)))
+    return(sum(x * y) / sum(sort(x) * sort(y)))
 
 #' Calculate the rank alignment between two numeric vectors
 #'
@@ -82,9 +90,9 @@ alignmentScore <- function(x, y)
 #' @export
 #'
 rankAlignmentScore <- function(x, y){
-  x <- safeMinmax(rank(x), 1 / length(x))
-  y <- safeMinmax(rank(y), 1 / length(y))
-  return(alignmentScore(x, y))
+    x <- safeMinmax(rank(x), 1 / length(x))
+    y <- safeMinmax(rank(y), 1 / length(y))
+    return(alignmentScore(x, y))
 }
 
 
@@ -102,7 +110,7 @@ rankAlignmentScore <- function(x, y){
 #' @export
 #'
 safeMinmax <- function(scores, safeVal = 0){
-  if(length(unique(scores)) < 2)
-    return(rep(safeVal, length(scores)))
-  return(liver::minmax(scores))
+    if(length(unique(scores)) < 2)
+        return(rep(safeVal, length(scores)))
+    return(liver::minmax(scores))
 }

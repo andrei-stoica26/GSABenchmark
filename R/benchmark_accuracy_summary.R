@@ -57,31 +57,27 @@ mdsScoreSummary <- function(scObj,
                             boundarySmr,
                             mccSmr,
                             globalSmr){
+
     mdsScoreSmr <- lapply(geneSetNames, function(gsName){
-        setDF <- metadataDF(scObj)[, joinCharCombs(gsaMethods, gsName)]
-        distMat <- as.matrix(stats::dist(base::t(setDF)))
-        mdsMat <- as.data.frame(cmdscale(distMat))
+    setDF <- metadataDF(scObj)[, joinCharCombs(gsaMethods, gsName)]
+    distMat <- as.matrix(stats::dist(base::t(setDF)))
+    mdsMat <- as.data.frame(cmdscale(distMat))
 
-        colnames(mdsMat) <- c('x', 'y')
-        rownames(mdsMat) <- vapply(str_split(rownames(mdsMat), '_'),
-                                   function(v) v[[1]], character(1))
+    colnames(mdsMat) <- c('x', 'y')
+    rownames(mdsMat) <- vapply(str_split(rownames(mdsMat), '_'),
+                               function(v) v[[1]], character(1))
 
-        summaryMat <- do.call(cbind, list(
-            vapply(boundarySmr[seq(length(boundarySmr) - 2)],
-                   function(x) x[gsaMethods, gsName],
-                   numeric(length(gsaMethods))),
-            vapply(mccSmr[seq(length(mccSmr))],
-                   function(x) x[gsaMethods, gsName],
-                   numeric(length(gsaMethods))),
-            vapply(globalSmr[seq(length(globalSmr) - 2)],
-                   function(x) x[gsaMethods, gsName],
-                   numeric(length(gsaMethods)))
+    summaryMat <- do.call(cbind, list(
+        geneSetMetrics(boundarySmr, gsaMethods, gsName, 2),
+        geneSetMetrics(mccSmr, gsaMethods, gsName, 0),
+        geneSetMetrics(globalSmr, gsaMethods, gsName, 2)
         ))
 
-        mdsMat$Score <- rowMeans(summaryMat)
-        mdsMat <- mdsMat[order(mdsMat$Score, decreasing=TRUE), ]
-        return(mdsMat)
+    mdsMat$Score <- rowMeans(summaryMat)
+    mdsMat <- mdsMat[order(mdsMat$Score, decreasing=TRUE), ]
+    return(mdsMat)
     })
+
     names(mdsScoreSmr) <- geneSetNames
     return(mdsScoreSmr)
 }
