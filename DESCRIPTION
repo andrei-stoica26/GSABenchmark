@@ -22,6 +22,7 @@ Imports:
     henna,
     Matrix,
     MLmetrics,
+    methods,
     mltools,
     pagoda2,
     peakRAM,
