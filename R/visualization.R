@@ -22,7 +22,8 @@ NULL
 #'
 scorePlot <- function(scoreDF, title, xLabel = 'Score', legendTitle = 'Gene set'){
     scoreDF <- scoreDF[order(scoreDF$avg), ]
-    longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF)]))
+    longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF),
+                                                drop=FALSE]))
     pal <- rainbow(length(colnames(scoreDF)))
     p <- ggplot(data=longDF) +
         geom_point(mapping=aes(x=value, y=Var1, color=Var2), size=2.5) +
@@ -31,7 +32,6 @@ scorePlot <- function(scoreDF, title, xLabel = 'Score', legendTitle = 'Gene set'
         theme(plot.title = element_text(hjust = 0.5))
     return(p)
 }
-
 
 #' Plot a data frame consisting of gene set analysis method running times
 #
