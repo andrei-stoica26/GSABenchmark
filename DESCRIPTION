@@ -10,7 +10,6 @@ Description: GSABenchmark is a package designed for benchmarking scRNA-seq gene
     15 gene set analysis methods. 
 License: MIT + file LICENSE
 Imports:
-    abdiv,
     CSOA,
     decoupleR,
     escape,
@@ -21,7 +20,6 @@ Imports:
     GSVA,
     hammers,
     henna,
-    liver,
     Matrix,
     MLmetrics,
     mltools,

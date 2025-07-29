@@ -23,6 +23,9 @@ efficiencyBenchmark(
 \item{gsaMethods}{Character vector of gene set analysis methods.}
 
 \item{geneSetNames}{The names of the gene sets.}
+
+\item{checkLabels}{Whether to check that \code{geneSetNames} is a subset of
+the values in \code{labelCol}.}
 }
 \value{
 A list of two data frames, the first comprising running times in seconds,

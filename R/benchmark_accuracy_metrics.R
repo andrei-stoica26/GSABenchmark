@@ -1,4 +1,3 @@
-#' @importFrom abdiv euclidean
 #' @importFrom MLmetrics AUC LogLoss PRAUC
 #' @importFrom mltools mcc
 #'
@@ -122,7 +121,7 @@ computeGlobalMetrics <- function(df, normSilDF = NULL, dimMat = NULL, maxDist = 
       if (length(intersect(scoreCM, NaN)))
         resDF$centrality <- 0 else{
           silCM <- centerOfMass(dimMat, sil[rownames(dimMat), 1])
-          resDF$centrality <- 1 - euclidean(scoreCM, silCM) / maxDist
+          resDF$centrality <- proximity(scoreCM, silCM, maxDist)
       }
     }
   }
