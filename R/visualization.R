@@ -131,6 +131,9 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL){
   p3 <- benchmarkPlots(smr$global, titleSuffix)
   p4 <- list(timePlot(smr$efficiency, titleSuffix),
              memoryPlot(smr$efficiency, titleSuffix))
-  p <- c(p1, p2, p3, p4)
+  p5 <- mapply(function(mdsDF, gsName)
+      densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes')),
+      smr$MDS, names(smr$MDS), SIMPLIFY = FALSE)
+  p <- c(p1, p2, p3, p4, p5)
   return(p)
 }

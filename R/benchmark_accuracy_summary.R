@@ -59,13 +59,13 @@ mdsScoreSummary <- function(scObj,
                             globalSmr){
 
     mdsScoreSmr <- lapply(geneSetNames, function(gsName){
-    setDF <- metadataDF(scObj)[, joinCharCombs(gsaMethods, gsName)]
+    setDF <- metadataDF(scObj)[, paste0(gsaMethods, '_', gsName)]
+    colnames(setDF) <- gsaMethods
+
     distMat <- as.matrix(stats::dist(base::t(setDF)))
     mdsMat <- as.data.frame(cmdscale(distMat))
 
     colnames(mdsMat) <- c('x', 'y')
-    rownames(mdsMat) <- vapply(str_split(rownames(mdsMat), '_'),
-                               function(v) v[[1]], character(1))
 
     summaryMat <- do.call(cbind, list(
         geneSetMetrics(boundarySmr, gsaMethods, gsName, 2),
@@ -74,6 +74,7 @@ mdsScoreSummary <- function(scObj,
         ))
 
     mdsMat$Score <- rowMeans(summaryMat)
+    mdsMat$nn <- nearestNeighbors(distMat)
     mdsMat <- mdsMat[order(mdsMat$Score, decreasing=TRUE), ]
     return(mdsMat)
     })
