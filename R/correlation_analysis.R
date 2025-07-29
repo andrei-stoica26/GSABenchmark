@@ -1,8 +1,3 @@
-#' @importFrom stats cmdscale cor dist setNames
-#'
-NULL
-
-
 #' Calculate correlation matrix for method results
 #'
 #' This function calculates the correlation matrix for all the methods for an
@@ -18,11 +13,11 @@ NULL
 #' @export
 #'
 methodsCor <- function(scObj, gsaMethods, scoreCols = gsaMethods, corMethod = 'pearson'){
-  m <- as.matrix(metadataDF(scObj)[, scoreCols])
-  corMat <- cor(m, method = corMethod)
-  rownames(corMat) <- gsaMethods
-  colnames(corMat) <- gsaMethods
-  return(corMat)
+    m <- as.matrix(metadataDF(scObj)[, scoreCols])
+    corMat <- cor(m, method = corMethod)
+    rownames(corMat) <- gsaMethods
+    colnames(corMat) <- gsaMethods
+    return(corMat)
 }
 
 #' Calculate correlation matrix for method results for multiple identity classes
@@ -39,6 +34,6 @@ methodsCor <- function(scObj, gsaMethods, scoreCols = gsaMethods, corMethod = 'p
 #' @export
 #'
 allCor <- function(scObj, gsaMethods, scoreColList){
-  corMats <- lapply(scoreColList, function(x) methodsCor(scObj, gsaMethods, x))
-  return(Reduce(`+`, corMats) / length(corMats))
+    corMats <- lapply(scoreColList, function(x) methodsCor(scObj, gsaMethods, x))
+    return(Reduce(`+`, corMats) / length(corMats))
 }

@@ -21,15 +21,15 @@ NULL
 #' @export
 #'
 scorePlot <- function(scoreDF, title, xLabel = 'Score', legendTitle = 'Gene set'){
-  scoreDF <- scoreDF[order(scoreDF$avg), ]
-  longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF)]))
-  pal <- rainbow(length(colnames(scoreDF)))
-  p <- ggplot(data=longDF) +
-    geom_point(mapping=aes(x=value, y=Var1, color=Var2), size=2.5) +
-    labs(x=xLabel, y ='Method', color=legendTitle, title=title) +
-    theme_minimal() + scale_color_manual(values=pal, breaks=colnames(scoreDF)) +
-    theme(plot.title = element_text(hjust = 0.5))
-  return(p)
+    scoreDF <- scoreDF[order(scoreDF$avg), ]
+    longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF)]))
+    pal <- rainbow(length(colnames(scoreDF)))
+    p <- ggplot(data=longDF) +
+        geom_point(mapping=aes(x=value, y=Var1, color=Var2), size=2.5) +
+        labs(x=xLabel, y ='Method', color=legendTitle, title=title) +
+        theme_minimal() + scale_color_manual(values=pal, breaks=colnames(scoreDF)) +
+        theme(plot.title = element_text(hjust = 0.5))
+    return(p)
 }
 
 
@@ -47,9 +47,9 @@ scorePlot <- function(scoreDF, title, xLabel = 'Score', legendTitle = 'Gene set'
 #' @export
 #'
 timePlot <- function(efBenchmark, titleSuffix = NULL){
-  title <- paste0('Running times', titleSuffix)
-  p <- scorePlot(efBenchmark$time, title, 'Running time (s)')
-  return(p)
+    title <- paste0('Running times', titleSuffix)
+    p <- scorePlot(efBenchmark$time, title, 'Running time (s)')
+    return(p)
 }
 
 #' Plot a data frame consisting of gene set analysis method peak memory usage
@@ -66,9 +66,9 @@ timePlot <- function(efBenchmark, titleSuffix = NULL){
 #' @export
 #'
 memoryPlot <- function(efBenchmark, titleSuffix = NULL){
-  title <- paste0('Peak memory usage', titleSuffix)
-  p <- scorePlot(efBenchmark$space, title, 'Peak memory usage (MiB)')
-  return(p)
+    title <- paste0('Peak memory usage', titleSuffix)
+    p <- scorePlot(efBenchmark$space, title, 'Peak memory usage (MiB)')
+    return(p)
 }
 
 #' Plot a list of data frame scores
@@ -84,33 +84,33 @@ memoryPlot <- function(efBenchmark, titleSuffix = NULL){
 #' @export
 #'
 benchmarkPlots <- function(smr, titleSuffix = NULL){
-  boundaryMetrics <- c('Sensitivity', 'Specificity', 'Precision', 'Accuracy', 'Size proximity',
-                       'Score coverage')
-  globalMetrics <- c('AUROC', 'PRAUC', 'Label rank alignment', 'Silhouette rank alignment', 'Centrality')
+    boundaryMetrics <- c('Sensitivity', 'Specificity', 'Precision',
+                         'Accuracy', 'Size proximity','Score coverage')
+    globalMetrics <- c('AUROC', 'PRAUC', 'Label rank alignment',
+                       'Silhouette rank alignment', 'Centrality')
 
-  boundarySummaries <- c('Class boundary determination gene set summary',
-                         'Class boundary determination metric summary')
-  globalSummaries <- c('Global evaluation gene set summary',
-                        'Global evaluation metric summary')
+    boundarySummaries <- c('Class boundary determination gene set summary',
+                           'Class boundary determination metric summary')
+    globalSummaries <- c('Global evaluation gene set summary',
+                         'Global evaluation metric summary')
 
+    if ('sensitivity' %in% names(smr)){
+        v <- c(boundaryMetrics, boundarySummaries)
+        names(v) <- c('sensitivity', 'specificity', 'precision', 'accuracy',
+                      'sizeProximity','scoreCoverage', 'avg', 'metricSummary')
+    } else{
+        v <- c(globalMetrics, globalSummaries)
+        names(v) <- c('AUROC', 'PRAUC', 'labRankAlignment',
+                      'silRankAlignment', 'centrality',
+                      'avg', 'metricSummary')
+    }
 
+    if(!is.null(titleSuffix))
+        v <- setNames(paste0(v, titleSuffix), names(v))
 
-  if ('sensitivity' %in% names(smr)){
-    v <- c(boundaryMetrics, boundarySummaries)
-    names(v) <- c('sensitivity', 'specificity', 'precision', 'accuracy',
-                  'sizeProximity','scoreCoverage', 'avg', 'metricSummary')
-  } else{
-    v <- c(globalMetrics, globalSummaries)
-    names(v) <- c('AUROC', 'PRAUC', 'labRankAlignment', 'silRankAlignment',
-                  'centrality', 'avg', 'metricSummary')
-  }
-
-  if(!is.null(titleSuffix))
-    v <- setNames(paste0(v, titleSuffix), names(v))
-
-  plots <- lapply(seq_len(length(smr)), function(i) scorePlot(smr[[i]], v[names(smr)[i]]))
-  plots[[length(plots)]] <- plots[[length(plots)]] + labs(color='Metric')
-  return(plots)
+    plots <- lapply(seq_len(length(smr)), function(i) scorePlot(smr[[i]], v[names(smr)[i]]))
+    plots[[length(plots)]] <- plots[[length(plots)]] + labs(color='Metric')
+    return(plots)
 }
 
 #' Plot the complete list of benchmark summaries
@@ -125,15 +125,17 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
 #' @export
 #'
 allBenchmarkPlots <- function(smr, titleSuffix = NULL){
-  p1 <- benchmarkPlots(smr$boundary, titleSuffix)
-  p2 <- list(scorePlot(smr$MCC$boundary, paste0('MCC with boundary threshold', titleSuffix)),
-             scorePlot(smr$MCC$direct, paste0('Comprehensive MCC', titleSuffix)))
-  p3 <- benchmarkPlots(smr$global, titleSuffix)
-  p4 <- list(timePlot(smr$efficiency, titleSuffix),
-             memoryPlot(smr$efficiency, titleSuffix))
-  p5 <- mapply(function(mdsDF, gsName)
-      densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes')),
-      smr$MDS, names(smr$MDS), SIMPLIFY = FALSE)
-  p <- c(p1, p2, p3, p4, p5)
-  return(p)
+    p1 <- benchmarkPlots(smr$boundary, titleSuffix)
+    p2 <- list(scorePlot(smr$MCC$boundary,
+                         paste0('MCC with boundary threshold', titleSuffix)),
+               scorePlot(smr$MCC$direct,
+                         paste0('Comprehensive MCC', titleSuffix)))
+    p3 <- benchmarkPlots(smr$global, titleSuffix)
+    p4 <- list(timePlot(smr$efficiency, titleSuffix),
+               memoryPlot(smr$efficiency, titleSuffix))
+    p5 <- mapply(function(mdsDF, gsName)
+        densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes')),
+        smr$MDS, names(smr$MDS), SIMPLIFY = FALSE)
+    p <- c(p1, p2, p3, p4, p5)
+    return(p)
 }

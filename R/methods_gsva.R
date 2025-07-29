@@ -17,18 +17,18 @@ NULL
 #'
 runGSVAMethod <- function(scObj, genes, method, colStr = method,
                           invert = FALSE, filter = FALSE, ...){
-  if(filter)
-      mat <- scExpMat(scObj, 'data', genes) else
-          mat <- scExpMat(scObj, 'data')
+    if(filter)
+        mat <- scExpMat(scObj, 'data', genes) else
+            mat <- scExpMat(scObj, 'data')
 
-  geneSet <- setNames(list(genes), 'sigScore')
-  gsvaPar <- do.call(paste0(tolower(method), 'Param'), list(mat, geneSet, ...))
-  scores <- gsva(gsvaPar)[1, ]
-  scores <- safeMinmax(scores)
-  if (invert)
-    scores <- 1 - scores
-  scObj[[colStr]] <- scores
-  return(scObj)
+    geneSet <- setNames(list(genes), 'sigScore')
+    gsvaPar <- do.call(paste0(tolower(method), 'Param'), list(mat, geneSet, ...))
+    scores <- gsva(gsvaPar)[1, ]
+    scores <- safeMinmax(scores)
+    if (invert)
+        scores <- 1 - scores
+    scObj[[colStr]] <- scores
+    return(scObj)
 }
 
 #' Run GSVA
@@ -44,7 +44,7 @@ runGSVAMethod <- function(scObj, genes, method, colStr = method,
 #' @export
 #'
 runGSVA <- function(scObj, genes, colStr = 'GSVA', ...)
-  return(runGSVAMethod(scObj, genes, 'GSVA', colStr, ...))
+    return(runGSVAMethod(scObj, genes, 'GSVA', colStr, ...))
 
 #' Run PLAGE
 #'
@@ -59,7 +59,7 @@ runGSVA <- function(scObj, genes, colStr = 'GSVA', ...)
 #' @export
 #'
 runPLAGE <- function(scObj, genes, colStr = 'PLAGE', ...)
-  return(runGSVAMethod(scObj, genes, 'PLAGE', colStr, TRUE, TRUE, ...))
+    return(runGSVAMethod(scObj, genes, 'PLAGE', colStr, TRUE, TRUE, ...))
 
 #' Run Zscore
 #'
@@ -74,4 +74,4 @@ runPLAGE <- function(scObj, genes, colStr = 'PLAGE', ...)
 #' @export
 #'
 runZscore <- function(scObj, genes, colStr = 'Zscore', ...)
-  return(runGSVAMethod(scObj, genes, 'Zscore', colStr, FALSE, TRUE, ...))
+    return(runGSVAMethod(scObj, genes, 'Zscore', colStr, FALSE, TRUE, ...))

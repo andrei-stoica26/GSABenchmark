@@ -21,11 +21,11 @@ NULL
 #' @export
 #'
 extractCellScores <- function(scObj, labelCol, scoreCol, label){
-  df <- metadataDF(scObj)[, c(labelCol, scoreCol)]
-  colnames(df)[1] <- 'label'
-  df$label <- as.integer(df[, 1] %in% label)
-  df <- df[order(df[, scoreCol], decreasing=TRUE),]
-  return(df)
+    df <- metadataDF(scObj)[, c(labelCol, scoreCol)]
+    colnames(df)[1] <- 'label'
+    df$label <- as.integer(df[, 1] %in% label)
+    df <- df[order(df[, scoreCol], decreasing=TRUE),]
+    return(df)
 }
 
 #' Condense repeated GSA method scores
@@ -38,12 +38,12 @@ extractCellScores <- function(scObj, labelCol, scoreCol, label){
 #' @return A condensed scores data frame
 #'
 condenseRepeatedScores <- function(df){
-  denseDF <- plyr::count(df[, 2])
-  denseDF$label <- sapply(denseDF[, 1], function(score) sum(df[, 1][which(df[, 2] == score)]))
-  denseDF <- denseDF[, c(3, 1, 2)]
-  denseDF <- denseDF[order(denseDF[, 2], decreasing=TRUE), ]
-  colnames(denseDF)[2] <- c(colnames(df)[2])
-  return(denseDF)
+    denseDF <- plyr::count(df[, 2])
+    denseDF$label <- sapply(denseDF[, 1], function(score) sum(df[, 1][which(df[, 2] == score)]))
+    denseDF <- denseDF[, c(3, 1, 2)]
+    denseDF <- denseDF[order(denseDF[, 2], decreasing=TRUE), ]
+    colnames(denseDF)[2] <- c(colnames(df)[2])
+    return(denseDF)
 }
 
 #' Add overall scores to a benchmark data frame

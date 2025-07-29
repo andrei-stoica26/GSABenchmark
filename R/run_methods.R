@@ -42,6 +42,7 @@ runGSAMethods <- function(scObj, labelCol, geneSets, gsaMethods, geneSetNames){
 #' @export
 #'
 supportedMethods <- function()
-  return(c('AUCell', 'CSOA', 'GSVA', 'MDT', 'MLM', 'ORA', 'Pagoda2', 'PLAGE',
-           'Singscore', 'SiPSiC', 'ssGSEA', 'UCell', 'UDT', 'VAM', 'Zscore'))
+    return(c('AUCell', 'CSOA', 'GSVA', 'MDT', 'MLM', 'ORA', 'Pagoda2',
+             'PLAGE', 'Singscore', 'SiPSiC', 'ssGSEA', 'UCell', 'UDT',
+             'VAM', 'Zscore'))
 

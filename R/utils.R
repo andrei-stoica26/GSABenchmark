@@ -1,4 +1,5 @@
 #' @importFrom methods is
+#' @importFrom stats cmdscale cor dist setNames
 #'
 NULL
 

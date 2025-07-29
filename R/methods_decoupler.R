@@ -19,11 +19,13 @@ runDecoupleRMethod <- function(scObj, genes, method,
                                colStr = method, ...){
     mat <- scExpMat(scObj, 'data')
     scores <- do.call(paste0('run_', tolower(method)),
-                      list(mat, network = data.frame(source='geneSet',
-                                                     target=genes,
-                                                     mor=1, ...)))$score
-  scObj[[colStr]] <- safeMinmax(scores)
-  return(scObj)
+                      list(mat, network=data.frame(source='geneSet',
+                                                   target=genes,
+                                                   mor=1,
+                                                   ...)))$score
+    names(scores) <- colnames(mat)
+    scObj[[colStr]] <- safeMinmax(scores)
+    return(scObj)
 }
 
 #' Run MDT using decoupleR
@@ -39,7 +41,7 @@ runDecoupleRMethod <- function(scObj, genes, method,
 #' @export
 #'
 runMDT <- function(scObj, genes, colStr = 'MDT', ...)
-  return(runDecoupleRMethod(scObj, genes, 'MDT', colStr, ...))
+    return(runDecoupleRMethod(scObj, genes, 'MDT', colStr, ...))
 
 #' Run MLM using decoupleR
 #'
@@ -54,7 +56,7 @@ runMDT <- function(scObj, genes, colStr = 'MDT', ...)
 #' @export
 #'
 runMLM <- function(scObj, genes, colStr = 'MLM', ...)
-  return(runDecoupleRMethod(scObj, genes, 'MLM', colStr, ...))
+    return(runDecoupleRMethod(scObj, genes, 'MLM', colStr, ...))
 
 #' Run ORA using decoupleR
 #'
@@ -68,7 +70,7 @@ runMLM <- function(scObj, genes, colStr = 'MLM', ...)
 #' @export
 #'
 runORA <- function(scObj, genes, colStr = 'ORA', ...)
-  return(runDecoupleRMethod(scObj, genes, 'ORA', colStr, ...))
+    return(runDecoupleRMethod(scObj, genes, 'ORA', colStr, ...))
 
 #' Run UDT using decoupleR
 #'
@@ -82,5 +84,5 @@ runORA <- function(scObj, genes, colStr = 'ORA', ...)
 #' @export
 #'
 runUDT <- function(scObj, genes, colStr = 'UDT', ...)
-  return(runDecoupleRMethod(scObj, genes, 'UDT', colStr, ...))
+    return(runDecoupleRMethod(scObj, genes, 'UDT', colStr, ...))
 
