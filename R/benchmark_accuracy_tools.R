@@ -57,9 +57,9 @@ condenseRepeatedScores <- function(df){
 #'
 #'
 computeMetricMeans <- function(df, startCol){
-  df$avg <- rowMeans(df[, seq(startCol, ncol(df))])
-  df <- df[order(df$avg, decreasing=TRUE),]
-  return(df)
+    df$avg <- rowMeans(df[, seq(startCol, ncol(df))])
+    df <- df[order(df$avg, decreasing=TRUE),]
+    return(df)
 }
 
 #' Extends summary by addding overall results for each metric
@@ -76,12 +76,12 @@ computeMetricMeans <- function(df, startCol){
 #' results obtained for each metric.
 #'
 addMetricSummary <- function(smr, metrics, gsaMethods){
-  names(smr) <- metrics
-  df <- data.frame(lapply(smr, function(x) x[gsaMethods, ]$avg))
-  rownames(df) <- gsaMethods
-  df <- df[order(df$avg, decreasing=TRUE), ]
-  smr <- c(smr, list(metricSummary=df))
-  return(smr)
+    names(smr) <- metrics
+    df <- data.frame(lapply(smr, function(x) x[gsaMethods, ]$avg))
+    rownames(df) <- gsaMethods
+    df <- df[order(df$avg, decreasing=TRUE), ]
+    smr <- c(smr, list(metricSummary=df))
+    return(smr)
 }
 
 #' Add means for metric results data frame
@@ -98,10 +98,10 @@ addMetricSummary <- function(smr, metrics, gsaMethods){
 #' @export
 #'
 computeMethodMeans <- function(df, gsaMethods){
-  rownames(df) <- gsaMethods
-  df$avg <- rowMeans(df)
-  df <- df[order(df$avg, decreasing=TRUE), ]
-  return(df)
+    rownames(df) <- gsaMethods
+    df$avg <- rowMeans(df)
+    df <- df[order(df$avg, decreasing=TRUE), ]
+    return(df)
 }
 
 #' Extract gene set results from a list of summary data frames

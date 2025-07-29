@@ -16,38 +16,38 @@ NULL
 #' @export
 #'
 computeBoundaryMetrics <- function(df){
-  denseDF <- condenseRepeatedScores(df)
+    denseDF <- condenseRepeatedScores(df)
 
-  labelSumsPerScore <- denseDF[, 1]
-  scoreThresholds <- denseDF[, 2]
-  frequencies <- denseDF[, 3]
-  nThresholds <- nrow(denseDF)
+    labelSumsPerScore <- denseDF[, 1]
+    scoreThresholds <- denseDF[, 2]
+    frequencies <- denseDF[, 3]
+    nThresholds <- nrow(denseDF)
 
-  Total <- nrow(df)
-  TP <- cumsum(labelSumsPerScore)
-  FP <- cumsum(frequencies) - TP
+    Total <- nrow(df)
+    TP <- cumsum(labelSumsPerScore)
+    FP <- cumsum(frequencies) - TP
 
-  True <- TP[nThresholds]
-  False <- Total - True
-  TN <- False - FP
+    True <- TP[nThresholds]
+    False <- Total - True
+    TN <- False - FP
 
-  Positive <- TP + FP
-  Largest <- max(True, False)
+    Positive <- TP + FP
+    Largest <- max(True, False)
 
-  df$sensitivity <- rep(TP / True, frequencies)
-  df$specificity <- rep(TN / False, frequencies)
-  df$precision <- rep(TP / Positive, frequencies)
-  df$accuracy <- rep((TP + TN) / Total, frequencies)
-  df$sizeProximity <- rep(1 - abs(Positive - True) / Largest, frequencies)
+    df$sensitivity <- rep(TP / True, frequencies)
+    df$specificity <- rep(TN / False, frequencies)
+    df$precision <- rep(TP / Positive, frequencies)
+    df$accuracy <- rep((TP + TN) / Total, frequencies)
+    df$sizeProximity <- rep(1 - abs(Positive - True) / Largest, frequencies)
 
-  score <- cumsum(scoreThresholds * labelSumsPerScore)
-  totalScore <- sum(df[, 2])
-  if (totalScore > 0)
-    df$scoreCoverage <- rep(score / totalScore, frequencies) else
-      df$scoreCoverage <- 0
+    score <- cumsum(scoreThresholds * labelSumsPerScore)
+    totalScore <- sum(df[, 2])
+    if (totalScore > 0)
+        df$scoreCoverage <- rep(score / totalScore, frequencies) else
+            df$scoreCoverage <- 0
 
-  df <- computeMetricMeans(df, 3)
-  return(df)
+    df <- computeMetricMeans(df, 3)
+    return(df)
 }
 
 #' Compute the MCC at each threshold
@@ -63,32 +63,32 @@ computeBoundaryMetrics <- function(df){
 #' @export
 #'
 computeMCCMetric <- function(df){
-  denseDF <- condenseRepeatedScores(df)
+    denseDF <- condenseRepeatedScores(df)
 
-  labelSumsPerScore <- denseDF[, 1]
-  scoreThresholds <- denseDF[, 2]
-  frequencies <- denseDF[, 3]
-  nThresholds <- nrow(denseDF)
+    labelSumsPerScore <- denseDF[, 1]
+    scoreThresholds <- denseDF[, 2]
+    frequencies <- denseDF[, 3]
+    nThresholds <- nrow(denseDF)
 
-  Total <- nrow(df)
-  Positives <- cumsum(frequencies)
-  Negatives <- Total - Positives
-  TP <- cumsum(labelSumsPerScore)
-  FP <- Positives - TP
+    Total <- nrow(df)
+    Positives <- cumsum(frequencies)
+    Negatives <- Total - Positives
+    TP <- cumsum(labelSumsPerScore)
+    FP <- Positives - TP
 
-  True <- TP[nThresholds]
-  False <- Total - True
-  classGeomMean <- sqrt(True * False)
+    True <- TP[nThresholds]
+    False <- Total - True
+    classGeomMean <- sqrt(True * False)
 
-  denseDF$x <- TP * False - FP * True
-  denseDF$y <- classGeomMean * sqrt(Positives * Negatives)
-  denseDF$y[nrow(denseDF)] <- -1
+    denseDF$x <- TP * False - FP * True
+    denseDF$y <- classGeomMean * sqrt(Positives * Negatives)
+    denseDF$y[nrow(denseDF)] <- -1
 
-  thresholdMCC <- denseDF$x / denseDF$y
-  df$MCC <- rep(thresholdMCC, frequencies)
-  df <- df[order(df$MCC, decreasing=TRUE),]
+    thresholdMCC <- denseDF$x / denseDF$y
+    df$MCC <- rep(thresholdMCC, frequencies)
+    df <- df[order(df$MCC, decreasing=TRUE),]
 
-  return(df)
+    return(df)
 }
 
 
@@ -109,24 +109,24 @@ computeMCCMetric <- function(df){
 #' @export
 #'
 computeGlobalMetrics <- function(df, normSilDF = NULL, dimMat = NULL, maxDist = NULL){
-  resDF <- data.frame(AUROC = AUC(df[, 2], df[, 1]),
-                      PRAUC = PRAUC(df[, 2], df[, 1]),
-                      labRankAlignment = rankAlignmentScore(df[, 1], df[, 2]))
-  if(!is.null(normSilDF)){
-    label <- str_split(colnames(df)[2], '_')[[1]][2]
-    sil <- normSilDF[label]
-    resDF$silRankAlignment <- rankAlignmentScore(sil[rownames(df), 1], df[, 2])
-    if (!is.null(dimMat) & !is.null(maxDist)){
-      scoreCM <- centerOfMass(dimMat, df[rownames(dimMat), 2])
-      if (length(intersect(scoreCM, NaN)))
-        resDF$centrality <- 0 else{
-          silCM <- centerOfMass(dimMat, sil[rownames(dimMat), 1])
-          resDF$centrality <- proximity(scoreCM, silCM, maxDist)
-      }
+    resDF <- data.frame(AUROC = AUC(df[, 2], df[, 1]),
+                        PRAUC = PRAUC(df[, 2], df[, 1]),
+                        labRankAlignment = rankAlignmentScore(df[, 1], df[, 2]))
+    if(!is.null(normSilDF)){
+        label <- str_split(colnames(df)[2], '_')[[1]][2]
+        sil <- normSilDF[label]
+        resDF$silRankAlignment <- rankAlignmentScore(sil[rownames(df), 1], df[, 2])
+        if (!is.null(dimMat) & !is.null(maxDist)){
+            scoreCM <- centerOfMass(dimMat, df[rownames(dimMat), 2])
+        if (length(intersect(scoreCM, NaN)))
+            resDF$centrality <- 0 else{
+                silCM <- centerOfMass(dimMat, sil[rownames(dimMat), 1])
+            resDF$centrality <- proximity(scoreCM, silCM, maxDist)
+            }
+        }
     }
-  }
-  resDF <- computeMetricMeans(resDF, 1)
-  return(resDF)
+    resDF <- computeMetricMeans(resDF, 1)
+    return(resDF)
 }
 
 #' Compute the Matthews correlation coefficient
@@ -144,8 +144,8 @@ computeGlobalMetrics <- function(df, normSilDF = NULL, dimMat = NULL, maxDist = 
 #' @export
 #'
 computeMCC <- function(boundaryResDF, threshold = boundaryResDF[1, 2]){
-  boundaryResDF <- boundaryResDF[, c(1, 2)]
-  boundaryResDF$prediction <- 0
-  boundaryResDF$prediction[which(boundaryResDF[, 2] >= threshold)] <- 1
-  return(mltools::mcc(boundaryResDF[, 1], boundaryResDF[, 3]))
+    boundaryResDF <- boundaryResDF[, c(1, 2)]
+    boundaryResDF$prediction <- 0
+    boundaryResDF$prediction[which(boundaryResDF[, 2] >= threshold)] <- 1
+    return(mltools::mcc(boundaryResDF[, 1], boundaryResDF[, 3]))
 }

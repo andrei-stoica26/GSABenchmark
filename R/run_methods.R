@@ -3,7 +3,6 @@
 #'
 NULL
 
-
 #' Run gene set analysis methods
 #'
 #' This function runs the gene set analysis methods.
