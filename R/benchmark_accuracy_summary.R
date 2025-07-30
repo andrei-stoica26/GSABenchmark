@@ -62,7 +62,7 @@ mdsScoreSummary <- function(scObj,
     setDF <- metadataDF(scObj)[, paste0(gsaMethods, '_', gsName)]
     colnames(setDF) <- gsaMethods
 
-    distMat <- as.matrix(stats::dist(base::t(setDF)))
+    distMat <- (1 - cor(setDF, method='spearman')) / 2
     mdsMat <- as.data.frame(cmdscale(distMat))
 
     colnames(mdsMat) <- c('x', 'y')
