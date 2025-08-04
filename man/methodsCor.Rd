@@ -20,5 +20,5 @@ A correlation matrix
 }
 \description{
 This function calculates the correlation matrix for all the methods for an
-identity class
+identity class.
 }

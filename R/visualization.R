@@ -119,12 +119,13 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
 #'
 #' @param smr Complete summary list generated with allBenchmarkResults.
 #' @inheritParams timePlot
+#' @param Additional arguments passed to \code{henna::densityPlot}.
 #'
 #' @return A list of ggplot objects
 #'
 #' @export
 #'
-allBenchmarkPlots <- function(smr, titleSuffix = NULL){
+allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
     p1 <- benchmarkPlots(smr$boundary, titleSuffix)
     p2 <- list(scorePlot(smr$MCC$boundary,
                          paste0('MCC with boundary threshold', titleSuffix)),
@@ -134,7 +135,7 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL){
     p4 <- list(timePlot(smr$efficiency, titleSuffix),
                memoryPlot(smr$efficiency, titleSuffix))
     p5 <- mapply(function(mdsDF, gsName)
-        densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes')),
+        densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes', ...)),
         smr$MDS, names(smr$MDS), SIMPLIFY = FALSE)
     p <- c(p1, p2, p3, p4, p5)
     return(p)

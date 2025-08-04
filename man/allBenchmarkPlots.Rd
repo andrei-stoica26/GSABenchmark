@@ -4,12 +4,14 @@
 \alias{allBenchmarkPlots}
 \title{Plot the complete list of benchmark summaries}
 \usage{
-allBenchmarkPlots(smr, titleSuffix = NULL)
+allBenchmarkPlots(smr, titleSuffix = NULL, ...)
 }
 \arguments{
 \item{smr}{Complete summary list generated with allBenchmarkResults.}
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title}
+
+\item{Additional}{arguments passed to \code{henna::densityPlot}.}
 }
 \value{
 A list of ggplot objects

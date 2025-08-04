@@ -12,12 +12,12 @@ allCor(scObj, gsaMethods, scoreColList)
 
 \item{gsaMethods}{Gene set analysis methods.}
 
-\item{scoreColList}{List of equally-sized character vectors}
+\item{scoreColList}{List of equally-sized character vectors.}
 }
 \value{
-A correlation matrix
+A correlation matrix.
 }
 \description{
 This function gets the mean correlation matrix for gene set analysis method
-results for multiple identity classes and Seurat objects
+results for multiple identity classes and Seurat objects.
 }

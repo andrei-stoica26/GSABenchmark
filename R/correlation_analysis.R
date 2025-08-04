@@ -1,7 +1,7 @@
 #' Calculate correlation matrix for method results
 #'
 #' This function calculates the correlation matrix for all the methods for an
-#' identity class
+#' identity class.
 #'
 #' @inheritParams extractCellScores
 #' @param gsaMethods Gene set analysis methods.
@@ -24,12 +24,12 @@ methodsCor <- function(scObj, gsaMethods, scoreCols = gsaMethods, corMethod = 'p
 #' and Seurat objects
 #'
 #' This function gets the mean correlation matrix for gene set analysis method
-#' results for multiple identity classes and Seurat objects
+#' results for multiple identity classes and Seurat objects.
 #'
 #' @inheritParams methodsCor
-#' @param scoreColList List of equally-sized character vectors
+#' @param scoreColList List of equally-sized character vectors.
 #'
-#' @return A correlation matrix
+#' @return A correlation matrix.
 #'
 #' @export
 #'
