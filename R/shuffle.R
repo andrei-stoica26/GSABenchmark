@@ -59,3 +59,27 @@ runMethodShuffle <- function(scObj,
     }
     return(scObj)
 }
+
+#' Generate all benchmark results for shuffled gene sets
+#
+#' This function generates all benchmark results for shuffled gene sets.
+#'
+#' @inheritParams runGSAMethods
+#' @inheritParams runMethodShuffle
+#'
+#' @return A list of benchmark results.
+#'
+#' @export
+#'
+runBenchmarkShuffle <- function(scObj,
+                                labelCol,
+                                gsaMethod,
+                                geneSetNames){
+    runs <- grep(gsaMethod, colnames(metadataDF(scObj)), value=TRUE)
+    runs <- unique(vapply(runs, runFromColumn, character(1)))
+    return(runBenchmark(scObj,
+                        labelCol,
+                        geneSets=NULL,
+                        gsaMethods=runs,
+                        geneSetNames))
+}

@@ -13,6 +13,8 @@
 #'
 #' @inheritParams globalBenchmarkMultiple
 #' @inheritParams runGSAMethods
+#' @param geneSets A list of gene sets. If not \code{NULL} while
+#' \code{efBenchmark} is \code{NULL}, the efficiency benchmark will be run.
 #' @param efBenchmark A list of dataframes generated with efficiencyBenchmark.
 #'
 #' @return A list of benchmark results.
@@ -67,7 +69,7 @@ allBenchmarkResults <- function(scObj,
                                          maxDist)
     globalSmr <- benchmarkSummary(globalRes)
 
-    if(is.null(efBenchmark)){
+    if(is.null(efBenchmark) & !is.null(geneSets)){
         message('Running efficiency benchmark. This may take a long time...')
         efBenchmark <- efficiencyBenchmark(scObj,
                                            labelCol,
@@ -75,7 +77,7 @@ allBenchmarkResults <- function(scObj,
                                            gsaMethods,
                                            geneSetNames,
                                            checkLabels=FALSE)
-    } else message('Loading efficiency benchmark...')
+    }
 
     message('Computing scored MDS summary...')
     mdsScoreSmr <- mdsScoreSummary(scObj, gsaMethods, geneSetNames,
@@ -85,8 +87,10 @@ allBenchmarkResults <- function(scObj,
     smr <- list(boundary = boundarySmr,
                 MCC = mccSmr,
                 global = globalSmr,
-                efficiency = efBenchmark,
                 MDS = mdsScoreSmr)
+
+    if(!is.null(efBenchmark) | !is.null(geneSets))
+        smr$efficiency <- efBenchmark
 
     y <- Sys.time()
     print(y - x)
@@ -125,7 +129,7 @@ runBenchmark <- function(scObj,
                                geneSets,
                                gsaMethods,
                                geneSetNames,
-                               checkLabels = FALSE,
+                               checkLabels=FALSE,
                                normSilDF,
                                dimMat,
                                maxDist)

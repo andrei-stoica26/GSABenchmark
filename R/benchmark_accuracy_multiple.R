@@ -40,7 +40,7 @@ accuracyBenchmarkMultiple <- function(scObj,
                                labelCol,
                                scoreCol,
                                geneSetNames[i],
-                               checkLabel = FALSE,
+                               checkLabel=FALSE,
                                ...)
             return(df)
             })

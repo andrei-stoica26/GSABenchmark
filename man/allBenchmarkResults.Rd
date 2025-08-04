@@ -24,7 +24,8 @@ allBenchmarkResults(
 
 \item{labelCol}{The metadata column containing the ground truth annotation.}
 
-\item{geneSets}{A list of gene sets.}
+\item{geneSets}{A list of gene sets. If not \code{NULL} while
+\code{efBenchmark} is \code{NULL}, the efficiency benchmark will be run.}
 
 \item{gsaMethods}{Character vector of gene set analysis methods.}
 

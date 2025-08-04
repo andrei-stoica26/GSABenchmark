@@ -113,7 +113,7 @@ computeGlobalMetrics <- function(df, normSilDF = NULL, dimMat = NULL, maxDist = 
                         PRAUC = PRAUC(df[, 2], df[, 1]),
                         labRankAlignment = rankAlignmentScore(df[, 1], df[, 2]))
     if(!is.null(normSilDF)){
-        label <- str_split(colnames(df)[2], '_')[[1]][2]
+        label <- labelFromColumn(colnames(df)[2])
         sil <- normSilDF[label]
         resDF$silRankAlignment <- rankAlignmentScore(sil[rownames(df), 1], df[, 2])
         if (!is.null(dimMat) & !is.null(maxDist)){

@@ -132,11 +132,11 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
                scorePlot(smr$MCC$direct,
                          paste0('Comprehensive MCC', titleSuffix)))
     p3 <- benchmarkPlots(smr$global, titleSuffix)
-    p4 <- list(timePlot(smr$efficiency, titleSuffix),
-               memoryPlot(smr$efficiency, titleSuffix))
-    p5 <- mapply(function(mdsDF, gsName)
+    p4 <- mapply(function(mdsDF, gsName)
         densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes', ...)),
-        smr$MDS, names(smr$MDS), SIMPLIFY = FALSE)
+        smr$MDS, names(smr$MDS), SIMPLIFY=FALSE)
+    p5 <- list(timePlot(smr$efficiency, titleSuffix),
+               memoryPlot(smr$efficiency, titleSuffix))
     p <- c(p1, p2, p3, p4, p5)
     return(p)
 }

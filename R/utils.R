@@ -95,3 +95,38 @@ rankAlignmentScore <- function(x, y){
     y <- safeMinmax(rank(y), 1 / length(y))
     return(alignmentScore(x, y))
 }
+
+#' Extract label from column name
+#'
+#' This function extracts the class identity label from column name.
+#'
+#' @param colStr Column name.
+#'
+#' @return Class identity label.
+#'
+#' @noRd
+#'
+labelFromColumn <- function(colStr){
+    splitRun <- str_split(colStr, '_')[[1]]
+    res <- splitRun[length(splitRun)]
+    return(res)
+}
+
+#' Extract run name from column name
+#'
+#' This function extracts the run name from column name.
+#'
+#' @param colStr Column name.
+#'
+#' @return Run name.
+#'
+#' @noRd
+#'
+runFromColumn <- function(colStr){
+    splitRun <- str_split(colStr, '_')[[1]]
+    res <- paste0(splitRun[seq(length(splitRun) - 1)], collapse='_')
+    return(res)
+}
+
+labelFromColumn('CSOA_0_0_1_acinar')
+
