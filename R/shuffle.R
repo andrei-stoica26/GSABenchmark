@@ -33,7 +33,7 @@ runMethodShuffle <- function(scObj,
     if(doGrid){
         lossNoiseDF <- expand.grid(lossVector, noiseVector)
         lossVector <- lossNoiseDF[, 1]
-        noiseVector <- lossNoiseDF[, 1]
+        noiseVector <- lossNoiseDF[, 2]
     }
 
     expression <- scExpMat(scObj, 'counts')
