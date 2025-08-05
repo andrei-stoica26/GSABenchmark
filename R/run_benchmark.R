@@ -54,8 +54,8 @@ allBenchmarkResults <- function(scObj,
 
     directMCCSmr <- benchmarkSummary(directMCCRes,
                                      summarizeMetrics=FALSE)
-    mccSmr <- list(boundary = boundaryMCCBenchmark(boundaryRes),
-                 direct = directMCCSmr)
+    mccSmr <- list(boundaryMCC = boundaryMCCBenchmark(boundaryRes),
+                 directMCC = directMCCSmr)
 
     message('Running global evaluation benchmark...')
     globalRes <- globalBenchmarkMultiple(scObj,
@@ -75,8 +75,12 @@ allBenchmarkResults <- function(scObj,
     message('Computing scored MDS summary...')
     smr$MDS <- mdsScoreSummary(scObj, gsaMethods, geneSetNames, smr)
 
-    message('Computing benchmark ranks...')
-    smr$ranks <- benchmarkRanks(smr)
+    message('Computing metric ranks...')
+    smr$metricRanks <- allMetricRanks(smr)
+
+
+    message('Computing aggregate ranks...')
+    smr$aggRanks <- aggregateRanks(smr)
 
 
     if(is.null(efBenchmark) & !is.null(geneSets)){

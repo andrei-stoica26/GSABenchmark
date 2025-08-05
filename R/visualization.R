@@ -136,15 +136,29 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
         densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes',
                                   titleSuffix), ...),
         smr$MDS, names(smr$MDS), SIMPLIFY=FALSE)
-    p5 <- list(rankPlot(smr$ranks,
-                   paste0('Distribution of gene set analysis method ranks',
+
+    metricNames <- c('sensitivity', 'specificity', 'precision',
+    'accuracy', 'size proximity','score coverage',
+    'MCC with boundary threshold', 'comprehensive MCC',
+    'AUROC', 'PRAUC', 'label rank alignment',
+    'silhouette rank alignment', 'centrality')
+
+    p5 <- mapply(function(metricRankDF, metricName)
+                 rankPlot(metricRankDF,
+                          paste0('Distribution of ',
+                                 metricName, ' ranks',
+                                 titleSuffix), summarize=FALSE, xLab='Method'),
+                 smr$metricRanks, metricNames, SIMPLIFY=FALSE)
+
+    p6 <- list(rankPlot(smr$aggRanks,
+                   paste0('Distribution of aggregate ranks',
                           titleSuffix), summarize=FALSE, xLab='Method'))
 
-    plots <- c(p1, p2, p3, p4, p5)
+    plots <- c(p1, p2, p3, p4, p5, p6)
     if ('efficiency' %in% names(smr)){
-        p6 <- list(timePlot(smr$efficiency, titleSuffix),
+        p7 <- list(timePlot(smr$efficiency, titleSuffix),
                    memoryPlot(smr$efficiency, titleSuffix))
-        plots <- c(plots, p6)
+        plots <- c(plots, p7)
     }
     return(plots)
 }
