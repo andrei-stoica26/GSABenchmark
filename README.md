@@ -32,7 +32,7 @@ and `SingleCellExperiment` objects:
 - `AUCell`
 - `CSOA`
 - `GSVA`
-- `JASMINE` (reimplemented from [JASMINE](https://github.com/NNoureen/JASMINE))
+- `JASMINE`(reimplemented from [JASMINE](https://github.com/NNoureen/JASMINE))
 - `MDT`
 - `MLM`
 - `ORA`
@@ -46,6 +46,10 @@ and `SingleCellExperiment` objects:
 - `VAM`
 - `Zscore`
 
+The `supportedMethods()` function can be used to display all method names alphabetically.
+
+## Assessing new methods
+
 Users can also define their own gene set analysis methods to be assessed with GSABenchmark. User-defined methods must meet the following criteria:
 
 - The name of the method starts with `run`.
@@ -58,6 +62,6 @@ Additional parameters are allowed. For instance, this function heading would be 
 
 `runCustomMethod(seuratObj, genes, colStr, tol = 0.2, verbose = TRUE)`. 
 
-**! Note** : When calling `runGSAMethods` or `efficiencyBenchmark`, the method needs to be referred to as `CustomMethod` (no `run`).
+**Note**: When passing the method name to `runGSAMethods` or `efficiencyBenchmark` as part of the `gsaMethods` argument, the method needs to be referred to as `CustomMethod` (no `run`).
 
 GSABenchmark min-max-normalizes the per-cell gene set analysis scores of all supported methods, returning scores between 0 and 1. It is recommended that user-defined methods follow the same convention.

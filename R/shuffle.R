@@ -13,6 +13,7 @@ NULL
 #' @param noiseVector Noise values.
 #' @param doGrid Whether to run the methods for each loss-noise combination.
 #' @param nReplicates Number of replicates.
+#' @param seed Random seed passed to \code{hammers::shuffleGenes}.
 #'
 #' @return A \code{Seurat} or \code{SingleCellExpression} object
 #' with the results of the runs stored as metadata columns.
@@ -27,7 +28,8 @@ runMethodShuffle <- function(scObj,
                              lossVector = c(0, 0.25, 0.5),
                              noiseVector = c(0, 0.25, 0.5),
                              doGrid = TRUE,
-                             nReplicates = 3){
+                             nReplicates = 3,
+                             seed = 1){
 
     checkSetNames(scObj, labelCol, geneSetNames)
     if(doGrid){
@@ -41,7 +43,7 @@ runMethodShuffle <- function(scObj,
     for (i in seq(nValues)){
         for (j in seq(nReplicates)){
             shGeneSets <- lapply(geneSets, function(x)
-                shuffleGenes(scObj, x, lossVector[i], noiseVector[i]))
+                shuffleGenes(scObj, x, lossVector[i], noiseVector[i], seed))
             infix <- paste0('_',
                             lossVector[i] * 100,
                             '_',

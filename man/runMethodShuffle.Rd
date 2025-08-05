@@ -13,7 +13,8 @@ runMethodShuffle(
   lossVector = c(0, 0.25, 0.5),
   noiseVector = c(0, 0.25, 0.5),
   doGrid = TRUE,
-  nReplicates = 3
+  nReplicates = 3,
+  seed = 1
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ runMethodShuffle(
 \item{doGrid}{Whether to run the methods for each loss-noise combination.}
 
 \item{nReplicates}{Number of replicates.}
+
+\item{seed}{Random seed passed to \code{hammers::shuffleGenes}.}
 }
 \value{
 A \code{Seurat} or \code{SingleCellExpression} object

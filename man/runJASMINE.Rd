@@ -7,8 +7,8 @@
 runJASMINE(
   scObj,
   genes,
-  method = c("oddsratio", "likelihood"),
-  colStr = "JASMINE"
+  colStr = "JASMINE",
+  method = c("oddsratio", "likelihood")
 )
 }
 \arguments{
@@ -16,9 +16,9 @@ runJASMINE(
 
 \item{genes}{A vector of genes}
 
-\item{method}{One of 'oddsratio' and 'likelihood'}
-
 \item{colStr}{Name of the results column}
+
+\item{method}{One of 'oddsratio' and 'likelihood'}
 }
 \value{
 A single-cell expression object with the results saved as a metadata
