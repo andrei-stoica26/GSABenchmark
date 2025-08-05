@@ -4,14 +4,7 @@
 \alias{mdsScoreSummary}
 \title{Compute the scored MDS summary}
 \usage{
-mdsScoreSummary(
-  scObj,
-  gsaMethods,
-  geneSetNames,
-  boundarySmr,
-  mccSmr,
-  globalSmr
-)
+mdsScoreSummary(scObj, gsaMethods, geneSetNames, smr)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
@@ -20,11 +13,7 @@ mdsScoreSummary(
 
 \item{geneSetNames}{The names of the gene sets.}
 
-\item{boundarySmr}{Class boundary determination summary.}
-
-\item{mccSmr}{MCC summary.}
-
-\item{globalSmr}{Global evaluation summary.}
+\item{smr}{List containing boundary, MCC and global summary data frames.}
 }
 \value{
 A list containing a data frame with three columns (two MDS

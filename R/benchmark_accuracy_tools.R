@@ -122,3 +122,22 @@ geneSetMetrics <- function(smr, gsaMethods, gsName, nAggCols)
     return(vapply(smr[seq(length(smr) - nAggCols)],
                   function(x) x[gsaMethods, gsName],
                   numeric(length(gsaMethods))))
+
+#' Extract results list of summary data frames
+#'
+#' This function extracts results from a list of summary data frames.
+#'
+#' @param smr List of summary data frames.
+#' @param nAggCols Number of columns of aggregate results in the list of
+#' summary data frames.
+#' @param nAvgCols Number of average columns for each data frame in the list.
+#'
+#' @return A data frame of aggregate summary results.
+#'
+#' @noRd
+#'
+bindSummary <- function(smr, nAggCols=0, nAvgCols=0)
+    return(do.call(cbind,
+                  lapply(smr[seq(length(smr) - nAggCols)],
+                         function(x) x[, seq(ncol(x) - nAvgCols)])))
+

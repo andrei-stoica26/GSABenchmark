@@ -127,6 +127,3 @@ runFromColumn <- function(colStr){
     res <- paste0(splitRun[seq(length(splitRun) - 1)], collapse='_')
     return(res)
 }
-
-labelFromColumn('CSOA_0_0_1_acinar')
-

@@ -153,13 +153,16 @@ scObj <- runGSAMethods(scObj, 'label', geneSets, gsaMethods, geneSetNames)
 
 # Running the benchmark
 
-The benchmark is run in a single line of code:
+The benchmark is run in a single line of code. For the purposes of this 
+vignette, we will perform only the correctness benchmark by setting 
+`geneSets` to `NULL`. This command bypasses the execution of the speed and 
+memory benchmarks.
 
 ```{r}
-smr <- runBenchmark(scObj, 'label', geneSets, gsaMethods, geneSetNames)
+smr <- runBenchmark(scObj, 'label', geneSets=NULL, gsaMethods, geneSetNames)
 ```
 
-**!** Note: While this tutorial illustrates using `GSABenchmark` with 
+**Note**: While this tutorial illustrates using `GSABenchmark` with 
 Bioconductor's native `SingleCellExperiment` class, `GSABenchmark` is also fully
 compatible with `Seurat`. Both `runGSAMethods` and `runBenchmark` also accept a
 Seurat object as their first argument.

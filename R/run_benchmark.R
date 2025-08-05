@@ -69,6 +69,16 @@ allBenchmarkResults <- function(scObj,
                                          maxDist)
     globalSmr <- benchmarkSummary(globalRes)
 
+    smr <- list(boundary = boundarySmr,
+                MCC = mccSmr,
+                global = globalSmr)
+    message('Computing scored MDS summary...')
+    smr$MDS <- mdsScoreSummary(scObj, gsaMethods, geneSetNames, smr)
+
+    message('Computing benchmark ranks...')
+    smr$ranks <- benchmarkRanks(smr)
+
+
     if(is.null(efBenchmark) & !is.null(geneSets)){
         message('Running efficiency benchmark. This may take a long time...')
         efBenchmark <- efficiencyBenchmark(scObj,
@@ -78,16 +88,6 @@ allBenchmarkResults <- function(scObj,
                                            geneSetNames,
                                            checkLabels=FALSE)
     }
-
-    message('Computing scored MDS summary...')
-    mdsScoreSmr <- mdsScoreSummary(scObj, gsaMethods, geneSetNames,
-                                   boundarySmr, mccSmr, globalSmr)
-
-    message('Collating results...')
-    smr <- list(boundary = boundarySmr,
-                MCC = mccSmr,
-                global = globalSmr,
-                MDS = mdsScoreSmr)
 
     if(!is.null(efBenchmark) | !is.null(geneSets))
         smr$efficiency <- efBenchmark

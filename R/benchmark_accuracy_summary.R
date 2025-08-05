@@ -42,9 +42,7 @@ benchmarkSummary <- function(benchmarkLL, summarizeMetrics=TRUE){
 #' of each method, obtained on the gene set.
 #'
 #' @inheritParams runBenchmark
-#' @param boundarySmr Class boundary determination summary.
-#' @param mccSmr MCC summary.
-#' @param globalSmr Global evaluation summary.
+#' @param smr List containing boundary, MCC and global summary data frames.
 #'
 #' @return A list containing a data frame with three columns (two MDS
 #' coordinates and method score) for each gene set.
@@ -54,9 +52,7 @@ benchmarkSummary <- function(benchmarkLL, summarizeMetrics=TRUE){
 mdsScoreSummary <- function(scObj,
                             gsaMethods,
                             geneSetNames,
-                            boundarySmr,
-                            mccSmr,
-                            globalSmr){
+                            smr){
 
     mdsScoreSmr <- lapply(geneSetNames, function(gsName){
     setDF <- metadataDF(scObj)[, paste0(gsaMethods, '_', gsName)]
@@ -68,9 +64,9 @@ mdsScoreSummary <- function(scObj,
     colnames(mdsMat) <- c('x', 'y')
 
     summaryMat <- do.call(cbind, list(
-        geneSetMetrics(boundarySmr, gsaMethods, gsName, 2),
-        geneSetMetrics(mccSmr, gsaMethods, gsName, 0),
-        geneSetMetrics(globalSmr, gsaMethods, gsName, 2)
+        geneSetMetrics(smr$boundary, gsaMethods, gsName, 2),
+        geneSetMetrics(smr$MCC, gsaMethods, gsName, 0),
+        geneSetMetrics(smr$global, gsaMethods, gsName, 2)
         ))
 
     mdsMat$Score <- rowMeans(summaryMat)
@@ -81,4 +77,26 @@ mdsScoreSummary <- function(scObj,
 
     names(mdsScoreSmr) <- geneSetNames
     return(mdsScoreSmr)
+}
+
+#' Compute benchmark ranks
+#'
+#' This function computes benchmark ranks from a list of summary data frames.
+#'
+#' @inheritParams mdsScoreSummary
+#' @param nAggCols Number of columns of aggregate results in the list of
+#' summary data frames.
+#' @param nAvgCols Number of average columns for each data frame in the list.
+#'
+#' @return A data frame of aggregate summary results.
+#'
+#' @export
+#'
+benchmarkRanks <- function(smr){
+    df <- do.call(cbind, list(bindSummary(smr$boundary, 2, 1),
+                              bindSummary(smr$MCC),
+                              bindSummary(smr$global, 2, 1)))
+    df <- apply(df, 2, function(x) rank(-x, ties.method='min'))
+    df <- rankSummary(df)
+    return(df)
 }

@@ -1,7 +1,7 @@
 #' @importFrom ggplot2 aes element_text geom_point ggplot ggtitle labs scale_color_manual theme theme_minimal
 #' @importFrom ggrepel geom_text_repel
 #' @importFrom grDevices rainbow
-#' @importFrom henna densityPlot
+#' @importFrom henna densityPlot rankSummary rankPlot
 #' @importFrom reshape2 melt
 #'
 NULL
@@ -133,10 +133,18 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
                          paste0('Comprehensive MCC', titleSuffix)))
     p3 <- benchmarkPlots(smr$global, titleSuffix)
     p4 <- mapply(function(mdsDF, gsName)
-        densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes', ...)),
+        densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes',
+                                  titleSuffix), ...),
         smr$MDS, names(smr$MDS), SIMPLIFY=FALSE)
-    p5 <- list(timePlot(smr$efficiency, titleSuffix),
-               memoryPlot(smr$efficiency, titleSuffix))
-    p <- c(p1, p2, p3, p4, p5)
-    return(p)
+    p5 <- list(rankPlot(smr$ranks,
+                   paste0('Distribution of gene set analysis method ranks',
+                          titleSuffix), summarize=FALSE, xLab='Method'))
+
+    plots <- c(p1, p2, p3, p4, p5)
+    if ('efficiency' %in% names(smr)){
+        p6 <- list(timePlot(smr$efficiency, titleSuffix),
+                   memoryPlot(smr$efficiency, titleSuffix))
+        plots <- c(plots, p6)
+    }
+    return(plots)
 }
