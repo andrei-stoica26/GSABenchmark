@@ -36,8 +36,8 @@ meanGeneRank <- function(cellVector, genes){
 #'
 runJASMINE <- function(scObj,
                        genes,
-                       method = c('oddsratio', 'likelihood'),
-                       colStr = 'JASMINE'){
+                       colStr = 'JASMINE',
+                       method = c('oddsratio', 'likelihood')){
     method <- match.arg(method, c('oddsratio', 'likelihood'))
 
     mat <- scExpMat(scObj, 'data')
