@@ -11,7 +11,7 @@ allBenchmarkPlots(smr, titleSuffix = NULL, ...)
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title}
 
-\item{Additional}{arguments passed to \code{henna::densityPlot}.}
+\item{...}{Additional arguments passed to \code{henna::densityPlot}.}
 }
 \value{
 A list of ggplot objects

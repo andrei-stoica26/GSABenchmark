@@ -26,12 +26,13 @@ In addition, GSABenchmark uses [peakRAM](https://cran.r-project.org/web//package
 
 ## Methods
 
-Currently, GSABenchmark supports 15 gene set analysis methods for both `Seurat` 
+Currently, GSABenchmark supports 16 gene set analysis methods for both `Seurat` 
 and `SingleCellExperiment` objects:
 
 - `AUCell`
 - `CSOA`
 - `GSVA`
+- `JASMINE` (reimplemented from [JASMINE](https://github.com/NNoureen/JASMINE))
 - `MDT`
 - `MLM`
 - `ORA`
@@ -48,10 +49,10 @@ and `SingleCellExperiment` objects:
 Users can also define their own gene set analysis methods to be assessed with GSABenchmark. User-defined methods must meet the following criteria:
 
 - The name of the method starts with `run`.
-- The first parameter is a Seurat object.
+- The first parameter is a Seurat or SingleCellExperiment object
 - The second parameter is a character vector of genes.
 - The third parameter is a character.
-- The method returns a Seurat object with cell scores in the metadata column denoted by the third parameter. 
+- The method returns a Seurat or SingleCellExperiment object with cell scores in the metadata column denoted by the third parameter. 
 
 Additional parameters are allowed. For instance, this function heading would be recognized by GSABenchmark's relevant functions, `runGSAMethods` and `efficiencyBenchmark`: 
 

@@ -4,6 +4,6 @@
 R/.extras.R
 R/.recipes.R
 R/.test_code.R
-R/.methods_reimplemented.R
+R/.draft_methods_reimplemented.R
 GSABenchmark.Rproj
 inst/doc

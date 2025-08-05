@@ -8,7 +8,7 @@ NULL
 
 #' Run pagoda2
 #'
-#' This function runs pagoda2
+#' This function runs \code{pagoda2}.
 #'
 #' @inheritParams runDecoupleRMethod
 #' @param ... Additional arguments passed to \code{pagoda2::score.cells.puram}.

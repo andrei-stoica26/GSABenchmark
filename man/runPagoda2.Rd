@@ -20,5 +20,5 @@ A single-cell expression object with the results saved as a metadata
 column.
 }
 \description{
-This function runs pagoda2
+This function runs \code{pagoda2}.
 }

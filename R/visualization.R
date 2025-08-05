@@ -119,7 +119,7 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
 #'
 #' @param smr Complete summary list generated with allBenchmarkResults.
 #' @inheritParams timePlot
-#' @param Additional arguments passed to \code{henna::densityPlot}.
+#' @param ... Additional arguments passed to \code{henna::densityPlot}.
 #'
 #' @return A list of ggplot objects
 #'
