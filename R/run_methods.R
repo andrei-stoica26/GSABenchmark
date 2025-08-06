@@ -23,6 +23,8 @@ NULL
 runGSAMethods <- function(scObj, labelCol, geneSets, gsaMethods, geneSetNames,
                           infix = NULL){
     checkSetNames(scObj, labelCol, geneSetNames)
+    if (length(geneSets) != length(geneSetNames))
+        stop('geneSets and geneSetNames must have the same length.')
     for (i in seq_along(geneSets)){
         setName <- geneSetNames[i]
         for (j in seq_along(gsaMethods)){
