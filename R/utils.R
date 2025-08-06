@@ -81,12 +81,12 @@ alignmentScore <- function(x, y)
 
 #' Calculate the rank alignment between two numeric vectors
 #'
-#' This function calculates the rank alignment between two numeric vectors
+#' This function calculates the rank alignment between two numeric vectors.
 #'
 #' @param x A vector.
-#' @param y A vector
+#' @param y A vector.
 #'
-#' @return Alignment score
+#' @return Alignment score.
 #'
 #' @export
 #'

@@ -9,11 +9,11 @@ rankAlignmentScore(x, y)
 \arguments{
 \item{x}{A vector.}
 
-\item{y}{A vector}
+\item{y}{A vector.}
 }
 \value{
-Alignment score
+Alignment score.
 }
 \description{
-This function calculates the rank alignment between two numeric vectors
+This function calculates the rank alignment between two numeric vectors.
 }

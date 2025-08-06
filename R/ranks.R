@@ -67,7 +67,7 @@ bindSummary <- function(smr, nAggCols=0, nAvgCols=0)
 #'
 aggregateRanks <- function(smr){
     df <- do.call(cbind, list(bindSummary(smr$boundary, 2, 1),
-                              bindSummary(smr$MCC),
+                              bindSummary(smr$MCC, 0, 1),
                               bindSummary(smr$global, 2, 1)))
     df <- apply(df, 2, function(x) rank(-x))
     df <- rankSummary(df)

@@ -39,7 +39,7 @@ mdsScoreSummary <- function(scObj,
 
     mdsScoreSmr <- lapply(geneSetNames, function(gsName){
         setDF <- metadataDF(scObj)[, paste0(gsaMethods, '_', gsName)]
-        setDF <- apply(setDF, 2, function(x) safeMinmax(rank(-x)))
+        setDF <- apply(setDF, 2, function(x) x / sum(x) * 100)
         colnames(setDF) <- gsaMethods
 
         distMat <- as.matrix(stats::dist(t(setDF)))
