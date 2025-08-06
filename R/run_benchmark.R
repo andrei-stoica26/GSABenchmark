@@ -75,6 +75,9 @@ allBenchmarkResults <- function(scObj,
     message('Computing scored MDS summary...')
     smr$MDS <- mdsScoreSummary(scObj, gsaMethods, geneSetNames, smr)
 
+    message('Computing gene set ranks...')
+    smr$gsRanks <- allGeneSetRanks(smr)
+
     message('Computing metric ranks...')
     smr$metricRanks <- allMetricRanks(smr)
 

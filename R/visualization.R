@@ -137,28 +137,41 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
                                   titleSuffix), ...),
         smr$MDS, names(smr$MDS), SIMPLIFY=FALSE)
 
+    geneSetNames <- colnames(smr$boundary[[1]])
+    geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
+
     metricNames <- c('sensitivity', 'specificity', 'precision',
     'accuracy', 'size proximity','score coverage',
     'MCC with boundary threshold', 'comprehensive MCC',
     'AUROC', 'PRAUC', 'label rank alignment',
     'silhouette rank alignment', 'centrality')
 
-    p5 <- mapply(function(metricRankDF, metricName)
+    p5 <- mapply(function(gsRankDF, gsName)
+        rankPlot(gsRankDF,
+                 paste0('Distribution of ranks for ',
+                        gsName, ' gene set',
+                        titleSuffix), summarize=FALSE, xLab='Method'),
+        smr$gsRanks, geneSetNames, SIMPLIFY=FALSE)
+
+    p6 <- mapply(function(metricRankDF, metricName)
                  rankPlot(metricRankDF,
                           paste0('Distribution of ',
                                  metricName, ' ranks',
                                  titleSuffix), summarize=FALSE, xLab='Method'),
                  smr$metricRanks, metricNames, SIMPLIFY=FALSE)
 
-    p6 <- list(rankPlot(smr$aggRanks,
+    p7 <- list(rankPlot(smr$aggRanks,
                    paste0('Distribution of aggregate ranks',
-                          titleSuffix), summarize=FALSE, xLab='Method'))
+                          titleSuffix),
+                   summarize=FALSE,
+                   xLab='Method',
+                   showMeanRanks=TRUE))
 
-    plots <- c(p1, p2, p3, p4, p5, p6)
+    plots <- c(p1, p2, p3, p4, p5, p6, p7)
     if ('efficiency' %in% names(smr)){
-        p7 <- list(timePlot(smr$efficiency, titleSuffix),
+        p8 <- list(timePlot(smr$efficiency, titleSuffix),
                    memoryPlot(smr$efficiency, titleSuffix))
-        plots <- c(plots, p7)
+        plots <- c(plots, p8)
     }
     return(plots)
 }
