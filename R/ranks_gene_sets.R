@@ -38,9 +38,9 @@ geneSetRanks <- function(smr, nAggDFs=0, nAvgCols=0){
 #' @noRd
 #'
 allGeneSetRanks <- function(smr){
-    boundaryRanks <- collectGeneSetRanks(smr$boundary, 2, 1)
-    mccRanks <- collectGeneSetRanks(smr$MCC, 0, 1)
-    globalRanks <- collectGeneSetRanks(smr$global, 2, 1)
+    boundaryRanks <- geneSetRanks(smr$boundary, 2, 1)
+    mccRanks <- geneSetRanks(smr$MCC, 0, 1)
+    globalRanks <- geneSetRanks(smr$global, 2, 1)
     geneSetNames <- names(boundaryRanks)
     res <- lapply(geneSetNames, function(gsName){
         df <- do.call(cbind, list(boundaryRanks[[gsName]],
