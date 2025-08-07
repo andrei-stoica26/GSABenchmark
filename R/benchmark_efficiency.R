@@ -1,4 +1,4 @@
-#' @importFrom stringr str_remove str_split str_sub str_replace
+#' @importFrom stringr str_remove str_replace str_split str_sub str_to_title
 #' @importFrom peakRAM peakRAM
 #'
 NULL

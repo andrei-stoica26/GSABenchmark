@@ -127,3 +127,25 @@ runFromColumn <- function(colStr){
     res <- paste0(splitRun[seq(length(splitRun) - 1)], collapse='_')
     return(res)
 }
+
+#' Convert metric names to titles
+#'
+#' This function converts metric names to titles.
+#'
+#' @return A named vector of characters.
+#'
+#' @noRd
+#'
+metricTitles <- function(){
+    metrics <- c('sensitivity', 'specificity', 'precision',
+                 'accuracy', 'sizeProximity','scoreCoverage',
+                 'boundaryMCC', 'directMCC',
+                 'AUROC', 'PRAUC', 'labRankAlignment',
+                 'silRankAlignment', 'centrality')
+    titles <- c('Sensitivity', 'Specificity', 'Precision',
+                'Accuracy', 'Size proximity','Score coverage',
+                'Boundary MCC', 'Direct MCC',
+                'AUROC', 'PRAUC', 'Label rank alignment',
+                'Silhouette rank alignment', 'Centrality')
+    return(setNames(titles, metrics))
+}

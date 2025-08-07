@@ -1,5 +1,3 @@
-
-
 #' Extract results list of summary data frames
 #'
 #' This function extracts results from a list of summary data frames.
