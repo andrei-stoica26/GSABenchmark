@@ -66,6 +66,7 @@ addModuleScoreHelper <- function(scObj,
 runAddModuleScore <- function(scObj, genes, colStr = 'AddModuleScore',
                               slot = 'data', pool = rownames(scObj),
                               nbin = 24, ctrl = 100, seed = 1){
+    checkGenes(scObj, genes)
     if (is.null(seed))
         stop('A positive integer seed must be set.')
     return(with_seed(seed, addModuleScoreHelper(scObj,
@@ -117,6 +118,7 @@ runJASMINE <- function(scObj,
                        genes,
                        colStr = 'JASMINE',
                        method = c('oddsratio', 'likelihood')){
+    checkGenes(scObj, genes)
     method <- match.arg(method, c('oddsratio', 'likelihood'))
 
     mat <- scExpMat(scObj, 'data')

@@ -17,6 +17,8 @@ NULL
 #'
 runGSVAMethod <- function(scObj, genes, method, colStr = method,
                           invert = FALSE, filter = FALSE, ...){
+
+    checkGenes(scObj, genes)
     if(filter)
         mat <- scExpMat(scObj, 'data', genes) else
             mat <- scExpMat(scObj, 'data')

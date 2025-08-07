@@ -19,6 +19,7 @@ NULL
 #' @export
 #'
 runPagoda2 <- function(scObj, genes, colStr = 'Pagoda2', ...){
+    checkGenes(scObj, genes)
     mat <- Matrix::t(scExpMat(scObj, 'data', densify=FALSE))
     scores <- pagoda2::score.cells.puram(mat, genes, ...)
     scObj[[colStr]] <- safeMinmax(scores)
@@ -38,6 +39,7 @@ runPagoda2 <- function(scObj, genes, colStr = 'Pagoda2', ...){
 #' @export
 #'
 runSingscore <- function(scObj, genes, colStr = 'Singscore', ...){
+    checkGenes(scObj, genes)
     mat <- scExpMat(scObj, 'data')
     mat <- singscore::rankGenes(mat)
     scores <- singscore::simpleScore(mat, genes, ...)$TotalScore
@@ -58,6 +60,7 @@ runSingscore <- function(scObj, genes, colStr = 'Singscore', ...){
 #' @export
 #'
 runSiPSiC <- function(scObj, genes, colStr = 'SiPSiC', ...){
+    checkGenes(scObj, genes)
     mat <- scExpMat(scObj, 'counts', densify=FALSE)
     scores <- SiPSiC::getPathwayScores(mat, genes, ...)[[2]]
     scObj[[colStr]] <- safeMinmax(scores)
@@ -77,6 +80,7 @@ runSiPSiC <- function(scObj, genes, colStr = 'SiPSiC', ...){
 #' @export
 #'
 runVAM <- function(scObj, genes, colStr = 'VAM', ...){
+    checkGenes(scObj, genes)
     mat <- t(scExpMat(scObj, 'data', genes))
     v <- vam(mat, ...)
     scObj[[colStr]] <- v$cdf.value

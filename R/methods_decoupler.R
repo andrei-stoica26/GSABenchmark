@@ -17,6 +17,7 @@ NULL
 #'
 runDecoupleRMethod <- function(scObj, genes, method,
                                colStr = method, ...){
+    checkGenes(scObj, genes)
     mat <- scExpMat(scObj, 'data')
     scores <- do.call(paste0('run_', tolower(method)),
                       list(mat, network=data.frame(source='geneSet',

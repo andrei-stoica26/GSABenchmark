@@ -13,6 +13,7 @@ NULL
 #' column.
 #'
 runEscapeMethod <- function(scObj, genes, method, colStr = method, ...){
+    checkGenes(scObj, genes)
     mat <- scExpMat(scObj, 'data')
     scores <- escape.matrix(mat, list(set1 = genes), method = method, ...)[, 1]
     scObj[[colStr]] <- safeMinmax(scores)

@@ -1,4 +1,4 @@
-#' @importFrom hammers centerOfMass computeSilhouette metadataDF metadataNames nearestNeighbors normalizeSilhouette proximity safeMinmax scCol scPCAMat scExpMat shuffleGenes
+#' @importFrom hammers centerOfMass checkGenes computeSilhouette metadataDF metadataNames nearestNeighbors normalizeSilhouette proximity safeMinmax scCol scPCAMat scExpMat shuffleGenes
 #' @importFrom plyr count
 #'
 NULL

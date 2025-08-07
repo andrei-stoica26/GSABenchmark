@@ -5,8 +5,7 @@
 #'
 #' @inheritParams runBenchmark
 #'
-#' @return None. This function is called for its side effect
-#' (showing an error message).
+#' @return None. This function is called for its side effect.
 #'
 #' @noRd
 #'
