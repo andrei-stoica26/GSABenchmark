@@ -132,13 +132,11 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
                          paste0('Comprehensive MCC', titleSuffix)))
     p3 <- benchmarkPlots(smr$global, titleSuffix)
 
-
-
-    plots <- c(p1, p2, p3, p4, p5, p6, p7)
+    plots <- c(p1, p2, p3)
     if ('efficiency' %in% names(smr)){
-        p8 <- list(timePlot(smr$efficiency, titleSuffix),
+        p4 <- list(timePlot(smr$efficiency, titleSuffix),
                    memoryPlot(smr$efficiency, titleSuffix))
-        plots <- c(plots, p8)
+        plots <- c(plots, p4)
     }
     return(plots)
 }
@@ -224,9 +222,9 @@ metricRankPlots <- function(smr, titleSuffix = NULL){
                  paste0('Distribution of ',
                         metricName, ' ranks',
                         titleSuffix), summarize=FALSE, xLab='Method'),
-        smr$metricRankDFs, metricNames, SIMPLIFY=FALSE)
+        metricRanksDFs, metricNames, SIMPLIFY=FALSE)
 
-    names(plots) <- geneSetNames
+    names(plots) <- metricNames
     return(plots)
 }
 
@@ -243,7 +241,7 @@ metricRankPlots <- function(smr, titleSuffix = NULL){
 aggregateRankPlot <- function(smr, titleSuffix = NULL){
     message('Computing aggregate ranks...')
     aggRanks <- aggregateRanks(smr)
-    p <- rankPlot(smr$aggRanks,
+    p <- rankPlot(aggRanks,
                   paste0('Distribution of aggregate ranks',
                          titleSuffix),
                   summarize=FALSE,
@@ -257,17 +255,18 @@ aggregateRankPlot <- function(smr, titleSuffix = NULL){
 #' This function creates a ratio rank plot for method results.
 #'
 #' @inheritParams allBenchmarkPlots
+#' @inheritParams allTopRatios
+#'
 #' @param ... Additional arguments passed to \code{henna::classRank}.
 #'
 #' @return A ggplot object.
 #'
 #' @export
 #'
-ratioRankPlots <- function(smr, titleSuffix, ...){
+ratioPlot <- function(smr, titleSuffix = NULL, nItems = 25, ...){
     message('Computing ratio ranks...')
-    ratioRanks <- allRatioRanks(smr)
-
-    p <- classPlot(ratioRanks,
+    ratioDF <- allTopRatios(smr, nItems)
+    p <- classPlot(ratioDF,
                    paste0('Top maximum over mean ratios', titleSuffix), ...)
     return(p)
 }

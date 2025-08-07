@@ -9,7 +9,7 @@
 #'
 #' @noRd
 #'
-ratioRanks <- function(smr, nAggDFs=0, nAvgCols=0){
+topRatios <- function(smr, nAggDFs=0, nAvgCols=0){
     metricNames <- names(smr)
     metricNames <- metricNames[seq(length(metricNames) - nAggDFs)]
 
@@ -43,15 +43,17 @@ ratioRanks <- function(smr, nAggDFs=0, nAvgCols=0){
 #' of summary data frames.
 #'
 #' @inheritParams bindSummary
+#' @param nItems Number of retained iterms.
 #'
 #' @return List of gene set ranks.
 #'
-#' @noRd
+#' @keywords internal
 #'
-allRatioRanks <- function(smr){
-    allRatioDF <- do.call(rbind, list(ratioRanks(smr$boundary, 2, 1),
-                                      ratioRanks(smr$MCC, 0, 1),
-                                      ratioRanks(smr$global, 2, 1)))
-    allRatioDF <- allRatioDF[order(allRatioDF$Ratio, decreasing=TRUE),]
-    return(allRatioDF)
+allTopRatios <- function(smr, nItems = 25){
+    ratioDF <- do.call(rbind, list(topRatios(smr$boundary, 2, 1),
+                                   topRatios(smr$MCC, 0, 1),
+                                   topRatios(smr$global, 2, 1)))
+    ratioDF <- ratioDF[order(ratioDF$Ratio, decreasing=TRUE),]
+    ratioDF <- ratioDF[seq(nItems), ]
+    return(ratioDF)
 }
