@@ -119,7 +119,6 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
 #'
 #' @param smr Complete summary list generated with allBenchmarkResults.
 #' @inheritParams timePlot
-#' @param ... Additional arguments passed to \code{henna::densityPlot}.
 #'
 #' @return A list of ggplot objects
 #'
@@ -132,40 +131,8 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
                scorePlot(smr$MCC$direct,
                          paste0('Comprehensive MCC', titleSuffix)))
     p3 <- benchmarkPlots(smr$global, titleSuffix)
-    p4 <- mapply(function(mdsDF, gsName)
-        densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes',
-                                  titleSuffix), ...),
-        smr$MDS, names(smr$MDS), SIMPLIFY=FALSE)
 
-    geneSetNames <- colnames(smr$boundary[[1]])
-    geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
 
-    metricNames <- c('sensitivity', 'specificity', 'precision',
-    'accuracy', 'size proximity','score coverage',
-    'MCC with boundary threshold', 'comprehensive MCC',
-    'AUROC', 'PRAUC', 'label rank alignment',
-    'silhouette rank alignment', 'centrality')
-
-    p5 <- mapply(function(gsRankDF, gsName)
-        rankPlot(gsRankDF,
-                 paste0('Distribution of ranks for ',
-                        gsName, ' gene set',
-                        titleSuffix), summarize=FALSE, xLab='Method'),
-        smr$gsRanks, geneSetNames, SIMPLIFY=FALSE)
-
-    p6 <- mapply(function(metricRankDF, metricName)
-                 rankPlot(metricRankDF,
-                          paste0('Distribution of ',
-                                 metricName, ' ranks',
-                                 titleSuffix), summarize=FALSE, xLab='Method'),
-                 smr$metricRanks, metricNames, SIMPLIFY=FALSE)
-
-    p7 <- list(rankPlot(smr$aggRanks,
-                   paste0('Distribution of aggregate ranks',
-                          titleSuffix),
-                   summarize=FALSE,
-                   xLab='Method',
-                   showMeanRanks=TRUE))
 
     plots <- c(p1, p2, p3, p4, p5, p6, p7)
     if ('efficiency' %in% names(smr)){
@@ -174,4 +141,133 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
         plots <- c(plots, p8)
     }
     return(plots)
+}
+
+#' Create MDS plots for the method results
+#'
+#' This function creates MDS plots for method results
+#'
+#' @inheritParams mdsScoreSummary
+#' @inheritParams timePlot
+#' @param ... Additional arguments passed to \code{henna::densityPlot}.
+#'
+#' @return A named list of ggplot objects
+#'
+#' @export
+#'
+mdsPlots <- function(scObj, smr, titleSuffix = NULL, ...){
+    message('Computing scored MDS summary...')
+
+    gsaMethods <- sort(rownames(smr$boundary[[1]]))
+    geneSetNames <- colnames(smr$boundary[[1]])
+    geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
+
+    mdsDFs <- mdsScoreSummary(scObj, gsaMethods, geneSetNames, smr)
+    plots <- mapply(function(mdsDF, gsName)
+        densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes',
+                                  titleSuffix), ...),
+        mdsDFs, geneSetNames, SIMPLIFY=FALSE)
+    names(plots) <- geneSetNames
+    return(plots)
+}
+
+#' Create gene set rank plots for the method results
+#'
+#' This function creates gene set rank plots for method results.
+#'
+#' @inheritParams allBenchmarkPlots
+#'
+#' @return A named list of ggplot objects.
+#'
+#' @export
+#'
+geneSetRankPlots <- function(smr, titleSuffix = NULL){
+    geneSetNames <- colnames(smr$boundary[[1]])
+    geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
+
+    message('Computing gene set ranks...')
+    gsRankDFs <- allGeneSetRanks(smr)
+
+    plots <- mapply(function(gsRankDF, gsName)
+        rankPlot(gsRankDF,
+                 paste0('Distribution of ranks for ',
+                        gsName, ' gene set',
+                        titleSuffix), summarize=FALSE, xLab='Method'),
+        gsRankDFs, geneSetNames, SIMPLIFY=FALSE)
+
+    names(plots) <- geneSetNames
+    return(plots)
+}
+
+#' Create metric rank plots for the method results
+#'
+#' This function creates metric rank plots for method results.
+#'
+#' @inheritParams allBenchmarkPlots
+#'
+#' @return A named list of ggplot objects.
+#'
+#' @export
+#'
+metricRankPlots <- function(smr, titleSuffix = NULL){
+    metricNames <- c('sensitivity', 'specificity', 'precision',
+                     'accuracy', 'size proximity','score coverage',
+                     'boundary MCC', 'direct MCC',
+                     'AUROC', 'PRAUC', 'label rank alignment',
+                     'silhouette rank alignment', 'centrality')
+
+    message('Computing metric ranks...')
+    metricRanksDFs <- allMetricRanks(smr)
+
+    plots <- mapply(function(metricRankDF, metricName)
+        rankPlot(metricRankDF,
+                 paste0('Distribution of ',
+                        metricName, ' ranks',
+                        titleSuffix), summarize=FALSE, xLab='Method'),
+        smr$metricRankDFs, metricNames, SIMPLIFY=FALSE)
+
+    names(plots) <- geneSetNames
+    return(plots)
+}
+
+#' Create aggregate rank plot
+#'
+#' This function creates an aggregate rank plot.
+#'
+#' @inheritParams allBenchmarkPlots
+#'
+#' @return A ggplot object.
+#'
+#' @export
+#'
+aggregateRankPlot <- function(smr, titleSuffix = NULL){
+    message('Computing aggregate ranks...')
+    aggRanks <- aggregateRanks(smr)
+    p <- rankPlot(smr$aggRanks,
+                  paste0('Distribution of aggregate ranks',
+                         titleSuffix),
+                  summarize=FALSE,
+                  xLab='Method',
+                  showMeanRanks=TRUE)
+    return(p)
+}
+
+#' Create ratio rank plot for the method results
+#'
+#' This function creates a ratio rank plot for method results.
+#'
+#' @inheritParams allBenchmarkPlots
+#' @param ... Additional arguments passed to \code{henna::classRank}.
+#'
+#' @return A ggplot object.
+#'
+#' @export
+#'
+ratioRankPlots <- function(smr, titleSuffix, ...){
+    message('Computing ratio ranks...')
+    ratioRanks <- allRatioRanks(smr)
+
+    p <- classPlot(ratioRanks,
+                   paste0('Top maximum over mean ratios', titleSuffix), ...)
+    return(p)
 }

@@ -25,12 +25,12 @@ geneSetMetrics <- function(smr, gsaMethods, gsName, nAggCols)
 #' of each method, obtained on the gene set.
 #'
 #' @inheritParams runBenchmark
-#' @param smr List containing boundary, MCC and global summary data frames.
+#' @param smr List containing boundary, MCC and global lists of data frames.
 #'
 #' @return A list containing a data frame with three columns (two MDS
 #' coordinates and method score) for each gene set.
 #'
-#' @export
+#' @keywords internal
 #'
 mdsScoreSummary <- function(scObj,
                             gsaMethods,

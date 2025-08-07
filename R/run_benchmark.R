@@ -72,33 +72,19 @@ allBenchmarkResults <- function(scObj,
     smr <- list(boundary = boundarySmr,
                 MCC = mccSmr,
                 global = globalSmr)
-    message('Computing scored MDS summary...')
-    smr$MDS <- mdsScoreSummary(scObj, gsaMethods, geneSetNames, smr)
 
-    message('Computing gene set ranks...')
-    smr$gsRanks <- allGeneSetRanks(smr)
-
-    message('Computing metric ranks...')
-    smr$metricRanks <- allMetricRanks(smr)
-
-
-    message('Computing aggregate ranks...')
-    smr$aggRanks <- aggregateRanks(smr)
-
-
-    if(is.null(efBenchmark) & !is.null(geneSets)){
-        message('Running efficiency benchmark. This may take a long time...')
-        efBenchmark <- efficiencyBenchmark(scObj,
-                                           labelCol,
-                                           geneSets,
-                                           gsaMethods,
-                                           geneSetNames,
-                                           checkLabels=FALSE)
-    }
-
-    if(!is.null(efBenchmark) | !is.null(geneSets))
-        smr$efficiency <- efBenchmark
-
+    if(!is.null(efBenchmark))
+       smr$efficiency <- efBenchmark else{
+           if(!is.null(geneSets)){
+               message('Running efficiency benchmark.',
+               ' This may take a long time...')
+               efBenchmark <- efficiencyBenchmark(scObj,
+                                                  labelCol,
+                                                  geneSets,
+                                                  gsaMethods,
+                                                  geneSetNames,
+                                                  checkLabels=FALSE)
+           }}
     y <- Sys.time()
     print(y - x)
     return(smr)

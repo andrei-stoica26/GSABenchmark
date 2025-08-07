@@ -13,7 +13,7 @@ mdsScoreSummary(scObj, gsaMethods, geneSetNames, smr)
 
 \item{geneSetNames}{The names of the gene sets.}
 
-\item{smr}{List containing boundary, MCC and global summary data frames.}
+\item{smr}{List containing boundary, MCC and global lists of data frames.}
 }
 \value{
 A list containing a data frame with three columns (two MDS
@@ -25,3 +25,4 @@ performed for the cell-level method predicted scores. The resulting
 two-column data frame is appended the average accuracy benchmark score
 of each method, obtained on the gene set.
 }
+\keyword{internal}

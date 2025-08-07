@@ -7,7 +7,7 @@
 aggregateRanks(smr)
 }
 \arguments{
-\item{smr}{List containing boundary, MCC and global summary data frames.}
+\item{smr}{List containing boundary, MCC and global lists of data frames.}
 
 \item{nAggCols}{Number of columns of aggregate results in the list of
 summary data frames.}
