@@ -1,3 +1,82 @@
+#' @importFrom Matrix colMeans rowMeans rowSums t
+#' @importFrom withr with_seed
+#'
+NULL
+
+#' Helper used to run AddModuleScore
+#'
+#' This function is used to run \code{AddModuleScore}.
+#'
+#' @inheritParams runDecoupleRMethod
+#' @param slot Gene expression slot. Default is 'data'.
+#' @param pool The set from which features to be compared with signature genes
+#' are selected. Defaults to all features.
+#' @param nbin Number of bins of aggregate expression levels for pool features.
+#' @param ctrl Number of control features chosen from the same bin for each
+#' feature.
+#'
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
+#'
+#' @keywords internal
+#'
+addModuleScoreHelper <- function(scObj,
+                                 genes,
+                                 colStr = 'AddModuleScore',
+                                 slot = 'data',
+                                 pool = rownames(scObj),
+                                 nbin = 24,
+                                 ctrl = 100){
+    mat <- scExpMat(scObj, slot, densify=FALSE)
+    matAvg <- Matrix::rowMeans(mat[pool, ])
+    matAvg <- matAvg[order(matAvg)]
+    matCut <- cut_number(matAvg + rnorm(length(matAvg))/1e30,
+                         n=nbin,
+                         labels=FALSE,
+                         right=FALSE)
+    names(matCut) <- names(matAvg)
+    ctrlUse <- c()
+    for (gene in genes) {
+        ctrlSample <- names(sample(matCut[which(matCut == matCut[gene])],
+                         size=ctrl, replace=FALSE))
+        ctrlUse <- c(ctrlUse, ctrlSample)
+    }
+    ctrlUse <- unique(ctrlUse)
+    featureScores <- Matrix::colMeans(mat[genes, , drop=FALSE])
+    ctrlScores <- Matrix::colMeans(mat[ctrlUse, ])
+    scores <- featureScores - ctrlScores
+    scObj[[colStr]] <- safeMinmax(scores)
+    return(scObj)
+}
+
+#' Run AddModuleScore
+#'
+#' This function runs \code{AddModuleScore}.
+#'
+#' @details Reimplemented from \code{https://github.com/satijalab}.
+#'
+#' @inheritParams addModuleScoreHelper
+#' @param seed Random seed.
+#'
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
+#'
+#' @export
+#'
+runAddModuleScore <- function(scObj, genes, colStr = 'AddModuleScore',
+                              slot = 'data', pool = rownames(scObj),
+                              nbin = 24, ctrl = 100, seed = 1){
+    if (is.null(seed))
+        stop('A positive integer seed must be set.')
+    return(with_seed(seed, addModuleScoreHelper(scObj,
+                                                genes,
+                                                colStr,
+                                                slot,
+                                                pool,
+                                                nbin,
+                                                ctrl)))
+}
+
 #' Compute mean signature gene rank
 #'
 #' This function computes the average gene rank for input genes in a cell,

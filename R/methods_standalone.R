@@ -1,4 +1,4 @@
-#' @importFrom Matrix rowSums t
+
 #' @importFrom pagoda2 score.cells.puram
 #' @importFrom singscore rankGenes simpleScore
 #' @importFrom SiPSiC getPathwayScores

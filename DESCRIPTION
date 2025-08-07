@@ -32,7 +32,8 @@ Imports:
     SiPSiC,
     stringr,
     stats,
-    VAM
+    VAM,
+    withr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2

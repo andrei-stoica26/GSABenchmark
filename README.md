@@ -26,9 +26,10 @@ In addition, GSABenchmark uses [peakRAM](https://cran.r-project.org/web//package
 
 ## Methods
 
-Currently, GSABenchmark supports 16 gene set analysis methods for both `Seurat` 
+Currently, GSABenchmark supports 17 gene set analysis methods for both `Seurat` 
 and `SingleCellExperiment` objects:
 
+- `AddModuleScore` (reimplemented from [Seurat](https://github.com/satijalab))
 - `AUCell`
 - `CSOA`
 - `GSVA`
@@ -46,7 +47,8 @@ and `SingleCellExperiment` objects:
 - `VAM`
 - `Zscore`
 
-The `supportedMethods()` function can be used to display all method names alphabetically.
+The `supportedMethods()` function can be used to alphabetically print the names
+of all supported methods.
 
 ## Assessing new methods
 
