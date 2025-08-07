@@ -1,7 +1,7 @@
 #' @importFrom ggplot2 aes cut_number element_text geom_point ggplot ggtitle labs scale_color_manual theme theme_minimal
 #' @importFrom ggrepel geom_text_repel
 #' @importFrom grDevices rainbow
-#' @importFrom henna densityPlot rankSummary rankPlot
+#' @importFrom henna classPlot densityPlot rankSummary rankPlot
 #' @importFrom reshape2 melt
 #'
 NULL

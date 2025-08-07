@@ -54,6 +54,9 @@ allTopRatios <- function(smr, nItems = 25){
                                    topRatios(smr$MCC, 0, 1),
                                    topRatios(smr$global, 2, 1)))
     ratioDF <- ratioDF[order(ratioDF$Ratio, decreasing=TRUE),]
-    ratioDF <- ratioDF[seq(nItems), ]
+    if (nItems <= nrow(ratioDF))
+        ratioDF <- ratioDF[seq(nItems), ] else
+            message('Cannot return ', nItems, ' top ratios. ',
+                    'Will retun only ', nrow(Items), '.')
     return(ratioDF)
 }
