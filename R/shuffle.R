@@ -9,11 +9,12 @@ NULL
 #'
 #' @inheritParams runGSAMethods
 #' @param gsaMethod Name of the gene set analysis method.
-#' @param lossVector Gene loss values.
-#' @param noiseVector Noise values.
+#' @param loss A numeric vector of gene loss values. Must be in [0, 1).
+#' @param noise A numeric vector of noise values. Must be in [0, 1).
 #' @param doGrid Whether to run the methods for each loss-noise combination.
-#' @param nReplicates Number of replicates.
-#' @param seed Random seed passed to \code{hammers::shuffleGenes}.
+#' @param seeds A numeric vector of random seeds passed
+#' to \code{hammers::shuffleGenes}. Its length decides the number of
+#' replicates.
 #'
 #' @return A \code{Seurat} or \code{SingleCellExpression} object
 #' with the results of the runs stored as metadata columns.
@@ -25,31 +26,34 @@ runMethodShuffle <- function(scObj,
                              geneSets,
                              gsaMethod,
                              geneSetNames,
-                             lossVector = c(0, 0.25, 0.5),
-                             noiseVector = c(0, 0.25, 0.5),
+                             loss = c(0, 0.2),
+                             noise = c(0, 0.2),
                              doGrid = TRUE,
-                             nReplicates = 3,
-                             seed = 1){
+                             seeds = c(1, 2, 3)){
 
     checkSetNames(scObj, labelCol, geneSetNames)
     if(doGrid){
-        lossNoiseDF <- expand.grid(lossVector, noiseVector)
+        lossNoiseDF <- expand.grid(loss, noise)
         lossVector <- lossNoiseDF[, 1]
         noiseVector <- lossNoiseDF[, 2]
     }
 
-    expression <- scExpMat(scObj, 'counts')
+    nReplicates <- length(seeds)
+
+    expression <- scExpMat(scObj, 'counts', densify=FALSE)
     nValues <- length(lossVector)
     for (i in seq(nValues)){
         for (j in seq(nReplicates)){
-            shGeneSets <- lapply(geneSets, function(x)
-                shuffleGenes(scObj, x, lossVector[i], noiseVector[i], seed))
-            infix <- paste0('_',
-                            lossVector[i] * 100,
-                            '_',
-                            noiseVector[i] * 100,
-                            '_',
-                            j)
+            lossPerc <- round(lossVector[i] * 100, 1)
+            noisePerc <- round(noiseVector[i] * 100, 1)
+            shGeneSets <- lapply(geneSets, function(x){
+                message('Shuffling genes: gene loss = ', lossPerc,
+                        '%, noise = ', noisePerc, '%, replicate = ', j, '.')
+                shuffleGenes(scObj, x, lossVector[i], noiseVector[i],
+                             seeds[j], verbose=FALSE)
+            })
+
+            infix <- paste0('_', lossPerc, '_', noisePerc, '_', j)
             scObj <- runGSAMethods(scObj,
                                    labelCol,
                                    shGeneSets,

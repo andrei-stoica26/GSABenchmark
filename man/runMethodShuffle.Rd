@@ -10,11 +10,10 @@ runMethodShuffle(
   geneSets,
   gsaMethod,
   geneSetNames,
-  lossVector = c(0, 0.25, 0.5),
-  noiseVector = c(0, 0.25, 0.5),
+  loss = c(0, 0.2),
+  noise = c(0, 0.2),
   doGrid = TRUE,
-  nReplicates = 3,
-  seed = 1
+  seeds = c(1, 2, 3)
 )
 }
 \arguments{
@@ -28,15 +27,15 @@ runMethodShuffle(
 
 \item{geneSetNames}{The names of the gene sets.}
 
-\item{lossVector}{Gene loss values.}
+\item{loss}{A numeric vector of gene loss values. Must be in [0, 1).}
 
-\item{noiseVector}{Noise values.}
+\item{noise}{A numeric vector of noise values. Must be in [0, 1).}
 
 \item{doGrid}{Whether to run the methods for each loss-noise combination.}
 
-\item{nReplicates}{Number of replicates.}
-
-\item{seed}{Random seed passed to \code{hammers::shuffleGenes}.}
+\item{seeds}{A numeric vector of random seeds passed
+to \code{hammers::shuffleGenes}. Its length decides the number of
+replicates.}
 }
 \value{
 A \code{Seurat} or \code{SingleCellExpression} object

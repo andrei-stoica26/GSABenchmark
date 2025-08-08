@@ -199,7 +199,7 @@ length(plots)
 
 Below, we display one of the resulting plots:
 
-```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
+```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
 plots[[3]]
 ```
 
@@ -207,7 +207,7 @@ This summary object is also used to create other plots. The `geneSetRankPlots`
 function creates plots ranking the gene set analysis methods for each gene set.
 We display one of these plots:
 
-```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
+```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
 plots <- geneSetRankPlots(smr)
 plots[[1]]
 ```
@@ -215,7 +215,7 @@ plots[[1]]
 The `metricRankPlots` function creates plots ranking the gene set analysis 
 methods for each benchmark metric. Below, we display one of these plots:
 
-```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
+```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
 plots <- metricRankPlots(smr)
 plots[[5]]
 ```
@@ -224,7 +224,7 @@ We can also visualize the aggregate ranks of the methods using the
 `aggregateRankPlot` function, which also display the average rank obtained by
 each method:
 
-```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
+```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
 aggregateRankPlot(smr)
 ```
 
@@ -232,7 +232,7 @@ Next, we will use the ratioRank function to visualize the top results among
 all method-metric-gene set combinations as ranked by the ratio of the 
 maximum score and the mean:
 
-```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
+```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
 ratioPlot(smr)
 ```
 
@@ -240,7 +240,7 @@ Finally, we will perform MDS plots for each gene set, illustrating how similar
 or different the results obtained by different methods are. We showcase one of 
 these plots below:
 
-```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
+```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
 plots <- mdsPlots(scObj, smr)
 plots[[2]]
 ```
