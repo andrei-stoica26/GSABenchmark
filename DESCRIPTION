@@ -1,13 +1,13 @@
 Package: GSABenchmark
 Type: Package
 Title: Tools for Benchmarking Gene Set Analysis Methods
-Version: 0.1.5
+Version: 0.2.0
 Author: Andrei-Florian Stoica
 Maintainer: Andrei-Florian Stoica <andrei@gibh.ac.cn>
 Description: GSABenchmark is a package designed for benchmarking scRNA-seq gene 
     set analysis methods. It provides both traditional and novel benchmark 
     metrics, as well as visualization tools. Currently, GSABenchmark supports 
-    15 gene set analysis methods. 
+    17 gene set analysis methods. 
 License: MIT + file LICENSE
 Imports:
     CSOA,

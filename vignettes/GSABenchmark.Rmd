@@ -2,7 +2,7 @@
 title: "GSABenchmark"
 author: "Andrei-Florian Stoica"
 package: GSABenchmark
-date: July 27, 2025
+date: August 8, 2025
 output: BiocStyle::html_document
 vignette: >
     %\VignetteIndexEntry{GSABenchmark}
@@ -40,7 +40,7 @@ and
 [scater](https://bioconductor.org/packages/release/bioc/html/scater.html) 
 for this tutorial.
 
-# Dataset loading
+# Loading data
 
 This tutorial uses an scRNA-seq human pancreas dataset with provided cell type 
 annotations. 
@@ -57,8 +57,6 @@ library(scRNAseq)
 scObj <- BaronPancreasData('human')
 
 ```
-
-# Input preparation
 
 GSABenchmark requires normalized and log-transformed data, and PCA coordinates.
 We will use the functions `logNormCounts` from `scuttle` and runPCA 
@@ -139,10 +137,10 @@ The `supportedMethods` function lists all the methods currently available in
 supportedMethods()
 ```
 
-For the purposes of this tutorial, we will select five of these methods:
+For the purposes of this tutorial, we will select 6 of these methods:
 
 ```{r}
-gsaMethods <- c('CSOA', 'PLAGE', 'VAM', 'SiPSiC', 'Zscore')
+gsaMethods <- c('AddModuleScore', 'CSOA', 'PLAGE', 'VAM', 'SiPSiC', 'Zscore')
 ```
 
 We now run the five methods for each gene set:
@@ -232,15 +230,54 @@ Next, we will use the ratioRank function to visualize the top results among
 all method-metric-gene set combinations as ranked by the ratio of the 
 maximum score and the mean:
 
-```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
-ratioPlot(smr)
+```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
+ratioPlot(smr, labelSize=2.5)
 ```
 
 Finally, we will perform MDS plots for each gene set, illustrating how similar
 or different the results obtained by different methods are. We showcase one of 
 these plots below:
 
-```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
+```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
+plots <- mdsPlots(scObj, smr)
+plots[[2]]
+```
+
+# Benchmarking a single method at different choices of gene loss and noise
+
+GSABenchmark also offers the option of benchmarking a single method at 
+different choice of gene loss (fraction of genes removed from each gene
+signature) and noise (fraction of the retained genes in the final adjusted
+gene signatures after random genes have been added).
+
+Each condition determined by a gene loss-noise combination can be run in
+replicates (that is, different gene signatures will be constructed with the
+same gene loss and noise parameters for each replicate). The `seeds` argument
+controls the random seeds used in the generation of gene sets, and its length
+determines the number of replicates:
+
+```{r}
+geneSets <- list(alphaMarkers, betaMarkers)
+geneSetNames <- c('alpha', 'beta')
+scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA',
+                              geneSetNames,
+                              loss=c(1/3, 2/3),
+                              noise=c(0.5),
+                              seeds=c(20, 30))
+
+```
+
+Subsequently, the same benchmark as before can be run with 
+`runBenchmarkShuffle`, a thin wrapper around `runBenchmark`:
+
+```{r}
+smr <- runBenchmarkShuffle(scObj, 'label', 'CSOA', geneSetNames)
+```
+
+We can then create the same plots as before before with the new benchmark
+summary results. For instance, here we display a MDS plot:
+
+```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
 plots <- mdsPlots(scObj, smr)
 plots[[2]]
 ```
