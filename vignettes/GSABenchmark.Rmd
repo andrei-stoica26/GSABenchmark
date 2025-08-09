@@ -59,8 +59,8 @@ scObj <- BaronPancreasData('human')
 ```
 
 GSABenchmark requires normalized and log-transformed data, and PCA coordinates.
-We will use the functions `logNormCounts` from `scuttle` and runPCA 
-from `scater` for these steps:
+We will use the functions `logNormCounts` from `scuttle` (loaded with `scater`)
+and runPCA from `scater` for these steps:
 
 
 ```{r}

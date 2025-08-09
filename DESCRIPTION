@@ -38,9 +38,9 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
 Suggests:
+    BiocStyle,
     knitr,
     rmarkdown,
     scater,
-    scRNAseq,
-    scuttle
+    scRNAseq
 VignetteBuilder: knitr

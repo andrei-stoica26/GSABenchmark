@@ -4,7 +4,7 @@
 \alias{allBenchmarkPlots}
 \title{Plot the complete list of benchmark summaries}
 \usage{
-allBenchmarkPlots(smr, titleSuffix = NULL, ...)
+allBenchmarkPlots(smr, titleSuffix = NULL)
 }
 \arguments{
 \item{smr}{Complete summary list generated with allBenchmarkResults.}

@@ -4,7 +4,7 @@
 \alias{methodsCor}
 \title{Calculate correlation matrix for method results}
 \usage{
-methodsCor(scObj, gsaMethods, scoreCols = gsaMethods, corMethod = "pearson")
+methodsCor(scObj, gsaMethods, scoreCols = gsaMethods, corMethod = "spearman")
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}

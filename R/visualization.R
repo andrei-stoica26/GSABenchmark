@@ -124,7 +124,7 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
 #'
 #' @export
 #'
-allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
+allBenchmarkPlots <- function(smr, titleSuffix = NULL){
     p1 <- benchmarkPlots(smr$boundary, titleSuffix)
     p2 <- list(scorePlot(smr$MCC$boundary,
                          paste0('MCC with boundary threshold', titleSuffix)),

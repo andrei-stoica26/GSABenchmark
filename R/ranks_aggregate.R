@@ -21,9 +21,6 @@ bindSummary <- function(smr, nAggDFs=0, nAvgCols=0)
 #' This function computes aggregate ranks from a list of summary data frames.
 #'
 #' @inheritParams mdsScoreSummary
-#' @param nAggCols Number of columns of aggregate results in the list of
-#' summary data frames.
-#' @param nAvgCols Number of average columns for each data frame in the list.
 #'
 #' @return A data frame of aggregate summary results.
 #'

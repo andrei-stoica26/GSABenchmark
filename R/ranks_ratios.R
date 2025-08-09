@@ -57,6 +57,6 @@ allTopRatios <- function(smr, nItems = 25){
     if (nItems <= nrow(ratioDF))
         ratioDF <- ratioDF[seq(nItems), ] else
             message('Cannot return ', nItems, ' top ratios. ',
-                    'Will retun only ', nrow(Items), '.')
+                    'Will retun only ', nrow(ratioDF), '.')
     return(ratioDF)
 }

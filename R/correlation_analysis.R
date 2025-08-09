@@ -12,7 +12,10 @@
 #'
 #' @export
 #'
-methodsCor <- function(scObj, gsaMethods, scoreCols = gsaMethods, corMethod = 'pearson'){
+methodsCor <- function(scObj,
+                       gsaMethods,
+                       scoreCols = gsaMethods,
+                       corMethod = 'spearman'){
     m <- as.matrix(metadataDF(scObj)[, scoreCols])
     corMat <- cor(m, method = corMethod)
     rownames(corMat) <- gsaMethods
