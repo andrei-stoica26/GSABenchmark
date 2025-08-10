@@ -12,6 +12,8 @@
 checkSetNames <- function(scObj, labelCol, geneSetNames){
     if (is(labelCol)[1] != 'character')
         stop('geneSetNames must be a character vector.')
+    if(max(grepl(' ', geneSetNames)))
+        stop('No spaces are allowed in any gene set name')
     extraNames <- setdiff(geneSetNames,
                           as.character(unique(scCol(scObj, labelCol))))
     if (length(extraNames))

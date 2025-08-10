@@ -121,8 +121,9 @@ geneSets <- list(acinarMarkers, alphaMarkers, betaMarkers, deltaMarkers)
 geneSetNames <- c('acinar', 'alpha', 'beta', 'delta')
 ```
 
-**!* Note: The gene set names must all be found in the column of assessed
-class identities. For this dataset, this column is named `label`:
+**!* Note: The gene set names cannot contain spaces, and they must all be found 
+in the column of assessed class identities. For this dataset, this column is 
+named `label`:
 
 ```{r}
 setdiff(geneSetNames, colData(scObj)[['label']])
