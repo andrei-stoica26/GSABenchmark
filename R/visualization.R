@@ -141,34 +141,6 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL){
     return(plots)
 }
 
-#' Create MDS plots for the method results
-#'
-#' This function creates MDS plots for method results
-#'
-#' @inheritParams mdsScoreSummary
-#' @inheritParams timePlot
-#' @param ... Additional arguments passed to \code{henna::densityPlot}.
-#'
-#' @return A named list of ggplot objects
-#'
-#' @export
-#'
-mdsPlots <- function(scObj, smr, titleSuffix = NULL, ...){
-    message('Computing scored MDS summary...')
-
-    gsaMethods <- sort(rownames(smr$boundary[[1]]))
-    geneSetNames <- colnames(smr$boundary[[1]])
-    geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
-
-    mdsDFs <- mdsScoreSummary(scObj, gsaMethods, geneSetNames, smr)
-    plots <- mapply(function(mdsDF, gsName)
-        densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes',
-                                  titleSuffix), ...),
-        mdsDFs, geneSetNames, SIMPLIFY=FALSE)
-    names(plots) <- geneSetNames
-    return(plots)
-}
-
 #' Create gene set rank plots for the method results
 #'
 #' This function creates gene set rank plots for method results.
@@ -269,4 +241,39 @@ ratioPlot <- function(smr, titleSuffix = NULL, nItems = 25, ...){
     p <- classPlot(ratioDF,
                    paste0('Top maximum over mean ratios', titleSuffix), ...)
     return(p)
+}
+
+#' Create MDS plots for the method results
+#'
+#' This function creates MDS plots for method results
+#'
+#' @inheritParams mdsScoreSummary
+#' @inheritParams timePlot
+#' @param ... Additional arguments passed to \code{henna::densityPlot}.
+#'
+#' @return A named list of ggplot objects
+#'
+#' @export
+#'
+mdsPlots <- function(scObj, smr, titleSuffix = NULL, ...){
+    message('Computing MDS...')
+
+    gsaMethods <- sort(rownames(smr$boundary[[1]]))
+    geneSetNames <- colnames(smr$boundary[[1]])
+    geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
+
+    mdsDFs <- mdsScoreSummary(scObj, gsaMethods, geneSetNames, smr)
+    plots <- mapply(function(mdsDF, gsName)
+        densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes',
+                                  titleSuffix), ...),
+        mdsDFs, geneSetNames, SIMPLIFY=FALSE)
+
+    p <- densityPlot(Reduce(`+`, lapply(mdsDFs, function(x) x[, seq(3)])) /
+                                length(mdsDFs),
+                     paste0('MDS plot - aggregate',
+                            titleSuffix))
+
+    plots <- c(plots, list(p))
+    names(plots) <- c(geneSetNames, 'aggregate')
+    return(plots)
 }
