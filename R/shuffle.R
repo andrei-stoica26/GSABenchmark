@@ -50,7 +50,7 @@ runMethodShuffle <- function(scObj,
                     '%, noise = ', noisePerc, '%, replicate = ', j, '.')
             shGeneSets <- lapply(geneSets, function(x)
                 shuffleGenes(scObj, x, lossVector[i], noiseVector[i],
-                             seeds[j], verbose=FALSE))
+                             seed=seeds[j], verbose=FALSE))
             infix <- paste0('_', lossPerc, '_', noisePerc, '_', j)
             scObj <- runGSAMethods(scObj,
                                    labelCol,
