@@ -233,7 +233,7 @@ maximum score and the mean:
 ratioPlot(smr, labelSize=2.5)
 ```
 
-To illustrating the similarity of the results obtained by different methods, 
+To illustrate the similarity of the results obtained by different methods, 
 we will create MDS plots for each gene set, as well as an aggregate MDS plot. 
 We showcase the aggregate MDS plot below:
 

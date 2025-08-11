@@ -256,8 +256,6 @@ ratioPlot <- function(smr,
     return(p)
 }
 
-?classPlot
-
 #' Create MDS plots for method results
 #'
 #' This function creates MDS plots for method results.
