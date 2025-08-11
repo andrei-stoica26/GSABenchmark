@@ -235,13 +235,21 @@ maximum score and the mean:
 ratioPlot(smr, labelSize=2.5)
 ```
 
-Finally, we will perform MDS plots for each gene set, illustrating how similar
-or different the results obtained by different methods are. We showcase one of 
-these plots below:
+To illustrating the similarity of the results obtained by different methods, 
+we will create MDS plots for each gene set, as well as an aggregate MDS plot. 
+We showcase the aggregate MDS plot below:
 
 ```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
 plots <- mdsPlots(scObj, smr)
-plots[[2]]
+plots[[length(geneSetNames)]]
+```
+
+Another way to look at the similarity between the results of different methods
+is through correlation plots. Below, we display the aggregate correlation plot:
+
+```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
+plots <- corrPlots(scObj, smr)
+plots[[length(geneSetNames)]]
 ```
 
 # Benchmarking a single method at different choices of gene loss and noise
