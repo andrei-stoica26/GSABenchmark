@@ -24,7 +24,7 @@ geneSetMetrics <- function(smr, gsaMethods, gsName, nAggCols)
 #' two-column data frame is appended the average accuracy benchmark score
 #' of each method, obtained on the gene set.
 #'
-#' @inheritParams runBenchmark
+#' @inheritParams extractCellScores
 #' @param smr List containing boundary, MCC and global lists of data frames.
 #'
 #' @return A list containing a data frame with three columns (two MDS
@@ -32,12 +32,13 @@ geneSetMetrics <- function(smr, gsaMethods, gsName, nAggCols)
 #'
 #' @keywords internal
 #'
-mdsScoreSummary <- function(scObj,
-                            gsaMethods,
-                            geneSetNames,
-                            smr){
+mdsScoreSummary <- function(scObj, smr){
 
-    mdsScoreSmr <- lapply(geneSetNames, function(gsName){
+    gsaMethods <- sort(rownames(smr$boundary[[1]]))
+    geneSetNames <- colnames(smr$boundary[[1]])
+    geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
+
+    mdsDFs <- lapply(geneSetNames, function(gsName){
         setDF <- metadataDF(scObj)[, paste0(gsaMethods, '_', gsName)]
         setDF <- apply(setDF, 2, function(x) x / sum(x) * 100)
         colnames(setDF) <- gsaMethods
@@ -59,6 +60,11 @@ mdsScoreSummary <- function(scObj,
         return(mdsMat)
     })
 
-    names(mdsScoreSmr) <- geneSetNames
-    return(mdsScoreSmr)
+    aggMDS <- Reduce(`+`, lapply(mdsDFs, function(x) x[, seq(3)])) /
+        length(mdsDFs)
+
+    mdsDFs <- c(mdsDFs, list(aggMDS))
+
+    names(mdsDFs) <- c(geneSetNames, 'aggregate')
+    return(mdsDFs)
 }

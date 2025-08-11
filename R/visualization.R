@@ -1,7 +1,7 @@
 #' @importFrom ggplot2 aes cut_number element_text geom_point ggplot ggtitle labs scale_color_manual theme theme_minimal
 #' @importFrom ggrepel geom_text_repel
 #' @importFrom grDevices rainbow
-#' @importFrom henna classPlot densityPlot rankSummary rankPlot
+#' @importFrom henna classPlot correlationPlot densityPlot rankSummary rankPlot
 #' @importFrom reshape2 melt
 #'
 NULL
@@ -243,37 +243,49 @@ ratioPlot <- function(smr, titleSuffix = NULL, nItems = 25, ...){
     return(p)
 }
 
-#' Create MDS plots for the method results
+#' Create MDS plots for method results
 #'
-#' This function creates MDS plots for method results
+#' This function creates MDS plots for method results.
 #'
 #' @inheritParams mdsScoreSummary
 #' @inheritParams timePlot
 #' @param ... Additional arguments passed to \code{henna::densityPlot}.
 #'
-#' @return A named list of ggplot objects
+#' @return A named list of ggplot objects.
 #'
 #' @export
 #'
 mdsPlots <- function(scObj, smr, titleSuffix = NULL, ...){
-    message('Computing MDS...')
+    message('Computing MDS for method results...')
 
-    gsaMethods <- sort(rownames(smr$boundary[[1]]))
-    geneSetNames <- colnames(smr$boundary[[1]])
-    geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
-
-    mdsDFs <- mdsScoreSummary(scObj, gsaMethods, geneSetNames, smr)
-    plots <- mapply(function(mdsDF, gsName)
-        densityPlot(mdsDF, paste0('MDS plot - ', gsName, ' genes',
+    mdsDFs <- mdsScoreSummary(scObj, smr)
+    plotNames <- names(mdsDFs)
+    plots <- mapply(function(mdsDF, plotName)
+        densityPlot(mdsDF, paste0('MDS plot - ', plotName,
                                   titleSuffix), ...),
-        mdsDFs, geneSetNames, SIMPLIFY=FALSE)
+        mdsDFs, plotNames, SIMPLIFY=FALSE)
+    return(plots)
+}
 
-    p <- densityPlot(Reduce(`+`, lapply(mdsDFs, function(x) x[, seq(3)])) /
-                                length(mdsDFs),
-                     paste0('MDS plot - aggregate',
-                            titleSuffix))
+#' Create correlation plots for method results
+#'
+#' This function creates correlation plots for method results
+#'
+#' @inheritParams mdsPlots
+#' @param ... Additional arguments passed to \code{henna::correlationPlot}.
+#'
+#' @return A named list of ggplot objects.
+#'
+#' @export
+#'
+corrPlots <- function(scObj, smr, titleSuffix = NULL, ...){
+    message('Computing correlations for method results...')
 
-    plots <- c(plots, list(p))
-    names(plots) <- c(geneSetNames, 'aggregate')
+    corrDFs <- corrSummary(scObj, smr)
+    plotNames <- names(corrDFs)
+    plots <- mapply(function(corrDF, plotName)
+        correlationPlot(corrDF, paste0('Correlation plot - ', plotName,
+                                  titleSuffix), ...),
+        corrDFs, plotNames, SIMPLIFY=FALSE)
     return(plots)
 }

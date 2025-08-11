@@ -4,14 +4,10 @@
 \alias{mdsScoreSummary}
 \title{Compute the scored MDS summary}
 \usage{
-mdsScoreSummary(scObj, gsaMethods, geneSetNames, smr)
+mdsScoreSummary(scObj, smr)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
-
-\item{gsaMethods}{Character vector of gene set analysis methods.}
-
-\item{geneSetNames}{The names of the gene sets.}
 
 \item{smr}{List containing boundary, MCC and global lists of data frames.}
 }
