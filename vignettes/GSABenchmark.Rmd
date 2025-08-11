@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 GSABenchmark is a package designed for benchmarking scRNA-seq gene 
 set analysis methods. It provides both traditional and novel benchmark 
 metrics, as well as visualization tools. Currently, GSABenchmark supports 
-15 gene set analysis methods. 
+17 gene set analysis methods. 
 
 # Installation
 To install GSABenchmark, run the following commands in an R session:
@@ -58,7 +58,7 @@ scObj <- BaronPancreasData('human')
 
 ```
 
-GSABenchmark requires normalized and log-transformed data, and PCA coordinates.
+GSABenchmark requires normalized and log-transformed data and PCA coordinates.
 We will use the functions `logNormCounts` from `scuttle` (loaded with `scater`)
 and runPCA from `scater` for these steps:
 
@@ -114,15 +114,15 @@ deltaMarkers <- c('SST', 'GABRB3', 'FRZB', 'MS4A8', 'BAIAP3', 'CASR', 'BCHE',
                   'RESP18', 'PAX4', 'RBP4', 'PCSK9', 'FFAR4')
 ```
 
-Now we gather the gene sets and we declare their names:
+Now we gather the gene sets and store their names:
 
 ```{r}
 geneSets <- list(acinarMarkers, alphaMarkers, betaMarkers, deltaMarkers)
 geneSetNames <- c('acinar', 'alpha', 'beta', 'delta')
 ```
 
-**!* Note: The gene set names cannot contain spaces or underscores, and they 
-must all be found in the column of assessed class identities. For this dataset, 
+**Note**: The gene set names cannot contain spaces or underscores, and must all
+be found in the column of assessed class identities. For this dataset, 
 this column is named `label`:
 
 ```{r}
@@ -144,7 +144,7 @@ For the purposes of this tutorial, we will select 6 of these methods:
 gsaMethods <- c('AddModuleScore', 'CSOA', 'PLAGE', 'VAM', 'SiPSiC', 'Zscore')
 ```
 
-We now run the five methods for each gene set:
+We now run the 6 methods for each gene set:
 
 ```{r}
 scObj <- runGSAMethods(scObj, 'label', geneSets, gsaMethods, geneSetNames)
@@ -152,23 +152,23 @@ scObj <- runGSAMethods(scObj, 'label', geneSets, gsaMethods, geneSetNames)
 
 # Running the benchmark
 
-The benchmark is run in a single line of code. For the purposes of this 
-vignette, we will perform only the correctness benchmark by setting 
-`geneSets` to `NULL`. This command bypasses the execution of the speed and 
-memory benchmarks.
+The benchmark is run in a single line of code. In this vignette, we will only 
+perform the correctness benchmark. To achieve this, we will bypass the 
+execution of speed and memory benchmarks by setting `geneSets` to `NULL`:
 
 ```{r}
 smr <- runBenchmark(scObj, 'label', geneSets=NULL, gsaMethods, geneSetNames)
 ```
 
-**Note**: While this tutorial illustrates using `GSABenchmark` with 
-Bioconductor's native `SingleCellExperiment` class, `GSABenchmark` is also fully
-compatible with `Seurat`. Both `runGSAMethods` and `runBenchmark` also accept a
-Seurat object as their first argument.
+**Note**: This tutorial illustrates using `GSABenchmark` with 
+Bioconductor's native `SingleCellExperiment` class. However, `GSABenchmark` 
+is also fully compatible with `Seurat`, with the relevant methods 
+(`runGSAMethods`, `runBenchmark`, `runMethodShuffle`, `runBenchmarkShuffle` 
+also accepting a Seurat object as their first argument.
 
 # Exploring the results
 
-`runBenchmark` returns a list object with four elements. We can further explore
+`runBenchmark` returns a list of lists of data frames. We can further explore
 the structure of this object:
 
 ```{r}
@@ -176,16 +176,14 @@ names(smr)
 names(smr$boundary)
 names(smr$MCC)
 names(smr$global)
-names(smr$efficiency)
 ```
 
-We can look at summaries in terms of correctness, speed, and memory usage:
+We can access the main summaries of the results as follows:
 
 ```{r}
 smr$boundary$metricSummary
 smr$MCC
 smr$global$metricSummary
-smr$efficiency
 ```
 
 To visualize the results, we will call the `allBenchmarkPlots` function. This
@@ -202,9 +200,9 @@ Below, we display one of the resulting plots:
 plots[[3]]
 ```
 
-This summary object is also used to create other plots. The `geneSetRankPlots` 
-function creates plots ranking the gene set analysis methods for each gene set.
-We display one of these plots:
+The output of `runBenchmark` is also used to create other plots. 
+The `geneSetRankPlots` function creates plots ranking the gene set analysis 
+methods for each gene set. We display one of these plots:
 
 ```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
 plots <- geneSetRankPlots(smr)
@@ -220,7 +218,7 @@ plots[[5]]
 ```
 
 We can also visualize the aggregate ranks of the methods using the 
-`aggregateRankPlot` function, which also display the average rank obtained by
+`aggregateRankPlot` function, which also displays the average rank obtained by
 each method:
 
 ```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
@@ -241,7 +239,7 @@ We showcase the aggregate MDS plot below:
 
 ```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
 plots <- mdsPlots(scObj, smr)
-plots[[length(geneSetNames)]]
+plots[[length(geneSetNames) + 1]]
 ```
 
 Another way to look at the similarity between the results of different methods
@@ -249,21 +247,21 @@ is through correlation plots. Below, we display the aggregate correlation plot:
 
 ```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
 plots <- corrPlots(scObj, smr)
-plots[[length(geneSetNames)]]
+plots[[length(geneSetNames) + 1]]
 ```
 
 # Benchmarking a single method at different choices of gene loss and noise
 
 GSABenchmark also offers the option of benchmarking a single method at 
-different choice of gene loss (fraction of genes removed from each gene
-signature) and noise (fraction of the retained genes in the final adjusted
+different choices of gene loss (fraction of genes removed from each gene
+signature) and noise (fraction of retained genes in the final adjusted
 gene signatures after random genes have been added).
 
 Each condition determined by a gene loss-noise combination can be run in
 replicates (that is, different gene signatures will be constructed with the
 same gene loss and noise parameters for each replicate). The `seeds` argument
-controls the random seeds used in the generation of gene sets, and its length
-determines the number of replicates:
+controls the random seeds used in the generation of gene sets. Its length
+determines the number of replicates.
 
 ```{r}
 geneSets <- list(alphaMarkers, betaMarkers)
@@ -283,8 +281,8 @@ Subsequently, the same benchmark as before can be run with
 smr <- runBenchmarkShuffle(scObj, 'label', 'CSOA', geneSetNames)
 ```
 
-We can then create the same plots as before before with the new benchmark
-summary results. For instance, here we display a MDS plot:
+The output of `runBenchmarkShuffle` can be used to create the same types of plots
+as before. For instance, here we display a MDS plot:
 
 ```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
 plots <- mdsPlots(scObj, smr)

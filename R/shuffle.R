@@ -46,13 +46,11 @@ runMethodShuffle <- function(scObj,
         for (j in seq(nReplicates)){
             lossPerc <- round(lossVector[i] * 100, 1)
             noisePerc <- round(noiseVector[i] * 100, 1)
-            shGeneSets <- lapply(geneSets, function(x){
-                message('Shuffling genes: gene loss = ', lossPerc,
-                        '%, noise = ', noisePerc, '%, replicate = ', j, '.')
+            message('Shuffling genes: gene loss = ', lossPerc,
+                    '%, noise = ', noisePerc, '%, replicate = ', j, '.')
+            shGeneSets <- lapply(geneSets, function(x)
                 shuffleGenes(scObj, x, lossVector[i], noiseVector[i],
-                             seeds[j], verbose=FALSE)
-            })
-
+                             seeds[j], verbose=FALSE))
             infix <- paste0('_', lossPerc, '_', noisePerc, '_', j)
             scObj <- runGSAMethods(scObj,
                                    labelCol,

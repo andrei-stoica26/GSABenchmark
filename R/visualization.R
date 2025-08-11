@@ -228,6 +228,9 @@ aggregateRankPlot <- function(smr, titleSuffix = NULL){
 #'
 #' @inheritParams allBenchmarkPlots
 #' @inheritParams allTopRatios
+#' @param xLab Label of the x axis.
+#' @param yLab Label of the y axis.
+#' @param legendLab Legend title.
 #'
 #' @param ... Additional arguments passed to \code{henna::classRank}.
 #'
@@ -235,13 +238,25 @@ aggregateRankPlot <- function(smr, titleSuffix = NULL){
 #'
 #' @export
 #'
-ratioPlot <- function(smr, titleSuffix = NULL, nItems = 25, ...){
+ratioPlot <- function(smr,
+                      titleSuffix = NULL,
+                      nItems = 25,
+                      xLab = 'Maximum over mean ratio',
+                      yLab = 'Metric',
+                      legendLab = 'Method',
+                      ...){
     message('Computing ratio ranks...')
     ratioDF <- allTopRatios(smr, nItems)
     p <- classPlot(ratioDF,
-                   paste0('Top maximum over mean ratios', titleSuffix), ...)
+                   paste0('Top maximum over mean ratios', titleSuffix),
+                   xLab,
+                   yLab,
+                   legendLab,
+                   ...)
     return(p)
 }
+
+?classPlot
 
 #' Create MDS plots for method results
 #'

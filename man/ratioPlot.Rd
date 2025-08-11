@@ -4,7 +4,15 @@
 \alias{ratioPlot}
 \title{Create ratio rank plot for the method results}
 \usage{
-ratioPlot(smr, titleSuffix = NULL, nItems = 25, ...)
+ratioPlot(
+  smr,
+  titleSuffix = NULL,
+  nItems = 25,
+  xLab = "Maximum over mean ratio",
+  yLab = "Metric",
+  legendLab = "Method",
+  ...
+)
 }
 \arguments{
 \item{smr}{Complete summary list generated with allBenchmarkResults.}
@@ -12,6 +20,12 @@ ratioPlot(smr, titleSuffix = NULL, nItems = 25, ...)
 \item{titleSuffix}{Plot title suffix to be appended to the default title}
 
 \item{nItems}{Number of retained iterms.}
+
+\item{xLab}{Label of the x axis.}
+
+\item{yLab}{Label of the y axis.}
+
+\item{legendLab}{Legend title.}
 
 \item{...}{Additional arguments passed to \code{henna::classRank}.}
 }
