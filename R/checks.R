@@ -35,7 +35,8 @@ checkSetNames <- function(scObj, labelCol, geneSetNames){
 removeSVCols <- function(df){
     hasDistinctValues <- apply(df, 2, function(x) length(unique(x)) > 1)
     removedCol <- names(which(!hasDistinctValues))
-    message('Single-valued columns will be removed: ', removedCol, '.')
+    if(length(removedCol))
+        message('Single-valued columns will be removed: ', removedCol, '.')
     df <- df[, hasDistinctValues]
     return(df)
 }
