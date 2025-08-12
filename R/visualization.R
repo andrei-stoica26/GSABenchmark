@@ -205,12 +205,15 @@ metricRankPlots <- function(smr, titleSuffix = NULL){
 #' This function creates an aggregate rank plot.
 #'
 #' @inheritParams allBenchmarkPlots
+#' @param sigDigits Number of significant digits used when displaying mean
+#' ranks. If \code{NULL}, the mean ranks will not be displayed.
+#' @param ... Additional arguments passed to rankPlot
 #'
 #' @return A ggplot object.
 #'
 #' @export
 #'
-aggregateRankPlot <- function(smr, titleSuffix = NULL){
+aggregateRankPlot <- function(smr, titleSuffix = NULL, sigDigits = 2, ...){
     message('Computing aggregate ranks...')
     aggRanks <- aggregateRanks(smr)
     p <- rankPlot(aggRanks,
@@ -218,7 +221,8 @@ aggregateRankPlot <- function(smr, titleSuffix = NULL){
                          titleSuffix),
                   summarize=FALSE,
                   xLab='Method',
-                  showMeanRanks=TRUE)
+                  sigDigits=sigDigits,
+                  ...)
     return(p)
 }
 

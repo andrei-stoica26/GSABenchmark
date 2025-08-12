@@ -40,6 +40,8 @@ mdsScoreSummary <- function(scObj, smr){
 
     mdsDFs <- lapply(geneSetNames, function(gsName){
         setDF <- metadataDF(scObj)[, paste0(gsaMethods, '_', gsName)]
+        setDF <- removeSVCols(setDF)
+
         setDF <- apply(setDF, 2, function(x) x / sum(x) * 100)
         colnames(setDF) <- gsaMethods
 

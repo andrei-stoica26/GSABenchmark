@@ -19,6 +19,7 @@ corrSummary <- function(scObj, smr, corMethod = 'spearman'){
     corrDFs <- lapply(geneSetNames, function(gsName){
         setDF <- as.matrix(metadataDF(scObj)[, paste0(gsaMethods,
                                                       '_', gsName)])
+        setDF <- removeSVCols(setDF)
         colnames(setDF) <- gsub('_.*', '', colnames(setDF))
         return(round(cor(setDF, method=corMethod), 2))
     })
