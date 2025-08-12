@@ -38,8 +38,6 @@ mdsScoreSummary <- function(scObj, smr){
     geneSetNames <- colnames(smr$boundary[[1]])
     geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
 
-    doAgg <- TRUE
-
     mdsDFs <- lapply(geneSetNames, function(gsName){
         setDF <- metadataDF(scObj)[, paste0(gsaMethods, '_', gsName)]
         setDF <- removeSVCols(setDF)
@@ -47,11 +45,8 @@ mdsScoreSummary <- function(scObj, smr){
         setDF <- apply(setDF, 2, function(x) x / sum(x) * 100)
         colnames(setDF) <- str_remove(colnames(setDF), paste0('_', gsName))
 
-        if(length(setdiff(gsaMethods, colnames(setDF)))){
-            message('At least one single-valued columns has been removed.',
-            ' Aggregate MDS will not be computed.')
-            doAgg <- FALSE
-        }
+        if(length(setdiff(gsaMethods, colnames(setDF))))
+            gsaMethods <- colnames(setDF)
 
         distMat <- as.matrix(stats::dist(t(setDF)))
         mdsMat <- as.data.frame(cmdscale(distMat))
@@ -70,8 +65,11 @@ mdsScoreSummary <- function(scObj, smr){
         return(mdsMat)
     })
 
-
-    if(doAgg){
+    if(!identical(unique(vapply(mdsDFs, nrow, numeric(1))), length(gsaMethods))){
+        message('At least one single-valued column has been removed.',
+                ' Aggregate MDS will not be computed.')
+        names(mdsDFs) <- geneSetNames
+    } else {
         aggMDS <- Reduce(`+`, lapply(mdsDFs, function(x) x[, seq(3)])) /
             length(mdsDFs)
         mdsDFs <- c(mdsDFs, list(aggMDS))

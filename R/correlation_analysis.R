@@ -24,16 +24,14 @@ corrSummary <- function(scObj, smr, corMethod = 'spearman'){
         setDF <- removeSVCols(setDF)
         colnames(setDF) <- str_remove(colnames(setDF), paste0('_', gsName))
 
-        if(length(setdiff(gsaMethods, colnames(setDF)))){
-            message('At least one single-valued columns has been removed.',
-                    ' Aggregate correlation will not be computed.')
-            doAgg <- FALSE
-        }
-
         return(round(cor(setDF, method=corMethod), 2))
     })
 
-    if(doAgg){
+    if(!identical(unique(vapply(corrDFs, nrow, numeric(1))), length(gsaMethods))){
+        message('At least one single-valued column has been removed.',
+                ' Aggregate correlation will not be computed.')
+        names(corrDFs) <- geneSetNames
+    } else {
         aggCorr <- round(Reduce(`+`, corrDFs) / length(corrDFs), 2)
         corrDFs <- c(corrDFs, list(aggCorr))
         names(corrDFs) <- c(geneSetNames, 'aggregate')
