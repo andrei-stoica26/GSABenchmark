@@ -65,7 +65,8 @@ mdsScoreSummary <- function(scObj, smr){
         return(mdsMat)
     })
 
-    if(!identical(unique(vapply(mdsDFs, nrow, numeric(1))), length(gsaMethods))){
+    if(!identical(unique(vapply(mdsDFs, nrow, integer(1))),
+                  length(gsaMethods))){
         message('At least one single-valued column has been removed.',
                 ' Aggregate MDS will not be computed.')
         names(mdsDFs) <- geneSetNames

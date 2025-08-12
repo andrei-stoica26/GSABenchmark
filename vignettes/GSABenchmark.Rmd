@@ -162,9 +162,9 @@ smr <- runBenchmark(scObj, 'label', geneSets=NULL, gsaMethods, geneSetNames)
 
 **Note**: This tutorial illustrates using `GSABenchmark` with 
 Bioconductor's native `SingleCellExperiment` class. However, `GSABenchmark` 
-is also fully compatible with `Seurat`, with the relevant methods 
-(`runGSAMethods`, `runBenchmark`, `runMethodShuffle`, `runBenchmarkShuffle` 
-also accepting a Seurat object as their first argument.
+is also fully compatible with `Seurat`—`runGSAMethods`, `runBenchmark`, 
+`runMethodShuffle` and `runBenchmarkShuffle` can all take a Seurat object as
+their first argument.
 
 # Exploring the results
 

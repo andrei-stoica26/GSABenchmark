@@ -27,7 +27,8 @@ corrSummary <- function(scObj, smr, corMethod = 'spearman'){
         return(round(cor(setDF, method=corMethod), 2))
     })
 
-    if(!identical(unique(vapply(corrDFs, nrow, numeric(1))), length(gsaMethods))){
+    if(!identical(unique(vapply(corrDFs, nrow, integer(1))),
+                  length(gsaMethods))){
         message('At least one single-valued column has been removed.',
                 ' Aggregate correlation will not be computed.')
         names(corrDFs) <- geneSetNames
