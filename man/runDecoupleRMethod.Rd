@@ -4,16 +4,14 @@
 \alias{runDecoupleRMethod}
 \title{Run a gene set analysis method using decoupleR}
 \usage{
-runDecoupleRMethod(scObj, genes, method, colStr = method, ...)
+runDecoupleRMethod(scObj, geneSets, method, ...)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{genes}{A vector of genes}
+\item{geneSets}{A named list of gene sets.}
 
-\item{method}{Gene set analysis method}
-
-\item{colStr}{Name of the results column}
+\item{method}{Gene set analysis method.}
 
 \item{...}{Additional arguments passed to gene set analysis methiod}
 }

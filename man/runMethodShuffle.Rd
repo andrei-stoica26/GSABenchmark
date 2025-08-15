@@ -9,7 +9,6 @@ runMethodShuffle(
   labelCol,
   geneSets,
   gsaMethod,
-  geneSetNames,
   loss = c(0, 0.2),
   noise = c(0, 0.2),
   doGrid = TRUE,
@@ -21,11 +20,9 @@ runMethodShuffle(
 
 \item{labelCol}{The metadata column containing the ground truth annotation.}
 
-\item{geneSets}{A list of gene sets.}
+\item{geneSets}{A named list of gene sets.}
 
 \item{gsaMethod}{Name of the gene set analysis method.}
-
-\item{geneSetNames}{The names of the gene sets.}
 
 \item{loss}{A numeric vector of gene loss values. Must be in [0, 1).}
 

@@ -11,12 +11,12 @@ allBenchmarkResults(
   labelCol,
   geneSets,
   gsaMethods,
-  geneSetNames,
   checkLabels = TRUE,
   normSilDF,
   dimMat,
   maxDist,
-  efBenchmark = NULL
+  efBenchmark = NULL,
+  runEFBenchmark = TRUE
 )
 }
 \arguments{
@@ -28,8 +28,6 @@ allBenchmarkResults(
 \code{efBenchmark} is \code{NULL}, the efficiency benchmark will be run.}
 
 \item{gsaMethods}{Character vector of gene set analysis methods.}
-
-\item{geneSetNames}{The names of the gene sets.}
 
 \item{checkLabels}{Whether to check that \code{geneSetNames} is a subset of
 the values in \code{labelCol}.}
@@ -43,6 +41,8 @@ if normSilDF is NULL.}
 or dimMat is NULL}
 
 \item{efBenchmark}{A list of dataframes generated with efficiencyBenchmark.}
+
+\item{runEFBenchmark}{Whether to run efficiency benchmark.}
 }
 \value{
 A list of benchmark results.

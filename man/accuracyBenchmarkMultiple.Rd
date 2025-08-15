@@ -8,8 +8,8 @@ labels}
 accuracyBenchmarkMultiple(
   scObj,
   labelCol,
-  gsaMethods,
   geneSetNames,
+  gsaMethods,
   checkLabels = TRUE,
   verbose = FALSE,
   benchmarkFun,
@@ -21,9 +21,9 @@ accuracyBenchmarkMultiple(
 
 \item{labelCol}{The metadata column containing the ground truth annotation.}
 
-\item{gsaMethods}{Character vector of gene set analysis methods.}
+\item{geneSetNames}{Gene set names.}
 
-\item{geneSetNames}{The names of the gene sets.}
+\item{gsaMethods}{Character vector of gene set analysis methods.}
 
 \item{checkLabels}{Whether to check that \code{geneSetNames} is a subset of
 the values in \code{labelCol}.}

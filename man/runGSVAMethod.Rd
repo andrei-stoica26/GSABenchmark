@@ -4,31 +4,21 @@
 \alias{runGSVAMethod}
 \title{Run a gene set analysis method using \code{GSVA}}
 \usage{
-runGSVAMethod(
-  scObj,
-  genes,
-  method,
-  colStr = method,
-  invert = FALSE,
-  filter = FALSE,
-  ...
-)
+runGSVAMethod(scObj, geneSets, method, invert = FALSE, filter = FALSE, ...)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{genes}{A vector of genes}
+\item{geneSets}{A named list of gene sets.}
 
-\item{method}{Gene set analysis method}
-
-\item{colStr}{Name of the results column}
+\item{method}{Gene set analysis method.}
 
 \item{invert}{Whether to transform the scores from x to 1 - x.}
 
 \item{filter}{Whether to filter the expression matrix as to contain only
 signature genes.}
 
-\item{...}{Additional arguments passed to gene set analysis methiod}
+\item{...}{Additional parameters passed to other functions.}
 }
 \value{
 A single-cell expression object with the results saved as a metadata

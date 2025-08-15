@@ -4,14 +4,12 @@
 \alias{runSiPSiC}
 \title{Run SiPSiC}
 \usage{
-runSiPSiC(scObj, genes, colStr = "SiPSiC", ...)
+runSiPSiC(scObj, geneSets, ...)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{genes}{A vector of genes}
-
-\item{colStr}{Name of the results column}
+\item{geneSets}{A named list of gene sets.}
 
 \item{...}{Additional arguments passed to \code{SiPSiC::getPathwayScores}}
 }

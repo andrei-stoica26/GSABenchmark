@@ -6,6 +6,7 @@
 #'
 #' @inheritParams accuracyBenchmark
 #' @inheritParams runGSAMethods
+#' @param geneSetNames Gene set names.
 #' @param checkLabels Whether to check that \code{geneSetNames} is a subset of
 #' the values in \code{labelCol}.
 #' @param benchmarkFun Benchmark function. Must be either boundaryBenchmark or
@@ -19,8 +20,8 @@
 #'
 accuracyBenchmarkMultiple <- function(scObj,
                                       labelCol,
-                                      gsaMethods,
                                       geneSetNames,
+                                      gsaMethods,
                                       checkLabels = TRUE,
                                       verbose = FALSE,
                                       benchmarkFun,
@@ -65,14 +66,14 @@ accuracyBenchmarkMultiple <- function(scObj,
 #'
 boundaryBenchmarkMultiple <- function(scObj,
                                       labelCol,
-                                      gsaMethods,
                                       geneSetNames,
+                                      gsaMethods,
                                       checkLabels = TRUE,
                                       verbose = FALSE)
     return(accuracyBenchmarkMultiple(scObj,
                                      labelCol,
-                                     gsaMethods,
                                      geneSetNames,
+                                     gsaMethods,
                                      checkLabels,
                                      verbose,
                                      boundaryBenchmark))
@@ -91,14 +92,14 @@ boundaryBenchmarkMultiple <- function(scObj,
 #'
 directMCCBenchmarkMultiple <- function(scObj,
                                        labelCol,
-                                       gsaMethods,
                                        geneSetNames,
+                                       gsaMethods,
                                        checkLabels = TRUE,
                                        verbose = FALSE)
     return(accuracyBenchmarkMultiple(scObj,
                                      labelCol,
-                                     gsaMethods,
                                      geneSetNames,
+                                     gsaMethods,
                                      checkLabels,
                                      verbose,
                                      directMCCBenchmark
@@ -119,8 +120,8 @@ directMCCBenchmarkMultiple <- function(scObj,
 #'
 globalBenchmarkMultiple <- function(scObj,
                                     labelCol,
-                                    gsaMethods,
                                     geneSetNames,
+                                    gsaMethods,
                                     checkLabels = TRUE,
                                     verbose = FALSE,
                                     normSilDF = NULL,
@@ -128,8 +129,8 @@ globalBenchmarkMultiple <- function(scObj,
                                     maxDist = NULL)
     return(accuracyBenchmarkMultiple(scObj,
                                      labelCol,
-                                     gsaMethods,
                                      geneSetNames,
+                                     gsaMethods,
                                      checkLabels,
                                      verbose,
                                      globalBenchmark,

@@ -21,8 +21,7 @@ NULL
 #' @keywords internal
 #'
 addModuleScoreHelper <- function(scObj,
-                                 genes,
-                                 colStr = 'AddModuleScore',
+                                 geneSets,
                                  slot = 'data',
                                  pool = rownames(scObj),
                                  nbin = 24,
@@ -30,22 +29,29 @@ addModuleScoreHelper <- function(scObj,
     mat <- scExpMat(scObj, slot, densify=FALSE)
     matAvg <- Matrix::rowMeans(mat[pool, ])
     matAvg <- matAvg[order(matAvg)]
-    matCut <- cut_number(matAvg + rnorm(length(matAvg))/1e30,
+    matCut <- cut_number(matAvg + rnorm(length(matAvg)) / 1e30,
                          n=nbin,
                          labels=FALSE,
                          right=FALSE)
     names(matCut) <- names(matAvg)
-    ctrlUse <- c()
-    for (gene in genes) {
-        ctrlSample <- names(sample(matCut[which(matCut == matCut[gene])],
-                         size=ctrl, replace=FALSE))
-        ctrlUse <- c(ctrlUse, ctrlSample)
-    }
-    ctrlUse <- unique(ctrlUse)
-    featureScores <- Matrix::colMeans(mat[genes, , drop=FALSE])
-    ctrlScores <- Matrix::colMeans(mat[ctrlUse, ])
-    scores <- featureScores - ctrlScores
-    scObj[[colStr]] <- safeMinmax(scores)
+
+    scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
+        ctrlUse <- c()
+        for (gene in genes){
+            ctrlSample <- names(sample(matCut[which(matCut == matCut[gene])],
+                                       size=ctrl, replace=FALSE))
+            ctrlUse <- c(ctrlUse, ctrlSample)
+        }
+        ctrlUse <- unique(ctrlUse)
+        featureScores <- Matrix::colMeans(mat[genes, , drop=FALSE])
+        ctrlScores <- Matrix::colMeans(mat[ctrlUse, ])
+        scores <- featureScores - ctrlScores
+        scores <- safeMinmax(scores)
+        return(scores)
+    }))
+
+    colnames(scoreDF) <- names(geneSets)
+    scObj <- attachCellScores(scObj, scoreDF)
     return(scObj)
 }
 
@@ -63,15 +69,16 @@ addModuleScoreHelper <- function(scObj,
 #'
 #' @export
 #'
-runAddModuleScore <- function(scObj, genes, colStr = 'AddModuleScore',
-                              slot = 'data', pool = rownames(scObj),
-                              nbin = 24, ctrl = 100, seed = 1){
-    checkGenes(scObj, genes)
+runAddModuleScore <- function(scObj, geneSets, slot = 'data',
+                              pool = rownames(scObj), nbin = 24, ctrl = 100,
+                              seed = 1){
+    allGenes <- Reduce(union, geneSets)
+    checkGenes(scObj, allGenes)
+
     if (is.null(seed))
         stop('A positive integer seed must be set.')
     return(with_seed(seed, addModuleScoreHelper(scObj,
-                                                genes,
-                                                colStr,
+                                                geneSets,
                                                 slot,
                                                 pool,
                                                 nbin,
@@ -115,39 +122,46 @@ meanGeneRank <- function(cellVector, genes){
 #' @export
 #'
 runJASMINE <- function(scObj,
-                       genes,
+                       geneSets,
                        colStr = 'JASMINE',
                        method = c('oddsratio', 'likelihood')){
-    checkGenes(scObj, genes)
+
+    allGenes <- Reduce(union, geneSets)
+    checkGenes(scObj, allGenes)
+
     method <- match.arg(method, c('oddsratio', 'likelihood'))
 
     mat <- scExpMat(scObj, 'data')
+    scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
+        ranks <- apply(mat, 2, function(x) meanGeneRank(x, genes))
+        ranks <- safeMinmax(ranks)
 
-    ranks <- apply(mat, 2, function(x) meanGeneRank(x, genes))
-    ranks <- safeMinmax(ranks)
+        sigMat <- mat[genes,]
+        complMat <- mat[setdiff(rownames(mat), genes), ]
 
-    sigMat <- mat[genes,]
-    complMat <- mat[setdiff(rownames(mat), genes), ]
+        sigGeneFreq <- apply(sigMat, 2, function(x) sum(x != 0))
+        complGeneFreq <- apply(complMat, 2, function(x) sum(x != 0))
 
-    sigGeneFreq <- apply(sigMat, 2, function(x) sum(x != 0))
-    complGeneFreq <- apply(complMat, 2, function(x) sum(x != 0))
+        absentSigGeneFreq <- nrow(sigMat) - sigGeneFreq
+        absentComplGeneFreq <- nrow(complMat) - complGeneFreq
 
-    absentSigGeneFreq <- nrow(sigMat) - sigGeneFreq
-    absentComplGeneFreq <- nrow(complMat) - complGeneFreq
+        absentSigGeneFreq <- replace(absentSigGeneFreq, absentSigGeneFreq == 0, 1)
+        complGeneFreq <- replace(complGeneFreq, complGeneFreq == 0, 1)
 
-    absentSigGeneFreq <- replace(absentSigGeneFreq, absentSigGeneFreq == 0, 1)
-    complGeneFreq <- replace(complGeneFreq, complGeneFreq == 0, 1)
+        if(method == 'oddsratio')
+            res <- (sigGeneFreq * absentComplGeneFreq) /
+            (absentSigGeneFreq * complGeneFreq) else
+                res <- sigGeneFreq * (complGeneFreq + absentComplGeneFreq) /
+            (complGeneFreq * (sigGeneFreq + absentSigGeneFreq))
 
-    if(method == 'oddsratio')
-        res <- (sigGeneFreq * absentComplGeneFreq) /
-        (absentSigGeneFreq * complGeneFreq) else
-            res <- sigGeneFreq * (complGeneFreq + absentComplGeneFreq) /
-                        (complGeneFreq * (sigGeneFreq + absentSigGeneFreq))
+        res <- safeMinmax(res)
 
-    res <- safeMinmax(res)
+        scores <- (res + ranks) / 2
+        scores <- safeMinmax(scores)
+        return(scores)
+    }))
 
-    scores <- (res + ranks) / 2
-    scObj[[colStr]] <- safeMinmax(scores)
-
+    colnames(scoreDF) <- names(geneSets)
+    scObj <- attachCellScores(scObj, scoreDF)
     return(scObj)
 }

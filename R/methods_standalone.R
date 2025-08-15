@@ -18,11 +18,19 @@ NULL
 #'
 #' @export
 #'
-runPagoda2 <- function(scObj, genes, colStr = 'Pagoda2', ...){
-    checkGenes(scObj, genes)
+runPagoda2 <- function(scObj, geneSets, ...){
+    allGenes <- Reduce(union, geneSets)
+    checkGenes(scObj, allGenes)
     mat <- Matrix::t(scExpMat(scObj, 'data', densify=FALSE))
-    scores <- pagoda2::score.cells.puram(mat, genes, ...)
-    scObj[[colStr]] <- safeMinmax(scores)
+
+    scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
+        scores <- pagoda2::score.cells.puram(mat, genes, ...)
+        scores <- safeMinmax(scores)
+        return(scores)
+    }))
+
+    colnames(scoreDF) <- names(geneSets)
+    scObj <- attachCellScores(scObj, scoreDF)
     return(scObj)
 }
 
@@ -38,12 +46,21 @@ runPagoda2 <- function(scObj, genes, colStr = 'Pagoda2', ...){
 #'
 #' @export
 #'
-runSingscore <- function(scObj, genes, colStr = 'Singscore', ...){
-    checkGenes(scObj, genes)
+runSingscore <- function(scObj, geneSets, ...){
+    allGenes <- Reduce(union, geneSets)
+    checkGenes(scObj, allGenes)
+
     mat <- scExpMat(scObj, 'data')
     mat <- singscore::rankGenes(mat)
-    scores <- singscore::simpleScore(mat, genes, ...)$TotalScore
-    scObj[[colStr]] <- safeMinmax(scores)
+
+    scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
+        scores <- singscore::simpleScore(mat, genes, ...)$TotalScore
+        scores <- safeMinmax(scores)
+        return(scores)
+    }))
+
+    colnames(scoreDF) <- names(geneSets)
+    scObj <- attachCellScores(scObj, scoreDF)
     return(scObj)
 }
 
@@ -59,11 +76,20 @@ runSingscore <- function(scObj, genes, colStr = 'Singscore', ...){
 #'
 #' @export
 #'
-runSiPSiC <- function(scObj, genes, colStr = 'SiPSiC', ...){
-    checkGenes(scObj, genes)
+runSiPSiC <- function(scObj, geneSets, ...){
+    allGenes <- Reduce(union, geneSets)
+    checkGenes(scObj, allGenes)
+
     mat <- scExpMat(scObj, 'counts', densify=FALSE)
-    scores <- SiPSiC::getPathwayScores(mat, genes, ...)[[2]]
-    scObj[[colStr]] <- safeMinmax(scores)
+
+    scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
+        scores <- getPathwayScores(mat, genes, ...)[[2]]
+        scores <- safeMinmax(scores)
+        return(scores)
+    }))
+
+    colnames(scoreDF) <- names(geneSets)
+    scObj <- attachCellScores(scObj, scoreDF)
     return(scObj)
 }
 
@@ -79,10 +105,17 @@ runSiPSiC <- function(scObj, genes, colStr = 'SiPSiC', ...){
 #'
 #' @export
 #'
-runVAM <- function(scObj, genes, colStr = 'VAM', ...){
-    checkGenes(scObj, genes)
-    mat <- t(scExpMat(scObj, 'data', genes))
-    v <- vam(mat, ...)
-    scObj[[colStr]] <- v$cdf.value
+runVAM <- function(scObj, geneSets, ...){
+    allGenes <- Reduce(union, geneSets)
+    checkGenes(scObj, allGenes)
+
+    mat <- Matrix::t(scExpMat(scObj, 'data', allGenes))
+    scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
+        scores <- vam(mat[, genes], ...)$cdf.value
+        return(scores)
+    }))
+
+    colnames(scoreDF) <- names(geneSets)
+    scObj <- attachCellScores(scObj, scoreDF)
     return(scObj)
 }

@@ -19,8 +19,10 @@ efficiencyBenchmark <- function(scObj,
                                 labelCol,
                                 geneSets,
                                 gsaMethods,
-                                geneSetNames,
                                 checkLabels = TRUE){
+
+    geneSetNames <- names(geneSets)
+
     if (checkLabels)
         checkSetNames(scObj, labelCol, geneSetNames)
 
@@ -31,9 +33,12 @@ efficiencyBenchmark <- function(scObj,
             methodCall <- paste0('run', method)
             message(paste0('Computing running time and peak memory usage for ',
                            method, ' on ', geneSetNames[i], ' genes...'))
+            geneSet <- geneSets[[i]]
+            names(geneSet) <- geneSetNames[i]
             df <- peakRAM(silently_run(do.call(methodCall,
-                                               list(scObj, geneSets[[i]]))))
-            message(paste0('Time elapsed: ', round(df$Elapsed_Time_sec, 4), ' seconds'))
+                                               list(scObj, geneSet))))
+            message(paste0('Time elapsed: ', round(df$Elapsed_Time_sec, 4),
+                           ' seconds'))
             elapsedTime <- c(elapsedTime, df$Elapsed_Time_sec)
             peakMemory <- c(peakMemory, df$Peak_RAM_Used_MiB)
             }

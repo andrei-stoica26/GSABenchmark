@@ -56,13 +56,13 @@ Users can also define their own gene set analysis methods to be assessed with GS
 
 - The name of the method starts with `run`.
 - The first parameter is a Seurat or SingleCellExperiment object.
-- The second parameter is a character vector of genes.
-- The third parameter is a character.
-- The method returns a Seurat or SingleCellExperiment object with cell scores in the metadata column denoted by the third parameter. 
+- The second parameter is a list of character vectors representing gene sets.
+- The method returns a Seurat or SingleCellExperiment object with cell scores in 
+the metadata column denoted by the third parameter. 
 
 Additional parameters are allowed. For instance, this function heading would be recognized by GSABenchmark's relevant functions, `runGSAMethods` and `efficiencyBenchmark`: 
 
-`runCustomMethod(seuratObj, genes, colStr, tol = 0.2, verbose = TRUE)`. 
+`runCustomMethod(seuratObj, geneSets, colStr, tol = 0.2, verbose = TRUE)`. 
 
 **Note**: When passing the method name to `runGSAMethods` or `efficiencyBenchmark` as part of the `gsaMethods` argument, the method needs to be referred to as `CustomMethod` (no `run`).
 

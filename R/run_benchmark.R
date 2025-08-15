@@ -16,6 +16,7 @@
 #' @param geneSets A list of gene sets. If not \code{NULL} while
 #' \code{efBenchmark} is \code{NULL}, the efficiency benchmark will be run.
 #' @param efBenchmark A list of dataframes generated with efficiencyBenchmark.
+#' @param runEFBenchmark Whether to run efficiency benchmark.
 #'
 #' @return A list of benchmark results.
 #'
@@ -25,21 +26,22 @@ allBenchmarkResults <- function(scObj,
                                 labelCol,
                                 geneSets,
                                 gsaMethods,
-                                geneSetNames,
                                 checkLabels = TRUE,
                                 normSilDF,
                                 dimMat,
                                 maxDist,
-                                efBenchmark = NULL){
+                                efBenchmark = NULL,
+                                runEFBenchmark = TRUE){
     x <- Sys.time()
+    geneSetNames <- names(geneSets)
     if(checkLabels)
         checkSetNames(scObj, labelCol, geneSetNames)
 
     message('Running class determination boundary benchmark...')
     boundaryRes <- boundaryBenchmarkMultiple(scObj,
                                              labelCol,
-                                             gsaMethods,
                                              geneSetNames,
+                                             gsaMethods,
                                              checkLabels=FALSE,
                                              verbose=FALSE)
     boundarySmr <- benchmarkSummary(boundaryRes)
@@ -47,8 +49,8 @@ allBenchmarkResults <- function(scObj,
     message('Running MCC benchmark...')
     directMCCRes <- directMCCBenchmarkMultiple(scObj,
                                                labelCol,
-                                               gsaMethods,
                                                geneSetNames,
+                                               gsaMethods,
                                                checkLabels=FALSE,
                                                verbose=FALSE)
 
@@ -60,8 +62,8 @@ allBenchmarkResults <- function(scObj,
     message('Running global evaluation benchmark...')
     globalRes <- globalBenchmarkMultiple(scObj,
                                          labelCol,
-                                         gsaMethods,
                                          geneSetNames,
+                                         gsaMethods,
                                          checkLabels=FALSE,
                                          verbose=FALSE,
                                          normSilDF,
@@ -75,14 +77,13 @@ allBenchmarkResults <- function(scObj,
 
     if(!is.null(efBenchmark))
        smr$efficiency <- efBenchmark else{
-           if(!is.null(geneSets)){
+           if(runEFBenchmark){
                message('Running efficiency benchmark.',
                ' This may take a long time...')
-               efBenchmark <- efficiencyBenchmark(scObj,
+               smr$efficiency <- efficiencyBenchmark(scObj,
                                                   labelCol,
                                                   geneSets,
                                                   gsaMethods,
-                                                  geneSetNames,
                                                   checkLabels=FALSE)
            }}
     y <- Sys.time()
@@ -108,9 +109,9 @@ runBenchmark <- function(scObj,
                          labelCol,
                          geneSets,
                          gsaMethods,
-                         geneSetNames){
+                         runEFBenchmark = TRUE){
 
-    checkSetNames(scObj, labelCol, geneSetNames)
+    checkSetNames(scObj, labelCol, names(geneSets))
     scObj <- computeSilhouette(scObj, labelCol)
     message('Computing identity class-normalized silhouette...')
     normSilDF <- normalizeSilhouette(scObj, labelCol)
@@ -121,10 +122,10 @@ runBenchmark <- function(scObj,
                                labelCol,
                                geneSets,
                                gsaMethods,
-                               geneSetNames,
                                checkLabels=FALSE,
                                normSilDF,
                                dimMat,
-                               maxDist)
+                               maxDist,
+                               runEFBenchmark=runEFBenchmark)
     return(res)
 }

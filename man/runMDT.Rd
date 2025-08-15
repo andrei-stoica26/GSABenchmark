@@ -4,14 +4,12 @@
 \alias{runMDT}
 \title{Run MDT using decoupleR}
 \usage{
-runMDT(scObj, genes, colStr = "MDT", ...)
+runMDT(scObj, geneSets, ...)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{genes}{A vector of genes}
-
-\item{colStr}{Name of the results column}
+\item{geneSets}{A named list of gene sets.}
 
 \item{...}{Additional parameters passed to \code{runDecoupleRMethod}.}
 }

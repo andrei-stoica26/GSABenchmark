@@ -5,7 +5,7 @@
 \title{Generate all benchmark results
 This function performs the entire \code{GSABenchmark} pipeline.}
 \usage{
-runBenchmark(scObj, labelCol, geneSets, gsaMethods, geneSetNames)
+runBenchmark(scObj, labelCol, geneSets, gsaMethods, runEFBenchmark = TRUE)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
@@ -17,7 +17,7 @@ runBenchmark(scObj, labelCol, geneSets, gsaMethods, geneSetNames)
 
 \item{gsaMethods}{Character vector of gene set analysis methods.}
 
-\item{geneSetNames}{The names of the gene sets.}
+\item{runEFBenchmark}{Whether to run efficiency benchmark.}
 }
 \value{
 A list of benchmark results.

@@ -1,9 +1,11 @@
 Package: GSABenchmark
 Type: Package
 Title: Tools for Benchmarking Gene Set Analysis Methods
-Version: 0.2.0
-Author: Andrei-Florian Stoica
-Maintainer: Andrei-Florian Stoica <andrei@gibh.ac.cn>
+Version: 0.3.0
+Authors@R: person('Andrei-Florian', 'Stoica', 
+    email='andreistoica@foxmail.com',
+    role=c('aut','cre'),
+    comment=c(ORCID='0000-0002-5253-0826'))
 Description: GSABenchmark is a package designed for benchmarking scRNA-seq gene 
     set analysis methods. It provides both traditional and novel benchmark 
     metrics, as well as visualization tools. Currently, GSABenchmark supports 
@@ -35,7 +37,6 @@ Imports:
     VAM,
     withr
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.3.2
 Suggests:
     BiocStyle,
@@ -43,4 +44,11 @@ Suggests:
     rmarkdown,
     scater,
     scRNAseq
+biocViews: 
+    Software,
+    SingleCell,
+    GeneSetEnrichment,
+    GeneExpression
 VignetteBuilder: knitr
+URL: https://github.com/andrei-stoica26/GSABenchmark
+BugReports: https://github.com/andrei-stoica26/GSABenchmark/issues

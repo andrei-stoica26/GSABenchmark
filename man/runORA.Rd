@@ -4,14 +4,12 @@
 \alias{runORA}
 \title{Run ORA using decoupleR}
 \usage{
-runORA(scObj, genes, colStr = "ORA", ...)
+runORA(scObj, geneSets, ...)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{genes}{A vector of genes}
-
-\item{colStr}{Name of the results column}
+\item{geneSets}{A named list of gene sets.}
 
 \item{...}{Additional parameters passed to \code{runDecoupleRMethod}.}
 }

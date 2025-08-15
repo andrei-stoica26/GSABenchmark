@@ -11,25 +11,29 @@ NULL
 #' @param invert Whether to transform the scores from x to 1 - x.
 #' @param filter Whether to filter the expression matrix as to contain only
 #' signature genes.
+#' @param ... Additional parameters passed to other functions.
 #'
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
 #'
-runGSVAMethod <- function(scObj, genes, method, colStr = method,
-                          invert = FALSE, filter = FALSE, ...){
+runGSVAMethod <- function(scObj, geneSets, method, invert = FALSE,
+                          filter = FALSE, ...){
+    allGenes <- Reduce(union, geneSets)
+    checkGenes(scObj, allGenes)
 
-    checkGenes(scObj, genes)
     if(filter)
-        mat <- scExpMat(scObj, 'data', genes) else
+        mat <- scExpMat(scObj, 'data', allGenes) else
             mat <- scExpMat(scObj, 'data')
 
-    geneSet <- setNames(list(genes), 'sigScore')
-    gsvaPar <- do.call(paste0(tolower(method), 'Param'), list(mat, geneSet, ...))
-    scores <- gsva(gsvaPar)[1, ]
-    scores <- safeMinmax(scores)
+    gsvaPar <- do.call(paste0(tolower(method), 'Param'),
+                       list(mat, geneSets, ...))
+    scoreDF <- t(gsva(gsvaPar))
+
+    scoreDF <- apply(scoreDF, 2, safeMinmax)
     if (invert)
-        scores <- 1 - scores
-    scObj[[colStr]] <- scores
+        scoreDF <- apply(scoreDF, 2, function(x) 1 - x)
+
+    scObj <- attachCellScores(scObj, scoreDF)
     return(scObj)
 }
 
@@ -45,8 +49,8 @@ runGSVAMethod <- function(scObj, genes, method, colStr = method,
 #'
 #' @export
 #'
-runGSVA <- function(scObj, genes, colStr = 'GSVA', ...)
-    return(runGSVAMethod(scObj, genes, 'GSVA', colStr, ...))
+runGSVA <- function(scObj, geneSets, ...)
+    return(runGSVAMethod(scObj, geneSets, 'GSVA', ...))
 
 #' Run PLAGE
 #'
@@ -60,8 +64,8 @@ runGSVA <- function(scObj, genes, colStr = 'GSVA', ...)
 #'
 #' @export
 #'
-runPLAGE <- function(scObj, genes, colStr = 'PLAGE', ...)
-    return(runGSVAMethod(scObj, genes, 'PLAGE', colStr, TRUE, TRUE, ...))
+runPLAGE <- function(scObj, geneSets, ...)
+    return(runGSVAMethod(scObj, geneSets, 'PLAGE', TRUE, TRUE, ...))
 
 #' Run Zscore
 #'
@@ -75,5 +79,5 @@ runPLAGE <- function(scObj, genes, colStr = 'PLAGE', ...)
 #'
 #' @export
 #'
-runZscore <- function(scObj, genes, colStr = 'Zscore', ...)
-    return(runGSVAMethod(scObj, genes, 'Zscore', colStr, FALSE, TRUE, ...))
+runZscore <- function(scObj, geneSets, ...)
+    return(runGSVAMethod(scObj, geneSets, 'Zscore', FALSE, TRUE, ...))

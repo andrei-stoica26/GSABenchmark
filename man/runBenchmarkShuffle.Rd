@@ -5,16 +5,16 @@
 \title{Generate all benchmark results for shuffled gene sets
 This function generates all benchmark results for shuffled gene sets.}
 \usage{
-runBenchmarkShuffle(scObj, labelCol, gsaMethod, geneSetNames)
+runBenchmarkShuffle(scObj, labelCol, geneSets, gsaMethod)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{labelCol}{The metadata column containing the ground truth annotation.}
 
-\item{gsaMethod}{Name of the gene set analysis method.}
+\item{geneSets}{A named list of gene sets.}
 
-\item{geneSetNames}{The names of the gene sets.}
+\item{gsaMethod}{Name of the gene set analysis method.}
 }
 \value{
 A list of benchmark results.

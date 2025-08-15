@@ -4,14 +4,12 @@
 \alias{runPagoda2}
 \title{Run pagoda2}
 \usage{
-runPagoda2(scObj, genes, colStr = "Pagoda2", ...)
+runPagoda2(scObj, geneSets, ...)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{genes}{A vector of genes}
-
-\item{colStr}{Name of the results column}
+\item{geneSets}{A named list of gene sets.}
 
 \item{...}{Additional arguments passed to \code{pagoda2::score.cells.puram}.}
 }

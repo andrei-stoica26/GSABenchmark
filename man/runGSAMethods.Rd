@@ -4,25 +4,16 @@
 \alias{runGSAMethods}
 \title{Run gene set analysis methods}
 \usage{
-runGSAMethods(
-  scObj,
-  labelCol,
-  geneSets,
-  gsaMethods,
-  geneSetNames,
-  infix = NULL
-)
+runGSAMethods(scObj, labelCol, geneSets, gsaMethods, infix = NULL)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{labelCol}{The metadata column containing the ground truth annotation.}
 
-\item{geneSets}{A list of gene sets.}
+\item{geneSets}{A named list of gene sets.}
 
 \item{gsaMethods}{Character vector of gene set analysis methods.}
-
-\item{geneSetNames}{The names of the gene sets.}
 
 \item{infix}{Infix to add between method name and gene set name in
 single-cell expression object. The string consisting of the method name and

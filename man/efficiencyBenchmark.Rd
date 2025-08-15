@@ -4,14 +4,7 @@
 \alias{efficiencyBenchmark}
 \title{Extract running times and peak memory usage for gene set analysis methods}
 \usage{
-efficiencyBenchmark(
-  scObj,
-  labelCol,
-  geneSets,
-  gsaMethods,
-  geneSetNames,
-  checkLabels = TRUE
-)
+efficiencyBenchmark(scObj, labelCol, geneSets, gsaMethods, checkLabels = TRUE)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
@@ -22,8 +15,6 @@ efficiencyBenchmark(
 \code{efBenchmark} is \code{NULL}, the efficiency benchmark will be run.}
 
 \item{gsaMethods}{Character vector of gene set analysis methods.}
-
-\item{geneSetNames}{The names of the gene sets.}
 
 \item{checkLabels}{Whether to check that \code{geneSetNames} is a subset of
 the values in \code{labelCol}.}

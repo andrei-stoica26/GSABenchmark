@@ -12,11 +12,16 @@ NULL
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
 #'
-runEscapeMethod <- function(scObj, genes, method, colStr = method, ...){
-    checkGenes(scObj, genes)
+runEscapeMethod <- function(scObj, geneSets, method, ...){
+    allGenes <- Reduce(union, geneSets)
+    checkGenes(scObj, allGenes)
+
     mat <- scExpMat(scObj, 'data')
-    scores <- escape.matrix(mat, list(set1 = genes), method = method, ...)[, 1]
-    scObj[[colStr]] <- safeMinmax(scores)
+
+    scoreDF <- escape.matrix(mat, geneSets, method=method, ...)
+    scoreDF <- apply(scoreDF, 2, safeMinmax)
+
+    scObj <- attachCellScores(scObj, scoreDF)
     return(scObj)
 }
 
@@ -32,8 +37,8 @@ runEscapeMethod <- function(scObj, genes, method, colStr = method, ...){
 #'
 #' @export
 #'
-runAUCell <- function(scObj, genes, colStr = 'AUCell', ...)
-    return(runEscapeMethod(scObj, genes, 'AUCell', colStr, ...))
+runAUCell <- function(scObj, geneSets, ...)
+    return(runEscapeMethod(scObj, geneSets, 'AUCell', ...))
 
 #' Run ssGSEA
 #'
@@ -46,8 +51,8 @@ runAUCell <- function(scObj, genes, colStr = 'AUCell', ...)
 #'
 #' @export
 #'
-runssGSEA <- function(scObj, genes, colStr = 'ssGSEA', ...)
-    return(runEscapeMethod(scObj, genes, 'ssGSEA', colStr, ...))
+runssGSEA <- function(scObj, geneSets, ...)
+    return(runEscapeMethod(scObj, geneSets, 'ssGSEA', ...))
 
 #' Run UCell
 #'
@@ -60,5 +65,5 @@ runssGSEA <- function(scObj, genes, colStr = 'ssGSEA', ...)
 #'
 #' @export
 #'
-runUCell <- function(scObj, genes, colStr = 'UCell', ...)
-    return(runEscapeMethod(scObj, genes, 'UCell', colStr, ...))
+runUCell <- function(scObj, geneSets, ...)
+    return(runEscapeMethod(scObj, geneSets, 'UCell', colStr, ...))

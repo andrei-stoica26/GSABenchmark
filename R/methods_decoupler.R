@@ -7,25 +7,29 @@ NULL
 #' This function runs one of the gene set analysis methods supported
 #' by \code{decoupleR}.
 #'
-#' @inheritParams extractCellScores
-#' @param genes A vector of genes
-#' @param method Gene set analysis method
-#' @param colStr Name of the results column
+#' @inheritParams runGSAMethods
+#' @param method Gene set analysis method.
 #' @param ... Additional arguments passed to gene set analysis methiod
 #'
 #' @return A single-cell expression object with the results saved as a metadata column.
 #'
-runDecoupleRMethod <- function(scObj, genes, method,
-                               colStr = method, ...){
-    checkGenes(scObj, genes)
+runDecoupleRMethod <- function(scObj, geneSets, method, ...){
+    allGenes <- Reduce(union, geneSets)
+    checkGenes(scObj, allGenes)
+
     mat <- scExpMat(scObj, 'data')
-    scores <- do.call(paste0('run_', tolower(method)),
-                      list(mat, network=data.frame(source='geneSet',
-                                                   target=genes,
-                                                   mor=1,
-                                                   ...)))$score
-    names(scores) <- colnames(mat)
-    scObj[[colStr]] <- safeMinmax(scores)
+    scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
+        funStr <- paste0('run_', tolower(method))
+        inputDF <- data.frame(source='geneSet',
+                                      target=genes,
+                                      mor=1)
+        scores <- do.call(funStr, list(mat, inputDF, ...))$score
+        scores <- safeMinmax(scores)
+        return(scores)
+    }))
+
+    colnames(scoreDF) <- names(geneSets)
+    scObj <- attachCellScores(scObj, scoreDF)
     return(scObj)
 }
 
@@ -41,8 +45,8 @@ runDecoupleRMethod <- function(scObj, genes, method,
 #'
 #' @export
 #'
-runMDT <- function(scObj, genes, colStr = 'MDT', ...)
-    return(runDecoupleRMethod(scObj, genes, 'MDT', colStr, ...))
+runMDT <- function(scObj, geneSets, ...)
+    return(runDecoupleRMethod(scObj, geneSets, 'MDT', ...))
 
 #' Run MLM using decoupleR
 #'
@@ -56,8 +60,8 @@ runMDT <- function(scObj, genes, colStr = 'MDT', ...)
 #'
 #' @export
 #'
-runMLM <- function(scObj, genes, colStr = 'MLM', ...)
-    return(runDecoupleRMethod(scObj, genes, 'MLM', colStr, ...))
+runMLM <- function(scObj, geneSets, ...)
+    return(runDecoupleRMethod(scObj, geneSets, 'MLM', ...))
 
 #' Run ORA using decoupleR
 #'
@@ -70,8 +74,8 @@ runMLM <- function(scObj, genes, colStr = 'MLM', ...)
 #'
 #' @export
 #'
-runORA <- function(scObj, genes, colStr = 'ORA', ...)
-    return(runDecoupleRMethod(scObj, genes, 'ORA', colStr, ...))
+runORA <- function(scObj, geneSets, ...)
+    return(runDecoupleRMethod(scObj, geneSets, 'ORA', ...))
 
 #' Run UDT using decoupleR
 #'
@@ -84,6 +88,6 @@ runORA <- function(scObj, genes, colStr = 'ORA', ...)
 #'
 #' @export
 #'
-runUDT <- function(scObj, genes, colStr = 'UDT', ...)
-    return(runDecoupleRMethod(scObj, genes, 'UDT', colStr, ...))
+runUDT <- function(scObj, geneSets, ...)
+    return(runDecoupleRMethod(scObj, genes, 'UDT', ...))
 

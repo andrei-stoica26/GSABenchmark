@@ -1,5 +1,5 @@
 #' @importFrom fabR silently_run
-#' @importFrom CSOA runCSOA
+#' @importFrom CSOA attachCellScores runCSOA
 #'
 NULL
 
@@ -8,9 +8,8 @@ NULL
 #' This function runs the gene set analysis methods.
 #'
 #' @inheritParams extractCellScores
-#' @param geneSets A list of gene sets.
+#' @param geneSets A named list of gene sets.
 #' @param gsaMethods Character vector of gene set analysis methods.
-#' @param geneSetNames The names of the gene sets.
 #' @param infix Infix to add between method name and gene set name in
 #' single-cell expression object. The string consisting of the method name and
 #' the infix is separated by the gene set name with a '_' character.
@@ -20,22 +19,14 @@ NULL
 #'
 #' @export
 #'
-runGSAMethods <- function(scObj, labelCol, geneSets, gsaMethods, geneSetNames,
-                          infix = NULL){
+runGSAMethods <- function(scObj, labelCol, geneSets, gsaMethods, infix = NULL){
+    geneSetNames <- names(geneSets)
     checkSetNames(scObj, labelCol, geneSetNames)
-    if (length(geneSets) != length(geneSetNames))
-        stop('geneSets and geneSetNames must have the same length.')
-    for (i in seq_along(geneSets)){
-        setName <- geneSetNames[i]
-        for (j in seq_along(gsaMethods)){
-            method <- gsaMethods[j]
-            message(paste0('Running ', method, ' for ', setName, ' genes...'))
-            fun <- eval(as.name(paste0('run', method)))
-            colStr <- paste0(method,
-                             infix, '_',
-                             setName)
-            scObj <- silently_run(fun(scObj, geneSets[[i]], colStr))
-        }
+    for (method in gsaMethods){
+        message(paste0('Running ', method, '...'))
+        fun <- eval(as.name(paste0('run', method)))
+        names(geneSets) <- paste0(method, infix, '_', geneSetNames)
+        scObj <- silently_run(fun(scObj, geneSets))
     }
     return(scObj)
 }

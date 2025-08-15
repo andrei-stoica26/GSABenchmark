@@ -25,13 +25,12 @@ runMethodShuffle <- function(scObj,
                              labelCol,
                              geneSets,
                              gsaMethod,
-                             geneSetNames,
                              loss = c(0, 0.2),
                              noise = c(0, 0.2),
                              doGrid = TRUE,
                              seeds = c(1, 2, 3)){
 
-    checkSetNames(scObj, labelCol, geneSetNames)
+    checkSetNames(scObj, labelCol, names(geneSets))
     if(doGrid){
         lossNoiseDF <- expand.grid(loss, noise)
         lossVector <- lossNoiseDF[, 1]
@@ -56,7 +55,6 @@ runMethodShuffle <- function(scObj,
                                    labelCol,
                                    shGeneSets,
                                    gsaMethod,
-                                   geneSetNames,
                                    infix)
         }
 
@@ -77,13 +75,12 @@ runMethodShuffle <- function(scObj,
 #'
 runBenchmarkShuffle <- function(scObj,
                                 labelCol,
-                                gsaMethod,
-                                geneSetNames){
+                                geneSets,
+                                gsaMethod){
     runs <- grep(gsaMethod, colnames(metadataDF(scObj)), value=TRUE)
     runs <- unique(vapply(runs, runFromColumn, character(1)))
     return(runBenchmark(scObj,
                         labelCol,
-                        geneSets=NULL,
-                        gsaMethods=runs,
-                        geneSetNames))
+                        geneSets,
+                        gsaMethods=runs))
 }

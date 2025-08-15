@@ -91,7 +91,6 @@ computeMCCMetric <- function(df){
     return(df)
 }
 
-
 #' Compute the global evaluation metrics
 #'
 #' This function computes the global evaluation metrics

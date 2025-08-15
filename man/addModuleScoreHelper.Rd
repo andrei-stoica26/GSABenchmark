@@ -6,8 +6,7 @@
 \usage{
 addModuleScoreHelper(
   scObj,
-  genes,
-  colStr = "AddModuleScore",
+  geneSets,
   slot = "data",
   pool = rownames(scObj),
   nbin = 24,
@@ -17,9 +16,7 @@ addModuleScoreHelper(
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
-\item{genes}{A vector of genes}
-
-\item{colStr}{Name of the results column}
+\item{geneSets}{A named list of gene sets.}
 
 \item{slot}{Gene expression slot. Default is 'data'.}
 
