@@ -4,12 +4,14 @@
 \alias{metricRankPlots}
 \title{Create metric rank plots for the method results}
 \usage{
-metricRankPlots(smr, titleSuffix = NULL)
+metricRankPlots(smr, titleSuffix = NULL, rankMethod = "min")
 }
 \arguments{
 \item{smr}{Complete summary list generated with allBenchmarkResults.}
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title}
+
+\item{rankMethod}{Rank method.}
 }
 \value{
 A named list of ggplot objects.

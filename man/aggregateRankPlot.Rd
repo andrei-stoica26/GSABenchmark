@@ -4,7 +4,13 @@
 \alias{aggregateRankPlot}
 \title{Create aggregate rank plot}
 \usage{
-aggregateRankPlot(smr, titleSuffix = NULL, sigDigits = 2, ...)
+aggregateRankPlot(
+  smr,
+  titleSuffix = NULL,
+  sigDigits = 2,
+  rankMethod = "min",
+  ...
+)
 }
 \arguments{
 \item{smr}{Complete summary list generated with allBenchmarkResults.}

@@ -146,17 +146,18 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL){
 #' This function creates gene set rank plots for method results.
 #'
 #' @inheritParams allBenchmarkPlots
+#' @inheritParams allGeneSetRanks
 #'
 #' @return A named list of ggplot objects.
 #'
 #' @export
 #'
-geneSetRankPlots <- function(smr, titleSuffix = NULL){
+geneSetRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min'){
     geneSetNames <- colnames(smr$boundary[[1]])
     geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
 
     message('Computing gene set ranks...')
-    gsRankDFs <- allGeneSetRanks(smr)
+    gsRankDFs <- allGeneSetRanks(smr, rankMethod)
 
     plots <- mapply(function(gsRankDF, gsName)
         rankPlot(gsRankDF,
@@ -174,12 +175,13 @@ geneSetRankPlots <- function(smr, titleSuffix = NULL){
 #' This function creates metric rank plots for method results.
 #'
 #' @inheritParams allBenchmarkPlots
+#' @inheritParams allMetricRanks
 #'
 #' @return A named list of ggplot objects.
 #'
 #' @export
 #'
-metricRankPlots <- function(smr, titleSuffix = NULL){
+metricRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min'){
     metricNames <- c('sensitivity', 'specificity', 'precision',
                      'accuracy', 'size proximity','score coverage',
                      'boundary MCC', 'direct MCC',
@@ -187,7 +189,7 @@ metricRankPlots <- function(smr, titleSuffix = NULL){
                      'silhouette rank alignment', 'centrality')
 
     message('Computing metric ranks...')
-    metricRanksDFs <- allMetricRanks(smr)
+    metricRanksDFs <- allMetricRanks(smr, rankMethod)
 
     plots <- mapply(function(metricRankDF, metricName)
         rankPlot(metricRankDF,
@@ -213,9 +215,10 @@ metricRankPlots <- function(smr, titleSuffix = NULL){
 #'
 #' @export
 #'
-aggregateRankPlot <- function(smr, titleSuffix = NULL, sigDigits = 2, ...){
+aggregateRankPlot <- function(smr, titleSuffix = NULL, sigDigits = 2,
+                              rankMethod = 'min', ...){
     message('Computing aggregate ranks...')
-    aggRanks <- aggregateRanks(smr)
+    aggRanks <- aggregateRanks(smr, rankMethod)
     p <- rankPlot(aggRanks,
                   paste0('Distribution of aggregate ranks',
                          titleSuffix),

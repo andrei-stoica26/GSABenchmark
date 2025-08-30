@@ -21,18 +21,17 @@ bindSummary <- function(smr, nAggDFs=0, nAvgCols=0)
 #' This function computes aggregate ranks from a list of summary data frames.
 #'
 #' @inheritParams mdsScoreSummary
+#' @inheritParams geneSetRanks
 #'
 #' @return A data frame of aggregate summary results.
 #'
 #' @export
 #'
-aggregateRanks <- function(smr){
+aggregateRanks <- function(smr, rankMethod='min'){
     df <- do.call(cbind, list(bindSummary(smr$boundary, 2, 1),
                               bindSummary(smr$MCC, 0, 1),
                               bindSummary(smr$global, 2, 1)))
-    df <- apply(df, 2, function(x) rank(-x))
+    df <- apply(df, 2, function(x) rank(-x, ties.method=rankMethod))
     df <- rankSummary(df)
     return(df)
 }
-
-

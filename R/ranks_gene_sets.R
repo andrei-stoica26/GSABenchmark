@@ -3,12 +3,13 @@
 #' This function extracts gene set ranks list from a list of summary data frames.
 #'
 #' @inheritParams bindSummary
+#' @param rankMethod Rank method.
 #'
 #' @return List of gene set ranks.
 #'
-#' @noRd
+#' @keywords internal
 #'
-geneSetRanks <- function(smr, nAggDFs=0, nAvgCols=0){
+geneSetRanks <- function(smr, nAggDFs=0, nAvgCols=0, rankMethod='min'){
     geneSetNames <- colnames(smr[[1]])
     geneSetNames <- geneSetNames[seq(length(geneSetNames) - nAvgCols)]
 
@@ -18,7 +19,7 @@ geneSetRanks <- function(smr, nAggDFs=0, nAvgCols=0){
         df <- do.call(cbind, lapply(metrics, function(metric)
             setNames(smr[[metric]][, gsName, drop=FALSE],
                      metric)))
-        df <- apply(df, 2, function(x) rank(-x))
+        df <- apply(df, 2, function(x) rank(-x, ties.method=rankMethod))
         return(df)
     })
 
@@ -31,16 +32,16 @@ geneSetRanks <- function(smr, nAggDFs=0, nAvgCols=0){
 #' This function extracts all gene set ranks list from a list
 #' of summary data frames.
 #'
-#' @inheritParams bindSummary
+#' @inheritParams geneSetRanks
 #'
 #' @return List of gene set ranks.
 #'
-#' @noRd
+#' @keywords internal
 #'
-allGeneSetRanks <- function(smr){
-    boundaryRanks <- geneSetRanks(smr$boundary, 2, 1)
-    mccRanks <- geneSetRanks(smr$MCC, 0, 1)
-    globalRanks <- geneSetRanks(smr$global, 2, 1)
+allGeneSetRanks <- function(smr, rankMethod='min'){
+    boundaryRanks <- geneSetRanks(smr$boundary, 2, 1, rankMethod)
+    mccRanks <- geneSetRanks(smr$MCC, 0, 1, rankMethod)
+    globalRanks <- geneSetRanks(smr$global, 2, 1, rankMethod)
     geneSetNames <- names(boundaryRanks)
     res <- lapply(geneSetNames, function(gsName){
         df <- do.call(cbind, list(boundaryRanks[[gsName]],

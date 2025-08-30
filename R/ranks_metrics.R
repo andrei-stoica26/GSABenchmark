@@ -2,17 +2,17 @@
 #'
 #' This function extracts metric ranks from a list of summary data frames.
 #'
-#' @inheritParams bindSummary
+#' @inheritParams geneSetRanks
 #'
 #' @return List of metric ranks.
 #'
-#' @noRd
+#' @keywords internal
 #'
-metricRanks <- function(smr, nAggDFs=0, nAvgCols=0)
+metricRanks <- function(smr, nAggDFs=0, nAvgCols=0, rankMethod='min')
     return(lapply(smr[seq(length(smr) - nAggDFs)],
                   function(df) {
                       df <- df[, seq(ncol(df) - nAvgCols)]
-                      df <- apply(df, 2, function(x) rank(-x))
+                      df <- apply(df, 2, function(x) rank(-x, ties.method=rankMethod))
                       df <- rankSummary(df)
                       return(df)
                   }))
@@ -21,15 +21,15 @@ metricRanks <- function(smr, nAggDFs=0, nAvgCols=0)
 #'
 #' This function extracts metric ranks from a list of summary data frames.
 #'
-#' @inheritParams bindSummary
+#' @inheritParams metricRanks
 #'
 #' @return List of metric ranks.
 #'
-#' @noRd
+#' @keywords internal
 #'
-allMetricRanks <- function(smr){
-    df <- c(metricRanks(smr$boundary, 2, 1),
-            metricRanks(smr$MCC, 0, 1),
-            metricRanks(smr$global, 2, 1))
+allMetricRanks <- function(smr, rankMethod='min'){
+    df <- c(metricRanks(smr$boundary, 2, 1, rankMethod),
+            metricRanks(smr$MCC, 0, 1, rankMethod),
+            metricRanks(smr$global, 2, 1, rankMethod))
     return(df)
 }
