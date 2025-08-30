@@ -60,7 +60,7 @@ tabulateVector <- function(v,
     if(addRowMeans){
         df$avg <- rowMeans(df)
         if(sortByRowMeans)
-        df <- df[order(df$avg), ]
+            df <- df[order(df$avg), ]
     }
     return(df)
 }

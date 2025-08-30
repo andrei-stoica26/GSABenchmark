@@ -42,7 +42,7 @@ efficiencyBenchmark <- function(scObj,
             elapsedTime <- c(elapsedTime, df$Elapsed_Time_sec)
             peakMemory <- c(peakMemory, df$Peak_RAM_Used_MiB)
             }
-    time <- tabulateVector(elapsedTime, gsaMethods, geneSetNames, TRUE)
-    space <- tabulateVector(peakMemory, gsaMethods, geneSetNames, TRUE)
+    time <- tabulateVector(elapsedTime, gsaMethods, geneSetNames, TRUE, TRUE)
+    space <- tabulateVector(peakMemory, gsaMethods, geneSetNames, TRUE, TRUE)
     return(list(time = time, space = space))
 }
