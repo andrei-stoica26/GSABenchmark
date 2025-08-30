@@ -66,4 +66,4 @@ runssGSEA <- function(scObj, geneSets, ...)
 #' @export
 #'
 runUCell <- function(scObj, geneSets, ...)
-    return(runEscapeMethod(scObj, geneSets, 'UCell', colStr, ...))
+    return(runEscapeMethod(scObj, geneSets, 'UCell', ...))

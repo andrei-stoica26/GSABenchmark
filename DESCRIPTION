@@ -43,7 +43,8 @@ Suggests:
     knitr,
     rmarkdown,
     scater,
-    scRNAseq
+    scRNAseq,
+    testthat (>= 3.0.0)
 biocViews: 
     Software,
     SingleCell,
@@ -52,3 +53,4 @@ biocViews:
 VignetteBuilder: knitr
 URL: https://github.com/andrei-stoica26/GSABenchmark
 BugReports: https://github.com/andrei-stoica26/GSABenchmark/issues
+Config/testthat/edition: 3

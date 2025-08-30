@@ -89,5 +89,5 @@ runORA <- function(scObj, geneSets, ...)
 #' @export
 #'
 runUDT <- function(scObj, geneSets, ...)
-    return(runDecoupleRMethod(scObj, genes, 'UDT', ...))
+    return(runDecoupleRMethod(scObj, geneSets, 'UDT', ...))
 
