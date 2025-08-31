@@ -12,12 +12,13 @@
 geneSetRanks <- function(smr, nAggDFs=0, nAvgCols=0, rankMethod='min'){
     geneSetNames <- colnames(smr[[1]])
     geneSetNames <- geneSetNames[seq(length(geneSetNames) - nAvgCols)]
+    gsaMethods <- sort(rownames(smr[[1]]))
 
     res <- lapply(geneSetNames, function(gsName){
         metrics <- names(smr)
         metrics <- metrics[seq(length(metrics) - nAggDFs)]
         df <- do.call(cbind, lapply(metrics, function(metric)
-            setNames(smr[[metric]][, gsName, drop=FALSE],
+            setNames(smr[[metric]][gsaMethods, gsName, drop=FALSE],
                      metric)))
         df <- apply(df, 2, function(x) rank(-x, ties.method=rankMethod))
         return(df)
