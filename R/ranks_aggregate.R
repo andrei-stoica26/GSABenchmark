@@ -11,10 +11,13 @@
 #'
 #' @keywords internal
 #'
-bindSummary <- function(smr, nAggDFs=0, nAvgCols=0)
+bindSummary <- function(smr, nAggDFs=0, nAvgCols=0){
+    gsaMethods <- sort(rownames(smr[[1]]))
     return(do.call(cbind,
                    lapply(smr[seq(length(smr) - nAggDFs)],
-                          function(x) x[, seq(ncol(x) - nAvgCols)])))
+                          function(x) x[gsaMethods, seq(ncol(x) - nAvgCols)])))
+}
+
 
 #' Compute aggregate ranks
 #'
