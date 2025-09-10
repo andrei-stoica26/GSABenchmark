@@ -114,11 +114,17 @@ deltaMarkers <- c('SST', 'GABRB3', 'FRZB', 'MS4A8', 'BAIAP3', 'CASR', 'BCHE',
                   'RESP18', 'PAX4', 'RBP4', 'PCSK9', 'FFAR4')
 ```
 
-Now we gather the gene sets and store their names:
+Now we build the gene sets:
 
 ```{r}
-geneSets <- list(acinarMarkers, alphaMarkers, betaMarkers, deltaMarkers)
-geneSetNames <- c('acinar', 'alpha', 'beta', 'delta')
+geneSets <- setNames(list(acinarMarkers, 
+                          alphaMarkers, 
+                          betaMarkers, 
+                          deltaMarkers),
+                     c('acinar', 
+                       'alpha', 
+                       'beta', 
+                       'delta'))
 ```
 
 **Note**: The gene set names cannot contain spaces or underscores, and must all
@@ -126,7 +132,7 @@ be found in the column of assessed class identities. For this dataset,
 this column is named `label`:
 
 ```{r}
-setdiff(geneSetNames, colData(scObj)[['label']])
+setdiff(names(geneSets), colData(scObj)[['label']])
 ```
 
 # Running the methods
@@ -147,7 +153,7 @@ gsaMethods <- c('AddModuleScore', 'CSOA', 'PLAGE', 'VAM', 'SiPSiC', 'Zscore')
 We now run the 6 methods for each gene set:
 
 ```{r}
-scObj <- runGSAMethods(scObj, 'label', geneSets, gsaMethods, geneSetNames)
+scObj <- runGSAMethods(scObj, 'label', geneSets, gsaMethods)
 ```
 
 # Running the benchmark
@@ -157,7 +163,7 @@ perform the correctness benchmark. To achieve this, we will bypass the
 execution of speed and memory benchmarks by setting `geneSets` to `NULL`:
 
 ```{r}
-smr <- runBenchmark(scObj, 'label', geneSets=NULL, gsaMethods, geneSetNames)
+smr <- runBenchmark(scObj, 'label', geneSets, gsaMethods)
 ```
 
 **Note**: This tutorial illustrates using `GSABenchmark` with 
@@ -239,7 +245,7 @@ We showcase the aggregate MDS plot below:
 
 ```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
 plots <- mdsPlots(scObj, smr)
-plots[[length(geneSetNames) + 1]]
+plots[[length(geneSets) + 1]]
 ```
 
 Another way to look at the similarity between the results of different methods
@@ -247,7 +253,7 @@ is through correlation plots. Below, we display the aggregate correlation plot:
 
 ```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
 plots <- corrPlots(scObj, smr)
-plots[[length(geneSetNames) + 1]]
+plots[[length(geneSets) + 1]]
 ```
 
 # Benchmarking a single method at different choices of gene loss and noise
@@ -264,10 +270,8 @@ controls the random seeds used in the generation of gene sets. Its length
 determines the number of replicates.
 
 ```{r}
-geneSets <- list(alphaMarkers, betaMarkers)
-geneSetNames <- c('alpha', 'beta')
+geneSets <- setNames(list(alphaMarkers, betaMarkers), c('alpha', 'beta'))
 scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA',
-                              geneSetNames,
                               loss=c(1/3, 2/3),
                               noise=c(0.5),
                               seeds=c(20, 30))
@@ -278,7 +282,7 @@ Subsequently, the same benchmark as before can be run with
 `runBenchmarkShuffle`, a thin wrapper around `runBenchmark`:
 
 ```{r}
-smr <- runBenchmarkShuffle(scObj, 'label', 'CSOA', geneSetNames)
+smr <- runBenchmarkShuffle(scObj, 'label', geneSets, 'CSOA')
 ```
 
 The output of `runBenchmarkShuffle` can be used to create the same types of plots
