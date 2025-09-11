@@ -32,13 +32,13 @@ the values in \code{labelCol}.}
 \item{verbose}{Whether to output a message whenever the benchmarking
 begins for a gene set.}
 
-\item{normSilDF}{Data frame of normalized silhouettes}
+\item{normSilDF}{Data frame of normalized silhouettes.}
 
-\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object. Unused
-if normSilDF is NULL.}
+\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object.
+Unused if normSilDF is NULL.}
 
-\item{maxDist}{Maximum UMAP distance in the Seurat object. Unused if normSilDF
-or dimMat is NULL}
+\item{maxDist}{Maximum UMAP distance in the Seurat object. Unused if
+normSilDF or dimMat is NULL.}
 }
 \value{
 A list of lists of distribution benchmark data frames.

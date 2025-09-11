@@ -9,9 +9,10 @@ NULL
 #'
 #' @inheritParams runGSAMethods
 #' @param method Gene set analysis method.
-#' @param ... Additional arguments passed to gene set analysis methiod
+#' @param ... Additional arguments passed to gene set analysis method.
 #'
-#' @return A single-cell expression object with the results saved as a metadata column.
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
 #'
 runDecoupleRMethod <- function(scObj, geneSets, method, ...){
     allGenes <- Reduce(union, geneSets)

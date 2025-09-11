@@ -21,9 +21,9 @@ in \code{labelCol}.}
 }
 \value{
 A benchmark data frame with cells as row names, and labels,
-GSA scores, and MCC scores as columns
+GSA scores, and MCC scores as columns.
 }
 \description{
 This function performs a direct MCC benchmark on a set of GSA
-method scores
+method scores.
 }

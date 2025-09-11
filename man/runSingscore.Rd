@@ -11,7 +11,7 @@ runSingscore(scObj, geneSets, ...)
 
 \item{geneSets}{A named list of gene sets.}
 
-\item{...}{Additional arguments passed to \code{singscore::simpleScore}}
+\item{...}{Additional arguments passed to \code{singscore::simpleScore}.}
 }
 \value{
 A single-cell expression object with the results saved as a metadata

@@ -7,14 +7,15 @@
 computeMCCMetric(df)
 }
 \arguments{
-\item{df}{A data frame consisting of cells with a binary label column (1) and
-a column containing the scores obtained by a gene set analysis method (2)}
+\item{df}{A data frame consisting of cells with a binary label column (1)
+and a column containing the scores obtained by a gene set analysis
+method (2).}
 }
 \value{
-A benchmark data frame with cells as row names, labels in the first column,
-gene set analysis method scores in the second column, and MCC scores in the third
-column
+A benchmark data frame with cells as row names, labels in the first
+column, gene set analysis method scores in the second column, and MCC scores
+in the third column.
 }
 \description{
-This function computes the MCC at each threshold
+This function computes the MCC at each threshold.
 }

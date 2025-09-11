@@ -115,7 +115,7 @@ meanGeneRank <- function(cellVector, genes){
 #' \code{https://doi.org/10.7554/eLife.71994}.
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param method One of 'oddsratio' and 'likelihood'
+#' @param method One of 'oddsratio' and 'likelihood'.
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
 #'

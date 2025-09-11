@@ -20,6 +20,7 @@ summary data frames.}
 List of gene set ranks.
 }
 \description{
-This function extracts gene set ranks list from a list of summary data frames.
+This function extracts gene set ranks list from a list of summary data
+frames.
 }
 \keyword{internal}

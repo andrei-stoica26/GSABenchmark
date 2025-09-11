@@ -16,5 +16,5 @@ GSA scores, and MCC scores as columns.
 }
 \description{
 This function computes the MCC based on the previously identified boundary
-cutoff
+cutoff.
 }

@@ -13,7 +13,7 @@ NULL
 #' @param noise A numeric vector of noise values. Must be in [0, 1).
 #' @param doGrid Whether to run the methods for each loss-noise combination.
 #' @param seeds A numeric vector of random seeds passed
-#' to \code{hammers::shuffleGenes}. Its length decides the number of
+#' to \code{hammers::shuffleGenes}. Its length determines the number of
 #' replicates.
 #'
 #' @return A \code{Seurat} or \code{SingleCellExpression} object

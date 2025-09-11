@@ -32,15 +32,15 @@ allBenchmarkResults(
 \item{checkLabels}{Whether to check that \code{geneSetNames} is a subset of
 the values in \code{labelCol}.}
 
-\item{normSilDF}{Data frame of normalized silhouettes}
+\item{normSilDF}{Data frame of normalized silhouettes.}
 
-\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object. Unused
-if normSilDF is NULL.}
+\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object.
+Unused if normSilDF is NULL.}
 
-\item{maxDist}{Maximum UMAP distance in the Seurat object. Unused if normSilDF
-or dimMat is NULL}
+\item{maxDist}{Maximum UMAP distance in the Seurat object. Unused if
+normSilDF or dimMat is NULL.}
 
-\item{efBenchmark}{A list of dataframes generated with efficiencyBenchmark.}
+\item{efBenchmark}{A list of data frames generated with efficiencyBenchmark.}
 
 \item{runEFBenchmark}{Whether to run efficiency benchmark.}
 }
@@ -59,5 +59,5 @@ object and cell identity classes, but different choices of gene sets
 (so long as they still describe the same classes) or methods. If a single
 run is planned rather than multiple ones, \code{runBenchmark} is a more
 straightforward choice, as it takes care of generating
-\code{normSilDF}, \code{dimMat} and \code{dimMat}.
+\code{normSilDF} and \code{dimMat}.
 }

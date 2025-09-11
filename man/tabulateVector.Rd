@@ -19,9 +19,9 @@ tabulateVector(
 
 \item{colNames}{A character vector.}
 
-\item{addRowMeans}{Whether to add the row means to the data frame}
+\item{addRowMeans}{Whether to add the row means to the data frame.}
 
-\item{sortByRowMeans}{Whether to sort by row means}
+\item{sortByRowMeans}{Whether to sort by row means.}
 }
 \value{
 A data frame

@@ -8,31 +8,16 @@ NULL
 #' This function messages or prints information on the gene set analysis method
 #' running and the group where it is running.
 #'
-#' @param funStr A supported gene set analysis method
-#' @param group A Seurat identity class
-#' @param messageFun An output function
+#' @param funStr A supported gene set analysis method.
+#' @param group A Seurat identity class.
+#' @param messageFun An output function.
 #'
-#' @return Messaged (default) or printed output
+#' @return Messaged (default) or printed output.
 #'
 messageMethod <- function(funStr, group, messageFun = message)
     return(messageFun(paste0(str_replace(funStr,
                                          'Run', 'Running '), ' for identity: ',
                              group, '...')))
-
-#' Take the square root of a non-negative number or the additive inverse of the
-#' square root of the additive inverse of a negative number
-#'
-#' This function takes the square root of a non-negative number or the additive inverse of the
-#' square root of the additive inverse of a negative number
-#'
-#' @param x A numeric variable
-#'
-#' @return The square root of x if positive and of -x if negative
-#'
-#' @export
-#'
-sqrt2 <- function(x)
-    if (x >= 0) return(sqrt(x)) else return(-sqrt(-x))
 
 #' Convert a vector to a data frame based on input row and column names
 #'
@@ -42,8 +27,8 @@ sqrt2 <- function(x)
 #' @param v A vector.
 #' @param rowNames A character vector.
 #' @param colNames A character vector.
-#' @param addRowMeans Whether to add the row means to the data frame
-#' @param sortByRowMeans Whether to sort by row means
+#' @param addRowMeans Whether to add the row means to the data frame.
+#' @param sortByRowMeans Whether to sort by row means.
 #'
 #' @return A data frame
 #'
@@ -67,12 +52,12 @@ tabulateVector <- function(v,
 
 #' Calculate the alignment between two numeric vectors
 #'
-#' This function calculates the alignment between two numeric vectors
+#' This function calculates the alignment between two numeric vectors.
 #'
 #' @param x A vector.
 #' @param y A vector
 #'
-#' @return Alignment score
+#' @return Alignment score.
 #'
 #' @export
 #'

@@ -3,7 +3,7 @@
 \name{extractCellScores}
 \alias{extractCellScores}
 \title{Extract GSA method scores and truth labels from single-cell
-expression object.}
+expression object}
 \usage{
 extractCellScores(scObj, labelCol, scoreCol, label)
 }
@@ -19,7 +19,7 @@ score.}
 }
 \value{
 A data frame with two columns: truth labels (1 or 0) and
-GSA method scores,
+GSA method scores.
 }
 \description{
 This function extracts GSA method scores and truth labels from a single-cell

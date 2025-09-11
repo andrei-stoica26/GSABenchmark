@@ -6,13 +6,13 @@
 #'
 #' @param benchmarkLL A list of lists of benchmark data frames.
 #' @param summarizeMetrics Whether to add a metric summary. Must be set to
-#' FALSE when summarizing a MCC benchmark list of lists.
+#' \code{FALSE} when summarizing a MCC benchmark list of lists.
 #'
 #' @return Summary data frames.
 #'
 #' @export
 #'
-benchmarkSummary <- function(benchmarkLL, summarizeMetrics=TRUE){
+benchmarkSummary <- function(benchmarkLL, summarizeMetrics = TRUE){
     geneSetNames <- names(benchmarkLL)
     gsaMethods <- names(benchmarkLL[[1]])
     tableCols <- colnames(benchmarkLL[[1]][[1]])

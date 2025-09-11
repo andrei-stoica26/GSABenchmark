@@ -11,11 +11,11 @@ runSiPSiC(scObj, geneSets, ...)
 
 \item{geneSets}{A named list of gene sets.}
 
-\item{...}{Additional arguments passed to \code{SiPSiC::getPathwayScores}}
+\item{...}{Additional arguments passed to \code{SiPSiC::getPathwayScores}.}
 }
 \value{
 A single-cell expression object with the results saved as a metadata
-column
+column.
 }
 \description{
 This function runs \code{SiPSiC}.

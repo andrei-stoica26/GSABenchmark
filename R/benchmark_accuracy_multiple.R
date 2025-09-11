@@ -60,7 +60,7 @@ accuracyBenchmarkMultiple <- function(scObj,
 #'
 #' @inheritParams accuracyBenchmarkMultiple
 #'
-#' @return A list of lists of boundary benchmark data frames
+#' @return A list of lists of boundary benchmark data frames.
 #'
 #' @export
 #'

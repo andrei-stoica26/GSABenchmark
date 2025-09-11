@@ -3,14 +3,14 @@
 \name{timePlot}
 \alias{timePlot}
 \title{Plot a data frame consisting of gene set analysis method running times
-This function plots data frame consisting of method running times with methods
-as rows, gene sets and the gene set average as columns.}
+This function plots data frame consisting of method running times with
+methods as rows, gene sets and the gene set average as columns.}
 \usage{
 timePlot(efBenchmark, titleSuffix = NULL)
 }
 \arguments{
-\item{efBenchmark}{A list of dataframes generated with efficiencyBenchmark, containing an
-element labeled "time".}
+\item{efBenchmark}{A list of dataframes generated with efficiencyBenchmark,
+containing an element labeled 'time'.}
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title}
 }
@@ -19,6 +19,6 @@ A ggplot object.
 }
 \description{
 Plot a data frame consisting of gene set analysis method running times
-This function plots data frame consisting of method running times with methods
-as rows, gene sets and the gene set average as columns.
+This function plots data frame consisting of method running times with
+methods as rows, gene sets and the gene set average as columns.
 }

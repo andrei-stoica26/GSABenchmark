@@ -1,4 +1,3 @@
-
 #' @importFrom pagoda2 score.cells.puram
 #' @importFrom singscore rankGenes simpleScore
 #' @importFrom SiPSiC getPathwayScores
@@ -39,7 +38,7 @@ runPagoda2 <- function(scObj, geneSets, ...){
 #' This function runs \code{Singscore}.
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param ... Additional arguments passed to \code{singscore::simpleScore}
+#' @param ... Additional arguments passed to \code{singscore::simpleScore}.
 #'
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
@@ -69,10 +68,10 @@ runSingscore <- function(scObj, geneSets, ...){
 #' This function runs \code{SiPSiC}.
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param ... Additional arguments passed to \code{SiPSiC::getPathwayScores}
+#' @param ... Additional arguments passed to \code{SiPSiC::getPathwayScores}.
 #'
 #' @return A single-cell expression object with the results saved as a metadata
-#' column
+#' column.
 #'
 #' @export
 #'
@@ -101,7 +100,7 @@ runSiPSiC <- function(scObj, geneSets, ...){
 #' @param ... Additional arguments passed to \code{VAM::vam}.
 #'
 #' @return A single-cell expression object with the results saved as a metadata
-#' column
+#' column.
 #'
 #' @export
 #'

@@ -30,7 +30,7 @@ the values in \code{labelCol}.}
 begins for a gene set.}
 }
 \value{
-A list of lists of boundary benchmark data frames
+A list of lists of boundary benchmark data frames.
 }
 \description{
 This function performs boundary accuracy benchmarks for multiple sets of GSA

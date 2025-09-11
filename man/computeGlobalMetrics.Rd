@@ -7,21 +7,22 @@
 computeGlobalMetrics(df, normSilDF = NULL, dimMat = NULL, maxDist = NULL)
 }
 \arguments{
-\item{df}{A data frame consisting of cells with a binary label column (1) and
-a column containing the scores obtained by a gene set analysis method (2)}
+\item{df}{A data frame consisting of cells with a binary label column (1)
+and a column containing the scores obtained by a gene set analysis
+method (2).}
 
-\item{normSilDF}{Data frame of normalized silhouettes}
+\item{normSilDF}{Data frame of normalized silhouettes.}
 
-\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object. Unused
-if normSilDF is NULL.}
+\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object.
+Unused if normSilDF is NULL.}
 
-\item{maxDist}{Maximum UMAP distance in the Seurat object. Unused if normSilDF
-or dimMat is NULL}
+\item{maxDist}{Maximum UMAP distance in the Seurat object. Unused if
+normSilDF or dimMat is NULL.}
 }
 \value{
-A benchmark data frame with one row and computed metric scores in the
-columns.
+A benchmark data frame with one row and computed metric scores in
+the columns.
 }
 \description{
-This function computes the global evaluation metrics
+This function computes the global evaluation metrics.
 }

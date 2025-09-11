@@ -12,8 +12,8 @@ alignmentScore(x, y)
 \item{y}{A vector}
 }
 \value{
-Alignment score
+Alignment score.
 }
 \description{
-This function calculates the alignment between two numeric vectors
+This function calculates the alignment between two numeric vectors.
 }

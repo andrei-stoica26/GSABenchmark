@@ -28,13 +28,13 @@ score.}
 \item{checkLabel}{Whether to check that \code{label} is found
 in \code{labelCol}.}
 
-\item{normSilDF}{Data frame of normalized silhouettes}
+\item{normSilDF}{Data frame of normalized silhouettes.}
 
-\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object. Unused
-if normSilDF is NULL.}
+\item{dimMat}{UMAP dimensionality reduction matrix of the Seurat object.
+Unused if normSilDF is NULL.}
 
-\item{maxDist}{Maximum UMAP distance in the Seurat object. Unused if normSilDF
-or dimMat is NULL}
+\item{maxDist}{Maximum UMAP distance in the Seurat object. Unused if
+normSilDF or dimMat is NULL.}
 }
 \value{
 A one-row benchmark data frame with global metric scores as columns.

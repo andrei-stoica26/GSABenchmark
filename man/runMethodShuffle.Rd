@@ -31,7 +31,7 @@ runMethodShuffle(
 \item{doGrid}{Whether to run the methods for each loss-noise combination.}
 
 \item{seeds}{A numeric vector of random seeds passed
-to \code{hammers::shuffleGenes}. Its length decides the number of
+to \code{hammers::shuffleGenes}. Its length determines the number of
 replicates.}
 }
 \value{

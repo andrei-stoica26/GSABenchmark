@@ -9,8 +9,8 @@ methods as rows, gene sets and the gene set average as columns.}
 memoryPlot(efBenchmark, titleSuffix = NULL)
 }
 \arguments{
-\item{efBenchmark}{A list of dataframes generated with efficiencyBenchmark, containing an
-element labeled "space".}
+\item{efBenchmark}{A list of dataframes generated with efficiencyBenchmark,
+containing an element labeled 'space'.}
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title}
 }

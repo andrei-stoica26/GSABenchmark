@@ -35,11 +35,11 @@ scorePlot <- function(scoreDF, title, xLabel = 'Score', legendTitle = 'Gene set'
 
 #' Plot a data frame consisting of gene set analysis method running times
 #
-#' This function plots data frame consisting of method running times with methods
-#' as rows, gene sets and the gene set average as columns.
+#' This function plots data frame consisting of method running times with
+#' methods as rows, gene sets and the gene set average as columns.
 #'
-#' @param efBenchmark A list of dataframes generated with efficiencyBenchmark, containing an
-#' element labeled "time".
+#' @param efBenchmark A list of dataframes generated with efficiencyBenchmark,
+#' containing an element labeled 'time'.
 #' @param titleSuffix Plot title suffix to be appended to the default title
 #'
 #' @return A ggplot object.
@@ -57,8 +57,8 @@ timePlot <- function(efBenchmark, titleSuffix = NULL){
 #' This function plots data frame consisting of method peak memory usages with
 #' methods as rows, gene sets and the gene set average as columns.
 #'
-#' @param efBenchmark A list of dataframes generated with efficiencyBenchmark, containing an
-#' element labeled "space".
+#' @param efBenchmark A list of dataframes generated with efficiencyBenchmark,
+#' containing an element labeled 'space'.
 #' @inheritParams timePlot
 #'
 #' @return A ggplot object.
@@ -73,8 +73,8 @@ memoryPlot <- function(efBenchmark, titleSuffix = NULL){
 
 #' Plot a list of data frame scores
 #'
-#' This function plots a list of dataframe scores with methods as rows, gene sets and the
-#' average of scores across all gene sets as columns.
+#' This function plots a list of dataframe scores with methods as rows,
+#' gene sets and the average of scores across all gene sets as columns.
 #'
 #' @param smr Summary list
 #' @inheritParams timePlot
@@ -108,7 +108,8 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
     if(!is.null(titleSuffix))
         v <- setNames(paste0(v, titleSuffix), names(v))
 
-    plots <- lapply(seq_len(length(smr)), function(i) scorePlot(smr[[i]], v[names(smr)[i]]))
+    plots <- lapply(seq_len(length(smr)), function(i)
+        scorePlot(smr[[i]], v[names(smr)[i]]))
     plots[[length(plots)]] <- plots[[length(plots)]] + labs(color='Metric')
     return(plots)
 }
@@ -120,7 +121,7 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
 #' @param smr Complete summary list generated with allBenchmarkResults.
 #' @inheritParams timePlot
 #'
-#' @return A list of ggplot objects
+#' @return A list of ggplot objects.
 #'
 #' @export
 #'
@@ -209,7 +210,7 @@ metricRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min'){
 #' @inheritParams allBenchmarkPlots
 #' @param sigDigits Number of significant digits used when displaying mean
 #' ranks. If \code{NULL}, the mean ranks will not be displayed.
-#' @param ... Additional arguments passed to rankPlot
+#' @param ... Additional arguments passed to rankPlot.
 #'
 #' @return A ggplot object.
 #'
@@ -289,7 +290,7 @@ mdsPlots <- function(scObj, smr, titleSuffix = NULL, ...){
 
 #' Create correlation plots for method results
 #'
-#' This function creates correlation plots for method results
+#' This function creates correlation plots for method results.
 #'
 #' @inheritParams mdsPlots
 #' @param ... Additional arguments passed to \code{henna::correlationPlot}.

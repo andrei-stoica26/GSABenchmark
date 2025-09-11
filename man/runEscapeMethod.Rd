@@ -13,7 +13,7 @@ runEscapeMethod(scObj, geneSets, method, ...)
 
 \item{method}{Gene set analysis method.}
 
-\item{...}{Additional arguments passed to gene set analysis methiod}
+\item{...}{Additional arguments passed to gene set analysis method.}
 }
 \value{
 A single-cell expression object with the results saved as a metadata

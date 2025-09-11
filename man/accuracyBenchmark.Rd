@@ -33,9 +33,9 @@ computeBoundaryMetrics and computeDistributionMetrics.}
 \item{...}{Additional parameters passed to computeMetricsFun.}
 }
 \value{
-A benchmark data frame
+A benchmark data frame.
 }
 \description{
 This function perform an accuracy benchmark on a set of gene set analysis
-method scores
+method scores.
 }

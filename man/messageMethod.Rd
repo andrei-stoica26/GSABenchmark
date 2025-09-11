@@ -7,14 +7,14 @@
 messageMethod(funStr, group, messageFun = message)
 }
 \arguments{
-\item{funStr}{A supported gene set analysis method}
+\item{funStr}{A supported gene set analysis method.}
 
-\item{group}{A Seurat identity class}
+\item{group}{A Seurat identity class.}
 
-\item{messageFun}{An output function}
+\item{messageFun}{An output function.}
 }
 \value{
-Messaged (default) or printed output
+Messaged (default) or printed output.
 }
 \description{
 This function messages or prints information on the gene set analysis method

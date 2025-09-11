@@ -20,7 +20,7 @@ aggregateRankPlot(
 \item{sigDigits}{Number of significant digits used when displaying mean
 ranks. If \code{NULL}, the mean ranks will not be displayed.}
 
-\item{...}{Additional arguments passed to rankPlot}
+\item{...}{Additional arguments passed to rankPlot.}
 }
 \value{
 A ggplot object.

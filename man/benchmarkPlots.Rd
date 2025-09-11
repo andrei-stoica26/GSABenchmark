@@ -15,6 +15,6 @@ benchmarkPlots(smr, titleSuffix = NULL)
 A list of ggplot objects
 }
 \description{
-This function plots a list of dataframe scores with methods as rows, gene sets and the
-average of scores across all gene sets as columns.
+This function plots a list of dataframe scores with methods as rows,
+gene sets and the average of scores across all gene sets as columns.
 }

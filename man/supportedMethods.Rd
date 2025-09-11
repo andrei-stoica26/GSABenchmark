@@ -7,8 +7,8 @@
 supportedMethods()
 }
 \value{
-A character vector of supported methods
+A character vector of supported methods.
 }
 \description{
-This function shows methods currently supported by GSABenchmark
+This function shows methods currently supported by GSABenchmark.
 }

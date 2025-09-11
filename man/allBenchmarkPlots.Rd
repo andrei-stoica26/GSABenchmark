@@ -12,7 +12,7 @@ allBenchmarkPlots(smr, titleSuffix = NULL)
 \item{titleSuffix}{Plot title suffix to be appended to the default title}
 }
 \value{
-A list of ggplot objects
+A list of ggplot objects.
 }
 \description{
 This function plots the complete list of benchmark summaries.

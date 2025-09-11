@@ -9,13 +9,13 @@
 #' (so long as they still describe the same classes) or methods. If a single
 #' run is planned rather than multiple ones, \code{runBenchmark} is a more
 #' straightforward choice, as it takes care of generating
-#' \code{normSilDF}, \code{dimMat} and \code{dimMat}.
+#' \code{normSilDF} and \code{dimMat}.
 #'
 #' @inheritParams globalBenchmarkMultiple
 #' @inheritParams runGSAMethods
 #' @param geneSets A list of gene sets. If not \code{NULL} while
 #' \code{efBenchmark} is \code{NULL}, the efficiency benchmark will be run.
-#' @param efBenchmark A list of dataframes generated with efficiencyBenchmark.
+#' @param efBenchmark A list of data frames generated with efficiencyBenchmark.
 #' @param runEFBenchmark Whether to run efficiency benchmark.
 #'
 #' @return A list of benchmark results.
@@ -96,8 +96,8 @@ allBenchmarkResults <- function(scObj,
 #' This function performs the entire \code{GSABenchmark} pipeline.
 #'
 #' @details A wrapper around \code{allBenchmarkResults}. Slower for repeated
-#' runs, but it does not require the user to manually
-#' generate \code{normSilDF}, \code{dimMat} and \code{dimMat}.
+#' runs, but it does not require users to manually generate \code{normSilDF}
+#' and \code{dimMat}.
 #'
 #' @inheritParams allBenchmarkResults
 #'

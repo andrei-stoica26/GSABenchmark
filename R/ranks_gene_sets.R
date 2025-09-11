@@ -1,6 +1,7 @@
 #' Extract gene set ranks list from a list of summary data frames
 #'
-#' This function extracts gene set ranks list from a list of summary data frames.
+#' This function extracts gene set ranks list from a list of summary data
+#' frames.
 #'
 #' @inheritParams bindSummary
 #' @param rankMethod Rank method.

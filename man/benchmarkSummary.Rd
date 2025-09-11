@@ -11,7 +11,7 @@ benchmarkSummary(benchmarkLL, summarizeMetrics = TRUE)
 \item{benchmarkLL}{A list of lists of benchmark data frames.}
 
 \item{summarizeMetrics}{Whether to add a metric summary. Must be set to
-FALSE when summarizing a MCC benchmark list of lists.}
+\code{FALSE} when summarizing a MCC benchmark list of lists.}
 }
 \value{
 Summary data frames.

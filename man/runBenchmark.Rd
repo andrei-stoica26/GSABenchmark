@@ -28,6 +28,6 @@ This function performs the entire \code{GSABenchmark} pipeline.
 }
 \details{
 A wrapper around \code{allBenchmarkResults}. Slower for repeated
-runs, but it does not require the user to manually
-generate \code{normSilDF}, \code{dimMat} and \code{dimMat}.
+runs, but it does not require users to manually generate \code{normSilDF}
+and \code{dimMat}.
 }

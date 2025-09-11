@@ -7,16 +7,16 @@
 computeMCC(boundaryResDF, threshold = boundaryResDF[1, 2])
 }
 \arguments{
-\item{boundaryResDF}{A data frame generated with the boundary benchmark}
+\item{boundaryResDF}{A data frame generated with the boundary benchmark.}
 
-\item{threshold}{Threshold that determines class boundary}
+\item{threshold}{Threshold that determines class boundary.}
 }
 \value{
-The Matthews correlation coefficient
+The Matthews correlation coefficient.
 }
 \description{
 This function computes the Matthews correlation coefficient for an input
 data frame generated through class boundary determination benchmarking. The
-first column contains labels while the second is binarized based on the previously
-determined cutoff (the first element in the second column).
+first column contains labels while the second is binarized based on the
+previously determined cutoff (the first element in the second column).
 }

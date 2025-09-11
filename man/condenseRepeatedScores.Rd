@@ -7,12 +7,13 @@
 condenseRepeatedScores(df)
 }
 \arguments{
-\item{df}{A data frame with two columns: truth labels (1 or 0) and GSA method scores.}
+\item{df}{A data frame with two columns: truth labels (1 or 0) and GSA
+method scores.}
 }
 \value{
-A condensed scores data frame
+A condensed scores data frame.
 }
 \description{
-This function condenses repeated GSA method scores, summing labels and recording
-frequencies in the process.
+This function condenses repeated GSA method scores, summing labels and
+recording frequencies in the process.
 }

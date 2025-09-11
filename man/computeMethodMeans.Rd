@@ -7,8 +7,8 @@
 computeMethodMeans(df, gsaMethods)
 }
 \arguments{
-\item{df}{A data frame where the values represent the scores obtained by a gene
-set analysis method (row) on a gene set (column) for a metric.}
+\item{df}{A data frame where the values represent the scores obtained by a
+gene set analysis method (row) on a gene set (column) for a metric.}
 
 \item{gsaMethods}{Gene set analysis methods.}
 }

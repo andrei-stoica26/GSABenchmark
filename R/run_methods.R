@@ -33,9 +33,9 @@ runGSAMethods <- function(scObj, labelCol, geneSets, gsaMethods, infix = NULL){
 
 #' Show supported methods
 #'
-#' This function shows methods currently supported by GSABenchmark
+#' This function shows methods currently supported by GSABenchmark.
 #'
-#' @return A character vector of supported methods
+#' @return A character vector of supported methods.
 #'
 #' @export
 #'
@@ -43,4 +43,3 @@ supportedMethods <- function()
     return(c('AddModuleScore', 'AUCell', 'CSOA', 'GSVA', 'JASMINE', 'MDT',
              'MLM', 'ORA', 'Pagoda2', 'PLAGE', 'Singscore', 'SiPSiC',
              'ssGSEA', 'UCell', 'UDT', 'VAM', 'Zscore'))
-?Seurat::SCTransform

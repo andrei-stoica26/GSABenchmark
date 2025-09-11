@@ -7,9 +7,9 @@
 addMetricSummary(smr, metrics, gsaMethods)
 }
 \arguments{
-\item{smr}{List of result data frames for each metrics. Each data frame contains
-the results for each tested gene set analysis method for each gene set for the
-corresponding gmethod.}
+\item{smr}{List of result data frames for each metrics. Each data frame
+contains the results for each tested gene set analysis method for each gene
+set for the corresponding method.}
 
 \item{metrics}{Metrics.}
 

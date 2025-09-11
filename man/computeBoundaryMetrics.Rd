@@ -7,14 +7,15 @@
 computeBoundaryMetrics(df)
 }
 \arguments{
-\item{df}{A data frame consisting of cells with a binary label column (1) and
-a column containing the scores obtained by a gene set analysis method (2)}
+\item{df}{A data frame consisting of cells with a binary label column (1)
+and a column containing the scores obtained by a gene set analysis
+method (2).}
 }
 \value{
-A benchmark data frame with cells as row names, labels in the first column,
-gene set analysis method scores in the second column, and computed metric scores
-in the remaining columns.
+A benchmark data frame with cells as row names, labels in the first
+column, gene set analysis method scores in the second column, and computed
+metric scores in the remaining columns.
 }
 \description{
-This function computes the class boundary metrics
+This function computes the class boundary metrics.
 }

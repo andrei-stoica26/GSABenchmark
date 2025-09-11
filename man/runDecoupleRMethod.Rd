@@ -13,10 +13,11 @@ runDecoupleRMethod(scObj, geneSets, method, ...)
 
 \item{method}{Gene set analysis method.}
 
-\item{...}{Additional arguments passed to gene set analysis methiod}
+\item{...}{Additional arguments passed to gene set analysis method.}
 }
 \value{
-A single-cell expression object with the results saved as a metadata column.
+A single-cell expression object with the results saved as a metadata
+column.
 }
 \description{
 This function runs one of the gene set analysis methods supported

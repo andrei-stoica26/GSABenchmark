@@ -4,7 +4,7 @@
 NULL
 
 #' Extract GSA method scores and truth labels from single-cell
-#' expression object.
+#' expression object
 #'
 #' This function extracts GSA method scores and truth labels from a single-cell
 #' expression object.
@@ -16,7 +16,7 @@ NULL
 #' @param label The identity assessed from the labelCol column.
 #'
 #' @return A data frame with two columns: truth labels (1 or 0) and
-#' GSA method scores,
+#' GSA method scores.
 #'
 #' @export
 #'
@@ -30,16 +30,18 @@ extractCellScores <- function(scObj, labelCol, scoreCol, label){
 
 #' Condense repeated GSA method scores
 #'
-#' This function condenses repeated GSA method scores, summing labels and recording
-#' frequencies in the process.
+#' This function condenses repeated GSA method scores, summing labels and
+#' recording frequencies in the process.
 #'
-#' @param df A data frame with two columns: truth labels (1 or 0) and GSA method scores.
+#' @param df A data frame with two columns: truth labels (1 or 0) and GSA
+#' method scores.
 #'
-#' @return A condensed scores data frame
+#' @return A condensed scores data frame.
 #'
 condenseRepeatedScores <- function(df){
     denseDF <- plyr::count(df[, 2])
-    denseDF$label <- sapply(denseDF[, 1], function(score) sum(df[, 1][which(df[, 2] == score)]))
+    denseDF$label <- sapply(denseDF[, 1], function(score)
+        sum(df[, 1][which(df[, 2] == score)]))
     denseDF <- denseDF[, c(3, 1, 2)]
     denseDF <- denseDF[order(denseDF[, 2], decreasing=TRUE), ]
     colnames(denseDF)[2] <- c(colnames(df)[2])
@@ -53,7 +55,8 @@ condenseRepeatedScores <- function(df){
 #' @param df Benchmark data frame.
 #' @param startCol Column where metric scores start.
 #'
-#' @return The input data frame sorted decreasingly by the newly added overall column.
+#' @return The input data frame sorted decreasingly by the newly added
+#' overall column.
 #'
 #'
 computeMetricMeans <- function(df, startCol){
@@ -66,9 +69,9 @@ computeMetricMeans <- function(df, startCol){
 #'
 #' This function extends summary by addding overall results for each metric.
 #'
-#' @param smr List of result data frames for each metrics. Each data frame contains
-#' the results for each tested gene set analysis method for each gene set for the
-#' corresponding gmethod.
+#' @param smr List of result data frames for each metrics. Each data frame
+#' contains the results for each tested gene set analysis method for each gene
+#' set for the corresponding method.
 #' @param metrics Metrics.
 #' @inheritParams computeMethodMeans
 #'
@@ -88,8 +91,8 @@ addMetricSummary <- function(smr, metrics, gsaMethods){
 #'
 #' This function adds means for a data frame of metric results.
 #'
-#' @param df A data frame where the values represent the scores obtained by a gene
-#' set analysis method (row) on a gene set (column) for a metric.
+#' @param df A data frame where the values represent the scores obtained by a
+#' gene set analysis method (row) on a gene set (column) for a metric.
 #' @param gsaMethods Gene set analysis methods.
 #'
 #' @return A metric results data frame with added means, sorted decreasingly by

@@ -1,7 +1,7 @@
 #' Perform an accuracy benchmark on a set of gene set analysis method scores
 #'
 #' This function perform an accuracy benchmark on a set of gene set analysis
-#' method scores
+#' method scores.
 #'
 #' @inheritParams extractCellScores
 #' @param computeMetricsFun Function used to compute metrics. Options are
@@ -11,7 +11,7 @@
 #' in \code{labelCol}.
 #' @param ... Additional parameters passed to computeMetricsFun.
 #'
-#' @return A benchmark data frame
+#' @return A benchmark data frame.
 #'
 #'
 accuracyBenchmark <- function(scObj,
@@ -72,7 +72,7 @@ globalBenchmark <- function(scObj,
 #' Compute the MCC based on the previously identified boundary cutoff
 #'
 #' This function computes the MCC based on the previously identified boundary
-#' cutoff
+#' cutoff.
 #'
 #' @param boundaryBenchmarkLL A list of lists of data frames generated with
 #' boundaryBenchmarkMultiple.
@@ -99,12 +99,12 @@ boundaryMCCBenchmark <- function(boundaryBenchmarkLL){
 #' Perform a direct MCC benchmark on a set of GSA method scores
 #'
 #' This function performs a direct MCC benchmark on a set of GSA
-#' method scores
+#' method scores.
 #'
 #' @inheritParams accuracyBenchmark
 #'
 #' @return A benchmark data frame with cells as row names, and labels,
-#' GSA scores, and MCC scores as columns
+#' GSA scores, and MCC scores as columns.
 #'
 #' @export
 #'

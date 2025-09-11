@@ -16,7 +16,7 @@ runJASMINE(
 
 \item{geneSets}{A named list of gene sets.}
 
-\item{method}{One of 'oddsratio' and 'likelihood'}
+\item{method}{One of 'oddsratio' and 'likelihood'.}
 }
 \value{
 A single-cell expression object with the results saved as a metadata

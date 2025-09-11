@@ -5,13 +5,14 @@ NULL
 
 #' Compute the class boundary metrics
 #'
-#' This function computes the class boundary metrics
+#' This function computes the class boundary metrics.
 #'
-#' @param df A data frame consisting of cells with a binary label column (1) and
-#' a column containing the scores obtained by a gene set analysis method (2)
-#' @return A benchmark data frame with cells as row names, labels in the first column,
-#' gene set analysis method scores in the second column, and computed metric scores
-#' in the remaining columns.
+#' @param df A data frame consisting of cells with a binary label column (1)
+#' and a column containing the scores obtained by a gene set analysis
+#' method (2).
+#' @return A benchmark data frame with cells as row names, labels in the first
+#' column, gene set analysis method scores in the second column, and computed
+#' metric scores in the remaining columns.
 #'
 #' @export
 #'
@@ -52,13 +53,13 @@ computeBoundaryMetrics <- function(df){
 
 #' Compute the MCC at each threshold
 #'
-#' This function computes the MCC at each threshold
+#' This function computes the MCC at each threshold.
 #'
 #' @inheritParams computeBoundaryMetrics
 #'
-#' @return A benchmark data frame with cells as row names, labels in the first column,
-#' gene set analysis method scores in the second column, and MCC scores in the third
-#' column
+#' @return A benchmark data frame with cells as row names, labels in the first
+#' column, gene set analysis method scores in the second column, and MCC scores
+#' in the third column.
 #'
 #' @export
 #'
@@ -93,28 +94,33 @@ computeMCCMetric <- function(df){
 
 #' Compute the global evaluation metrics
 #'
-#' This function computes the global evaluation metrics
+#' This function computes the global evaluation metrics.
 #'
 #' @inheritParams computeBoundaryMetrics
-#' @param normSilDF Data frame of normalized silhouettes
-#' @param dimMat UMAP dimensionality reduction matrix of the Seurat object. Unused
-#' if normSilDF is NULL.
-#' @param maxDist Maximum UMAP distance in the Seurat object. Unused if normSilDF
-#' or dimMat is NULL
+#' @param normSilDF Data frame of normalized silhouettes.
+#' @param dimMat UMAP dimensionality reduction matrix of the Seurat object.
+#' Unused if normSilDF is NULL.
+#' @param maxDist Maximum UMAP distance in the Seurat object. Unused if
+#' normSilDF or dimMat is NULL.
 #'
-#' @return A benchmark data frame with one row and computed metric scores in the
-#' columns.
+#' @return A benchmark data frame with one row and computed metric scores in
+#' the columns.
 #'
 #' @export
 #'
-computeGlobalMetrics <- function(df, normSilDF = NULL, dimMat = NULL, maxDist = NULL){
+computeGlobalMetrics <- function(df,
+                                 normSilDF = NULL,
+                                 dimMat = NULL,
+                                 maxDist = NULL){
     resDF <- data.frame(AUROC = AUC(df[, 2], df[, 1]),
                         PRAUC = PRAUC(df[, 2], df[, 1]),
-                        labRankAlignment = rankAlignmentScore(df[, 1], df[, 2]))
+                        labRankAlignment = rankAlignmentScore(df[, 1],
+                                                              df[, 2]))
     if(!is.null(normSilDF)){
         label <- labelFromColumn(colnames(df)[2])
         sil <- normSilDF[label]
-        resDF$silRankAlignment <- rankAlignmentScore(sil[rownames(df), 1], df[, 2])
+        resDF$silRankAlignment <- rankAlignmentScore(sil[rownames(df), 1],
+                                                     df[, 2])
         if (!is.null(dimMat) & !is.null(maxDist)){
             scoreCM <- centerOfMass(dimMat, df[rownames(dimMat), 2])
         if (length(intersect(scoreCM, NaN)))
@@ -132,13 +138,13 @@ computeGlobalMetrics <- function(df, normSilDF = NULL, dimMat = NULL, maxDist = 
 #'
 #' This function computes the Matthews correlation coefficient for an input
 #' data frame generated through class boundary determination benchmarking. The
-#' first column contains labels while the second is binarized based on the previously
-#' determined cutoff (the first element in the second column).
+#' first column contains labels while the second is binarized based on the
+#' previously determined cutoff (the first element in the second column).
 #'
-#' @param boundaryResDF A data frame generated with the boundary benchmark
-#' @param threshold Threshold that determines class boundary
+#' @param boundaryResDF A data frame generated with the boundary benchmark.
+#' @param threshold Threshold that determines class boundary.
 #'
-#' @return The Matthews correlation coefficient
+#' @return The Matthews correlation coefficient.
 #'
 #' @export
 #'

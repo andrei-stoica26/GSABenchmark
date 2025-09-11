@@ -12,7 +12,8 @@ computeMetricMeans(df, startCol)
 \item{startCol}{Column where metric scores start.}
 }
 \value{
-The input data frame sorted decreasingly by the newly added overall column.
+The input data frame sorted decreasingly by the newly added
+overall column.
 }
 \description{
 This function adds overlap scores to a benchmark data frame.

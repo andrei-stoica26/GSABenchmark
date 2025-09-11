@@ -19,5 +19,5 @@ corrPlots(scObj, smr, titleSuffix = NULL, ...)
 A named list of ggplot objects.
 }
 \description{
-This function creates correlation plots for method results
+This function creates correlation plots for method results.
 }

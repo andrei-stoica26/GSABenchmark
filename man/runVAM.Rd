@@ -15,7 +15,7 @@ runVAM(scObj, geneSets, ...)
 }
 \value{
 A single-cell expression object with the results saved as a metadata
-column
+column.
 }
 \description{
 This function runs \code{VAM}.
