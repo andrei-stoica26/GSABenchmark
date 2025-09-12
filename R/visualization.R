@@ -283,7 +283,7 @@ mdsPlots <- function(scObj, smr, titleSuffix = NULL, ...){
     plotNames <- names(mdsDFs)
     plots <- mapply(function(mdsDF, plotName)
         densityPlot(mdsDF, paste0('MDS plot - ', plotName,
-                                  titleSuffix), ...),
+                                  titleSuffix), drawScores=TRUE, ...),
         mdsDFs, plotNames, SIMPLIFY=FALSE)
     return(plots)
 }
