@@ -19,37 +19,6 @@ messageMethod <- function(funStr, group, messageFun = message)
                                          'Run', 'Running '), ' for identity: ',
                              group, '...')))
 
-#' Convert a vector to a data frame based on input row and column names
-#'
-#' This function converts a vector to a data frame based on input row and column names.
-#' Optionally, it also calculates the row means.
-#'
-#' @param v A vector.
-#' @param rowNames A character vector.
-#' @param colNames A character vector.
-#' @param addRowMeans Whether to add the row means to the data frame.
-#' @param sortByRowMeans Whether to sort by row means.
-#'
-#' @return A data frame
-#'
-#' @export
-#'
-tabulateVector <- function(v,
-                           rowNames,
-                           colNames,
-                           addRowMeans=FALSE,
-                           sortByRowMeans=FALSE){
-    df <- data.frame(matrix(v, length(rowNames), length(colNames)))
-    rownames(df) <- rowNames
-    colnames(df) <- colNames
-    if(addRowMeans){
-        df$avg <- rowMeans(df)
-        if(sortByRowMeans)
-            df <- df[order(df$avg), ]
-    }
-    return(df)
-}
-
 #' Calculate the alignment between two numeric vectors
 #'
 #' This function calculates the alignment between two numeric vectors.

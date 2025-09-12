@@ -1,8 +1,3 @@
-#' @importFrom hammers shuffleGenes
-#'
-NULL
-
-
 #' Run gene set analysis method on shuffled gene sets
 #'
 #' This function runs a gene set analysis method on shuffled gene sets.
