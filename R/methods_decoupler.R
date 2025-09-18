@@ -24,13 +24,12 @@ runDecoupleRMethod <- function(scObj, geneSets, method, ...){
         inputDF <- data.frame(source='geneSet',
                                       target=genes,
                                       mor=1)
-        scores <- do.call(funStr, list(mat, inputDF, ...))$score
+        scores <- replace_na(do.call(funStr, list(mat, inputDF, ...))$score)
         scores <- safeMinmax(scores)
         return(scores)
     }))
 
-    colnames(scoreDF) <- names(geneSets)
-    scObj <- attachCellScores(scObj, scoreDF)
+    scObj <- attachScores(scObj, geneSets, scoreDF)
     return(scObj)
 }
 
@@ -43,6 +42,11 @@ runDecoupleRMethod <- function(scObj, geneSets, method, ...){
 #'
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
+#'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runMDT(mat, geneSets)[[2]]
 #'
 #' @export
 #'
@@ -59,6 +63,11 @@ runMDT <- function(scObj, geneSets, ...)
 #' @return A single-cell expression object with the results saved as a
 #' metadata column.
 #'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runMLM(mat, geneSets)[[2]]
+#'
 #' @export
 #'
 runMLM <- function(scObj, geneSets, ...)
@@ -73,6 +82,11 @@ runMLM <- function(scObj, geneSets, ...)
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
 #'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runORA(mat, geneSets)[[2]]
+#'
 #' @export
 #'
 runORA <- function(scObj, geneSets, ...)
@@ -86,6 +100,11 @@ runORA <- function(scObj, geneSets, ...)
 #'
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
+#'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runUDT(mat, geneSets)[[2]]
 #'
 #' @export
 #'

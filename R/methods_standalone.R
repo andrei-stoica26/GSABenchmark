@@ -15,6 +15,11 @@ NULL
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
 #'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runPagoda2(mat, geneSets)[[2]]
+#'
 #' @export
 #'
 runPagoda2 <- function(scObj, geneSets, ...){
@@ -28,8 +33,7 @@ runPagoda2 <- function(scObj, geneSets, ...){
         return(scores)
     }))
 
-    colnames(scoreDF) <- names(geneSets)
-    scObj <- attachCellScores(scObj, scoreDF)
+    scObj <- attachScores(scObj, geneSets, scoreDF)
     return(scObj)
 }
 
@@ -42,6 +46,11 @@ runPagoda2 <- function(scObj, geneSets, ...){
 #'
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
+#'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runSingscore(mat, geneSets)[[2]]
 #'
 #' @export
 #'
@@ -58,8 +67,7 @@ runSingscore <- function(scObj, geneSets, ...){
         return(scores)
     }))
 
-    colnames(scoreDF) <- names(geneSets)
-    scObj <- attachCellScores(scObj, scoreDF)
+    scObj <- attachScores(scObj, geneSets, scoreDF)
     return(scObj)
 }
 
@@ -72,6 +80,11 @@ runSingscore <- function(scObj, geneSets, ...){
 #'
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
+#'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runSiPSiC(mat, geneSets)[[2]]
 #'
 #' @export
 #'
@@ -87,8 +100,7 @@ runSiPSiC <- function(scObj, geneSets, ...){
         return(scores)
     }))
 
-    colnames(scoreDF) <- names(geneSets)
-    scObj <- attachCellScores(scObj, scoreDF)
+    scObj <- attachScores(scObj, geneSets, scoreDF)
     return(scObj)
 }
 
@@ -102,6 +114,11 @@ runSiPSiC <- function(scObj, geneSets, ...){
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
 #'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runVAM(mat, geneSets)[[2]]
+#'
 #' @export
 #'
 runVAM <- function(scObj, geneSets, ...){
@@ -114,7 +131,6 @@ runVAM <- function(scObj, geneSets, ...){
         return(scores)
     }))
 
-    colnames(scoreDF) <- names(geneSets)
-    scObj <- attachCellScores(scObj, scoreDF)
+    scObj <- attachScores(scObj, geneSets, scoreDF)
     return(scObj)
 }

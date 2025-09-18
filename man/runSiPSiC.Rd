@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{SiPSiC}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runSiPSiC(mat, geneSets)[[2]]
+
+}

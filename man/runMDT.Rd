@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{MDT} using \code{decoupleR}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runMDT(mat, geneSets)[[2]]
+
+}

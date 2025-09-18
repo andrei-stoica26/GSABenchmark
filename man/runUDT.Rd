@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{UDT} using \code{decoupleR}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runUDT(mat, geneSets)[[2]]
+
+}

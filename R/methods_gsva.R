@@ -33,7 +33,7 @@ runGSVAMethod <- function(scObj, geneSets, method, invert = FALSE,
     if (invert)
         scoreDF <- apply(scoreDF, 2, function(x) 1 - x)
 
-    scObj <- attachCellScores(scObj, scoreDF)
+    scObj <- attachScores(scObj, geneSets, scoreDF)
     return(scObj)
 }
 
@@ -46,6 +46,11 @@ runGSVAMethod <- function(scObj, geneSets, method, invert = FALSE,
 #'
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
+#'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runGSVA(mat, geneSets)[[2]]
 #'
 #' @export
 #'
@@ -62,6 +67,11 @@ runGSVA <- function(scObj, geneSets, ...)
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
 #'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runPLAGE(mat, geneSets)[[2]]
+#'
 #' @export
 #'
 runPLAGE <- function(scObj, geneSets, ...)
@@ -76,6 +86,11 @@ runPLAGE <- function(scObj, geneSets, ...)
 #'
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
+#'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runZscore(mat, geneSets)[[2]]
 #'
 #' @export
 #'

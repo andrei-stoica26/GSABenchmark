@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{pagoda2}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runPagoda2(mat, geneSets)[[2]]
+
+}

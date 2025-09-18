@@ -16,8 +16,8 @@ set for the corresponding method.}
 \item{gsaMethods}{Gene set analysis methods.}
 }
 \value{
-Extended summary list with an additional data frame showing the average
-results obtained for each metric.
+Extended summary list with an additional data frame showing the
+average results obtained for each metric.
 }
 \description{
 This function extends summary by addding overall results for each metric.

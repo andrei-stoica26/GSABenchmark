@@ -20,3 +20,9 @@ metadata column.
 \description{
 This function runs \code{MLM} using \code{decoupleR}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runMLM(mat, geneSets)[[2]]
+
+}

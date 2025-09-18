@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{Zscore} using \code{GSVA}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runZscore(mat, geneSets)[[2]]
+
+}

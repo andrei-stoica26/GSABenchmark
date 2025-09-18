@@ -41,3 +41,9 @@ This function runs \code{AddModuleScore}.
 \details{
 Reimplemented from \code{https://github.com/satijalab}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runAddModuleScore(mat, geneSets)[[2]]
+
+}

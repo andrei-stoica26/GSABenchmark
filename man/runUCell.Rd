@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{UCell} using \code{escape}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runUCell(mat, geneSets)[[2]]
+
+}

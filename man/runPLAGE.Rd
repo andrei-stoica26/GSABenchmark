@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{PLAGE} using \code{GSVA}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runPLAGE(mat, geneSets)[[2]]
+
+}

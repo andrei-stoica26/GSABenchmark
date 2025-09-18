@@ -47,8 +47,7 @@ and `SingleCellExperiment` objects:
 - `VAM`
 - `Zscore`
 
-The `supportedMethods()` function can be used to alphabetically print the names
-of all supported methods.
+The `supportedMethods()` function returns the names of all currently supported methods.
 
 ## Assessing new methods
 

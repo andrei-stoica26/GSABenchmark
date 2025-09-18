@@ -1,5 +1,5 @@
 #' @importFrom MLmetrics AUC LogLoss PRAUC
-#' @importFrom mltools mcc
+#' @importFrom mltools mcc replace_na
 #'
 NULL
 

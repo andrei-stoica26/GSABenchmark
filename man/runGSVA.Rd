@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{GSVA} using \code{GSVA}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runGSVA(mat, geneSets)[[2]]
+
+}

@@ -58,7 +58,6 @@ condenseRepeatedScores <- function(df){
 #' @return The input data frame sorted decreasingly by the newly added
 #' overall column.
 #'
-#'
 computeMetricMeans <- function(df, startCol){
     df$avg <- rowMeans(df[, seq(startCol, ncol(df))])
     df <- df[order(df$avg, decreasing=TRUE),]
@@ -75,8 +74,8 @@ computeMetricMeans <- function(df, startCol){
 #' @param metrics Metrics.
 #' @inheritParams computeMethodMeans
 #'
-#' @return Extended summary list with an additional data frame showing the average
-#' results obtained for each metric.
+#' @return Extended summary list with an additional data frame showing the
+#' average results obtained for each metric.
 #'
 addMetricSummary <- function(smr, metrics, gsaMethods){
     names(smr) <- metrics

@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{ssGSEA} using \code{escape}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runssGSEA(mat, geneSets)[[2]]
+
+}

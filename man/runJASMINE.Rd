@@ -30,3 +30,9 @@ Reimplemented from \code{https://github.com/NNoureen/JASMINE}.
 The method's paper can be found at
 \code{https://doi.org/10.7554/eLife.71994}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runJASMINE(mat, geneSets)[[2]]
+
+}

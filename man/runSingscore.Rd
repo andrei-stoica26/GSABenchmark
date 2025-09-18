@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{Singscore}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runSingscore(mat, geneSets)[[2]]
+
+}

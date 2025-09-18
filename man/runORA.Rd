@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{ORA} using \code{decoupleR}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runORA(mat, geneSets)[[2]]
+
+}

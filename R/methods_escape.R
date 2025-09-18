@@ -21,7 +21,7 @@ runEscapeMethod <- function(scObj, geneSets, method, ...){
     scoreDF <- escape.matrix(mat, geneSets, method=method, ...)
     scoreDF <- apply(scoreDF, 2, safeMinmax)
 
-    scObj <- attachCellScores(scObj, scoreDF)
+    scObj <- attachScores(scObj, geneSets, scoreDF)
     return(scObj)
 }
 
@@ -34,6 +34,11 @@ runEscapeMethod <- function(scObj, geneSets, method, ...){
 #'
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
+#'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runAUCell(mat, geneSets)[[2]]
 #'
 #' @export
 #'
@@ -49,6 +54,11 @@ runAUCell <- function(scObj, geneSets, ...)
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
 #'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runssGSEA(mat, geneSets)[[2]]
+#'
 #' @export
 #'
 runssGSEA <- function(scObj, geneSets, ...)
@@ -62,6 +72,11 @@ runssGSEA <- function(scObj, geneSets, ...)
 #'
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
+#'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runUCell(mat, geneSets)[[2]]
 #'
 #' @export
 #'

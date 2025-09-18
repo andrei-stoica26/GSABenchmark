@@ -20,3 +20,9 @@ column.
 \description{
 This function runs \code{VAM}.
 }
+\examples{
+mat <- mockGCMat()
+geneSets <- mockGeneSets()
+res <- runVAM(mat, geneSets)[[2]]
+
+}

@@ -38,8 +38,10 @@ addModuleScoreHelper <- function(scObj,
     scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
         ctrlUse <- c()
         for (gene in genes){
-            ctrlSample <- names(sample(matCut[which(matCut == matCut[gene])],
-                                       size=ctrl, replace=FALSE))
+            ctrlPop <- matCut[which(matCut == matCut[gene])]
+            ctrlSample <- names(sample(ctrlPop,
+                                       size=min(ctrl, length(ctrlPop)),
+                                       replace=FALSE))
             ctrlUse <- c(ctrlUse, ctrlSample)
         }
         ctrlUse <- unique(ctrlUse)
@@ -50,8 +52,7 @@ addModuleScoreHelper <- function(scObj,
         return(scores)
     }))
 
-    colnames(scoreDF) <- names(geneSets)
-    scObj <- attachCellScores(scObj, scoreDF)
+    scObj <- attachScores(scObj, geneSets, scoreDF)
     return(scObj)
 }
 
@@ -66,6 +67,11 @@ addModuleScoreHelper <- function(scObj,
 #'
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
+#'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runAddModuleScore(mat, geneSets)[[2]]
 #'
 #' @export
 #'
@@ -119,6 +125,11 @@ meanGeneRank <- function(cellVector, genes){
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
 #'
+#' @examples
+#' mat <- mockGCMat()
+#' geneSets <- mockGeneSets()
+#' res <- runJASMINE(mat, geneSets)[[2]]
+#'
 #' @export
 #'
 runJASMINE <- function(scObj,
@@ -145,7 +156,8 @@ runJASMINE <- function(scObj,
         absentSigGeneFreq <- nrow(sigMat) - sigGeneFreq
         absentComplGeneFreq <- nrow(complMat) - complGeneFreq
 
-        absentSigGeneFreq <- replace(absentSigGeneFreq, absentSigGeneFreq == 0, 1)
+        absentSigGeneFreq <- replace(absentSigGeneFreq,
+                                     absentSigGeneFreq == 0, 1)
         complGeneFreq <- replace(complGeneFreq, complGeneFreq == 0, 1)
 
         if(method == 'oddsratio')
@@ -161,7 +173,6 @@ runJASMINE <- function(scObj,
         return(scores)
     }))
 
-    colnames(scoreDF) <- names(geneSets)
-    scObj <- attachCellScores(scObj, scoreDF)
+    scObj <- attachScores(scObj, geneSets, scoreDF)
     return(scObj)
 }

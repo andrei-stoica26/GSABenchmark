@@ -103,3 +103,24 @@ metricTitles <- function(){
                 'Silhouette rank alignment', 'Centrality')
     return(setNames(titles, metrics))
 }
+
+#' Attach gene set analysis method scores
+#'
+#' This function attaches gene set analysis method scores to an object.
+#'
+#' @details Wrapper around \code{CSOA::attachCellScores}
+#'
+#' @inheritParams runGSAMethods
+#' @param scoreDF Data frame of gene set analysis method scores.
+#'
+#' @return A single-cell expression object with the results saved as a metadata
+#' column.
+#'
+#' @noRd
+#'
+attachScores <- function(scObj, geneSets, scoreDF){
+    rownames(scoreDF) <- colnames(scObj)
+    colnames(scoreDF) <- names(geneSets)
+    scObj <- attachCellScores(scObj, scoreDF)
+    return(scObj)
+}
