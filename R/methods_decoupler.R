@@ -44,9 +44,9 @@ runDecoupleRMethod <- function(scObj, geneSets, method, ...){
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runMDT(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runMDT(scObj, geneSets)
 #'
 #' @export
 #'
@@ -64,9 +64,9 @@ runMDT <- function(scObj, geneSets, ...)
 #' metadata column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runMLM(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runMLM(scObj, geneSets)
 #'
 #' @export
 #'
@@ -83,9 +83,9 @@ runMLM <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runORA(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runORA(scObj, geneSets)
 #'
 #' @export
 #'
@@ -102,9 +102,9 @@ runORA <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runUDT(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runUDT(scObj, geneSets)
 #'
 #' @export
 #'

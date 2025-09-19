@@ -24,7 +24,7 @@ extractCellScores <- function(scObj, labelCol, scoreCol, label){
     df <- metadataDF(scObj)[, c(labelCol, scoreCol)]
     colnames(df)[1] <- 'label'
     df$label <- as.integer(df[, 1] %in% label)
-    df <- df[order(df[, scoreCol], decreasing=TRUE),]
+    df <- df[order(df[, scoreCol], decreasing=TRUE), ]
     return(df)
 }
 

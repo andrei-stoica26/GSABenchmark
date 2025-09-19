@@ -36,9 +36,9 @@ runEscapeMethod <- function(scObj, geneSets, method, ...){
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runAUCell(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runAUCell(scObj, geneSets)
 #'
 #' @export
 #'
@@ -55,9 +55,9 @@ runAUCell <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runssGSEA(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runssGSEA(scObj, geneSets)
 #'
 #' @export
 #'
@@ -74,9 +74,9 @@ runssGSEA <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runUCell(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runUCell(scObj, geneSets)
 #'
 #' @export
 #'

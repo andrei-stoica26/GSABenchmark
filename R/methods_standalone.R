@@ -16,9 +16,9 @@ NULL
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runPagoda2(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runPagoda2(scObj, geneSets)
 #'
 #' @export
 #'
@@ -48,9 +48,9 @@ runPagoda2 <- function(scObj, geneSets, ...){
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runSingscore(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runSingscore(scObj, geneSets)
 #'
 #' @export
 #'
@@ -82,9 +82,9 @@ runSingscore <- function(scObj, geneSets, ...){
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runSiPSiC(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runSiPSiC(scObj, geneSets)
 #'
 #' @export
 #'
@@ -115,9 +115,9 @@ runSiPSiC <- function(scObj, geneSets, ...){
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runVAM(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runVAM(scObj, geneSets)
 #'
 #' @export
 #'

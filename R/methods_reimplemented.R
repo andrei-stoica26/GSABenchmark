@@ -15,8 +15,8 @@ NULL
 #' @param ctrl Number of control features chosen from the same bin for each
 #' feature.
 #'
-#' @return A single-cell expression object with the results saved as a metadata
-#' column.
+#' @return A single-cell expression object with the results saved as a
+#' metadata column.
 #'
 #' @keywords internal
 #'
@@ -69,9 +69,9 @@ addModuleScoreHelper <- function(scObj,
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runAddModuleScore(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runAddModuleScore(scObj, geneSets)
 #'
 #' @export
 #'
@@ -126,9 +126,9 @@ meanGeneRank <- function(cellVector, genes){
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runJASMINE(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runJASMINE(scObj, geneSets)
 #'
 #' @export
 #'

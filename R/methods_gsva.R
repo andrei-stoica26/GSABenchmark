@@ -48,9 +48,9 @@ runGSVAMethod <- function(scObj, geneSets, method, invert = FALSE,
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runGSVA(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runGSVA(scObj, geneSets)
 #'
 #' @export
 #'
@@ -68,9 +68,9 @@ runGSVA <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runPLAGE(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runPLAGE(scObj, geneSets)
 #'
 #' @export
 #'
@@ -88,9 +88,9 @@ runPLAGE <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' mat <- mockGCMat()
-#' geneSets <- mockGeneSets()
-#' res <- runZscore(mat, geneSets)[[2]]
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runZscore(scObj, geneSets)
 #'
 #' @export
 #'

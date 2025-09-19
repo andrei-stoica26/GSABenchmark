@@ -87,7 +87,7 @@ computeMCCMetric <- function(df){
 
     thresholdMCC <- denseDF$x / denseDF$y
     df$MCC <- rep(thresholdMCC, frequencies)
-    df <- df[order(df$MCC, decreasing=TRUE),]
+    df <- df[order(df$MCC, decreasing=TRUE), ]
 
     return(df)
 }
