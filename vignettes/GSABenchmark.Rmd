@@ -285,8 +285,8 @@ Subsequently, the same benchmark as before can be run with
 smr <- runBenchmarkShuffle(scObj, 'label', geneSets, 'CSOA')
 ```
 
-The output of `runBenchmarkShuffle` can be used to create the same types of plots
-as before. For instance, here we display a MDS plot:
+The output of `runBenchmarkShuffle` can be used to create the same types of 
+plots as before. For instance, here we display a MDS plot:
 
 ```{r, out.height='100%', out.width='100%', fig.height=5, fig.width=5}
 plots <- mdsPlots(scObj, smr)

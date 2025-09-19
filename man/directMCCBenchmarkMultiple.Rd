@@ -36,3 +36,4 @@ A list of lists of boundary benchmark data frames.
 This function performs direct MCC benchmarks for multiple sets of GSA
 method scores and class labels.
 }
+\keyword{internal}

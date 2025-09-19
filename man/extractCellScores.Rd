@@ -25,3 +25,4 @@ GSA method scores.
 This function extracts GSA method scores and truth labels from a single-cell
 expression object.
 }
+\keyword{internal}

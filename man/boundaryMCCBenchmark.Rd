@@ -18,3 +18,4 @@ GSA scores, and MCC scores as columns.
 This function computes the MCC based on the previously identified boundary
 cutoff.
 }
+\keyword{internal}

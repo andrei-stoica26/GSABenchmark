@@ -26,3 +26,4 @@ the columns.
 \description{
 This function computes the global evaluation metrics.
 }
+\keyword{internal}

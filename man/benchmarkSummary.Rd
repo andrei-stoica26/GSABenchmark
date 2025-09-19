@@ -20,3 +20,4 @@ Summary data frames.
 This function compares the identification of different labels through
 different gene set analysis methods.
 }
+\keyword{internal}

@@ -19,3 +19,4 @@ metric scores in the remaining columns.
 \description{
 This function computes the class boundary metrics.
 }
+\keyword{internal}

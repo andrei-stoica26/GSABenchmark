@@ -43,3 +43,4 @@ A list of lists of benchmark data frames.
 This function performs accuracy benchmarks for multiple sets of GSA method
 scores and class labels.
 }
+\keyword{internal}

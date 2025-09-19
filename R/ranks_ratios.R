@@ -20,7 +20,7 @@ topRatios <- function(smr, nAggDFs=0, nAvgCols=0){
 
     ratioDF <- do.call(rbind, lapply(metricNames, function(metricName){
         df <- smr[[metricName]]
-        do.call(rbind, lapply(geneSetNames, function(gsName) {
+        do.call(rbind, lapply(geneSetNames, function(gsName){
             colVals <- df[[gsName]]
             maxVal <- max(colVals)
             colSum <- sum(colVals)

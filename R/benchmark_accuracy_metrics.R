@@ -14,7 +14,7 @@ NULL
 #' column, gene set analysis method scores in the second column, and computed
 #' metric scores in the remaining columns.
 #'
-#' @export
+#' @keywords internal
 #'
 computeBoundaryMetrics <- function(df){
     denseDF <- condenseRepeatedScores(df)
@@ -61,7 +61,7 @@ computeBoundaryMetrics <- function(df){
 #' column, gene set analysis method scores in the second column, and MCC scores
 #' in the third column.
 #'
-#' @export
+#' @keywords internal
 #'
 computeMCCMetric <- function(df){
     denseDF <- condenseRepeatedScores(df)
@@ -106,7 +106,7 @@ computeMCCMetric <- function(df){
 #' @return A benchmark data frame with one row and computed metric scores in
 #' the columns.
 #'
-#' @export
+#' @keywords internal
 #'
 computeGlobalMetrics <- function(df,
                                  normSilDF = NULL,
@@ -126,7 +126,7 @@ computeGlobalMetrics <- function(df,
         if (length(intersect(scoreCM, NaN)))
             resDF$centrality <- 0 else{
                 silCM <- centerOfMass(dimMat, sil[rownames(dimMat), 1])
-            resDF$centrality <- proximity(scoreCM, silCM, maxDist)
+                resDF$centrality <- proximity(scoreCM, silCM, maxDist)
             }
         }
     }
@@ -146,7 +146,7 @@ computeGlobalMetrics <- function(df,
 #'
 #' @return The Matthews correlation coefficient.
 #'
-#' @export
+#' @keywords internal
 #'
 computeMCC <- function(boundaryResDF, threshold = boundaryResDF[1, 2]){
     boundaryResDF <- boundaryResDF[, c(1, 2)]

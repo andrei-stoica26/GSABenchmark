@@ -17,6 +17,7 @@
 #'
 #' @return A list of lists of benchmark data frames.
 #'
+#' @keywords internal
 #'
 accuracyBenchmarkMultiple <- function(scObj,
                                       labelCol,
@@ -52,17 +53,17 @@ accuracyBenchmarkMultiple <- function(scObj,
     return(res)
 }
 
-#' Perform boundary accuracy benchmarks for multiple sets of GSA method scores
-#' and class labels
+#' Perform boundary accuracy benchmarks for multiple sets of gene set analysis
+#' method scores and class labels
 #'
-#' This function performs boundary accuracy benchmarks for multiple sets of GSA
-#' method scores and class labels.
+#' This function performs boundary accuracy benchmarks for multiple sets of
+#' gene set analysis method scores and class labels.
 #'
 #' @inheritParams accuracyBenchmarkMultiple
 #'
 #' @return A list of lists of boundary benchmark data frames.
 #'
-#' @export
+#' @keywords internal
 #'
 boundaryBenchmarkMultiple <- function(scObj,
                                       labelCol,
@@ -88,7 +89,7 @@ boundaryBenchmarkMultiple <- function(scObj,
 #'
 #' @return A list of lists of boundary benchmark data frames.
 #'
-#' @export
+#' @keywords internal
 #'
 directMCCBenchmarkMultiple <- function(scObj,
                                        labelCol,
@@ -116,7 +117,7 @@ directMCCBenchmarkMultiple <- function(scObj,
 #'
 #' @return A list of lists of distribution benchmark data frames.
 #'
-#' @export
+#' @keywords internal
 #'
 globalBenchmarkMultiple <- function(scObj,
                                     labelCol,

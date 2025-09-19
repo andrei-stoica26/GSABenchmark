@@ -43,3 +43,4 @@ A one-row benchmark data frame with global metric scores as columns.
 This function performs a global evaluation benchmark on a set of GSA
 method scores.
 }
+\keyword{internal}

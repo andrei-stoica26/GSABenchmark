@@ -27,3 +27,4 @@ GSA scores, and class boundary metric scores as columns.
 This function performs a class boundary accuracy benchmark on a set of GSA
 method scores.
 }
+\keyword{internal}

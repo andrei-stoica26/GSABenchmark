@@ -36,3 +36,4 @@ A list of lists of boundary benchmark data frames.
 This function performs boundary accuracy benchmarks for multiple sets of GSA
 method scores and class labels.
 }
+\keyword{internal}

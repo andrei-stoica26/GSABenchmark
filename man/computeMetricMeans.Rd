@@ -18,3 +18,4 @@ overall column.
 \description{
 This function adds overlap scores to a benchmark data frame.
 }
+\keyword{internal}

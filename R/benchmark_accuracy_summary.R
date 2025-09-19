@@ -10,7 +10,7 @@
 #'
 #' @return Summary data frames.
 #'
-#' @export
+#' @keywords internal
 #'
 benchmarkSummary <- function(benchmarkLL, summarizeMetrics = TRUE){
     geneSetNames <- names(benchmarkLL)

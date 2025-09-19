@@ -22,3 +22,4 @@ average results obtained for each metric.
 \description{
 This function extends summary by addding overall results for each metric.
 }
+\keyword{internal}

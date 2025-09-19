@@ -47,3 +47,4 @@ A list of lists of distribution benchmark data frames.
 This function performs distribution accuracy benchmarks for multiple sets
 of GSA method scores and class labels.
 }
+\keyword{internal}

@@ -19,3 +19,4 @@ these means.
 \description{
 This function adds means for a data frame of metric results.
 }
+\keyword{internal}

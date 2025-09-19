@@ -19,3 +19,4 @@ in the third column.
 \description{
 This function computes the MCC at each threshold.
 }
+\keyword{internal}

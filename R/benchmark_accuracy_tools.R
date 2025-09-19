@@ -3,11 +3,11 @@
 #'
 NULL
 
-#' Extract GSA method scores and truth labels from single-cell
+#' Extract gene set analysis method scores and truth labels from single-cell
 #' expression object
 #'
-#' This function extracts GSA method scores and truth labels from a single-cell
-#' expression object.
+#' This function extracts gene set analysis method scores and truth labels from
+#' a single-cell expression object.
 #'
 #' @param scObj A \code{Seurat} or \code{SingleCellExperiment} object.
 #' @param labelCol The metadata column containing the ground truth annotation.
@@ -16,9 +16,9 @@ NULL
 #' @param label The identity assessed from the labelCol column.
 #'
 #' @return A data frame with two columns: truth labels (1 or 0) and
-#' GSA method scores.
+#' gene set analysis method scores.
 #'
-#' @export
+#' @keywords internal
 #'
 extractCellScores <- function(scObj, labelCol, scoreCol, label){
     df <- metadataDF(scObj)[, c(labelCol, scoreCol)]
@@ -28,15 +28,17 @@ extractCellScores <- function(scObj, labelCol, scoreCol, label){
     return(df)
 }
 
-#' Condense repeated GSA method scores
+#' Condense repeated gene set analysis method scores
 #'
-#' This function condenses repeated GSA method scores, summing labels and
-#' recording frequencies in the process.
+#' This function condenses repeated gene set analysis method scores, summing
+#' labels and recording frequencies in the process.
 #'
-#' @param df A data frame with two columns: truth labels (1 or 0) and GSA
-#' method scores.
+#' @param df A data frame with two columns: truth labels (1 or 0) and gene set
+#' analysis method scores.
 #'
 #' @return A condensed scores data frame.
+#'
+#' @noRd
 #'
 condenseRepeatedScores <- function(df){
     denseDF <- plyr::count(df[, 2])
@@ -58,6 +60,8 @@ condenseRepeatedScores <- function(df){
 #' @return The input data frame sorted decreasingly by the newly added
 #' overall column.
 #'
+#' @keywords internal
+#'
 computeMetricMeans <- function(df, startCol){
     df$avg <- rowMeans(df[, seq(startCol, ncol(df))])
     df <- df[order(df$avg, decreasing=TRUE),]
@@ -76,6 +80,8 @@ computeMetricMeans <- function(df, startCol){
 #'
 #' @return Extended summary list with an additional data frame showing the
 #' average results obtained for each metric.
+#'
+#' @keywords internal
 #'
 addMetricSummary <- function(smr, metrics, gsaMethods){
     names(smr) <- metrics
@@ -97,7 +103,7 @@ addMetricSummary <- function(smr, metrics, gsaMethods){
 #' @return A metric results data frame with added means, sorted decreasingly by
 #' these means.
 #'
-#' @export
+#' @keywords internal
 #'
 computeMethodMeans <- function(df, gsaMethods){
     rownames(df) <- gsaMethods

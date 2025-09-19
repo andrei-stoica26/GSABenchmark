@@ -39,3 +39,4 @@ A benchmark data frame.
 This function perform an accuracy benchmark on a set of gene set analysis
 method scores.
 }
+\keyword{internal}

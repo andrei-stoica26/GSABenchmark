@@ -27,3 +27,4 @@ GSA scores, and MCC scores as columns.
 This function performs a direct MCC benchmark on a set of GSA
 method scores.
 }
+\keyword{internal}
