@@ -17,6 +17,12 @@ NULL
 #' @return A \code{Seurat} or \code{SingleCellExpression} object
 #' with the results of the runs stored as metadata columns.
 #'
+#' @examples
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runGSAMethods(scObj, 'label', geneSets,
+#' supportedMethods()[c(1, 2)])
+#'
 #' @export
 #'
 runGSAMethods <- function(scObj, labelCol, geneSets, gsaMethods, infix = NULL){
@@ -36,6 +42,9 @@ runGSAMethods <- function(scObj, labelCol, geneSets, gsaMethods, infix = NULL){
 #' This function shows methods currently supported by GSABenchmark.
 #'
 #' @return A character vector of supported methods.
+#'
+#' @examples
+#' supportedMethods()
 #'
 #' @export
 #'

@@ -20,6 +20,9 @@
 #'
 #' @return A list of benchmark results.
 #'
+#' @example
+#'
+#'
 #' @export
 #'
 allBenchmarkResults <- function(scObj,
@@ -27,9 +30,9 @@ allBenchmarkResults <- function(scObj,
                                 geneSets,
                                 gsaMethods,
                                 checkLabels = TRUE,
-                                normSilDF,
-                                dimMat,
-                                maxDist,
+                                normSilDF = NULL,
+                                dimMat = NULL,
+                                maxDist = NULL,
                                 efBenchmark = NULL,
                                 runEFBenchmark = TRUE){
     x <- Sys.time()

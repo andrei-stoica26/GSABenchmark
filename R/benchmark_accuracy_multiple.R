@@ -1,8 +1,8 @@
-#' Perform accuracy benchmarks for multiple sets of GSA method scores and class
-#' labels
+#' Perform accuracy benchmarks for multiple sets of gene set analysis method
+#' scores and class labels
 #'
-#' This function performs accuracy benchmarks for multiple sets of GSA method
-#' scores and class labels.
+#' This function performs accuracy benchmarks for multiple sets of gene set
+#' analysis method scores and class labels.
 #'
 #' @inheritParams accuracyBenchmark
 #' @inheritParams runGSAMethods
@@ -79,11 +79,11 @@ boundaryBenchmarkMultiple <- function(scObj,
                                      verbose,
                                      boundaryBenchmark))
 
-#' Perform direct MCC benchmarks for multiple sets of GSA method scores
-#' and class labels
+#' Perform direct MCC benchmarks for multiple sets of gene set analysis method
+#' scores and class labels
 #'
-#' This function performs direct MCC benchmarks for multiple sets of GSA
-#' method scores and class labels.
+#' This function performs direct MCC benchmarks for multiple sets of gene set
+#' analysis method scores and class labels.
 #'
 #' @inheritParams accuracyBenchmarkMultiple
 #'
@@ -106,11 +106,11 @@ directMCCBenchmarkMultiple <- function(scObj,
                                      directMCCBenchmark
                                      ))
 
-#' Perform distribution accuracy benchmarks for multiple sets of GSA method
-#' scores and class labels
+#' Perform distribution accuracy benchmarks for multiple sets of gene set
+#' analysis method scores and class labels
 #'
 #' This function performs distribution accuracy benchmarks for multiple sets
-#' of GSA method scores and class labels.
+#' of gene set analysis method scores and class labels.
 #'
 #' @inheritParams accuracyBenchmarkMultiple
 #' @inheritParams globalBenchmark
