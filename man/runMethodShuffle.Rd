@@ -41,3 +41,9 @@ with the results of the runs stored as metadata columns.
 \description{
 This function runs a gene set analysis method on shuffled gene sets.
 }
+\examples{
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA', 0.2, 0.2)
+
+}

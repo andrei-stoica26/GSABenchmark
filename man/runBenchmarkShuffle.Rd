@@ -5,16 +5,25 @@
 \title{Generate all benchmark results for shuffled gene sets
 This function generates all benchmark results for shuffled gene sets.}
 \usage{
-runBenchmarkShuffle(scObj, labelCol, geneSets, gsaMethod)
+runBenchmarkShuffle(
+  scObj,
+  labelCol,
+  geneSets,
+  gsaMethod,
+  runEFBenchmark = TRUE
+)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{labelCol}{The metadata column containing the ground truth annotation.}
 
-\item{geneSets}{A named list of gene sets.}
+\item{geneSets}{A list of gene sets. If not \code{NULL} while
+\code{efBenchmark} is \code{NULL}, the efficiency benchmark will be run.}
 
 \item{gsaMethod}{Name of the gene set analysis method.}
+
+\item{runEFBenchmark}{Whether to run efficiency benchmark.}
 }
 \value{
 A list of benchmark results.
@@ -22,4 +31,11 @@ A list of benchmark results.
 \description{
 Generate all benchmark results for shuffled gene sets
 This function generates all benchmark results for shuffled gene sets.
+}
+\examples{
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA', 0.2, 0.2)
+smr <- runBenchmarkShuffle(scObj, 'label', geneSets, 'CSOA', FALSE)
+
 }

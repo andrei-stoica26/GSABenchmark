@@ -14,6 +14,11 @@
 #' @return A \code{Seurat} or \code{SingleCellExpression} object
 #' with the results of the runs stored as metadata columns.
 #'
+#' @examples
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA', 0.2, 0.2)
+#'
 #' @export
 #'
 runMethodShuffle <- function(scObj,
@@ -61,21 +66,29 @@ runMethodShuffle <- function(scObj,
 #
 #' This function generates all benchmark results for shuffled gene sets.
 #'
-#' @inheritParams runGSAMethods
+#' @inheritParams runBenchmark
 #' @inheritParams runMethodShuffle
 #'
 #' @return A list of benchmark results.
+#'
+#' @examples
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA', 0.2, 0.2)
+#' smr <- runBenchmarkShuffle(scObj, 'label', geneSets, 'CSOA', FALSE)
 #'
 #' @export
 #'
 runBenchmarkShuffle <- function(scObj,
                                 labelCol,
                                 geneSets,
-                                gsaMethod){
+                                gsaMethod,
+                                runEFBenchmark = TRUE){
     runs <- grep(gsaMethod, colnames(metadataDF(scObj)), value=TRUE)
     runs <- unique(vapply(runs, runFromColumn, character(1)))
     return(runBenchmark(scObj,
                         labelCol,
                         geneSets,
-                        gsaMethods=runs))
+                        gsaMethods=runs,
+                        runEFBenchmark))
 }
