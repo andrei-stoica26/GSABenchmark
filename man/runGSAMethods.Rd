@@ -26,3 +26,9 @@ with the results of the runs stored as metadata columns.
 \description{
 This function runs the gene set analysis methods.
 }
+\examples{
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runGSAMethods(scObj, 'label', geneSets, c('CSOA', 'Zscore'))
+
+}

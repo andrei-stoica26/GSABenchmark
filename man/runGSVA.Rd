@@ -21,8 +21,8 @@ column.
 This function runs \code{GSVA} using \code{GSVA}.
 }
 \examples{
-mat <- mockGCMat()
-geneSets <- mockGeneSets()
-res <- runGSVA(mat, geneSets)[[2]]
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runGSVA(scObj, geneSets)
 
 }

@@ -21,8 +21,8 @@ column.
 This function runs \code{PLAGE} using \code{GSVA}.
 }
 \examples{
-mat <- mockGCMat()
-geneSets <- mockGeneSets()
-res <- runPLAGE(mat, geneSets)[[2]]
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runPLAGE(scObj, geneSets)
 
 }

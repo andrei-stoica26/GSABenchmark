@@ -2,7 +2,7 @@
 % Please edit documentation in R/benchmark_accuracy.R
 \name{directMCCBenchmark}
 \alias{directMCCBenchmark}
-\title{Perform a direct MCC benchmark on a set of GSA method scores}
+\title{Perform a direct MCC benchmark on a set of gene set analysis method scores}
 \usage{
 directMCCBenchmark(scObj, labelCol, scoreCol, label, checkLabel = TRUE)
 }
@@ -21,10 +21,10 @@ in \code{labelCol}.}
 }
 \value{
 A benchmark data frame with cells as row names, and labels,
-GSA scores, and MCC scores as columns.
+gene set analysis scores, and MCC scores as columns.
 }
 \description{
-This function performs a direct MCC benchmark on a set of GSA
+This function performs a direct MCC benchmark on a set of gene set analysis
 method scores.
 }
 \keyword{internal}

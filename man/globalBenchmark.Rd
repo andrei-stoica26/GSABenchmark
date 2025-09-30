@@ -2,7 +2,8 @@
 % Please edit documentation in R/benchmark_accuracy.R
 \name{globalBenchmark}
 \alias{globalBenchmark}
-\title{Perform a global evaluation benchmark on a set of GSA method scores}
+\title{Perform a global evaluation benchmark on a set of gene set analysis method
+scores}
 \usage{
 globalBenchmark(
   scObj,
@@ -40,7 +41,7 @@ normSilDF or dimMat is NULL.}
 A one-row benchmark data frame with global metric scores as columns.
 }
 \description{
-This function performs a global evaluation benchmark on a set of GSA
-method scores.
+This function performs a global evaluation benchmark on a set of gene set
+analysis method scores.
 }
 \keyword{internal}

@@ -20,10 +20,10 @@ efficiencyBenchmark(scObj, labelCol, geneSets, gsaMethods, checkLabels = TRUE)
 the values in \code{labelCol}.}
 }
 \value{
-A list of two data frames, the first comprising running times in seconds,
-the second comprising peak memory usage in mebibytes.
+A list of two data frames, the first comprising running times in
+seconds, the second comprising peak memory usage in mebibytes.
 }
 \description{
-This function extracts running times and peak memory usage for gene set analysis
-methods.
+This function extracts running times and peak memory usage for gene set
+analysis methods.
 }

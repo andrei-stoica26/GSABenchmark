@@ -2,8 +2,8 @@
 % Please edit documentation in R/benchmark_accuracy_multiple.R
 \name{accuracyBenchmarkMultiple}
 \alias{accuracyBenchmarkMultiple}
-\title{Perform accuracy benchmarks for multiple sets of GSA method scores and class
-labels}
+\title{Perform accuracy benchmarks for multiple sets of gene set analysis method
+scores and class labels}
 \usage{
 accuracyBenchmarkMultiple(
   scObj,
@@ -40,7 +40,7 @@ distributionBenchmark.}
 A list of lists of benchmark data frames.
 }
 \description{
-This function performs accuracy benchmarks for multiple sets of GSA method
-scores and class labels.
+This function performs accuracy benchmarks for multiple sets of gene set
+analysis method scores and class labels.
 }
 \keyword{internal}

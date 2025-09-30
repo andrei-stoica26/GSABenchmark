@@ -31,3 +31,9 @@ A wrapper around \code{allBenchmarkResults}. Slower for repeated
 runs, but it does not require users to manually generate \code{normSilDF}
 and \code{dimMat}.
 }
+\examples{
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+smr <- runBenchmark(scObj, 'label', geneSets, c('CSOA', 'Zscore'), FALSE)
+
+}

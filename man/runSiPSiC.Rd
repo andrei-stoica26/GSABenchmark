@@ -21,8 +21,8 @@ column.
 This function runs \code{SiPSiC}.
 }
 \examples{
-mat <- mockGCMat()
-geneSets <- mockGeneSets()
-res <- runSiPSiC(mat, geneSets)[[2]]
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runSiPSiC(scObj, geneSets)
 
 }

@@ -2,8 +2,8 @@
 % Please edit documentation in R/benchmark_accuracy_multiple.R
 \name{boundaryBenchmarkMultiple}
 \alias{boundaryBenchmarkMultiple}
-\title{Perform boundary accuracy benchmarks for multiple sets of GSA method scores
-and class labels}
+\title{Perform boundary accuracy benchmarks for multiple sets of gene set analysis
+method scores and class labels}
 \usage{
 boundaryBenchmarkMultiple(
   scObj,
@@ -33,7 +33,7 @@ begins for a gene set.}
 A list of lists of boundary benchmark data frames.
 }
 \description{
-This function performs boundary accuracy benchmarks for multiple sets of GSA
-method scores and class labels.
+This function performs boundary accuracy benchmarks for multiple sets of
+gene set analysis method scores and class labels.
 }
 \keyword{internal}

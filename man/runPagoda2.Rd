@@ -21,8 +21,8 @@ column.
 This function runs \code{pagoda2}.
 }
 \examples{
-mat <- mockGCMat()
-geneSets <- mockGeneSets()
-res <- runPagoda2(mat, geneSets)[[2]]
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runPagoda2(scObj, geneSets)
 
 }

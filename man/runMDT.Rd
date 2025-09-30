@@ -21,8 +21,8 @@ column.
 This function runs \code{MDT} using \code{decoupleR}.
 }
 \examples{
-mat <- mockGCMat()
-geneSets <- mockGeneSets()
-res <- runMDT(mat, geneSets)[[2]]
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runMDT(scObj, geneSets)
 
 }

@@ -14,6 +14,8 @@ NULL
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
 #'
+#' @keywords internal
+#'
 runDecoupleRMethod <- function(scObj, geneSets, method, ...){
     allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)

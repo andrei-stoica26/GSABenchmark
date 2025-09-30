@@ -29,8 +29,8 @@ are selected. Defaults to all features.}
 feature.}
 }
 \value{
-A single-cell expression object with the results saved as a metadata
-column.
+A single-cell expression object with the results saved as a
+metadata column.
 }
 \description{
 This function is used to run \code{AddModuleScore}.

@@ -21,8 +21,8 @@ column.
 This function runs \code{ssGSEA} using \code{escape}.
 }
 \examples{
-mat <- mockGCMat()
-geneSets <- mockGeneSets()
-res <- runssGSEA(mat, geneSets)[[2]]
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runssGSEA(scObj, geneSets)
 
 }

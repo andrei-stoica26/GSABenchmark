@@ -12,3 +12,7 @@ A character vector of supported methods.
 \description{
 This function shows methods currently supported by GSABenchmark.
 }
+\examples{
+supportedMethods()
+
+}

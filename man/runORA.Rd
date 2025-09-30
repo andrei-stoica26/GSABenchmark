@@ -21,8 +21,8 @@ column.
 This function runs \code{ORA} using \code{decoupleR}.
 }
 \examples{
-mat <- mockGCMat()
-geneSets <- mockGeneSets()
-res <- runORA(mat, geneSets)[[2]]
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runORA(scObj, geneSets)
 
 }

@@ -21,8 +21,8 @@ column.
 This function runs \code{UDT} using \code{decoupleR}.
 }
 \examples{
-mat <- mockGCMat()
-geneSets <- mockGeneSets()
-res <- runUDT(mat, geneSets)[[2]]
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runUDT(scObj, geneSets)
 
 }

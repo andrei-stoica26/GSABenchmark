@@ -16,6 +16,8 @@ NULL
 #' @return A single-cell expression object with the results saved as a metadata
 #' column.
 #'
+#' @keywords internal
+#'
 runGSVAMethod <- function(scObj, geneSets, method, invert = FALSE,
                           filter = FALSE, ...){
     allGenes <- Reduce(union, geneSets)

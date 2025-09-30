@@ -20,8 +20,15 @@
 #'
 #' @return A list of benchmark results.
 #'
-#' @example
-#'
+#' @examples
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scObj <- hammers::computeSilhouette(scObj, 'label')
+#' normSilDF <- hammers::normalizeSilhouette(scObj, 'label')
+#' dimMat <- hammers::scPCAMat(scObj)
+#' maxDist <- max(dist(dimMat))
+#' smr <- allBenchmarkResults(scObj, 'label', geneSets, c('CSOA', 'Zscore'),
+#' TRUE, normSilDF, dimMat, maxDist, runEFBenchmark=FALSE)
 #'
 #' @export
 #'
@@ -105,6 +112,11 @@ allBenchmarkResults <- function(scObj,
 #' @inheritParams allBenchmarkResults
 #'
 #' @return A list of benchmark results.
+#'
+#' @examples
+#' scObj <- qs::qread('inst/testdata/scObj.qs')
+#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' smr <- runBenchmark(scObj, 'label', geneSets, c('CSOA', 'Zscore'), FALSE)
 #'
 #' @export
 #'

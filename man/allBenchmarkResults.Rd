@@ -12,9 +12,9 @@ allBenchmarkResults(
   geneSets,
   gsaMethods,
   checkLabels = TRUE,
-  normSilDF,
-  dimMat,
-  maxDist,
+  normSilDF = NULL,
+  dimMat = NULL,
+  maxDist = NULL,
   efBenchmark = NULL,
   runEFBenchmark = TRUE
 )
@@ -60,4 +60,15 @@ object and cell identity classes, but different choices of gene sets
 run is planned rather than multiple ones, \code{runBenchmark} is a more
 straightforward choice, as it takes care of generating
 \code{normSilDF} and \code{dimMat}.
+}
+\examples{
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- hammers::computeSilhouette(scObj, 'label')
+normSilDF <- hammers::normalizeSilhouette(scObj, 'label')
+dimMat <- hammers::scPCAMat(scObj)
+maxDist <- max(dist(dimMat))
+smr <- allBenchmarkResults(scObj, 'label', geneSets, c('CSOA', 'Zscore'),
+TRUE, normSilDF, dimMat, maxDist, runEFBenchmark=FALSE)
+
 }

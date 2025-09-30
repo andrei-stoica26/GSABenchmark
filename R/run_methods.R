@@ -20,8 +20,7 @@ NULL
 #' @examples
 #' scObj <- qs::qread('inst/testdata/scObj.qs')
 #' geneSets <- qs::qread('inst/testdata/geneSets.qs')
-#' scObj <- runGSAMethods(scObj, 'label', geneSets,
-#' supportedMethods()[c(1, 2)])
+#' scObj <- runGSAMethods(scObj, 'label', geneSets, c('CSOA', 'Zscore'))
 #'
 #' @export
 #'

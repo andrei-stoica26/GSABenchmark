@@ -28,3 +28,4 @@ column.
 This function runs one of the gene set analysis methods supported
 by \code{GSVA}.
 }
+\keyword{internal}

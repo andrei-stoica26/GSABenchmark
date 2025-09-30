@@ -42,8 +42,8 @@ This function runs \code{AddModuleScore}.
 Reimplemented from \code{https://github.com/satijalab}.
 }
 \examples{
-mat <- mockGCMat()
-geneSets <- mockGeneSets()
-res <- runAddModuleScore(mat, geneSets)[[2]]
+scObj <- qs::qread('inst/testdata/scObj.qs')
+geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scObj <- runAddModuleScore(scObj, geneSets)
 
 }

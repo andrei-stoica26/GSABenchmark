@@ -2,7 +2,7 @@
 % Please edit documentation in R/benchmark_accuracy_tools.R
 \name{extractCellScores}
 \alias{extractCellScores}
-\title{Extract GSA method scores and truth labels from single-cell
+\title{Extract gene set analysis method scores and truth labels from single-cell
 expression object}
 \usage{
 extractCellScores(scObj, labelCol, scoreCol, label)
@@ -19,10 +19,10 @@ score.}
 }
 \value{
 A data frame with two columns: truth labels (1 or 0) and
-GSA method scores.
+gene set analysis method scores.
 }
 \description{
-This function extracts GSA method scores and truth labels from a single-cell
-expression object.
+This function extracts gene set analysis method scores and truth labels from
+a single-cell expression object.
 }
 \keyword{internal}
