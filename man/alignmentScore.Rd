@@ -2,18 +2,25 @@
 % Please edit documentation in R/utils.R
 \name{alignmentScore}
 \alias{alignmentScore}
-\title{Calculate the alignment between two numeric vectors}
+\title{Calculate the alignment between two numeric vectors of the same length}
 \usage{
-alignmentScore(x, y)
+alignmentScore(v, w)
 }
 \arguments{
-\item{x}{A vector.}
+\item{v}{A vector.}
 
-\item{y}{A vector}
+\item{w}{A vector of the same length as}
 }
 \value{
 Alignment score.
 }
 \description{
-This function calculates the alignment between two numeric vectors.
+This function calculates the alignment between two numeric vectors of the
+same lenght.
+}
+\examples{
+v <- c(2, 3, 6, 7, 8, 4, 12, 9, 10)
+w <- c(3, 4, 5, 6, 2, 7, 8, 13, 3)
+alignmentScore(v, w)
+
 }

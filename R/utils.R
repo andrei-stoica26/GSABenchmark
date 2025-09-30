@@ -14,40 +14,58 @@ NULL
 #'
 #' @return Messaged (default) or printed output.
 #'
+#' @noRd
+#'
 messageMethod <- function(funStr, group, messageFun = message)
     return(messageFun(paste0(str_replace(funStr,
                                          'Run', 'Running '), ' for identity: ',
                              group, '...')))
 
-#' Calculate the alignment between two numeric vectors
+#' Calculate the alignment between two numeric vectors of the same length
 #'
-#' This function calculates the alignment between two numeric vectors.
+#' This function calculates the alignment between two numeric vectors of the
+#' same lenght.
 #'
-#' @param x A vector.
-#' @param y A vector
+#' @param v A vector.
+#' @param w A vector of the same length as
 #'
 #' @return Alignment score.
 #'
+#' @examples
+#' v <- c(2, 3, 6, 7, 8, 4, 12, 9, 10)
+#' w <- c(3, 4, 5, 6, 2, 7, 8, 13, 3)
+#' alignmentScore(v, w)
+#'
 #' @export
 #'
-alignmentScore <- function(x, y)
-    return(sum(x * y) / sum(sort(x) * sort(y)))
+alignmentScore <- function(v, w){
+    if (length(v) != length(w))
+        stop('`v` and `w` must have the same length.')
+    return(sum(v * w) / sum(sort(v) * sort(w)))
+}
 
-#' Calculate the rank alignment between two numeric vectors
+#' Calculate the rank alignment between two numeric vectors of the same length
 #'
-#' This function calculates the rank alignment between two numeric vectors.
+#' This function calculates the rank alignment between two numeric vectors of
+#' the same length.
 #'
-#' @param x A vector.
-#' @param y A vector.
+#' @inheritParams alignmentScore
 #'
-#' @return Alignment score.
+#' @return Rank alignment score.
+#'
+#' @examples
+#' v <- c(2, 3, 6, 7, 8, 4, 12, 9, 10)
+#' w <- c(3, 4, 5, 6, 2, 7, 8, 13, 3)
+#' rankAlignmentScore(v, w)
 #'
 #' @export
 #'
-rankAlignmentScore <- function(x, y){
-    x <- safeMinmax(rank(x), 1 / length(x))
-    y <- safeMinmax(rank(y), 1 / length(y))
-    return(alignmentScore(x, y))
+rankAlignmentScore <- function(v, w){
+    if (length(v) != length(w))
+        stop('`v` and `w` must have the same length.')
+    v <- safeMinmax(rank(v), 1 / length(v))
+    w <- safeMinmax(rank(w), 1 / length(w))
+    return(alignmentScore(v, w))
 }
 
 #' Extract label from column name

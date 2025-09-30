@@ -2,18 +2,25 @@
 % Please edit documentation in R/utils.R
 \name{rankAlignmentScore}
 \alias{rankAlignmentScore}
-\title{Calculate the rank alignment between two numeric vectors}
+\title{Calculate the rank alignment between two numeric vectors of the same length}
 \usage{
-rankAlignmentScore(x, y)
+rankAlignmentScore(v, w)
 }
 \arguments{
-\item{x}{A vector.}
+\item{v}{A vector.}
 
-\item{y}{A vector.}
+\item{w}{A vector of the same length as}
 }
 \value{
-Alignment score.
+Rank alignment score.
 }
 \description{
-This function calculates the rank alignment between two numeric vectors.
+This function calculates the rank alignment between two numeric vectors of
+the same length.
+}
+\examples{
+v <- c(2, 3, 6, 7, 8, 4, 12, 9, 10)
+w <- c(3, 4, 5, 6, 2, 7, 8, 13, 3)
+rankAlignmentScore(v, w)
+
 }
