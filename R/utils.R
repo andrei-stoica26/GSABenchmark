@@ -142,3 +142,22 @@ attachScores <- function(scObj, geneSets, scoreDF){
     scObj <- attachCellScores(scObj, scoreDF)
     return(scObj)
 }
+
+#' Remove single-valued columns from a data frame
+#'
+#' This function removes single-valued columns from a data frame.
+#'
+#' @param df A data frame.
+#'
+#' @return A data frame from which single-valued columns have been removed.
+#'
+#' @noRd
+#'
+removeSVCols <- function(df){
+    hasDistinctValues <- apply(df, 2, function(x) length(unique(x)) > 1)
+    removedCol <- names(which(!hasDistinctValues))
+    if(length(removedCol))
+        message('Single-valued columns will be removed: ', removedCol, '.')
+    df <- df[, hasDistinctValues]
+    return(df)
+}
