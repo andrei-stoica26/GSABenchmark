@@ -15,7 +15,7 @@ aggregateRankPlot(
 \arguments{
 \item{smr}{Complete summary list generated with allBenchmarkResults.}
 
-\item{titleSuffix}{Plot title suffix to be appended to the default title}
+\item{titleSuffix}{Plot title suffix to be appended to the default title.}
 
 \item{sigDigits}{Number of significant digits used when displaying mean
 ranks. If \code{NULL}, the mean ranks will not be displayed.}

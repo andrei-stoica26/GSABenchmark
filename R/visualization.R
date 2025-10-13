@@ -15,20 +15,26 @@ NULL
 #' @param title Plot title.
 #' @param xLabel x axis label.
 #' @param legendTitle Legend title.
+#' @param pointSize Point size.
 #'
 #' @return A ggplot object.
 #'
 #' @export
 #'
-scorePlot <- function(scoreDF, title, xLabel = 'Score', legendTitle = 'Gene set'){
+scorePlot <- function(scoreDF,
+                      title,
+                      xLabel = 'Score',
+                      legendTitle = 'Gene set',
+                      pointSize = 2.5){
     scoreDF <- scoreDF[order(scoreDF$avg), ]
     longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF),
                                                 drop=FALSE]))
     pal <- rainbow(length(colnames(scoreDF)))
     p <- ggplot(data=longDF) +
-        geom_point(mapping=aes(x=value, y=Var1, color=Var2), size=2.5) +
+        geom_point(mapping=aes(x=value, y=Var1, color=Var2), size=pointSize) +
         labs(x=xLabel, y ='Method', color=legendTitle, title=title) +
-        theme_minimal() + scale_color_manual(values=pal, breaks=colnames(scoreDF)) +
+        theme_minimal() + scale_color_manual(values=pal,
+                                             breaks=colnames(scoreDF)) +
         theme(plot.title = element_text(hjust = 0.5))
     return(p)
 }
@@ -40,15 +46,16 @@ scorePlot <- function(scoreDF, title, xLabel = 'Score', legendTitle = 'Gene set'
 #'
 #' @param efBenchmark A list of dataframes generated with efficiencyBenchmark,
 #' containing an element labeled 'time'.
-#' @param titleSuffix Plot title suffix to be appended to the default title
+#' @param titleSuffix Plot title suffix to be appended to the default title.
+#' @param ... Additional parameters to be passed to \code{scorePlot}.
 #'
 #' @return A ggplot object.
 #'
 #' @export
 #'
-timePlot <- function(efBenchmark, titleSuffix = NULL){
+timePlot <- function(efBenchmark, titleSuffix = NULL, ...){
     title <- paste0('Running times', titleSuffix)
-    p <- scorePlot(efBenchmark$time, title, 'Running time (s)')
+    p <- scorePlot(efBenchmark$time, title, 'Running time (s)', ...)
     return(p)
 }
 
@@ -65,9 +72,9 @@ timePlot <- function(efBenchmark, titleSuffix = NULL){
 #'
 #' @export
 #'
-memoryPlot <- function(efBenchmark, titleSuffix = NULL){
+memoryPlot <- function(efBenchmark, titleSuffix = NULL, ...){
     title <- paste0('Peak memory usage', titleSuffix)
-    p <- scorePlot(efBenchmark$space, title, 'Peak memory usage (MiB)')
+    p <- scorePlot(efBenchmark$space, title, 'Peak memory usage (MiB)', ...)
     return(p)
 }
 
@@ -83,7 +90,7 @@ memoryPlot <- function(efBenchmark, titleSuffix = NULL){
 #'
 #' @export
 #'
-benchmarkPlots <- function(smr, titleSuffix = NULL){
+benchmarkPlots <- function(smr, titleSuffix = NULL, ...){
     boundaryMetrics <- c('Sensitivity', 'Specificity', 'Precision',
                          'Accuracy', 'Size proximity','Score coverage')
     globalMetrics <- c('AUROC', 'PRAUC', 'Label rank alignment',
@@ -109,7 +116,7 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
         v <- setNames(paste0(v, titleSuffix), names(v))
 
     plots <- lapply(seq_len(length(smr)), function(i)
-        scorePlot(smr[[i]], v[names(smr)[i]]))
+        scorePlot(smr[[i]], v[names(smr)[i]]), ...)
     plots[[length(plots)]] <- plots[[length(plots)]] + labs(color='Metric')
     return(plots)
 }
@@ -120,23 +127,26 @@ benchmarkPlots <- function(smr, titleSuffix = NULL){
 #'
 #' @param smr Complete summary list generated with allBenchmarkResults.
 #' @inheritParams timePlot
+#' @param ... Additional parameters passed to other functions.
 #'
 #' @return A list of ggplot objects.
 #'
 #' @export
 #'
-allBenchmarkPlots <- function(smr, titleSuffix = NULL){
-    p1 <- benchmarkPlots(smr$boundary, titleSuffix)
+allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
+    p1 <- benchmarkPlots(smr$boundary, titleSuffix, ...)
     p2 <- list(scorePlot(smr$MCC$boundary,
-                         paste0('MCC with boundary threshold', titleSuffix)),
+                         paste0('MCC with boundary threshold', titleSuffix),
+                         ...),
                scorePlot(smr$MCC$direct,
-                         paste0('Comprehensive MCC', titleSuffix)))
-    p3 <- benchmarkPlots(smr$global, titleSuffix)
+                         paste0('Comprehensive MCC', titleSuffix),
+                         ...))
+    p3 <- benchmarkPlots(smr$global, titleSuffix, ...)
 
     plots <- c(p1, p2, p3)
     if ('efficiency' %in% names(smr)){
-        p4 <- list(timePlot(smr$efficiency, titleSuffix),
-                   memoryPlot(smr$efficiency, titleSuffix))
+        p4 <- list(timePlot(smr$efficiency, titleSuffix, ...),
+                   memoryPlot(smr$efficiency, titleSuffix, ...))
         plots <- c(plots, p4)
     }
     return(plots)

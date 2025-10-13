@@ -17,7 +17,7 @@ ratioPlot(
 \arguments{
 \item{smr}{Complete summary list generated with allBenchmarkResults.}
 
-\item{titleSuffix}{Plot title suffix to be appended to the default title}
+\item{titleSuffix}{Plot title suffix to be appended to the default title.}
 
 \item{nItems}{Number of retained iterms.}
 

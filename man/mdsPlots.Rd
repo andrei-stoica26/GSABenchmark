@@ -11,7 +11,7 @@ mdsPlots(scObj, smr, titleSuffix = NULL, ...)
 
 \item{smr}{List containing boundary, MCC and global lists of data frames.}
 
-\item{titleSuffix}{Plot title suffix to be appended to the default title}
+\item{titleSuffix}{Plot title suffix to be appended to the default title.}
 
 \item{...}{Additional arguments passed to \code{henna::densityPlot}.}
 }

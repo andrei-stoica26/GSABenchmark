@@ -4,12 +4,14 @@
 \alias{benchmarkPlots}
 \title{Plot a list of data frame scores}
 \usage{
-benchmarkPlots(smr, titleSuffix = NULL)
+benchmarkPlots(smr, titleSuffix = NULL, ...)
 }
 \arguments{
 \item{smr}{Summary list}
 
-\item{titleSuffix}{Plot title suffix to be appended to the default title}
+\item{titleSuffix}{Plot title suffix to be appended to the default title.}
+
+\item{...}{Additional parameters to be passed to \code{scorePlot}.}
 }
 \value{
 A list of ggplot objects
