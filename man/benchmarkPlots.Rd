@@ -7,14 +7,14 @@
 benchmarkPlots(smr, titleSuffix = NULL, ...)
 }
 \arguments{
-\item{smr}{Summary list}
+\item{smr}{Summary list.}
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title.}
 
 \item{...}{Additional parameters to be passed to \code{scorePlot}.}
 }
 \value{
-A list of ggplot objects
+A list of ggplot objects.
 }
 \description{
 This function plots a list of dataframe scores with methods as rows,
