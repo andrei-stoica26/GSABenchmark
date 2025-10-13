@@ -8,10 +8,10 @@ as rows, gene sets and the gene set average as columns.}
 \usage{
 scorePlot(
   scoreDF,
-  title,
+  title = NULL,
   xLabel = "Score",
   legendTitle = "Gene set",
-  pointSize = 2.5
+  pointSize = 1.5
 )
 }
 \arguments{

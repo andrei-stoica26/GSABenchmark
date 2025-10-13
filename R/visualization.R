@@ -22,10 +22,10 @@ NULL
 #' @export
 #'
 scorePlot <- function(scoreDF,
-                      title,
+                      title = NULL,
                       xLabel = 'Score',
                       legendTitle = 'Gene set',
-                      pointSize = 2.5){
+                      pointSize = 1.5){
     scoreDF <- scoreDF[order(scoreDF$avg), ]
     longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF),
                                                 drop=FALSE]))
@@ -83,10 +83,10 @@ memoryPlot <- function(efBenchmark, titleSuffix = NULL, ...){
 #' This function plots a list of dataframe scores with methods as rows,
 #' gene sets and the average of scores across all gene sets as columns.
 #'
-#' @param smr Summary list
+#' @param smr Summary list.
 #' @inheritParams timePlot
 #'
-#' @return A list of ggplot objects
+#' @return A list of ggplot objects.
 #'
 #' @export
 #'
@@ -116,7 +116,8 @@ benchmarkPlots <- function(smr, titleSuffix = NULL, ...){
         v <- setNames(paste0(v, titleSuffix), names(v))
 
     plots <- lapply(seq_len(length(smr)), function(i)
-        scorePlot(smr[[i]], v[names(smr)[i]]), ...)
+        scorePlot(smr[[i]], v[names(smr)[i]], ...))
+
     plots[[length(plots)]] <- plots[[length(plots)]] + labs(color='Metric')
     return(plots)
 }

@@ -18,7 +18,6 @@ bindSummary <- function(smr, nAggDFs=0, nAvgCols=0){
                           function(x) x[gsaMethods, seq(ncol(x) - nAvgCols)])))
 }
 
-
 #' Compute aggregate ranks
 #'
 #' This function computes aggregate ranks from a list of summary data frames.
