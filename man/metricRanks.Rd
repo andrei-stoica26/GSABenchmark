@@ -14,7 +14,8 @@ summary data frames.}
 
 \item{nAvgCols}{Number of average columns for each data frame in the list.}
 
-\item{rankMethod}{Rank method.}
+\item{rankMethod}{Rank method. Choose between 'min', 'average', 'first',
+'last', 'random' and 'max'. Default in 'min'.}
 }
 \value{
 List of metric ranks.

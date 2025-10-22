@@ -62,6 +62,7 @@ straightforward choice, as it takes care of generating
 \code{normSilDF} and \code{dimMat}.
 }
 \examples{
+getwd()
 scObj <- qs::qread('inst/testdata/scObj.qs')
 geneSets <- qs::qread('inst/testdata/geneSets.qs')
 scObj <- hammers::computeSilhouette(scObj, 'label')

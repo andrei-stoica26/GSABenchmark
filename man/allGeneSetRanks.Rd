@@ -9,7 +9,8 @@ allGeneSetRanks(smr, rankMethod = "min")
 \arguments{
 \item{smr}{List of summary data frames.}
 
-\item{rankMethod}{Rank method.}
+\item{rankMethod}{Rank method. Choose between 'min', 'average', 'first',
+'last', 'random' and 'max'. Default in 'min'.}
 }
 \value{
 List of gene set ranks.

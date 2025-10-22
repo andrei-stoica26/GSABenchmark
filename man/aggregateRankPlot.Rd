@@ -8,7 +8,7 @@ aggregateRankPlot(
   smr,
   titleSuffix = NULL,
   sigDigits = 2,
-  rankMethod = "min",
+  rankMethod = c("min", "average", "first", "last", "random", "max"),
   ...
 )
 }
@@ -20,7 +20,10 @@ aggregateRankPlot(
 \item{sigDigits}{Number of significant digits used when displaying mean
 ranks. If \code{NULL}, the mean ranks will not be displayed.}
 
-\item{...}{Additional arguments passed to rankPlot.}
+\item{rankMethod}{Rank method. Choose between 'min', 'average', 'first',
+'last', 'random' and 'max'. Default in 'min'.}
+
+\item{...}{Additional arguments passed to \code{henna::rankPlot}.}
 }
 \value{
 A ggplot object.

@@ -21,6 +21,7 @@
 #' @return A list of benchmark results.
 #'
 #' @examples
+#' getwd()
 #' scObj <- qs::qread('inst/testdata/scObj.qs')
 #' geneSets <- qs::qread('inst/testdata/geneSets.qs')
 #' scObj <- hammers::computeSilhouette(scObj, 'label')

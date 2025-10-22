@@ -30,6 +30,7 @@ Imports:
     peakRAM,
     plyr,
     reshape2,
+    rlang,
     singscore,
     SiPSiC,
     stringr,
@@ -41,9 +42,12 @@ RoxygenNote: 7.3.3
 Suggests:
     BiocStyle,
     knitr,
+    qs,
     rmarkdown,
     scater,
     scRNAseq,
+    scuttle,
+    Seurat,
     testthat (>= 3.0.0)
 biocViews: 
     Software,

@@ -75,8 +75,12 @@ addModuleScoreHelper <- function(scObj,
 #'
 #' @export
 #'
-runAddModuleScore <- function(scObj, geneSets, slot = 'data',
-                              pool = rownames(scObj), nbin = 24, ctrl = 100,
+runAddModuleScore <- function(scObj,
+                              geneSets,
+                              slot = 'data',
+                              pool = rownames(scObj),
+                              nbin = 24,
+                              ctrl = 100,
                               seed = 1){
     allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
@@ -134,7 +138,6 @@ meanGeneRank <- function(cellVector, genes){
 #'
 runJASMINE <- function(scObj,
                        geneSets,
-                       colStr = 'JASMINE',
                        method = c('oddsratio', 'likelihood')){
 
     allGenes <- Reduce(union, geneSets)

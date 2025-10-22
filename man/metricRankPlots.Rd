@@ -11,7 +11,8 @@ metricRankPlots(smr, titleSuffix = NULL, rankMethod = "min")
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title.}
 
-\item{rankMethod}{Rank method.}
+\item{rankMethod}{Rank method. Choose between 'min', 'average', 'first',
+'last', 'random' and 'max'. Default in 'min'.}
 }
 \value{
 A named list of ggplot objects.

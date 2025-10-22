@@ -4,7 +4,12 @@
 \alias{geneSetRanks}
 \title{Extract gene set ranks list from a list of summary data frames}
 \usage{
-geneSetRanks(smr, nAggDFs = 0, nAvgCols = 0, rankMethod = "min")
+geneSetRanks(
+  smr,
+  nAggDFs = 0,
+  nAvgCols = 0,
+  rankMethod = c("min", "average", "first", "last", "random", "max")
+)
 }
 \arguments{
 \item{smr}{List of summary data frames.}
@@ -14,7 +19,8 @@ summary data frames.}
 
 \item{nAvgCols}{Number of average columns for each data frame in the list.}
 
-\item{rankMethod}{Rank method.}
+\item{rankMethod}{Rank method. Choose between 'min', 'average', 'first',
+'last', 'random' and 'max'. Default in 'min'.}
 }
 \value{
 List of gene set ranks.

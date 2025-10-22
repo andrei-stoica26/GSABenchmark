@@ -8,5 +8,5 @@ seuratObj <- Seurat::RunPCA(seuratObj)
 seuratObj <- suppressWarnings(Seurat::RunUMAP(seuratObj, dims=1:15))
 
 sceObj <- scater::runPCA(sceObj)
-sceObj <- computeSilhouette(sceObj, 'label')
+sceObj <- hammers::computeSilhouette(sceObj, 'label')
 sceObj <- scater::runUMAP(sceObj)

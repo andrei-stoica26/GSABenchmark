@@ -4,12 +4,16 @@
 \alias{aggregateRanks}
 \title{Compute aggregate ranks}
 \usage{
-aggregateRanks(smr, rankMethod = "min")
+aggregateRanks(
+  smr,
+  rankMethod = c("min", "average", "first", "last", "random", "max")
+)
 }
 \arguments{
 \item{smr}{List containing boundary, MCC and global lists of data frames.}
 
-\item{rankMethod}{Rank method.}
+\item{rankMethod}{Rank method. Choose between 'min', 'average', 'first',
+'last', 'random' and 'max'. Default in 'min'.}
 }
 \value{
 A data frame of aggregate summary results.

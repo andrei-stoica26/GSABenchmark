@@ -4,12 +4,7 @@
 \alias{runJASMINE}
 \title{Run JASMINE}
 \usage{
-runJASMINE(
-  scObj,
-  geneSets,
-  colStr = "JASMINE",
-  method = c("oddsratio", "likelihood")
-)
+runJASMINE(scObj, geneSets, method = c("oddsratio", "likelihood"))
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}

@@ -4,13 +4,21 @@
 #' frames.
 #'
 #' @inheritParams bindSummary
-#' @param rankMethod Rank method.
+#' @param rankMethod Rank method. Choose between 'min', 'average', 'first',
+#' 'last', 'random' and 'max'. Default in 'min'.
 #'
 #' @return List of gene set ranks.
 #'
 #' @keywords internal
 #'
-geneSetRanks <- function(smr, nAggDFs=0, nAvgCols=0, rankMethod='min'){
+geneSetRanks <- function(smr,
+                         nAggDFs = 0,
+                         nAvgCols = 0,
+                         rankMethod = c('min', 'average', 'first',
+                                        'last', 'random', 'max')){
+    rankMethod <- match.arg(rankMethod, c('min', 'average', 'first',
+                                          'last', 'random', 'max'))
+
     geneSetNames <- colnames(smr[[1]])
     geneSetNames <- geneSetNames[seq(length(geneSetNames) - nAvgCols)]
     gsaMethods <- sort(rownames(smr[[1]]))
@@ -40,7 +48,7 @@ geneSetRanks <- function(smr, nAggDFs=0, nAvgCols=0, rankMethod='min'){
 #'
 #' @keywords internal
 #'
-allGeneSetRanks <- function(smr, rankMethod='min'){
+allGeneSetRanks <- function(smr, rankMethod = 'min'){
     boundaryRanks <- geneSetRanks(smr$boundary, 2, 1, rankMethod)
     mccRanks <- geneSetRanks(smr$MCC, 0, 1, rankMethod)
     globalRanks <- geneSetRanks(smr$global, 2, 1, rankMethod)

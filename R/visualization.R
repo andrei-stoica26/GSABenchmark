@@ -3,6 +3,7 @@
 #' @importFrom grDevices rainbow
 #' @importFrom henna classPlot correlationPlot densityPlot rankSummary rankPlot
 #' @importFrom reshape2 melt
+#' @importFrom rlang .data
 #'
 NULL
 
@@ -31,7 +32,10 @@ scorePlot <- function(scoreDF,
                                                 drop=FALSE]))
     pal <- rainbow(length(colnames(scoreDF)))
     p <- ggplot(data=longDF) +
-        geom_point(mapping=aes(x=value, y=Var1, color=Var2), size=pointSize) +
+        geom_point(mapping=aes(x=.data[['value']],
+                               y=.data[['Var1']],
+                               color=.data[['Var2']]),
+                   size=pointSize) +
         labs(x=xLabel, y ='Method', color=legendTitle, title=title) +
         theme_minimal() + scale_color_manual(values=pal,
                                              breaks=colnames(scoreDF)) +
@@ -221,14 +225,19 @@ metricRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min'){
 #' @inheritParams allBenchmarkPlots
 #' @param sigDigits Number of significant digits used when displaying mean
 #' ranks. If \code{NULL}, the mean ranks will not be displayed.
-#' @param ... Additional arguments passed to rankPlot.
+#' @inheritParams aggregateRanks
+#' @param ... Additional arguments passed to \code{henna::rankPlot}.
 #'
 #' @return A ggplot object.
 #'
 #' @export
 #'
-aggregateRankPlot <- function(smr, titleSuffix = NULL, sigDigits = 2,
-                              rankMethod = 'min', ...){
+aggregateRankPlot <- function(smr,
+                              titleSuffix = NULL,
+                              sigDigits = 2,
+                              rankMethod = c('min', 'average', 'first',
+                                             'last', 'random', 'max'),
+                              ...){
     message('Computing aggregate ranks...')
     aggRanks <- aggregateRanks(smr, rankMethod)
     p <- rankPlot(aggRanks,
