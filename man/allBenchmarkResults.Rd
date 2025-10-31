@@ -62,9 +62,10 @@ straightforward choice, as it takes care of generating
 \code{normSilDF} and \code{dimMat}.
 }
 \examples{
-getwd()
-scObj <- qs::qread('inst/testdata/scObj.qs')
-geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+scObj <- qs::qread(scoPath)
+gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+geneSets <- qs::qread(gsPath)
 scObj <- hammers::computeSilhouette(scObj, 'label')
 normSilDF <- hammers::normalizeSilhouette(scObj, 'label')
 dimMat <- hammers::scPCAMat(scObj)

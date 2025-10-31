@@ -69,8 +69,10 @@ addModuleScoreHelper <- function(scObj,
 #' column.
 #'
 #' @examples
-#' scObj <- qs::qread('inst/testdata/scObj.qs')
-#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scObj <- qs::qread(scoPath)
+#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' geneSets <- qs::qread(gsPath)
 #' scObj <- runAddModuleScore(scObj, geneSets)
 #'
 #' @export
@@ -130,14 +132,17 @@ meanGeneRank <- function(cellVector, genes){
 #' column.
 #'
 #' @examples
-#' scObj <- qs::qread('inst/testdata/scObj.qs')
-#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scObj <- qs::qread(scoPath)
+#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' geneSets <- qs::qread(gsPath)
 #' scObj <- runJASMINE(scObj, geneSets)
 #'
 #' @export
 #'
 runJASMINE <- function(scObj,
                        geneSets,
+
                        method = c('oddsratio', 'likelihood')){
 
     allGenes <- Reduce(union, geneSets)

@@ -21,8 +21,10 @@ column.
 This function runs \code{AUCell} using \code{escape}.
 }
 \examples{
-scObj <- qs::qread('inst/testdata/scObj.qs')
-geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+scObj <- qs::qread(scoPath)
+gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+geneSets <- qs::qread(gsPath)
 scObj <- runAUCell(scObj, geneSets)
 
 }

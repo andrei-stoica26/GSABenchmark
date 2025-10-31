@@ -21,8 +21,10 @@ metadata column.
 This function runs \code{MLM} using \code{decoupleR}.
 }
 \examples{
-scObj <- qs::qread('inst/testdata/scObj.qs')
-geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+scObj <- qs::qread(scoPath)
+gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+geneSets <- qs::qread(gsPath)
 scObj <- runMLM(scObj, geneSets)
 
 }

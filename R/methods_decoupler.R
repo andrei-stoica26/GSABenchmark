@@ -46,8 +46,10 @@ runDecoupleRMethod <- function(scObj, geneSets, method, ...){
 #' column.
 #'
 #' @examples
-#' scObj <- qs::qread('inst/testdata/scObj.qs')
-#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scObj <- qs::qread(scoPath)
+#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' geneSets <- qs::qread(gsPath)
 #' scObj <- runMDT(scObj, geneSets)
 #'
 #' @export
@@ -66,8 +68,10 @@ runMDT <- function(scObj, geneSets, ...)
 #' metadata column.
 #'
 #' @examples
-#' scObj <- qs::qread('inst/testdata/scObj.qs')
-#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scObj <- qs::qread(scoPath)
+#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' geneSets <- qs::qread(gsPath)
 #' scObj <- runMLM(scObj, geneSets)
 #'
 #' @export
@@ -85,8 +89,10 @@ runMLM <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' scObj <- qs::qread('inst/testdata/scObj.qs')
-#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scObj <- qs::qread(scoPath)
+#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' geneSets <- qs::qread(gsPath)
 #' scObj <- runORA(scObj, geneSets)
 #'
 #' @export
@@ -104,8 +110,10 @@ runORA <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' scObj <- qs::qread('inst/testdata/scObj.qs')
-#' geneSets <- qs::qread('inst/testdata/geneSets.qs')
+#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scObj <- qs::qread(scoPath)
+#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' geneSets <- qs::qread(gsPath)
 #' scObj <- runUDT(scObj, geneSets)
 #'
 #' @export
