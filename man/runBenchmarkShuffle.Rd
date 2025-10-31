@@ -33,8 +33,10 @@ Generate all benchmark results for shuffled gene sets
 This function generates all benchmark results for shuffled gene sets.
 }
 \examples{
-scObj <- qs::qread('inst/testdata/scObj.qs')
-geneSets <- qs::qread('inst/testdata/geneSets.qs')
+scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+scObj <- qs::qread(scoPath)
+gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+geneSets <- qs::qread(gsPath)
 scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA', 0.2, 0.2)
 smr <- runBenchmarkShuffle(scObj, 'label', geneSets, 'CSOA', FALSE)
 

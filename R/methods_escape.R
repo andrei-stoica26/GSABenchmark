@@ -38,11 +38,14 @@ runEscapeMethod <- function(scObj, geneSets, method, ...){
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
-#' scObj <- runAUCell(scObj, geneSets)
+#' if (requireNamespace("AUCell", quietly=TRUE)){
+#'     scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#'     scObj <- qs::qread(scoPath)
+#'     gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#'     geneSets <- qs::qread(gsPath)
+#'     scObj <- runAUCell(scObj, geneSets)
+#' }
+
 #'
 #' @export
 #'
