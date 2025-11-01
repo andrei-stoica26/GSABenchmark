@@ -46,6 +46,7 @@ Suggests:
     qs,
     ranger,
     rmarkdown,
+    rpart,
     scater,
     scRNAseq,
     scuttle,
