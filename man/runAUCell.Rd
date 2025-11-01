@@ -27,6 +27,6 @@ if (requireNamespace("AUCell", quietly=TRUE)){
     gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
     geneSets <- qs::qread(gsPath)
     scObj <- runAUCell(scObj, geneSets)
-}
+    }
 
 }

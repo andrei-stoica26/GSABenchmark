@@ -21,10 +21,12 @@ column.
 This function runs \code{UCell} using \code{escape}.
 }
 \examples{
-scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
-scObj <- qs::qread(scoPath)
-gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
-geneSets <- qs::qread(gsPath)
-scObj <- runUCell(scObj, geneSets)
+if (requireNamespace("UCell", quietly=TRUE)){
+    scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+    scObj <- qs::qread(scoPath)
+    gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+    geneSets <- qs::qread(gsPath)
+    scObj <- runUCell(scObj, geneSets)
+    }
 
 }

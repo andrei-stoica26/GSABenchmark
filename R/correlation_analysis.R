@@ -8,6 +8,13 @@
 #'
 #' @return A list of correlation matrices.
 #'
+#' @examples
+#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scObj <- qs::qread(scoPath)
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' m <- corrSummary(scObj, smr)
+#'
 #' @export
 #'
 corrSummary <- function(scObj, smr, corMethod = 'spearman'){

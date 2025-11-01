@@ -13,6 +13,13 @@ NULL
 #' @return A list of two data frames, the first comprising running times in
 #' seconds, the second comprising peak memory usage in mebibytes.
 #'
+#' @examples
+#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scObj <- qs::qread(scoPath)
+#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' geneSets <- qs::qread(gsPath)
+#' ef <- efficiencyBenchmark(scObj, 'label', geneSets, c('CSOA', 'Zscore'))
+#'
 #' @export
 #'
 efficiencyBenchmark <- function(scObj,

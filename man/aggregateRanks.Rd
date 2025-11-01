@@ -21,3 +21,9 @@ A data frame of aggregate summary results.
 \description{
 This function computes aggregate ranks from a list of summary data frames.
 }
+\examples{
+sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+smr <- qs::qread(sPath)
+m <- aggregateRanks(smr)
+
+}
