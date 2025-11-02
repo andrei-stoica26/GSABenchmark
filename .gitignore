@@ -7,3 +7,4 @@ R/.test_code.R
 R/.draft_methods_reimplemented.R
 GSABenchmark.Rproj
 inst/doc
+*.pdf
