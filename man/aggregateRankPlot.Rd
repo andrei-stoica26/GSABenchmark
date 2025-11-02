@@ -34,6 +34,6 @@ This function creates an aggregate rank plot from a summary object.
 \examples{
 sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
 smr <- qs::qread(sPath)
-plots <- aggregateRankPlot(smr)
+p <- aggregateRankPlot(smr)
 
 }

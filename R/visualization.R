@@ -274,7 +274,7 @@ metricRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min', ...){
 #' @examples
 #' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
 #' smr <- qs::qread(sPath)
-#' plots <- aggregateRankPlot(smr)
+#' p <- aggregateRankPlot(smr)
 #'
 #' @export
 #'
@@ -312,7 +312,7 @@ aggregateRankPlot <- function(smr,
 #' @examples
 #' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
 #' smr <- qs::qread(sPath)
-#' plots <- ratioPlot(smr)
+#' p <- ratioPlot(smr)
 #'
 #' @export
 #'

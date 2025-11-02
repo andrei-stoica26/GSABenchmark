@@ -38,6 +38,6 @@ This function creates a ratio rank plot for method results.
 \examples{
 sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
 smr <- qs::qread(sPath)
-plots <- ratioPlot(smr)
+p <- ratioPlot(smr)
 
 }
