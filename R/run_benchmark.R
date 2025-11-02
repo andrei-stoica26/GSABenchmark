@@ -103,7 +103,7 @@ allBenchmarkResults <- function(scObj,
                                                   verbose=verbose)
            }}
     y <- Sys.time()
-    print(y - x)
+    message(y - x)
     return(smr)
 }
 

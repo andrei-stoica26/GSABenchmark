@@ -82,7 +82,7 @@ cell type markers from [PanglaoDB](https://www.panglaodb.se/markers.html):
 ```{r}
 acinarMarkers <- c('PRSS1', 'KLK1', 'CTRC', 'PNLIP', 'AKR1C3', 'CTRB1',
                    'DUOXA2', 'ALDOB', 'REG3A', 'SERPINA3', 'PRSS3', 'REG1B',
-                   'CFB',	'GDF15',	'MUC1','ANPEP', 'ANGPTL4', 'OLFM4',
+                   'CFB', 'GDF15', 'MUC1','ANPEP', 'ANGPTL4', 'OLFM4',
                    'GSTA1', 'LGALS2', 'PDZK1IP1', 'RARRES2', 'CXCL17',
                    'UBD', 'GSTA2', 'LYZ', 'RBPJL', 'PTF1A', 'CELA3A',
                    'SPINK1', 'ZG16', 'CEL', 'CELA2A', 'CPB1', 'CELA1',

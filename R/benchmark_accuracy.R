@@ -89,8 +89,8 @@ boundaryMCCBenchmark <- function(boundaryBenchmarkLL){
     geneSetNames <- names(boundaryBenchmarkLL)
     gsaMethods <- names(boundaryBenchmarkLL[[1]])
     for (setName in geneSetNames)
-        mccValues <- c(mccValues, sapply(boundaryBenchmarkLL[[setName]],
-                                         computeMCC))
+        mccValues <- c(mccValues, vapply(boundaryBenchmarkLL[[setName]],
+                                         computeMCC, numeric(1)))
     mccValues <- data.frame(matrix(mccValues, length(gsaMethods),
                                  length(geneSetNames)))
     colnames(mccValues) <- geneSetNames

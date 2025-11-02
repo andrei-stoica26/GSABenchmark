@@ -30,7 +30,7 @@ runGSAMethods <- function(scObj, labelCol, geneSets, gsaMethods, infix = NULL){
     geneSetNames <- names(geneSets)
     checkSetNames(scObj, labelCol, geneSetNames)
     for (method in gsaMethods){
-        message(paste0('Running ', method, '...'))
+        message('Running ', method, '...')
         fun <- eval(as.name(paste0('run', method)))
         names(geneSets) <- paste0(method, infix, '_', geneSetNames)
         scObj <- silently_run(fun(scObj, geneSets))

@@ -24,8 +24,8 @@ benchmarkSummary <- function(benchmarkLL, summarizeMetrics = TRUE){
             metrics <- tableCols[seq(3, length(tableCols))]
     smr <- lapply(metrics, function(metric){
         df <- data.frame(Reduce(rbind, lapply(gsaMethods, function(method)
-            sapply(geneSetNames, function(setName)
-                benchmarkLL[[setName]][[method]][[metric]][1]))))
+            vapply(geneSetNames, function(setName)
+                benchmarkLL[[setName]][[method]][[metric]][1], numeric(1)))))
         df <- computeMethodMeans(df, gsaMethods)
         return(df)
     })

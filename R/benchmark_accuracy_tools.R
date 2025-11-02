@@ -42,8 +42,8 @@ extractCellScores <- function(scObj, labelCol, scoreCol, label){
 #'
 condenseRepeatedScores <- function(df){
     denseDF <- plyr::count(df[, 2])
-    denseDF$label <- sapply(denseDF[, 1], function(score)
-        sum(df[, 1][which(df[, 2] == score)]))
+    denseDF$label <- vapply(denseDF[, 1], function(score)
+        sum(df[, 1][which(df[, 2] == score)]), numeric(1))
     denseDF <- denseDF[, c(3, 1, 2)]
     denseDF <- denseDF[order(denseDF[, 2], decreasing=TRUE), ]
     colnames(denseDF)[2] <- c(colnames(df)[2])
