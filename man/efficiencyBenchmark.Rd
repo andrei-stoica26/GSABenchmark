@@ -4,7 +4,14 @@
 \alias{efficiencyBenchmark}
 \title{Extract running times and peak memory usage for gene set analysis methods}
 \usage{
-efficiencyBenchmark(scObj, labelCol, geneSets, gsaMethods, checkLabels = TRUE)
+efficiencyBenchmark(
+  scObj,
+  labelCol,
+  geneSets,
+  gsaMethods,
+  checkLabels = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
@@ -18,6 +25,8 @@ efficiencyBenchmark(scObj, labelCol, geneSets, gsaMethods, checkLabels = TRUE)
 
 \item{checkLabels}{Whether to check that \code{geneSetNames} is a subset of
 the values in \code{labelCol}.}
+
+\item{verbose}{Whether output should be verbose.}
 }
 \value{
 A list of two data frames, the first comprising running times in

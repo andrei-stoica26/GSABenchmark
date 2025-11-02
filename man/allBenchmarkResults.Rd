@@ -16,7 +16,8 @@ allBenchmarkResults(
   dimMat = NULL,
   maxDist = NULL,
   efBenchmark = NULL,
-  runEFBenchmark = TRUE
+  runEFBenchmark = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -43,6 +44,9 @@ normSilDF or dimMat is NULL.}
 \item{efBenchmark}{A list of data frames generated with efficiencyBenchmark.}
 
 \item{runEFBenchmark}{Whether to run efficiency benchmark.}
+
+\item{verbose}{Whether the output of the efficiency benchmark should be
+verbose. Ignored if \code{runEFBenchmark} is \code{FALSE}.}
 }
 \value{
 A list of benchmark results.

@@ -17,6 +17,8 @@
 #' \code{efBenchmark} is \code{NULL}, the efficiency benchmark will be run.
 #' @param efBenchmark A list of data frames generated with efficiencyBenchmark.
 #' @param runEFBenchmark Whether to run efficiency benchmark.
+#' @param verbose Whether the output of the efficiency benchmark should be
+#' verbose. Ignored if \code{runEFBenchmark} is \code{FALSE}.
 #'
 #' @return A list of benchmark results.
 #'
@@ -43,7 +45,8 @@ allBenchmarkResults <- function(scObj,
                                 dimMat = NULL,
                                 maxDist = NULL,
                                 efBenchmark = NULL,
-                                runEFBenchmark = TRUE){
+                                runEFBenchmark = TRUE,
+                                verbose = TRUE){
     x <- Sys.time()
     geneSetNames <- names(geneSets)
     if(checkLabels)
@@ -96,7 +99,8 @@ allBenchmarkResults <- function(scObj,
                                                   labelCol,
                                                   geneSets,
                                                   gsaMethods,
-                                                  checkLabels=FALSE)
+                                                  checkLabels=FALSE,
+                                                  verbose=verbose)
            }}
     y <- Sys.time()
     print(y - x)
@@ -128,7 +132,8 @@ runBenchmark <- function(scObj,
                          labelCol,
                          geneSets,
                          gsaMethods,
-                         runEFBenchmark = TRUE){
+                         runEFBenchmark = TRUE,
+                         verbose = TRUE){
 
     checkSetNames(scObj, labelCol, names(geneSets))
     scObj <- computeSilhouette(scObj, labelCol)
@@ -145,6 +150,7 @@ runBenchmark <- function(scObj,
                                normSilDF,
                                dimMat,
                                maxDist,
-                               runEFBenchmark=runEFBenchmark)
+                               runEFBenchmark=runEFBenchmark,
+                               verbose=verbose)
     return(res)
 }
