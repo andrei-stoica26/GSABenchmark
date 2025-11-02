@@ -15,7 +15,7 @@ ratioPlot(
 )
 }
 \arguments{
-\item{smr}{Complete summary list generated with allBenchmarkResults.}
+\item{smr}{Complete summary list generated with \code{allBenchmarkResults}.}
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title.}
 
@@ -34,4 +34,10 @@ A ggplot object.
 }
 \description{
 This function creates a ratio rank plot for method results.
+}
+\examples{
+sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+smr <- qs::qread(sPath)
+plots <- ratioPlot(smr)
+
 }

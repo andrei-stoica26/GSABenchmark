@@ -20,6 +20,11 @@ NULL
 #'
 #' @return A ggplot object.
 #'
+#' @examples
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' scorePlot(smr[[1]][[1]])
+#'
 #' @export
 #'
 scorePlot <- function(scoreDF,
@@ -55,6 +60,11 @@ scorePlot <- function(scoreDF,
 #'
 #' @return A ggplot object.
 #'
+#' @examples
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' timePlot(smr[[4]])
+#'
 #' @export
 #'
 timePlot <- function(efBenchmark, titleSuffix = NULL, ...){
@@ -74,6 +84,11 @@ timePlot <- function(efBenchmark, titleSuffix = NULL, ...){
 #'
 #' @return A ggplot object.
 #'
+#' @examples
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' memoryPlot(smr[[4]])
+#'
 #' @export
 #'
 memoryPlot <- function(efBenchmark, titleSuffix = NULL, ...){
@@ -87,10 +102,15 @@ memoryPlot <- function(efBenchmark, titleSuffix = NULL, ...){
 #' This function plots a list of dataframe scores with methods as rows,
 #' gene sets and the average of scores across all gene sets as columns.
 #'
-#' @param smr Summary list.
+#' @param smr List of summary data frames, whether boundary, MCC or global.
 #' @inheritParams timePlot
 #'
 #' @return A list of ggplot objects.
+#'
+#' @examples
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' plots <- benchmarkPlots(smr[[1]])
 #'
 #' @export
 #'
@@ -130,11 +150,16 @@ benchmarkPlots <- function(smr, titleSuffix = NULL, ...){
 #'
 #' This function plots the complete list of benchmark summaries.
 #'
-#' @param smr Complete summary list generated with allBenchmarkResults.
+#' @param smr Complete summary list generated with \code{allBenchmarkResults}.
 #' @inheritParams timePlot
 #' @param ... Additional parameters passed to other functions.
 #'
 #' @return A list of ggplot objects.
+#'
+#' @examples
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' plots <- allBenchmarkPlots(smr)
 #'
 #' @export
 #'
@@ -163,12 +188,18 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
 #'
 #' @inheritParams allBenchmarkPlots
 #' @inheritParams allGeneSetRanks
+#' @param ... Additional arguments passed to \code{henna::rankPlot}.
 #'
 #' @return A named list of ggplot objects.
 #'
+#' @examples
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' plots <- geneSetRankPlots(smr)
+#'
 #' @export
 #'
-geneSetRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min'){
+geneSetRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min', ...){
     geneSetNames <- colnames(smr$boundary[[1]])
     geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
 
@@ -179,7 +210,10 @@ geneSetRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min'){
         rankPlot(gsRankDF,
                  paste0('Distribution of ranks for ',
                         gsName, ' gene set',
-                        titleSuffix), summarize=FALSE, xLab='Method'),
+                        titleSuffix),
+                 summarize=FALSE,
+                 xLab='Method',
+                 ...),
         gsRankDFs, geneSetNames, SIMPLIFY=FALSE)
 
     names(plots) <- geneSetNames
@@ -190,14 +224,18 @@ geneSetRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min'){
 #'
 #' This function creates metric rank plots for method results.
 #'
-#' @inheritParams allBenchmarkPlots
-#' @inheritParams allMetricRanks
+#' @inheritParams geneSetRankPlots
 #'
 #' @return A named list of ggplot objects.
 #'
+#' @examples
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' plots <- metricRankPlots(smr)
+#'
 #' @export
 #'
-metricRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min'){
+metricRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min', ...){
     metricNames <- c('sensitivity', 'specificity', 'precision',
                      'accuracy', 'size proximity','score coverage',
                      'boundary MCC', 'direct MCC',
@@ -211,24 +249,32 @@ metricRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min'){
         rankPlot(metricRankDF,
                  paste0('Distribution of ',
                         metricName, ' ranks',
-                        titleSuffix), summarize=FALSE, xLab='Method'),
+                        titleSuffix),
+                 summarize=FALSE,
+                 xLab='Method',
+                 ...),
         metricRanksDFs, metricNames, SIMPLIFY=FALSE)
 
     names(plots) <- metricNames
     return(plots)
 }
 
-#' Create aggregate rank plot
+#' Create aggregate rank plot from a summary object
 #'
-#' This function creates an aggregate rank plot.
+#' This function creates an aggregate rank plot from a summary object.
 #'
 #' @inheritParams allBenchmarkPlots
+#' @inheritParams geneSetRankPlots
 #' @param sigDigits Number of significant digits used when displaying mean
 #' ranks. If \code{NULL}, the mean ranks will not be displayed.
 #' @inheritParams aggregateRanks
-#' @param ... Additional arguments passed to \code{henna::rankPlot}.
 #'
 #' @return A ggplot object.
+#'
+#' @examples
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' plots <- aggregateRankPlot(smr)
 #'
 #' @export
 #'
@@ -259,10 +305,14 @@ aggregateRankPlot <- function(smr,
 #' @param xLab Label of the x axis.
 #' @param yLab Label of the y axis.
 #' @param legendLab Legend title.
-#'
 #' @param ... Additional arguments passed to \code{henna::classRank}.
 #'
 #' @return A ggplot object.
+#'
+#' @examples
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' plots <- ratioPlot(smr)
 #'
 #' @export
 #'
@@ -294,6 +344,13 @@ ratioPlot <- function(smr,
 #'
 #' @return A named list of ggplot objects.
 #'
+#' @examples
+#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scObj <- qs::qread(scoPath)
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' plots <- mdsPlots(scObj, smr)
+#'
 #' @export
 #'
 mdsPlots <- function(scObj, smr, titleSuffix = NULL, ...){
@@ -316,6 +373,13 @@ mdsPlots <- function(scObj, smr, titleSuffix = NULL, ...){
 #' @param ... Additional arguments passed to \code{henna::correlationPlot}.
 #'
 #' @return A named list of ggplot objects.
+#'
+#' @examples
+#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scObj <- qs::qread(scoPath)
+#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' plots <- corrPlots(scObj, smr)
 #'
 #' @export
 #'

@@ -21,3 +21,11 @@ A named list of ggplot objects.
 \description{
 This function creates correlation plots for method results.
 }
+\examples{
+scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+scObj <- qs::qread(scoPath)
+sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+smr <- qs::qread(sPath)
+plots <- corrPlots(scObj, smr)
+
+}

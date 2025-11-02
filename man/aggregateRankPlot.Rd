@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualization.R
 \name{aggregateRankPlot}
 \alias{aggregateRankPlot}
-\title{Create aggregate rank plot}
+\title{Create aggregate rank plot from a summary object}
 \usage{
 aggregateRankPlot(
   smr,
@@ -13,7 +13,7 @@ aggregateRankPlot(
 )
 }
 \arguments{
-\item{smr}{Complete summary list generated with allBenchmarkResults.}
+\item{smr}{Complete summary list generated with \code{allBenchmarkResults}.}
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title.}
 
@@ -23,11 +23,17 @@ ranks. If \code{NULL}, the mean ranks will not be displayed.}
 \item{rankMethod}{Rank method. Choose between 'min', 'average', 'first',
 'last', 'random' and 'max'. Default in 'min'.}
 
-\item{...}{Additional arguments passed to \code{henna::rankPlot}.}
+\item{...}{Additional parameters passed to other functions.}
 }
 \value{
 A ggplot object.
 }
 \description{
-This function creates an aggregate rank plot.
+This function creates an aggregate rank plot from a summary object.
+}
+\examples{
+sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+smr <- qs::qread(sPath)
+plots <- aggregateRankPlot(smr)
+
 }

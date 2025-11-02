@@ -4,19 +4,27 @@
 \alias{metricRankPlots}
 \title{Create metric rank plots for the method results}
 \usage{
-metricRankPlots(smr, titleSuffix = NULL, rankMethod = "min")
+metricRankPlots(smr, titleSuffix = NULL, rankMethod = "min", ...)
 }
 \arguments{
-\item{smr}{Complete summary list generated with allBenchmarkResults.}
+\item{smr}{Complete summary list generated with \code{allBenchmarkResults}.}
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title.}
 
 \item{rankMethod}{Rank method. Choose between 'min', 'average', 'first',
 'last', 'random' and 'max'. Default in 'min'.}
+
+\item{...}{Additional arguments passed to \code{henna::rankPlot}.}
 }
 \value{
 A named list of ggplot objects.
 }
 \description{
 This function creates metric rank plots for method results.
+}
+\examples{
+sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+smr <- qs::qread(sPath)
+plots <- metricRankPlots(smr)
+
 }

@@ -7,7 +7,7 @@
 allBenchmarkPlots(smr, titleSuffix = NULL, ...)
 }
 \arguments{
-\item{smr}{Complete summary list generated with allBenchmarkResults.}
+\item{smr}{Complete summary list generated with \code{allBenchmarkResults}.}
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title.}
 
@@ -18,4 +18,10 @@ A list of ggplot objects.
 }
 \description{
 This function plots the complete list of benchmark summaries.
+}
+\examples{
+sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+smr <- qs::qread(sPath)
+plots <- allBenchmarkPlots(smr)
+
 }

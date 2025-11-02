@@ -7,7 +7,7 @@
 benchmarkPlots(smr, titleSuffix = NULL, ...)
 }
 \arguments{
-\item{smr}{Summary list.}
+\item{smr}{List of summary data frames, whether boundary, MCC or global.}
 
 \item{titleSuffix}{Plot title suffix to be appended to the default title.}
 
@@ -19,4 +19,10 @@ A list of ggplot objects.
 \description{
 This function plots a list of dataframe scores with methods as rows,
 gene sets and the average of scores across all gene sets as columns.
+}
+\examples{
+sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+smr <- qs::qread(sPath)
+plots <- benchmarkPlots(smr[[1]])
+
 }
