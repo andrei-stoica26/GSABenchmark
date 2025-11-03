@@ -205,17 +205,15 @@ geneSetRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min', ...){
 
     message('Computing gene set ranks...')
     gsRankDFs <- allGeneSetRanks(smr, rankMethod)
-    title <- suffixedTitle(paste0('Distribution of ranks for ',
-                                  gsName, ' gene set'),
-                           titleSuffix)
 
-    plots <- mapply(function(gsRankDF, gsName)
-        rankPlot(gsRankDF,
-                 title,
-                 summarize=FALSE,
-                 xLab='Method',
-                 ...),
-        gsRankDFs, geneSetNames, SIMPLIFY=FALSE)
+
+    plots <- mapply(function(gsRankDF, gsName){
+        title <- suffixedTitle(paste0('Distribution of ranks for ',
+                                      gsName, ' gene set'),
+                               titleSuffix)
+        return(rankPlot(gsRankDF, title, summarize=FALSE, xLab='Method',
+                 ...))
+    }, gsRankDFs, geneSetNames, SIMPLIFY=FALSE)
 
     names(plots) <- geneSetNames
     return(plots)
@@ -245,17 +243,15 @@ metricRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min', ...){
 
     message('Computing metric ranks...')
     metricRanksDFs <- allMetricRanks(smr, rankMethod)
-    title <- suffixedTitle(paste0('Distribution of ',
-                                  metricName, ' ranks'),
-                           titleSuffix)
 
-    plots <- mapply(function(metricRankDF, metricName)
-        rankPlot(metricRankDF,
-                 title,
-                 summarize=FALSE,
-                 xLab='Method',
-                 ...),
-        metricRanksDFs, metricNames, SIMPLIFY=FALSE)
+
+    plots <- mapply(function(metricRankDF, metricName){
+        title <- suffixedTitle(paste0('Distribution of ',
+                                      metricName, ' ranks'),
+                               titleSuffix)
+        return(rankPlot(metricRankDF, title, summarize=FALSE, xLab='Method',
+                        ...))
+    }, metricRanksDFs, metricNames, SIMPLIFY=FALSE)
 
     names(plots) <- metricNames
     return(plots)
