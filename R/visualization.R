@@ -115,34 +115,34 @@ memoryPlot <- function(efBenchmark, titleSuffix = NULL, ...){
 #' @export
 #'
 benchmarkPlots <- function(smr, titleSuffix = NULL, ...){
-    boundaryMetrics <- c('Sensitivity', 'Specificity', 'Precision',
-                         'Accuracy', 'Size proximity','Score coverage')
-    globalMetrics <- c('AUROC', 'PRAUC', 'Label rank alignment',
-                       'Silhouette rank alignment', 'Centrality')
-
-    boundarySummaries <- c('Class boundary determination gene set summary',
-                           'Class boundary determination metric summary')
-    globalSummaries <- c('Global evaluation gene set summary',
-                         'Global evaluation metric summary')
 
     if ('sensitivity' %in% names(smr)){
-        v <- c(boundaryMetrics, boundarySummaries)
-        names(v) <- c('sensitivity', 'specificity', 'precision', 'accuracy',
-                      'sizeProximity','scoreCoverage', 'avg', 'metricSummary')
-    } else{
-        v <- c(globalMetrics, globalSummaries)
-        names(v) <- c('AUROC', 'PRAUC', 'labRankAlignment',
-                      'silRankAlignment', 'centrality',
-                      'avg', 'metricSummary')
+        titleTemplates <- c('Sensitivity', 'Specificity', 'Precision',
+                            'Accuracy', 'Size proximity','Score coverage',
+                            'Class boundary determination gene set summary',
+                            'Class boundary determination metric summary')
+        prefix <- 'boundary_'
+    } else {
+        titleTemplates <- c('AUROC', 'PRAUC', 'Label rank alignment',
+                            'Silhouette rank alignment', 'Centrality',
+                            'Global evaluation gene set summary',
+                            'Global evaluation metric summary')
+        prefix <- 'global_'
     }
 
+    names(titleTemplates) <- names(smr)
+
     if(!is.null(titleSuffix))
-        v <- setNames(paste0(v, titleSuffix), names(v))
+        titleTemplates <- setNames(paste0(titleTemplates, titleSuffix),
+                                   names(titleTemplates))
 
     plots <- lapply(seq_len(length(smr)), function(i)
-        scorePlot(smr[[i]], v[names(smr)[i]], ...))
+        scorePlot(smr[[i]], titleTemplates[names(smr)[i]], ...))
 
     plots[[length(plots)]] <- plots[[length(plots)]] + labs(color='Metric')
+    names(plots) <- names(smr)
+    slice <- c(length(plots) - 1, length(plots))
+    names(plots)[slice] <- paste0(prefix, names(plots)[slice])
     return(plots)
 }
 
@@ -165,18 +165,19 @@ benchmarkPlots <- function(smr, titleSuffix = NULL, ...){
 #'
 allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
     p1 <- benchmarkPlots(smr$boundary, titleSuffix, ...)
-    p2 <- list(scorePlot(smr$MCC$boundary,
-                         paste0('MCC with boundary threshold', titleSuffix),
-                         ...),
+    p2 <- setNames(list(scorePlot(smr$MCC$boundary,
+                                  paste0('MCC with boundary threshold',
+                                         titleSuffix), ...),
                scorePlot(smr$MCC$direct,
                          paste0('Comprehensive MCC', titleSuffix),
-                         ...))
+                         ...)), names(smr$MCC))
     p3 <- benchmarkPlots(smr$global, titleSuffix, ...)
 
     plots <- c(p1, p2, p3)
     if ('efficiency' %in% names(smr)){
-        p4 <- list(timePlot(smr$efficiency, titleSuffix, ...),
-                   memoryPlot(smr$efficiency, titleSuffix, ...))
+        p4 <- setNames(list(timePlot(smr$efficiency, titleSuffix, ...),
+                            memoryPlot(smr$efficiency, titleSuffix, ...)),
+                       names(smr$efficiency))
         plots <- c(plots, p4)
     }
     return(plots)

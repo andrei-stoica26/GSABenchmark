@@ -31,8 +31,8 @@ the values in \code{labelCol}.}
 \item{verbose}{Whether to output a message whenever the benchmarking
 begins for a gene set.}
 
-\item{benchmarkFun}{Benchmark function. Must be either boundaryBenchmark or
-distributionBenchmark.}
+\item{benchmarkFun}{Benchmark function. Must be either
+\code{boundaryBenchmark} or \code{distributionBenchmark}.}
 
 \item{...}{Additional paramters passed to benchmarkFun.}
 }

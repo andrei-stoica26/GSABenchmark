@@ -14,7 +14,7 @@ benchmarkSummary(benchmarkLL, summarizeMetrics = TRUE)
 \code{FALSE} when summarizing a MCC benchmark list of lists.}
 }
 \value{
-Summary data frames.
+A list of summary data frames.
 }
 \description{
 This function compares the identification of different labels through

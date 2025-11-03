@@ -9,8 +9,8 @@
 #' @param geneSetNames Gene set names.
 #' @param checkLabels Whether to check that \code{geneSetNames} is a subset of
 #' the values in \code{labelCol}.
-#' @param benchmarkFun Benchmark function. Must be either boundaryBenchmark or
-#' distributionBenchmark.
+#' @param benchmarkFun Benchmark function. Must be either
+#' \code{boundaryBenchmark} or \code{distributionBenchmark}.
 #' @param verbose Whether to output a message whenever the benchmarking
 #' begins for a gene set.
 #' @param ... Additional paramters passed to benchmarkFun.

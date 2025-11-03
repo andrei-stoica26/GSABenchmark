@@ -111,3 +111,35 @@ computeMethodMeans <- function(df, gsaMethods){
     df <- df[order(df$avg, decreasing=TRUE), ]
     return(df)
 }
+
+#' Construct binary prediction data frames for the gene set analysis methods
+#'
+#' This function used the boundary benchmark results to construct binary
+#' prediction data frames for the gene set analysis methods.
+#'
+#' @inheritParams extractCellScores
+#' @param boundaryBenchmarkLL A list of lists of boundary benchmark
+#' data frames.
+#'
+#' @return A list of binary data frames.
+#'
+#' @keywords internal
+#'
+binaryPred <- function(scObj, boundaryBenchmarkLL, labelCol){
+    geneSetNames <- names(boundaryBenchmarkLL)
+    gsaMethods <- names(boundaryBenchmarkLL[[1]])
+
+    bList <- setNames(lapply(geneSetNames, function(gsName){
+        res <- data.frame(label = as.integer(scCol(scObj, labelCol) == gsName))
+        rownames(res) <- colnames(scObj)
+        benchmarkRes <- boundaryBenchmarkLL[[gsName]]
+        for (method in gsaMethods){
+            cutoff <- benchmarkRes[[method]][1, 2]
+            res[[method]] <- as.integer(scCol(scObj,
+                                              paste0(method, '_', gsName)) >= cutoff)
+        }
+        return(res)
+    }), geneSetNames)
+
+    return(bList)
+}

@@ -61,6 +61,9 @@ allBenchmarkResults <- function(scObj,
                                              verbose=FALSE)
     boundarySmr <- benchmarkSummary(boundaryRes)
 
+    message('Constructing binary predictions...')
+    bList <- binaryPred(scObj, labelCol, boundaryRes)
+
     message('Running MCC benchmark...')
     directMCCRes <- directMCCBenchmarkMultiple(scObj,
                                                labelCol,
@@ -88,7 +91,8 @@ allBenchmarkResults <- function(scObj,
 
     smr <- list(boundary = boundarySmr,
                 MCC = mccSmr,
-                global = globalSmr)
+                global = globalSmr,
+                predictions = bList)
 
     if(!is.null(efBenchmark))
        smr$efficiency <- efBenchmark else{

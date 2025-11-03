@@ -8,7 +8,7 @@
 #' @param summarizeMetrics Whether to add a metric summary. Must be set to
 #' \code{FALSE} when summarizing a MCC benchmark list of lists.
 #'
-#' @return Summary data frames.
+#' @return A list of summary data frames.
 #'
 #' @keywords internal
 #'
