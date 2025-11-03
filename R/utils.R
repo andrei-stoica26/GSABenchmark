@@ -161,3 +161,21 @@ removeSVCols <- function(df){
     df <- df[, hasDistinctValues]
     return(df)
 }
+
+#' Adds a suffix to a title (if provided), otherwise returns NULL
+#'
+#' This function adds a suffix to a title (if the suffix is provided), and
+#' otherwise returns \code{NULL}.
+#'
+#' @param title Title.
+#' @param titleSuffix Title suffix.
+#'
+#' @return A suffixed title or \code{NULL}..
+#'
+#' @noRd
+#'
+suffixedTitle <- function(title, titleSuffix=NULL){
+    if (!is.null(titleSuffix))
+        return(paste0(title, titleSuffix))
+    return (NULL)
+}

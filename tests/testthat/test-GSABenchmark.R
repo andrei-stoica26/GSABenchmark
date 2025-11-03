@@ -48,7 +48,7 @@ test_that("visualization functions work", {
     expect_equal(length(intersect(is(p), c('gg', 'ggplot2::ggplot'))), 1)
     p <- ratioPlot(smr)
     expect_equal(length(intersect(is(p), c('gg', 'ggplot2::ggplot'))), 1)
-    plots <- mdsPlots(scObj, smr)
+    plots <- mdsPlots(scObj, smr, colorScheme='orichalc')
     expect_equal(length(intersect(is(plots[[1]]),
                                   c('gg', 'ggplot2::ggplot'))), 1)
     plots <- corrPlots(scObj, smr)

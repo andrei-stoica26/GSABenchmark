@@ -68,7 +68,7 @@ scorePlot <- function(scoreDF,
 #' @export
 #'
 timePlot <- function(efBenchmark, titleSuffix = NULL, ...){
-    title <- paste0('Running times', titleSuffix)
+    title <- suffixedTitle('Running times', titleSuffix)
     p <- scorePlot(efBenchmark$time, title, 'Running time (s)', ...)
     return(p)
 }
@@ -92,7 +92,7 @@ timePlot <- function(efBenchmark, titleSuffix = NULL, ...){
 #' @export
 #'
 memoryPlot <- function(efBenchmark, titleSuffix = NULL, ...){
-    title <- paste0('Peak memory usage', titleSuffix)
+    title <- suffixedTitle('Peak memory usage', titleSuffix)
     p <- scorePlot(efBenchmark$space, title, 'Peak memory usage (MiB)', ...)
     return(p)
 }
@@ -205,12 +205,13 @@ geneSetRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min', ...){
 
     message('Computing gene set ranks...')
     gsRankDFs <- allGeneSetRanks(smr, rankMethod)
+    title <- suffixedTitle(paste0('Distribution of ranks for ',
+                                  gsName, ' gene set'),
+                           titleSuffix)
 
     plots <- mapply(function(gsRankDF, gsName)
         rankPlot(gsRankDF,
-                 paste0('Distribution of ranks for ',
-                        gsName, ' gene set',
-                        titleSuffix),
+                 title,
                  summarize=FALSE,
                  xLab='Method',
                  ...),
@@ -244,12 +245,13 @@ metricRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min', ...){
 
     message('Computing metric ranks...')
     metricRanksDFs <- allMetricRanks(smr, rankMethod)
+    title <- suffixedTitle(paste0('Distribution of ',
+                                  metricName, ' ranks'),
+                           titleSuffix)
 
     plots <- mapply(function(metricRankDF, metricName)
         rankPlot(metricRankDF,
-                 paste0('Distribution of ',
-                        metricName, ' ranks',
-                        titleSuffix),
+                 title,
                  summarize=FALSE,
                  xLab='Method',
                  ...),
@@ -286,9 +288,10 @@ aggregateRankPlot <- function(smr,
                               ...){
     message('Computing aggregate ranks...')
     aggRanks <- aggregateRanks(smr, rankMethod)
+    title <- suffixedTitle('Distribution of aggregate ranks', titleSuffix)
+
     p <- rankPlot(aggRanks,
-                  paste0('Distribution of aggregate ranks',
-                         titleSuffix),
+                  title,
                   summarize=FALSE,
                   xLab='Method',
                   sigDigits=sigDigits,
@@ -325,8 +328,9 @@ ratioPlot <- function(smr,
                       ...){
     message('Computing ratio ranks...')
     ratioDF <- allTopRatios(smr, nItems)
+    title <- suffixedTitle('Top maximum over mean ratios', titleSuffix)
     p <- classPlot(ratioDF,
-                   paste0('Top maximum over mean ratios', titleSuffix),
+                   paste0(title, titleSuffix),
                    xLab,
                    yLab,
                    legendLab,
@@ -358,10 +362,10 @@ mdsPlots <- function(scObj, smr, titleSuffix = NULL, ...){
 
     mdsDFs <- mdsScoreSummary(scObj, smr)
     plotNames <- names(mdsDFs)
-    plots <- mapply(function(mdsDF, plotName)
-        densityPlot(mdsDF, paste0('MDS plot - ', plotName,
-                                  titleSuffix), drawScores=TRUE, ...),
-        mdsDFs, plotNames, SIMPLIFY=FALSE)
+    plots <- mapply(function(mdsDF, plotName){
+        title <- suffixedTitle(paste0('MDS plot - ', plotName), titleSuffix)
+        return(densityPlot(mdsDF, title, drawScores=TRUE, ...))
+    }, mdsDFs, plotNames, SIMPLIFY=FALSE)
     return(plots)
 }
 
@@ -388,9 +392,9 @@ corrPlots <- function(scObj, smr, titleSuffix = NULL, ...){
 
     corrDFs <- corrSummary(scObj, smr)
     plotNames <- names(corrDFs)
-    plots <- mapply(function(corrDF, plotName)
-        correlationPlot(corrDF, paste0('Correlation plot - ', plotName,
-                                  titleSuffix), ...),
-        corrDFs, plotNames, SIMPLIFY=FALSE)
+    plots <- mapply(function(corrDF, plotName){
+        title <- suffixedTitle(paste0('Correlation plot - ', plotName), titleSuffix)
+        correlationPlot(corrDF, title, ...)
+    }, corrDFs, plotNames, SIMPLIFY=FALSE)
     return(plots)
 }
