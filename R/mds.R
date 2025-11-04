@@ -63,7 +63,7 @@ mdsScoreSummary <- function(scObj, smr){
         return(mdsMat)
     })
 
-    aggMDS <- Reduce(`+`, lapply(mdsDFs, function(x) x[, seq(3)])) /
+    aggMDS <- do.call(`+`, lapply(mdsDFs, function(x) x[, seq(3)])) /
         length(mdsDFs)
     mdsDFs <- c(mdsDFs, list(aggMDS))
     names(mdsDFs) <- c(geneSetNames, 'aggregate')

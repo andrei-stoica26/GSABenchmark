@@ -84,7 +84,7 @@ runAddModuleScore <- function(scObj,
                               nbin = 24,
                               ctrl = 100,
                               seed = 1){
-    allGenes <- Reduce(union, geneSets)
+    allGenes <- do.call(union, geneSets)
     checkGenes(scObj, allGenes)
 
     if (is.null(seed))
@@ -145,7 +145,7 @@ runJASMINE <- function(scObj,
 
                        method = c('oddsratio', 'likelihood')){
 
-    allGenes <- Reduce(union, geneSets)
+    allGenes <- do.call(union, geneSets)
     checkGenes(scObj, allGenes)
 
     method <- match.arg(method, c('oddsratio', 'likelihood'))

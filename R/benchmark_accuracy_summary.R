@@ -29,7 +29,7 @@ benchmarkSummary <- function(benchmarkLL,
         metrics <- tableCols else
             metrics <- tableCols[seq(3, length(tableCols))]
     smr <- lapply(metrics, function(metric){
-        df <- data.frame(Reduce(rbind, lapply(gsaMethods, function(method)
+        df <- data.frame(do.call(rbind, lapply(gsaMethods, function(method)
             vapply(geneSetNames, function(setName)
                 benchmarkLL[[setName]][[method]][[metric]][1], numeric(1)))))
         df <- addMethodInfo(df, gsaMethods, doAverage)

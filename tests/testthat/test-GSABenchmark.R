@@ -1,9 +1,9 @@
 test_that("runBenchmark works", {
     smr <- runBenchmark(scObj, 'label', geneSets, supportedMethods(), FALSE)
-    expect_equal(length(smr), 3)
+    expect_equal(length(smr), 4)
     expect_equal(length(smr[[1]]), 8)
     expect_equal(length(smr[[2]]), 2)
-    expect_equal(length(smr[[3]]), 7)
+    expect_equal(length(smr[[3]]), 9)
     nMethods <- length(supportedMethods())
     for (i in seq(3)){
         temp <- unlist(smr[[i]])
