@@ -21,16 +21,17 @@ knitr::opts_chunk$set(
 
 GSABenchmark is a package designed for benchmarking scRNA-seq gene 
 set analysis methods. It provides both traditional and novel benchmark 
-metrics, as well as visualization tools. Currently, GSABenchmark supports 
+metrics as well as visualization tools. Currently, GSABenchmark supports 
 17 gene set analysis methods. 
 
 # Installation
 To install GSABenchmark, run the following commands in an R session:
+
 ```{r setup, eval=FALSE}
 if (!require("BiocManager", quietly=TRUE))
     install.packages("BiocManager")
 
-BiocManager::install("andrei-stoica26/GSABenchmark")
+BiocManager::install("GSABenchmark")
 ```
 
 # Prerequisites
@@ -107,11 +108,6 @@ betaMarkers <- c('INS', 'IAPP', 'GJD2', 'PDX1', 'SLC2A2', 'NPY', 'MAFA',
                  'G6PC2', 'SLC30A8', 'PCSK1', 'SCGN', 'IGF2','SYT13', 'FFAR2', 
                  'SIX2')
 
-deltaMarkers <- c('SST', 'GABRB3', 'FRZB', 'MS4A8', 'BAIAP3', 'CASR', 'BCHE',
-                  'UNC5B','EDN3', 'GHSR', 'PCSK1', 'GABRG2', 'POU3F1',
-                  'BHLHE41', 'EHF', 'LCORL', 'ETV1', 'PDX1', 'LEPR', 'UCP2',
-                  'NPTX2', 'FXYD2', 'IAPP', 'KCNK16', 'SCGN', 'ISL1', 'HHEX',
-                  'RESP18', 'PAX4', 'RBP4', 'PCSK9', 'FFAR4')
 ```
 
 Now we build the gene sets:
@@ -119,12 +115,10 @@ Now we build the gene sets:
 ```{r}
 geneSets <- setNames(list(acinarMarkers, 
                           alphaMarkers, 
-                          betaMarkers, 
-                          deltaMarkers),
+                          betaMarkers),
                      c('acinar', 
                        'alpha', 
-                       'beta', 
-                       'delta'))
+                       'beta'))
 ```
 
 **Note**: The gene set names cannot contain spaces or underscores, and must all
@@ -144,13 +138,13 @@ The `supportedMethods` function lists all the methods currently available in
 supportedMethods()
 ```
 
-For the purposes of this tutorial, we will select 6 of these methods:
+For the purposes of this tutorial, we will select 5 of these methods:
 
 ```{r}
-gsaMethods <- c('AddModuleScore', 'CSOA', 'PLAGE', 'VAM', 'SiPSiC', 'Zscore')
+gsaMethods <- c('CSOA', 'PLAGE', 'VAM', 'SiPSiC', 'Zscore')
 ```
 
-We now run the 6 methods for each gene set:
+We now run the 5 methods for each gene set:
 
 ```{r}
 scObj <- runGSAMethods(scObj, 'label', geneSets, gsaMethods)
@@ -159,16 +153,17 @@ scObj <- runGSAMethods(scObj, 'label', geneSets, gsaMethods)
 # Running the benchmark
 
 The benchmark is run in a single line of code. In this vignette, we will only 
-perform the correctness benchmark. To achieve this, we will bypass the 
-execution of speed and memory benchmarks by setting `geneSets` to `NULL`:
+perform the correctness benchmark. To achieve this, we will skip the speed and 
+memory benchmarks by setting `runEFBenchmark` to `FALSE`:
+
 
 ```{r}
-smr <- runBenchmark(scObj, 'label', geneSets, gsaMethods)
+smr <- runBenchmark(scObj, 'label', geneSets, gsaMethods, runEFBenchmark=FALSE)
 ```
 
 **Note**: This tutorial illustrates using `GSABenchmark` with 
 Bioconductor's native `SingleCellExperiment` class. However, `GSABenchmark` 
-is also fully compatible with `Seurat`—`runGSAMethods`, `runBenchmark`, 
+is also fully compatible with `Seurat`: `runGSAMethods`, `runBenchmark`, 
 `runMethodShuffle` and `runBenchmarkShuffle` can all take a Seurat object as
 their first argument.
 
@@ -182,6 +177,7 @@ names(smr)
 names(smr$boundary)
 names(smr$MCC)
 names(smr$global)
+names(smr$predictions)
 ```
 
 We can access the main summaries of the results as follows:

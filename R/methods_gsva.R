@@ -20,7 +20,7 @@ NULL
 #'
 runGSVAMethod <- function(scObj, geneSets, method, invert = FALSE,
                           filter = FALSE, ...){
-    allGenes <- do.call(union, geneSets)
+    allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
     if(filter)

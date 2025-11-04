@@ -25,7 +25,7 @@ NULL
 #' @export
 #'
 runPagoda2 <- function(scObj, geneSets, ...){
-    allGenes <- do.call(union, geneSets)
+    allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
     mat <- Matrix::t(scExpMat(scObj, 'data', densify=FALSE))
 
@@ -59,7 +59,7 @@ runPagoda2 <- function(scObj, geneSets, ...){
 #' @export
 #'
 runSingscore <- function(scObj, geneSets, ...){
-    allGenes <- do.call(union, geneSets)
+    allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
     mat <- scExpMat(scObj, 'data')
@@ -95,7 +95,7 @@ runSingscore <- function(scObj, geneSets, ...){
 #' @export
 #'
 runSiPSiC <- function(scObj, geneSets, ...){
-    allGenes <- do.call(union, geneSets)
+    allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
     mat <- scExpMat(scObj, 'counts', densify=FALSE)
@@ -130,7 +130,7 @@ runSiPSiC <- function(scObj, geneSets, ...){
 #' @export
 #'
 runVAM <- function(scObj, geneSets, ...){
-    allGenes <- do.call(union, geneSets)
+    allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
     mat <- Matrix::t(scExpMat(scObj, 'data', allGenes))

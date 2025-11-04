@@ -17,7 +17,7 @@ NULL
 #' @keywords internal
 #'
 runDecoupleRMethod <- function(scObj, geneSets, method, ...){
-    allGenes <- do.call(union, geneSets)
+    allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
     mat <- scExpMat(scObj, 'data')
