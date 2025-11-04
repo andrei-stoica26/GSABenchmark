@@ -47,9 +47,9 @@ runDecoupleRMethod <- function(scObj, geneSets, method, ...){
 #'
 #' @examples
 #' if (requireNamespace("ranger", quietly=TRUE)){
-#'     scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#'     scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #'     scObj <- qs::qread(scoPath)
-#'     gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#'     gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #'     geneSets <- qs::qread(gsPath)
 #'     scObj <- runMDT(scObj, geneSets)
 #' }
@@ -70,9 +70,9 @@ runMDT <- function(scObj, geneSets, ...)
 #' metadata column.
 #'
 #' @examples
-#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #' geneSets <- qs::qread(gsPath)
 #' scObj <- runMLM(scObj, geneSets)
 #'
@@ -91,9 +91,9 @@ runMLM <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #' geneSets <- qs::qread(gsPath)
 #' scObj <- runORA(scObj, geneSets)
 #'
@@ -113,9 +113,9 @@ runORA <- function(scObj, geneSets, ...)
 #'
 #' @examples
 #' if (requireNamespace("rpart", quietly=TRUE)){
-#'     scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#'     scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #'     scObj <- qs::qread(scoPath)
-#'     gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#'     gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #'     geneSets <- qs::qread(gsPath)
 #'     scObj <- runUDT(scObj, geneSets)
 #'     }

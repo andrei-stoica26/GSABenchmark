@@ -39,9 +39,9 @@ runEscapeMethod <- function(scObj, geneSets, method, ...){
 #'
 #' @examples
 #' if (requireNamespace("AUCell", quietly=TRUE)){
-#'     scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#'     scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #'     scObj <- qs::qread(scoPath)
-#'     gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#'     gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #'     geneSets <- qs::qread(gsPath)
 #'     scObj <- runAUCell(scObj, geneSets)
 #'     }
@@ -61,9 +61,9 @@ runAUCell <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #' geneSets <- qs::qread(gsPath)
 #' scObj <- runssGSEA(scObj, geneSets)
 #'
@@ -83,9 +83,9 @@ runssGSEA <- function(scObj, geneSets, ...)
 #'
 #' @examples
 #' if (requireNamespace("UCell", quietly=TRUE)){
-#'     scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#'     scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #'     scObj <- qs::qread(scoPath)
-#'     gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#'     gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #'     geneSets <- qs::qread(gsPath)
 #'     scObj <- runUCell(scObj, geneSets)
 #'     }

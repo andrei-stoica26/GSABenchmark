@@ -9,7 +9,7 @@
 #'
 #' @return A list of binary data frames.
 #'
-#' @keywords internal
+#' @noRd
 #'
 binaryPred <- function(scObj, labelCol, boundaryBenchmarkLL){
     geneSetNames <- names(boundaryBenchmarkLL)

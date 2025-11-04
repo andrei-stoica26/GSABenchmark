@@ -25,7 +25,7 @@ This function plots data frame consisting of method running times with
 methods as rows, gene sets and the gene set average as columns.
 }
 \examples{
-sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
 smr <- qs::qread(sPath)
 timePlot(smr[[4]])
 

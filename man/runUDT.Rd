@@ -22,9 +22,9 @@ This function runs \code{UDT} using \code{decoupleR}.
 }
 \examples{
 if (requireNamespace("rpart", quietly=TRUE)){
-    scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+    scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
     scObj <- qs::qread(scoPath)
-    gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+    gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
     geneSets <- qs::qread(gsPath)
     scObj <- runUDT(scObj, geneSets)
     }

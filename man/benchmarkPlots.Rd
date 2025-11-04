@@ -21,7 +21,7 @@ This function plots a list of dataframe scores with methods as rows,
 gene sets and the average of scores across all gene sets as columns.
 }
 \examples{
-sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
 smr <- qs::qread(sPath)
 plots <- benchmarkPlots(smr[[1]])
 

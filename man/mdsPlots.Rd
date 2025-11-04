@@ -22,9 +22,9 @@ A named list of ggplot objects.
 This function creates MDS plots for method results.
 }
 \examples{
-scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 scObj <- qs::qread(scoPath)
-sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
 smr <- qs::qread(sPath)
 plots <- mdsPlots(scObj, smr)
 

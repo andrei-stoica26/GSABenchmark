@@ -23,7 +23,7 @@ A named list of ggplot objects.
 This function creates metric rank plots for method results.
 }
 \examples{
-sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
 smr <- qs::qread(sPath)
 plots <- metricRankPlots(smr)
 

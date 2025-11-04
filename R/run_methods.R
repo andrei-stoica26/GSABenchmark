@@ -18,9 +18,9 @@ NULL
 #' with the results of the runs stored as metadata columns.
 #'
 #' @examples
-#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #' geneSets <- qs::qread(gsPath)
 #' scObj <- runGSAMethods(scObj, 'label', geneSets, c('CSOA', 'Zscore'))
 #'

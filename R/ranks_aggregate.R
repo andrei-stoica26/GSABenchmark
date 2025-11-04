@@ -27,12 +27,7 @@ bindSummary <- function(smr, nAggDFs=0, nAvgCols=0){
 #'
 #' @return A data frame of aggregate summary results.
 #'
-#' @examples
-#' sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
-#' m <- aggregateRanks(smr)
-#'
-#' @export
+#' @keywords internal
 #'
 aggregateRanks <- function(smr,
                            rankMethod = c('min', 'average', 'first',

@@ -16,9 +16,9 @@ NULL
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #' geneSets <- qs::qread(gsPath)
 #' scObj <- runPagoda2(scObj, geneSets)
 #'
@@ -50,9 +50,9 @@ runPagoda2 <- function(scObj, geneSets, ...){
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #' geneSets <- qs::qread(gsPath)
 #' scObj <- runSingscore(scObj, geneSets)
 #'
@@ -86,9 +86,9 @@ runSingscore <- function(scObj, geneSets, ...){
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #' geneSets <- qs::qread(gsPath)
 #' scObj <- runSiPSiC(scObj, geneSets)
 #'
@@ -121,9 +121,9 @@ runSiPSiC <- function(scObj, geneSets, ...){
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #' geneSets <- qs::qread(gsPath)
 #' scObj <- runVAM(scObj, geneSets)
 #'

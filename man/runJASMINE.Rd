@@ -26,9 +26,9 @@ The method's paper can be found at
 \code{https://doi.org/10.7554/eLife.71994}.
 }
 \examples{
-scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 scObj <- qs::qread(scoPath)
-gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 geneSets <- qs::qread(gsPath)
 scObj <- runJASMINE(scObj, geneSets)
 

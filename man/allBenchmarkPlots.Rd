@@ -20,7 +20,7 @@ A list of ggplot objects.
 This function plots the complete list of benchmark summaries.
 }
 \examples{
-sPath <- system.file('testdata', 'smr.qs', package='GSABenchmark')
+sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
 smr <- qs::qread(sPath)
 plots <- allBenchmarkPlots(smr)
 

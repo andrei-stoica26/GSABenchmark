@@ -15,9 +15,9 @@
 #' with the results of the runs stored as metadata columns.
 #'
 #' @examples
-#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #' geneSets <- qs::qread(gsPath)
 #' scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA', 0.2, 0.2)
 #'
@@ -74,9 +74,9 @@ runMethodShuffle <- function(scObj,
 #' @return A list of benchmark results.
 #'
 #' @examples
-#' scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 #' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 #' geneSets <- qs::qread(gsPath)
 #' scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA', 0.2, 0.2)
 #' smr <- runBenchmarkShuffle(scObj, 'label', geneSets, 'CSOA', FALSE)

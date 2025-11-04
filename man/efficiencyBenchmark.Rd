@@ -37,9 +37,9 @@ This function extracts running times and peak memory usage for gene set
 analysis methods.
 }
 \examples{
-scoPath <- system.file('testdata', 'scObj.qs', package='GSABenchmark')
+scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
 scObj <- qs::qread(scoPath)
-gsPath <- system.file('testdata', 'geneSets.qs', package='GSABenchmark')
+gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
 geneSets <- qs::qread(gsPath)
 ef <- efficiencyBenchmark(scObj, 'label', geneSets, c('CSOA', 'Zscore'))
 
