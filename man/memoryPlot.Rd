@@ -27,6 +27,6 @@ methods as rows, gene sets and the gene set average as columns.
 \examples{
 sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
 smr <- qs::qread(sPath)
-memoryPlot(smr[[4]])
+memoryPlot(smr[[5]])
 
 }

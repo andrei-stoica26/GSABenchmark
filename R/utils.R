@@ -112,13 +112,14 @@ metricTitles <- function(){
     metrics <- c('sensitivity', 'specificity', 'precision',
                  'accuracy', 'sizeProximity','scoreCoverage',
                  'boundaryMCC', 'directMCC',
-                 'AUROC', 'PRAUC', 'labRankAlignment',
-                 'silRankAlignment', 'centrality')
+                 'AUROC', 'PRAUC', 'labRankAlignment', 'silRankAlignment',
+                 'centrality', 'labJaccard', 'labCosine')
     titles <- c('Sensitivity', 'Specificity', 'Precision',
                 'Accuracy', 'Size proximity','Score coverage',
                 'Boundary MCC', 'Direct MCC',
                 'AUROC', 'PRAUC', 'Label rank alignment',
-                'Silhouette rank alignment', 'Centrality')
+                'Silhouette rank alignment', 'Centrality',
+                'Label Jaccard score', 'Label cosine score')
     return(setNames(titles, metrics))
 }
 
