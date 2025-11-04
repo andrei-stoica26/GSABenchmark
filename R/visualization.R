@@ -241,7 +241,8 @@ metricRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min', ...){
                      'accuracy', 'size proximity','score coverage',
                      'boundary MCC', 'direct MCC',
                      'AUROC', 'PRAUC', 'label rank alignment',
-                     'silhouette rank alignment', 'centrality')
+                     'silhouette rank alignment', 'centrality',
+                     'label Jaccard score', 'label cosine score')
 
     message('Computing metric ranks...')
     metricRanksDFs <- allMetricRanks(smr, rankMethod)

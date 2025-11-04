@@ -4,8 +4,7 @@
 #' prediction data frames for the gene set analysis methods.
 #'
 #' @inheritParams extractCellScores
-#' @param boundaryBenchmarkLL A list of lists of boundary benchmark
-#' data frames.
+#' @inheritParams boundaryMCCBenchmark
 #'
 #' @return A list of binary data frames.
 #'

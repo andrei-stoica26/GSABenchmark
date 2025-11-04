@@ -77,7 +77,7 @@ globalBenchmark <- function(scObj,
 #' cutoff.
 #'
 #' @param boundaryBenchmarkLL A list of lists of data frames generated with
-#' boundaryBenchmarkMultiple.
+#' \code{boundaryBenchmarkMultiple}.
 #'
 #' @return A benchmark data frame with cells as row names, and labels,
 #' GSA scores, and MCC scores as columns.

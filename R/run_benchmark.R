@@ -67,10 +67,8 @@ allBenchmarkResults <- function(scObj,
                                                gsaMethods,
                                                checkLabels=FALSE,
                                                verbose=FALSE)
-
-    directMCCSmr <- benchmarkSummary(directMCCRes, TRUE, FALSE)
     mccSmr <- list(boundaryMCC = boundaryMCCBenchmark(boundaryRes),
-                 directMCC = directMCCSmr)
+                   directMCC = benchmarkSummary(directMCCRes, TRUE, FALSE)[[1]])
 
     message('Constructing binary predictions...')
     predList <- binaryPred(scObj, labelCol, boundaryRes)

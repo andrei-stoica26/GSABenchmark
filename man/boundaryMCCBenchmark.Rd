@@ -8,7 +8,7 @@ boundaryMCCBenchmark(boundaryBenchmarkLL)
 }
 \arguments{
 \item{boundaryBenchmarkLL}{A list of lists of data frames generated with
-boundaryBenchmarkMultiple.}
+\code{boundaryBenchmarkMultiple}.}
 }
 \value{
 A benchmark data frame with cells as row names, and labels,

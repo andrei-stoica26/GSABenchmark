@@ -28,9 +28,9 @@ test_that("efficiencyBenchmark works", {
 test_that("visualization functions work", {
     p <- scorePlot(smr[[1]][[1]])
     expect_equal(length(intersect(is(p), c('gg', 'ggplot2::ggplot'))), 1)
-    p <- timePlot(smr[[4]])
+    p <- timePlot(smr[[5]])
     expect_equal(length(intersect(is(p), c('gg', 'ggplot2::ggplot'))), 1)
-    p <- memoryPlot(smr[[4]])
+    p <- memoryPlot(smr[[5]])
     expect_equal(length(intersect(is(p), c('gg', 'ggplot2::ggplot'))), 1)
     plots <- benchmarkPlots(smr[[1]])
     expect_equal(length(intersect(is(plots[[1]]),
