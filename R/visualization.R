@@ -63,7 +63,7 @@ scorePlot <- function(scoreDF,
 #' @examples
 #' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
 #' smr <- qs::qread(sPath)
-#' timePlot(smr[[4]])
+#' timePlot(smr[[5]])
 #'
 #' @export
 #'
@@ -87,7 +87,7 @@ timePlot <- function(efBenchmark, titleSuffix = NULL, ...){
 #' @examples
 #' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
 #' smr <- qs::qread(sPath)
-#' memoryPlot(smr[[4]])
+#' memoryPlot(smr[[5]])
 #'
 #' @export
 #'

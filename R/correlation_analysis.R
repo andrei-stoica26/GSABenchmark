@@ -40,7 +40,7 @@ corrSummary <- function(scObj, smr, corMethod = 'spearman'){
                 ' Aggregate correlation will not be computed.')
         names(corrDFs) <- geneSetNames
     } else {
-        aggCorr <- round(do.call(`+`, corrDFs) / length(corrDFs), 2)
+        aggCorr <- round(Reduce(`+`, corrDFs) / length(corrDFs), 2)
         corrDFs <- c(corrDFs, list(aggCorr))
         names(corrDFs) <- c(geneSetNames, 'aggregate')
     }
