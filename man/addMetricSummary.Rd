@@ -2,9 +2,9 @@
 % Please edit documentation in R/benchmark_accuracy_tools.R
 \name{addMetricSummary}
 \alias{addMetricSummary}
-\title{Extends summary by addding overall results for each metric}
+\title{Add metric information to the summary list}
 \usage{
-addMetricSummary(smr, metrics, gsaMethods)
+addMetricSummary(smr, metrics, gsaMethods, doSummarize = TRUE)
 }
 \arguments{
 \item{smr}{List of result data frames for each metrics. Each data frame
@@ -13,13 +13,17 @@ set for the corresponding method.}
 
 \item{metrics}{Metrics.}
 
-\item{gsaMethods}{Gene set analysis methods.}
+\item{gsaMethods}{Character vector of gene set analysis methods.}
+
+\item{doSummarize}{Whether to add a metric summary. Must be set to
+\code{FALSE} when summarizing a MCC benchmark list of lists.}
 }
 \value{
 Extended summary list with an additional data frame showing the
 average results obtained for each metric.
 }
 \description{
-This function extends summary by addding overall results for each metric.
+This function adds metric information to the summary list and optionally
+extends the list by addding overall results for each metric.
 }
 \keyword{internal}

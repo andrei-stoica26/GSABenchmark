@@ -1,4 +1,4 @@
-#' @importFrom hammers centerOfMass checkGenes computeSilhouette metadataDF metadataNames nearestNeighbors normalizeSilhouette proximity safeMinmax scCol scPCAMat scExpMat shuffleGenes tabulateVector
+#' @importFrom hammers centerOfMass checkGenes computeSilhouette metadataDF metadataNames nearestNeighbors normalizeSilhouette numCosine proximity safeMinmax scCol scPCAMat scExpMat shuffleGenes tabulateVector
 #' @importFrom plyr count
 #'
 NULL
@@ -68,78 +68,81 @@ computeMetricMeans <- function(df, startCol){
     return(df)
 }
 
-#' Extends summary by addding overall results for each metric
+#' Add method information to a summary data frame
 #'
-#' This function extends summary by addding overall results for each metric.
+#' This function adds gene set analysis method information to a summary data
+#' frame. It sets the names of the gene set analysis method as the rownames of
+#' the data frame, and optionally computes the mean score for each method and
+#' decreasingly sorts the data frame by these scores.
+#'
+#' @inheritParams runGSAMethods
+#' @param df A data frame where the values represent the scores obtained by a
+#' gene set analysis method (row) on a gene set (column) for a metric.
+#' @param doAverage Whether to add an average column to each data frame,
+#' sorting each data frame decreasingly by the average column in the process.
+#'
+#' @return A summary data frame with added method information.
+#'
+#' @keywords internal
+#'
+addMethodInfo <- function(df, gsaMethods, doAverage=TRUE){
+    rownames(df) <- gsaMethods
+    if(doAverage){
+        df$avg <- rowMeans(df)
+        df <- df[order(df$avg, decreasing=TRUE), ]
+    }
+    return(df)
+}
+
+#' Add metric information to the summary list
+#'
+#' This function adds metric information to the summary list and optionally
+#' extends the list by addding overall results for each metric.
 #'
 #' @param smr List of result data frames for each metrics. Each data frame
 #' contains the results for each tested gene set analysis method for each gene
 #' set for the corresponding method.
 #' @param metrics Metrics.
-#' @inheritParams computeMethodMeans
+#' @inheritParams addMethodInfo
+#' @param doSummarize Whether to add a metric summary. Must be set to
+#' \code{FALSE} when summarizing a MCC benchmark list of lists.
 #'
 #' @return Extended summary list with an additional data frame showing the
 #' average results obtained for each metric.
 #'
 #' @keywords internal
 #'
-addMetricSummary <- function(smr, metrics, gsaMethods){
+addMetricSummary <- function(smr, metrics, gsaMethods, doSummarize=TRUE){
     names(smr) <- metrics
-    df <- data.frame(lapply(smr, function(x) x[gsaMethods, ]$avg))
-    rownames(df) <- gsaMethods
-    df <- df[order(df$avg, decreasing=TRUE), ]
-    smr <- c(smr, list(metricSummary=df))
+    if (doSummarize){
+        df <- data.frame(lapply(smr, function(x) x[gsaMethods, ]$avg))
+        rownames(df) <- gsaMethods
+        df <- df[order(df$avg, decreasing=TRUE), ]
+        smr <- c(smr, list(metricSummary=df))
+    }
     return(smr)
 }
 
-#' Add means for metric results data frame
+#' Add gene set averages to the global summary list
 #'
-#' This function adds means for a data frame of metric results.
+#' This function adds gene set averages to the global summary list.
 #'
-#' @param df A data frame where the values represent the scores obtained by a
-#' gene set analysis method (row) on a gene set (column) for a metric.
-#' @param gsaMethods Gene set analysis methods.
+#' @inheritParams runGSAMethods
+#' @param globalSmr Global summary.
 #'
-#' @return A metric results data frame with added means, sorted decreasingly by
-#' these means.
+#' @return Extended summary list with an additional data frame showing the
+#' average results obtained for each gene set.
 #'
 #' @keywords internal
 #'
-computeMethodMeans <- function(df, gsaMethods){
+addGlobalAverage <- function(globalSmr, gsaMethods){
+    smrNames <- names(globalSmr[[1]])
+    df <- data.frame(do.call(cbind, setNames(lapply(smrNames, function(smrCol){
+        rowMeans(do.call(cbind, lapply(globalSmr,
+                                       function(x) x[gsaMethods, smrCol])))
+    }), smrNames)))
     rownames(df) <- gsaMethods
-    df$avg <- rowMeans(df)
     df <- df[order(df$avg, decreasing=TRUE), ]
-    return(df)
-}
-
-#' Construct binary prediction data frames for the gene set analysis methods
-#'
-#' This function used the boundary benchmark results to construct binary
-#' prediction data frames for the gene set analysis methods.
-#'
-#' @inheritParams extractCellScores
-#' @param boundaryBenchmarkLL A list of lists of boundary benchmark
-#' data frames.
-#'
-#' @return A list of binary data frames.
-#'
-#' @keywords internal
-#'
-binaryPred <- function(scObj, boundaryBenchmarkLL, labelCol){
-    geneSetNames <- names(boundaryBenchmarkLL)
-    gsaMethods <- names(boundaryBenchmarkLL[[1]])
-
-    bList <- setNames(lapply(geneSetNames, function(gsName){
-        res <- data.frame(label = as.integer(scCol(scObj, labelCol) == gsName))
-        rownames(res) <- colnames(scObj)
-        benchmarkRes <- boundaryBenchmarkLL[[gsName]]
-        for (method in gsaMethods){
-            cutoff <- benchmarkRes[[method]][1, 2]
-            res[[method]] <- as.integer(scCol(scObj,
-                                              paste0(method, '_', gsName)) >= cutoff)
-        }
-        return(res)
-    }), geneSetNames)
-
-    return(bList)
+    globalSmr$avg <- df
+    return(globalSmr)
 }

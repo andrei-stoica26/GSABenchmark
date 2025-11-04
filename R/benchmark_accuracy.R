@@ -94,7 +94,7 @@ boundaryMCCBenchmark <- function(boundaryBenchmarkLL){
     mccValues <- data.frame(matrix(mccValues, length(gsaMethods),
                                  length(geneSetNames)))
     colnames(mccValues) <- geneSetNames
-    mccValues <- computeMethodMeans(mccValues, gsaMethods)
+    mccValues <- addMethodInfo(mccValues, gsaMethods)
     return(mccValues)
 }
 

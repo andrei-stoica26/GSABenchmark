@@ -1,3 +1,5 @@
+
+
 #' Perform accuracy benchmarks for multiple sets of gene set analysis method
 #' scores and class labels
 #'
@@ -30,12 +32,12 @@ accuracyBenchmarkMultiple <- function(scObj,
 
     if(checkLabels)
         checkSetNames(scObj, labelCol, geneSetNames)
-    res <- lapply(seq_along(geneSetNames), function(i) {
+    res <- setNames(lapply(seq_along(geneSetNames), function(i) {
         setName <- geneSetNames[i]
         if (verbose)
             message('Running benchmark on gene set: ',
                     geneSetNames[i], '...')
-        setRes <- lapply(seq_along(gsaMethods), function(j){
+        setRes <- setNames(lapply(seq_along(gsaMethods), function(j){
             method <- gsaMethods[j]
             scoreCol <- paste0(method, '_', setName)
             df <- benchmarkFun(scObj,
@@ -45,11 +47,9 @@ accuracyBenchmarkMultiple <- function(scObj,
                                checkLabel=FALSE,
                                ...)
             return(df)
-            })
-        names(setRes) <- gsaMethods
+            }), gsaMethods)
         return(setRes)
-    })
-    names(res) <- geneSetNames
+    }), geneSetNames)
     return(res)
 }
 
@@ -137,5 +137,4 @@ globalBenchmarkMultiple <- function(scObj,
                                      globalBenchmark,
                                      normSilDF,
                                      dimMat,
-                                     maxDist
-                                     ))
+                                     maxDist))

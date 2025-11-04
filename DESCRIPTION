@@ -22,6 +22,7 @@ Imports:
     GSVA,
     hammers,
     henna,
+    jaccard,
     Matrix,
     MLmetrics,
     methods,

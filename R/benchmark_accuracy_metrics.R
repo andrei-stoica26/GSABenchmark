@@ -98,10 +98,10 @@ computeMCCMetric <- function(df){
 #'
 #' @inheritParams computeBoundaryMetrics
 #' @param normSilDF Data frame of normalized silhouettes.
-#' @param dimMat UMAP dimensionality reduction matrix of the Seurat object.
-#' Unused if normSilDF is NULL.
-#' @param maxDist Maximum UMAP distance in the Seurat object. Unused if
-#' normSilDF or dimMat is NULL.
+#' @param dimMat UMAP dimensionality reduction matrix of the single-cell
+#' expression object. Unused if \code{normSilDF} is \code{NULL}.
+#' @param maxDist Maximum UMAP distance in the single-cell expression object.
+#' Unused if \code{normSilDF} or \code{dimMat} is \code{NULL}.
 #'
 #' @return A benchmark data frame with one row and computed metric scores in
 #' the columns.
@@ -130,7 +130,6 @@ computeGlobalMetrics <- function(df,
             }
         }
     }
-    resDF <- computeMetricMeans(resDF, 1)
     return(resDF)
 }
 

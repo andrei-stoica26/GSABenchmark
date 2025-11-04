@@ -47,7 +47,6 @@ allBenchmarkResults <- function(scObj,
                                 efBenchmark = NULL,
                                 runEFBenchmark = TRUE,
                                 verbose = TRUE){
-    x <- Sys.time()
     geneSetNames <- names(geneSets)
     if(checkLabels)
         checkSetNames(scObj, labelCol, geneSetNames)
@@ -61,9 +60,6 @@ allBenchmarkResults <- function(scObj,
                                              verbose=FALSE)
     boundarySmr <- benchmarkSummary(boundaryRes)
 
-    message('Constructing binary predictions...')
-    bList <- binaryPred(scObj, labelCol, boundaryRes)
-
     message('Running MCC benchmark...')
     directMCCRes <- directMCCBenchmarkMultiple(scObj,
                                                labelCol,
@@ -72,10 +68,12 @@ allBenchmarkResults <- function(scObj,
                                                checkLabels=FALSE,
                                                verbose=FALSE)
 
-    directMCCSmr <- benchmarkSummary(directMCCRes,
-                                     summarizeMetrics=FALSE)
+    directMCCSmr <- benchmarkSummary(directMCCRes, TRUE, FALSE)
     mccSmr <- list(boundaryMCC = boundaryMCCBenchmark(boundaryRes),
                  directMCC = directMCCSmr)
+
+    message('Constructing binary predictions...')
+    predList <- binaryPred(scObj, labelCol, boundaryRes)
 
     message('Running global evaluation benchmark...')
     globalRes <- globalBenchmarkMultiple(scObj,
@@ -87,12 +85,15 @@ allBenchmarkResults <- function(scObj,
                                          normSilDF,
                                          dimMat,
                                          maxDist)
-    globalSmr <- benchmarkSummary(globalRes)
+    globalSmr <- globalBenchmarkSummary(globalRes,
+                                        geneSetNames,
+                                        gsaMethods,
+                                        predList)
 
     smr <- list(boundary = boundarySmr,
                 MCC = mccSmr,
                 global = globalSmr,
-                predictions = bList)
+                predictions = predList)
 
     if(!is.null(efBenchmark))
        smr$efficiency <- efBenchmark else{
@@ -106,8 +107,6 @@ allBenchmarkResults <- function(scObj,
                                                   checkLabels=FALSE,
                                                   verbose=verbose)
            }}
-    y <- Sys.time()
-    message(y - x)
     return(smr)
 }
 
