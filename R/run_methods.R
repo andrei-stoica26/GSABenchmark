@@ -40,7 +40,7 @@ runGSAMethods <- function(scObj, labelCol, geneSets, gsaMethods, infix = NULL){
 
 #' Show supported methods
 #'
-#' This function shows methods currently supported by GSABenchmark.
+#' This function shows the methods currently supported by GSABenchmark.
 #'
 #' @return A character vector of supported methods.
 #'

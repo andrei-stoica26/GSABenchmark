@@ -1,4 +1,4 @@
-#' @importFrom decoupleR run_mdt run_mlm run_ora run_udt run_ulm
+#' @importFrom decoupleR run_mdt run_mlm run_ora run_udt
 #'
 NULL
 
