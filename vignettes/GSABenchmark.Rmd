@@ -241,6 +241,14 @@ plots <- corrPlots(scObj, smr)
 plots[[length(geneSets) + 1]]
 ```
 
+We can also look at the Jaccard tile plots of the binary predictions made by
+each method. Here, we display the aggregate Jaccard tile plot:
+
+```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
+plots <- predJaccardPlots(smr$predictions)
+plots[[length(geneSets) + 1]]
+```
+
 # Benchmarking a single method at different choices of gene loss and noise
 
 GSABenchmark also offers the option of benchmarking a single method at 

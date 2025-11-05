@@ -1,7 +1,7 @@
 #' @importFrom ggplot2 aes cut_number element_text geom_point ggplot ggtitle labs scale_color_manual theme theme_minimal
 #' @importFrom ggrepel geom_text_repel
 #' @importFrom grDevices rainbow
-#' @importFrom henna classPlot correlationPlot densityPlot rankSummary rankPlot
+#' @importFrom henna classPlot correlationPlot densityPlot rankSummary rankPlot tilePlot
 #' @importFrom reshape2 melt
 #' @importFrom rlang .data
 #'
@@ -395,5 +395,36 @@ corrPlots <- function(scObj, smr, titleSuffix = NULL, ...){
         title <- suffixedTitle(paste0('Correlation plot - ', plotName), titleSuffix)
         correlationPlot(corrDF, title, ...)
     }, corrDFs, plotNames, SIMPLIFY=FALSE)
+    return(plots)
+}
+
+#' Create Jaccard tile plots for binary predictions
+#'
+#' This function creates correlation plots for method results.
+#'
+#' @param predictionsSmr Binary predictions summary.
+#' @param ... Additional arguments passed to \code{henna::tilePlot}.
+#'
+#' @return A named list of ggplot objects.
+#'
+#' @examples
+#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
+#' scObj <- qs::qread(scoPath)
+#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
+#' smr <- qs::qread(sPath)
+#' plots <- predJaccardPlots(scObj, smr$predictions)
+#'
+#' @export
+#'
+predJaccardPlots <- function(predictionsSmr, ...){
+    jaccardMats <- lapply(predictionsSmr, function(df) {
+        df[['label']] <- c()
+        mat <- round(1 - as.matrix(stats::dist(t(df), 'binary')), 2)
+        return(mat)
+    })
+    aggJaccardMat <- round(Reduce(`+`, jaccardMats) / length(jaccardMats), 2)
+    jaccardMats <- c(jaccardMats, list(aggJaccardMat))
+    plots <- setNames(lapply(jaccardMats, function(mat) tilePlot(mat, ...)),
+                      c(names(predictionsSmr), 'aggregate'))
     return(plots)
 }

@@ -54,6 +54,9 @@ test_that("visualization functions work", {
     plots <- corrPlots(scObj, smr)
     expect_equal(length(intersect(is(plots[[1]]),
                                   c('gg', 'ggplot2::ggplot'))), 1)
+    plots <- predJaccardPlots(scObj, smr$predictions)
+    expect_equal(length(intersect(is(plots[[1]]),
+                                  c('gg', 'ggplot2::ggplot'))), 1)
 })
 
 test_that("rankAlignment score works", {
