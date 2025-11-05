@@ -7,9 +7,9 @@ Authors@R: person('Andrei-Florian', 'Stoica',
     role=c('aut','cre'),
     comment=c(ORCID='0000-0002-5253-0826'))
 Description: GSABenchmark is a package designed for benchmarking scRNA-seq gene 
-    set analysis (scGSA) methods. It provides both traditional and novel benchmark 
-    metrics, as well as visualization tools. Currently, GSABenchmark supports 
-    17 scGSA methods.
+    set analysis (scGSA) methods. It provides both traditional and novel 
+    benchmark metrics, as well as visualization tools. Currently, GSABenchmark 
+    supports 17 scGSA methods.
 License: MIT + file LICENSE
 Imports:
     CSOA,

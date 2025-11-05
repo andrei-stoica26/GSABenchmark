@@ -99,11 +99,7 @@ betaMarkers <- c('INS', 'IAPP', 'GJD2', 'PDX1', 'SLC2A2', 'NPY', 'MAFA',
                  'G6PC2', 'SLC30A8', 'PCSK1', 'SCGN', 'IGF2','SYT13', 'FFAR2', 
                  'SIX2')
 
-```
 
-Now we build the gene sets:
-
-```{r}
 geneSets <- setNames(list(alphaMarkers, 
                           betaMarkers),
                      c('alpha', 
@@ -178,7 +174,7 @@ smr$global$metricSummary
 ```
 
 To visualize the results, we will call the `allBenchmarkPlots` function. This
-function plots each benchmark data frame:
+function plots each summary result data frame:
 
 ```{r}
 plots <- allBenchmarkPlots(smr)
@@ -191,7 +187,7 @@ Below, we display one of the resulting plots:
 plots[[3]]
 ```
 
-The output of `runBenchmark` is also used to create other plots. 
+The output of `runBenchmark` can also be used to create other plots. 
 The `geneSetRankPlots` function creates plots ranking the gene set analysis 
 methods for each gene set. We display one of these plots:
 
@@ -216,7 +212,7 @@ each method:
 aggregateRankPlot(smr)
 ```
 
-Next, we will use the ratioRank function to visualize the top results among 
+Next, we will use the `ratioRank` function to visualize the top results among 
 all method-metric-gene set combinations as ranked by the ratio of the 
 maximum score and the mean:
 
@@ -252,8 +248,11 @@ plots[[length(geneSets) + 1]]
 # Benchmarking a single method at different choices of gene loss and noise
 
 GSABenchmark also offers the option of benchmarking a single method at 
-different choices of gene loss (fraction of genes removed from each gene
-signature) and noise (fraction of retained genes in the final adjusted
+different choices of:
+
+- Gene loss (the fraction of genes removed from each gene
+signature)
+- Noise (the fraction of retained genes in the final adjusted
 gene signatures after random genes have been added).
 
 Each condition determined by a gene loss-noise combination can be run in
