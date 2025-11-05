@@ -25,36 +25,51 @@ test_that("efficiencyBenchmark works", {
     }
 })
 
-test_that("visualization functions work", {
+test_that("simple visualization functions work", {
     p <- scorePlot(smr[[1]][[1]])
     expect_equal(length(intersect(is(p), c('gg', 'ggplot2::ggplot'))), 1)
+
     p <- timePlot(smr[[5]])
     expect_equal(length(intersect(is(p), c('gg', 'ggplot2::ggplot'))), 1)
+
     p <- memoryPlot(smr[[5]])
     expect_equal(length(intersect(is(p), c('gg', 'ggplot2::ggplot'))), 1)
-    plots <- benchmarkPlots(smr[[1]])
-    expect_equal(length(intersect(is(plots[[1]]),
-                                  c('gg', 'ggplot2::ggplot'))), 1)
-    plots <- allBenchmarkPlots(smr)
-    expect_equal(length(intersect(is(plots[[1]]),
-                                  c('gg', 'ggplot2::ggplot'))), 1)
-    plots <- geneSetRankPlots(smr)
-    expect_equal(length(intersect(is(plots[[1]]),
-                                  c('gg', 'ggplot2::ggplot'))), 1)
-    plots <- metricRankPlots(smr)
-    expect_equal(length(intersect(is(plots[[1]]),
-                                  c('gg', 'ggplot2::ggplot'))), 1)
+
     p <- aggregateRankPlot(smr)
     expect_equal(length(intersect(is(p), c('gg', 'ggplot2::ggplot'))), 1)
+
     p <- ratioPlot(smr)
     expect_equal(length(intersect(is(p), c('gg', 'ggplot2::ggplot'))), 1)
-    plots <- mdsPlots(scObj, smr, colorScheme='orichalc')
+})
+
+test_that("complex visualization functions work", {
+    titleSuffix <- 'Test'
+
+    plots <- benchmarkPlots(smr[[1]], titleSuffix=titleSuffix)
     expect_equal(length(intersect(is(plots[[1]]),
                                   c('gg', 'ggplot2::ggplot'))), 1)
-    plots <- corrPlots(scObj, smr)
+
+    plots <- allBenchmarkPlots(smr, titleSuffix=titleSuffix)
     expect_equal(length(intersect(is(plots[[1]]),
                                   c('gg', 'ggplot2::ggplot'))), 1)
-    plots <- predJaccardPlots(scObj, smr$predictions)
+
+    plots <- geneSetRankPlots(smr, titleSuffix=titleSuffix)
+    expect_equal(length(intersect(is(plots[[1]]),
+                                  c('gg', 'ggplot2::ggplot'))), 1)
+
+    plots <- metricRankPlots(smr, titleSuffix=titleSuffix)
+    expect_equal(length(intersect(is(plots[[1]]),
+                                  c('gg', 'ggplot2::ggplot'))), 1)
+
+    plots <- mdsPlots(scObj, smr, titleSuffix=titleSuffix)
+    expect_equal(length(intersect(is(plots[[1]]),
+                                  c('gg', 'ggplot2::ggplot'))), 1)
+
+    plots <- corrPlots(scObj, smr, titleSuffix=titleSuffix)
+    expect_equal(length(intersect(is(plots[[1]]),
+                                  c('gg', 'ggplot2::ggplot'))), 1)
+
+    plots <- predJaccardPlots(smr$predictions, titleSuffix=titleSuffix)
     expect_equal(length(intersect(is(plots[[1]]),
                                   c('gg', 'ggplot2::ggplot'))), 1)
 })

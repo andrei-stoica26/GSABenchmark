@@ -9,7 +9,12 @@ benchmarkPlots(smr, titleSuffix = NULL, lastPlotLegendLab = "Metric", ...)
 \arguments{
 \item{smr}{List of summary data frames, whether boundary, MCC or global.}
 
+\item{titleSuffix}{Suffix used to create plot titles If \code{NULL}, the
+plots will have no titles.}
+
 \item{lastPlotLegendLab}{The legend label of the last plot.}
+
+\item{...}{Additional arguments passed to \code{plotFun}.}
 }
 \value{
 A list of ggplot objects.

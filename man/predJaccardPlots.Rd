@@ -6,7 +6,7 @@
 \usage{
 predJaccardPlots(
   predictionsSmr,
-  titleTemplate = "Binary prediction Jaccard plot",
+  titlePrefix = "Binary prediction Jaccard plot",
   titleInfixes = NULL,
   titleSuffix = NULL,
   ...
@@ -14,6 +14,9 @@ predJaccardPlots(
 }
 \arguments{
 \item{predictionsSmr}{Binary predictions summary.}
+
+\item{titlePrefix}{Prefix used to create a title with \code{subplotTitle}.
+Ignored if \code{titleSuffix} is \code{NULL}.}
 
 \item{titleInfixes}{A character vector of title infixes used to create a
 title with \code{subplotTitle}. Ignored if \code{titleSuffix}
@@ -31,10 +34,8 @@ A named list of ggplot objects.
 This function creates Jaccard tile plots for method binary predictions.
 }
 \examples{
-scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-scObj <- qs::qread(scoPath)
 sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
 smr <- qs::qread(sPath)
-plots <- predJaccardPlots(scObj, smr$predictions)
+plots <- predJaccardPlots(smr$predictions)
 
 }

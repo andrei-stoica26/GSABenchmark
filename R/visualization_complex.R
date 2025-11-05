@@ -3,6 +3,7 @@
 #' This function plots a list of summary data frames with methods as rows,
 #' gene sets and the average of scores across all gene sets as columns.
 #'
+#' @inheritParams plotList
 #' @param smr List of summary data frames, whether boundary, MCC or global.
 #' @param lastPlotLegendLab The legend label of the last plot.
 #'
@@ -188,7 +189,7 @@ mdsPlots <- function(scObj,
 #'
 corrPlots <- function(scObj,
                       smr,
-                      titleTemplate = 'Correlation plot',
+                      titlePrefix = 'Correlation plot',
                       titleInfixes = NULL,
                       titleSuffix = NULL,
                       ...)
@@ -206,16 +207,14 @@ corrPlots <- function(scObj,
 #' @return A named list of ggplot objects.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
 #' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
 #' smr <- qs::qread(sPath)
-#' plots <- predJaccardPlots(scObj, smr$predictions)
+#' plots <- predJaccardPlots(smr$predictions)
 #'
 #' @export
 #'
 predJaccardPlots <- function(predictionsSmr,
-                             titleTemplate = 'Binary prediction Jaccard plot',
+                             titlePrefix = 'Binary prediction Jaccard plot',
                              titleInfixes = NULL,
                              titleSuffix = NULL,
                              ...)

@@ -10,6 +10,9 @@ allBenchmarkPlots(smr, titleSuffix = NULL, ...)
 \item{smr}{Complete summary list generated with \code{allBenchmarkResults}
 or \code{runBenchmark}.}
 
+\item{titleSuffix}{Suffix used to create plot titles If \code{NULL}, the
+plots will have no titles.}
+
 \item{...}{Additional parameters passed to other functions.}
 }
 \value{

@@ -7,7 +7,7 @@
 corrPlots(
   scObj,
   smr,
-  titleTemplate = "Correlation plot",
+  titlePrefix = "Correlation plot",
   titleInfixes = NULL,
   titleSuffix = NULL,
   ...
@@ -18,6 +18,9 @@ corrPlots(
 
 \item{smr}{Complete summary list generated with \code{allBenchmarkResults}
 or \code{runBenchmark}.}
+
+\item{titlePrefix}{Prefix used to create a title with \code{subplotTitle}.
+Ignored if \code{titleSuffix} is \code{NULL}.}
 
 \item{titleInfixes}{A character vector of title infixes used to create a
 title with \code{subplotTitle}. Ignored if \code{titleSuffix}
