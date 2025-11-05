@@ -23,7 +23,7 @@ geneSetRanks <- function(smr,
     geneSetNames <- geneSetNames[seq(length(geneSetNames) - nAvgCols)]
     gsaMethods <- sort(rownames(smr[[1]]))
 
-    res <- lapply(geneSetNames, function(gsName){
+    res <- setNames(lapply(geneSetNames, function(gsName){
         metrics <- names(smr)
         metrics <- metrics[seq(length(metrics) - nAggDFs)]
         df <- do.call(cbind, lapply(metrics, function(metric)
@@ -31,9 +31,8 @@ geneSetRanks <- function(smr,
                      metric)))
         df <- apply(df, 2, function(x) rank(-x, ties.method=rankMethod))
         return(df)
-    })
+    }), geneSetNames)
 
-    names(res) <- geneSetNames
     return(res)
 }
 
@@ -53,13 +52,14 @@ allGeneSetRanks <- function(smr, rankMethod = 'min'){
     mccRanks <- geneSetRanks(smr$MCC, 0, 1, rankMethod)
     globalRanks <- geneSetRanks(smr$global, 2, 1, rankMethod)
     geneSetNames <- names(boundaryRanks)
-    res <- lapply(geneSetNames, function(gsName){
+
+    res <- setNames(lapply(geneSetNames, function(gsName){
         df <- do.call(cbind, list(boundaryRanks[[gsName]],
                                   mccRanks[[gsName]],
                                   globalRanks[[gsName]]))
         df <- rankSummary(df)
         return(df)
-    })
-    names(res) <- geneSetNames
+    }), geneSetNames)
+
     return(res)
 }

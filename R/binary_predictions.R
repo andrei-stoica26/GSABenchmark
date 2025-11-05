@@ -73,3 +73,25 @@ binaryPredMetric <- function(globalSmr, geneSetNames, gsaMethods,
     globalSmr[[smrCol]] <- addMethodInfo(df, gsaMethods)
     return(globalSmr)
 }
+
+#' Calculate the Jaccard scores of method binary predictions
+#'
+#' This function calculates the Jaccard scores of method binary predictions.
+#'
+#' @param predictionsSmr Binary predictions summary.
+#'
+#' @return A list of numeric matrices.
+#'
+#' @keywords internal
+#'
+predJaccards <- function(predictionsSmr){
+    jaccardMats <- lapply(predictionsSmr, function(df) {
+        df[['label']] <- c()
+        mat <- round(1 - as.matrix(stats::dist(t(df), 'binary')), 2)
+        return(mat)
+    })
+    aggJaccardMat <- round(Reduce(`+`, jaccardMats) / length(jaccardMats), 2)
+    jaccardMats <- c(jaccardMats, list(aggJaccardMat))
+    names(jaccardMats) <- c(names(predictionsSmr), 'aggregate')
+    return(jaccardMats)
+}

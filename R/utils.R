@@ -100,6 +100,24 @@ runFromColumn <- function(colStr){
     return(res)
 }
 
+#' Return metric names
+#'
+#' This function returns metric names.
+#'
+#' @return A vector of characters.
+#'
+#' @noRd
+#'
+metricNames <- function(){
+    metrics <- c('sensitivity', 'specificity', 'precision',
+                 'accuracy', 'size proximity','score coverage',
+                 'boundary MCC', 'direct MCC',
+                 'AUROC', 'PRAUC', 'label rank alignment',
+                 'silhouette rank alignment', 'centrality',
+                 'label Jaccard score', 'label cosine score')
+    return(metrics)
+}
+
 #' Convert metric names to titles
 #'
 #' This function converts metric names to titles.
@@ -161,22 +179,4 @@ removeSVCols <- function(df){
         message('Single-valued columns will be removed: ', removedCol, '.')
     df <- df[, hasDistinctValues]
     return(df)
-}
-
-#' Adds a suffix to a title (if provided), otherwise returns NULL
-#'
-#' This function adds a suffix to a title (if the suffix is provided), and
-#' otherwise returns \code{NULL}.
-#'
-#' @param title Title.
-#' @param titleSuffix Title suffix.
-#'
-#' @return A suffixed title or \code{NULL}..
-#'
-#' @noRd
-#'
-suffixedTitle <- function(title, titleSuffix=NULL){
-    if (!is.null(titleSuffix))
-        return(paste0(title, titleSuffix))
-    return (NULL)
 }
