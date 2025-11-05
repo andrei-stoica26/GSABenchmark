@@ -205,19 +205,17 @@ geneSetRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min', ...){
     geneSetNames <- colnames(smr$boundary[[1]])
     geneSetNames <- geneSetNames[seq(length(geneSetNames) - 1)]
 
-    message('Computing gene set ranks...')
     gsRankDFs <- allGeneSetRanks(smr, rankMethod)
 
 
-    plots <- mapply(function(gsRankDF, gsName){
+    plots <- setNames(mapply(function(gsRankDF, gsName){
         title <- suffixedTitle(paste0('Distribution of ranks for ',
                                       gsName, ' gene set'),
                                titleSuffix)
         return(rankPlot(gsRankDF, title, summarize=FALSE, xLab='Method',
                  ...))
-    }, gsRankDFs, geneSetNames, SIMPLIFY=FALSE)
+    }, gsRankDFs, geneSetNames, SIMPLIFY=FALSE), geneSetNames)
 
-    names(plots) <- geneSetNames
     return(plots)
 }
 
@@ -243,20 +241,17 @@ metricRankPlots <- function(smr, titleSuffix = NULL, rankMethod = 'min', ...){
                      'AUROC', 'PRAUC', 'label rank alignment',
                      'silhouette rank alignment', 'centrality',
                      'label Jaccard score', 'label cosine score')
-
-    message('Computing metric ranks...')
     metricRanksDFs <- allMetricRanks(smr, rankMethod)
 
 
-    plots <- mapply(function(metricRankDF, metricName){
+    plots <- setNames(mapply(function(metricRankDF, metricName){
         title <- suffixedTitle(paste0('Distribution of ',
                                       metricName, ' ranks'),
                                titleSuffix)
         return(rankPlot(metricRankDF, title, summarize=FALSE, xLab='Method',
                         ...))
-    }, metricRanksDFs, metricNames, SIMPLIFY=FALSE)
+    }, metricRanksDFs, metricNames, SIMPLIFY=FALSE), metricNames)
 
-    names(plots) <- metricNames
     return(plots)
 }
 
@@ -285,7 +280,6 @@ aggregateRankPlot <- function(smr,
                               rankMethod = c('min', 'average', 'first',
                                              'last', 'random', 'max'),
                               ...){
-    message('Computing aggregate ranks...')
     aggRanks <- aggregateRanks(smr, rankMethod)
     title <- suffixedTitle('Distribution of aggregate ranks', titleSuffix)
 
@@ -325,7 +319,6 @@ ratioPlot <- function(smr,
                       yLab = 'Metric',
                       legendLab = 'Method',
                       ...){
-    message('Computing ratio ranks...')
     ratioDF <- allTopRatios(smr, nItems)
     title <- suffixedTitle('Top maximum over mean ratios', titleSuffix)
     p <- classPlot(ratioDF,
@@ -357,14 +350,12 @@ ratioPlot <- function(smr,
 #' @export
 #'
 mdsPlots <- function(scObj, smr, titleSuffix = NULL, ...){
-    message('Computing MDS for method results...')
-
     mdsDFs <- mdsScoreSummary(scObj, smr)
     plotNames <- names(mdsDFs)
-    plots <- mapply(function(mdsDF, plotName){
+    plots <- setNames(mapply(function(mdsDF, plotName){
         title <- suffixedTitle(paste0('MDS plot - ', plotName), titleSuffix)
         return(densityPlot(mdsDF, title, drawScores=TRUE, ...))
-    }, mdsDFs, plotNames, SIMPLIFY=FALSE)
+    }, mdsDFs, plotNames, SIMPLIFY=FALSE), plotNames)
     return(plots)
 }
 
@@ -387,14 +378,13 @@ mdsPlots <- function(scObj, smr, titleSuffix = NULL, ...){
 #' @export
 #'
 corrPlots <- function(scObj, smr, titleSuffix = NULL, ...){
-    message('Computing correlations for method results...')
-
     corrDFs <- corrSummary(scObj, smr)
     plotNames <- names(corrDFs)
-    plots <- mapply(function(corrDF, plotName){
-        title <- suffixedTitle(paste0('Correlation plot - ', plotName), titleSuffix)
+    plots <- setNames(mapply(function(corrDF, plotName){
+        title <- suffixedTitle(paste0('Correlation plot - ', plotName),
+                               titleSuffix)
         correlationPlot(corrDF, title, ...)
-    }, corrDFs, plotNames, SIMPLIFY=FALSE)
+    }, corrDFs, plotNames, SIMPLIFY=FALSE), plotNames)
     return(plots)
 }
 
@@ -416,7 +406,7 @@ corrPlots <- function(scObj, smr, titleSuffix = NULL, ...){
 #'
 #' @export
 #'
-predJaccardPlots <- function(predictionsSmr, ...){
+predJaccardPlots <- function(predictionsSmr, titleSuffix = NULL, ...){
     jaccardMats <- lapply(predictionsSmr, function(df) {
         df[['label']] <- c()
         mat <- round(1 - as.matrix(stats::dist(t(df), 'binary')), 2)
@@ -424,7 +414,12 @@ predJaccardPlots <- function(predictionsSmr, ...){
     })
     aggJaccardMat <- round(Reduce(`+`, jaccardMats) / length(jaccardMats), 2)
     jaccardMats <- c(jaccardMats, list(aggJaccardMat))
-    plots <- setNames(lapply(jaccardMats, function(mat) tilePlot(mat, ...)),
-                      c(names(predictionsSmr), 'aggregate'))
+    plotNames <- c(names(predictionsSmr), 'aggregate')
+    plots <- setNames(mapply(function(mat, plotName) {
+        title <- suffixedTitle(paste0('Binary prediction Jaccard plot - ',
+                                      plotName), titleSuffix)
+        tilePlot(mat, title, ...)
+        }, jaccardMats, plotNames, SIMPLIFY=FALSE),
+                      plotNames)
     return(plots)
 }

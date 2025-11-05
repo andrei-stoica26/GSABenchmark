@@ -4,7 +4,7 @@
 \alias{predJaccardPlots}
 \title{Create Jaccard tile plots for binary predictions}
 \usage{
-predJaccardPlots(predictionsSmr, ...)
+predJaccardPlots(predictionsSmr, titleSuffix = NULL, ...)
 }
 \arguments{
 \item{predictionsSmr}{Binary predictions summary.}
