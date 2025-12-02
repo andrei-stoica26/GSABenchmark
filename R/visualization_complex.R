@@ -6,6 +6,7 @@
 #' @inheritParams plotList
 #' @param smr List of summary data frames, whether boundary, MCC or global.
 #' @param lastPlotLegendLab The legend label of the last plot.
+#' @param ... Additional arguments passed to \code{scorePlot}.
 #'
 #' @return A list of ggplot objects.
 #'
@@ -36,8 +37,14 @@ benchmarkPlots <- function(smr,
         prefix <- 'global_'
     }
 
-    plots <- plotList(list(smr), identity, scorePlot, NULL, titleInfixes,
-                      titleSuffix)
+    plots <- plotList(args=list(smr),
+                      calcFun=identity,
+                      plotFun=scorePlot,
+                      unlistPlotArgs=FALSE,
+                      titlePrefix=NULL,
+                      titleInfixes=titleInfixes,
+                      titleSuffix=titleSuffix,
+                      ...)
     plots[[length(plots)]] <- plots[[length(plots)]] +
         labs(color=lastPlotLegendLab)
     slice <- c(length(plots) - 1, length(plots))
@@ -110,9 +117,16 @@ geneSetRankPlots <- function(smr,
                              titleSuffix = NULL,
                              xLab = 'Method',
                              ...)
-    return(plotList(list(smr, rankMethod), allGeneSetRanks, rankPlot,
-                    titlePrefix, titleInfixes, titleSuffix, summarize=FALSE,
-                    xLab=xLab, ...))
+    return(plotList(args=list(smr, rankMethod),
+                    calcFun=allGeneSetRanks,
+                    plotFun=rankPlot,
+                    unlistPlotArgs=FALSE,
+                    titlePrefix=titlePrefix,
+                    titleInfixes=titleInfixes,
+                    titleSuffix=titleSuffix,
+                    summarize=FALSE,
+                    xLab=xLab,
+                    ...))
 
 #' Create metric rank plots for the method results
 #'
@@ -136,17 +150,26 @@ metricRankPlots <- function(smr,
                             rankMethod = 'min',
                             xLab = 'Method',
                             ...)
-    return(plotList(list(smr, rankMethod), allMetricRanks, rankPlot,
-                    titlePrefix, titleInfixes, titleSuffix, summarize=FALSE,
-                    xLab=xLab, ...))
+    return(plotList(args=list(smr, rankMethod),
+                    calcFun=allMetricRanks,
+                    plotFun=rankPlot,
+                    unlistPlotArgs=FALSE,
+                    titlePrefix=titlePrefix,
+                    titleInfixes=titleInfixes,
+                    titleSuffix=titleSuffix,
+                    summarize=FALSE,
+                    xLab=xLab,
+                    ...))
 
 #' Create MDS plots for method results
 #'
 #' This function creates MDS plots for method results.
 #'
+#' @inheritParams henna::densityPlot
 #' @inheritParams extractCellScores
 #' @inheritParams allBenchmarkPlots
 #' @inheritParams plotList
+#'
 #' @param ... Additional arguments passed to \code{henna::densityPlot}.
 #'
 #' @return A named list of ggplot objects.
@@ -165,9 +188,16 @@ mdsPlots <- function(scObj,
                      titlePrefix = 'MDS plot',
                      titleInfixes = NULL,
                      titleSuffix = NULL,
+                     drawScores = TRUE,
                      ...)
-    return(plotList(list(scObj, smr), mdsScoreSummary, densityPlot, titlePrefix,
-                      titleInfixes, titleSuffix, drawScores=TRUE, ...))
+    return(plotList(args=list(scObj, smr),
+                    calcFun=mdsScoreSummary,
+                    plotFun=densityPlot,
+                    unlistPlotArgs=TRUE,
+                    titlePrefix=titlePrefix,
+                    titleInfixes=titleInfixes,
+                    titleSuffix=titleSuffix,
+                    c(drawScores=drawScores, list(...))))
 
 #' Create correlation plots for method results
 #'
@@ -193,8 +223,14 @@ corrPlots <- function(scObj,
                       titleInfixes = NULL,
                       titleSuffix = NULL,
                       ...)
-    return(plotList(list(scObj, smr), corrSummary, correlationPlot,
-                    titlePrefix, titleInfixes, titleSuffix, ...))
+    return(plotList(args=list(scObj, smr),
+                    calcFun=corrSummary,
+                    plotFun=correlationPlot,
+                    unlistPlotArgs=FALSE,
+                    titlePrefix=titlePrefix,
+                    titleInfixes=titleInfixes,
+                    titleSuffix=titleSuffix,
+                    ...))
 
 #' Create Jaccard tile plots for method binary predictions
 #'
@@ -218,5 +254,11 @@ predJaccardPlots <- function(predictionsSmr,
                              titleInfixes = NULL,
                              titleSuffix = NULL,
                              ...)
-    return(plotList(list(predictionsSmr), predJaccards, tilePlot,
-                    titlePrefix, titleInfixes, titleSuffix, ...))
+    return(plotList(args=list(predictionsSmr),
+                    calcFun=predJaccards,
+                    plotFun=tilePlot,
+                    unlistPlotArgs=FALSE,
+                    titlePrefix=titlePrefix,
+                    titleInfixes=titleInfixes,
+                    titleSuffix=titleSuffix,
+                    ...))

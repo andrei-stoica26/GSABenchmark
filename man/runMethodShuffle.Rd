@@ -12,7 +12,8 @@ runMethodShuffle(
   loss = c(0, 0.2),
   noise = c(0, 0.2),
   doGrid = TRUE,
-  seeds = c(1, 2, 3)
+  seeds = c(1, 2, 3),
+  outputFun = identity
 )
 }
 \arguments{
@@ -33,6 +34,9 @@ runMethodShuffle(
 \item{seeds}{A numeric vector of random seeds passed
 to \code{hammers::shuffleGenes}. Its length determines the number of
 replicates.}
+
+\item{outputFun}{Choose between silently_run (suppress all warnings and
+messages) or identity (do not suppress them). Default is silently_run.}
 }
 \value{
 A \code{Seurat} or \code{SingleCellExpression} object

@@ -29,6 +29,8 @@ subplotTitle <- function(prefix, infix, suffix=NULL){
 #' @param calcFun The function used for generating the results that will be
 #' plotted
 #' @param plotFun The function used for plotting.
+#' @param unlistPlotArgs Whether the additional arguments passed to
+#' \code{plotFun} have to be unlisted (that is, they are provided as a list).
 #' @param titlePrefix Prefix used to create a title with \code{subplotTitle}.
 #' Ignored if \code{titleSuffix} is \code{NULL}.
 #' @param titleInfixes A character vector of title infixes used to create a
@@ -45,6 +47,7 @@ subplotTitle <- function(prefix, infix, suffix=NULL){
 plotList <- function(args,
                      calcFun,
                      plotFun,
+                     unlistPlotArgs=FALSE,
                      titlePrefix=NULL,
                      titleInfixes=NULL,
                      titleSuffix=NULL,
@@ -52,13 +55,17 @@ plotList <- function(args,
 
     plotInput <- do.call(calcFun, args)
     plotNames <- names(plotInput)
+    plotArgs <- list(...)
+    if(unlistPlotArgs)
+        plotArgs <- unlist(plotArgs, recursive=FALSE)
 
     if(is.null(titleInfixes))
         titleInfixes <- plotNames
 
-    plots <- setNames(mapply(function(x, titleInfix) {
+    plots <- setNames(mapply(function(df, titleInfix) {
         title <- subplotTitle(titlePrefix, titleInfix, titleSuffix)
-        plotFun(x, title=title, ...)
+        plotArgs <- c(list(df, title), plotArgs)
+        return(do.call(plotFun, plotArgs))
     }, plotInput, titleInfixes, SIMPLIFY=FALSE), plotNames)
     return(plots)
 }

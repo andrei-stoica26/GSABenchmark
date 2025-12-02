@@ -30,34 +30,34 @@ runMethodShuffle <- function(scObj,
                              loss = c(0, 0.2),
                              noise = c(0, 0.2),
                              doGrid = TRUE,
-                             seeds = c(1, 2, 3)){
+                             seeds = c(1, 2, 3),
+                             outputFun = identity){
 
     checkSetNames(scObj, labelCol, names(geneSets))
     if(doGrid){
         lossNoiseDF <- expand.grid(loss, noise)
-        lossVector <- lossNoiseDF[, 1]
-        noiseVector <- lossNoiseDF[, 2]
+        loss <- lossNoiseDF[, 1]
+        noise <- lossNoiseDF[, 2]
     }
 
     nReplicates <- length(seeds)
-
-    expression <- scExpMat(scObj, 'counts', densify=FALSE)
-    nValues <- length(lossVector)
+    nValues <- length(loss)
     for (i in seq(nValues)){
         for (j in seq(nReplicates)){
-            lossPerc <- round(lossVector[i] * 100, 1)
-            noisePerc <- round(noiseVector[i] * 100, 1)
+            lossPerc <- round(loss[i] * 100, 1)
+            noisePerc <- round(noise[i] * 100, 1)
             message('Shuffling genes: gene loss = ', lossPerc,
                     '%, noise = ', noisePerc, '%, replicate = ', j, '.')
             shGeneSets <- lapply(geneSets, function(x)
-                shuffleGenes(scObj, x, lossVector[i], noiseVector[i],
+                shuffleGenes(scObj, x, loss[i], noise[i],
                              seed=seeds[j], verbose=FALSE))
             infix <- paste0('_', lossPerc, '_', noisePerc, '_', j)
             scObj <- runGSAMethods(scObj,
                                    labelCol,
                                    shGeneSets,
                                    gsaMethod,
-                                   infix)
+                                   infix,
+                                   outputFun)
         }
 
     }

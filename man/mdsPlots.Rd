@@ -10,6 +10,7 @@ mdsPlots(
   titlePrefix = "MDS plot",
   titleInfixes = NULL,
   titleSuffix = NULL,
+  drawScores = TRUE,
   ...
 )
 }
@@ -28,6 +29,10 @@ is \code{NULL}.}
 
 \item{titleSuffix}{Suffix used to create plot titles If \code{NULL}, the
 plots will have no titles.}
+
+\item{drawScores}{Whether to render scores on the plot. If set to
+\code{TRUE}, the third column of the input data frame will be numeric and
+scores will be taken from there.}
 
 \item{...}{Additional arguments passed to \code{henna::densityPlot}.}
 }

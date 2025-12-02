@@ -4,7 +4,14 @@
 \alias{runGSAMethods}
 \title{Run gene set analysis methods}
 \usage{
-runGSAMethods(scObj, labelCol, geneSets, gsaMethods, infix = NULL)
+runGSAMethods(
+  scObj,
+  labelCol,
+  geneSets,
+  gsaMethods,
+  infix = NULL,
+  outputFun = silently_run
+)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
@@ -18,6 +25,9 @@ runGSAMethods(scObj, labelCol, geneSets, gsaMethods, infix = NULL)
 \item{infix}{Infix to add between method name and gene set name in
 single-cell expression object. The string consisting of the method name and
 the infix is separated by the gene set name with a '_' character.}
+
+\item{outputFun}{Choose between silently_run (suppress all warnings and
+messages) or identity (do not suppress them). Default is silently_run.}
 }
 \value{
 A \code{Seurat} or \code{SingleCellExpression} object

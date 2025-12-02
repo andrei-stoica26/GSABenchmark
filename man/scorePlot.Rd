@@ -11,6 +11,7 @@ scorePlot(
   title = NULL,
   xLab = "Score",
   yLab = "Method",
+  palette = "Plasma",
   legendLab = "Gene set",
   pointSize = 1.5
 )
@@ -23,6 +24,8 @@ scorePlot(
 \item{xLab}{x axis label.}
 
 \item{yLab}{y axis label.}
+
+\item{palette}{Color palette.}
 
 \item{legendLab}{Legend label.}
 

@@ -14,7 +14,7 @@ plots will have no titles.}
 
 \item{lastPlotLegendLab}{The legend label of the last plot.}
 
-\item{...}{Additional arguments passed to \code{plotFun}.}
+\item{...}{Additional arguments passed to \code{scorePlot}.}
 }
 \value{
 A list of ggplot objects.

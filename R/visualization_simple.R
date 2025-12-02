@@ -16,6 +16,7 @@ NULL
 #' @param title Plot title.
 #' @param xLab x axis label.
 #' @param yLab y axis label.
+#' @param palette Color palette.
 #' @param legendLab Legend label.
 #' @param pointSize Point size.
 #'
@@ -32,12 +33,13 @@ scorePlot <- function(scoreDF,
                       title = NULL,
                       xLab = 'Score',
                       yLab = 'Method',
+                      palette = 'Plasma',
                       legendLab = 'Gene set',
                       pointSize = 1.5){
     scoreDF <- scoreDF[order(scoreDF$avg), ]
     longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF),
                                                 drop=FALSE]))
-    pal <- rainbow(length(colnames(scoreDF)))
+    pal <- hcl.colors(length(colnames(scoreDF)), palette)
     p <- ggplot(data=longDF) +
         geom_point(mapping=aes(x=.data[['value']],
                                y=.data[['Var1']],

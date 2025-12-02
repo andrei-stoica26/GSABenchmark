@@ -8,6 +8,7 @@ plotList(
   args,
   calcFun,
   plotFun,
+  unlistPlotArgs = FALSE,
   titlePrefix = NULL,
   titleInfixes = NULL,
   titleSuffix = NULL,
@@ -21,6 +22,9 @@ plotList(
 plotted}
 
 \item{plotFun}{The function used for plotting.}
+
+\item{unlistPlotArgs}{Whether the additional arguments passed to
+\code{plotFun} have to be unlisted (that is, they are provided as a list).}
 
 \item{titlePrefix}{Prefix used to create a title with \code{subplotTitle}.
 Ignored if \code{titleSuffix} is \code{NULL}.}
