@@ -122,13 +122,13 @@ The `supportedMethods` function lists all the methods currently available in
 supportedMethods()
 ```
 
-For the purposes of this tutorial, we will select four of these methods:
+For the purposes of this tutorial, we will select three of these methods:
 
 ```{r}
-gsaMethods <- c('CSOA', 'PLAGE', 'VAM', 'Zscore')
+gsaMethods <- c('CSOA', 'PLAGE', 'Zscore')
 ```
 
-We now run the four methods for each gene set:
+We now run the three methods for each gene set:
 
 ```{r}
 scObj <- runGSAMethods(scObj, 'label', geneSets, gsaMethods)
@@ -146,8 +146,8 @@ smr <- runBenchmark(scObj, 'label', geneSets, gsaMethods, runEFBenchmark=FALSE)
 
 **Note**: This tutorial illustrates using `GSABenchmark` with 
 Bioconductor's native `SingleCellExperiment` class. However, `GSABenchmark` 
-is also fully compatible with `Seurat`: `runGSAMethods`, `runBenchmark`, 
-`runMethodShuffle` and `runBenchmarkShuffle` can all take a Seurat object as
+is also fully compatible with `Seurat`, as `runGSAMethods`, `runBenchmark`, 
+`runMethodShuffle` and `runBenchmarkShuffle` can all take a `Seurat` object as
 their first argument.
 
 # Exploring the results
