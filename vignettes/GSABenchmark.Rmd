@@ -261,7 +261,7 @@ determines the number of replicates.
 
 ```{r}
 scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA',
-                              loss=1/3,
+                              loss=c(1/3, 2/3),
                               noise=0.5,
                               seeds=c(20, 30))
 
@@ -271,7 +271,8 @@ Subsequently, the same benchmark as before can be run with
 `runBenchmarkShuffle`, a thin wrapper around `runBenchmark`:
 
 ```{r}
-smr <- runBenchmarkShuffle(scObj, 'label', geneSets, 'CSOA')
+smr <- runBenchmarkShuffle(scObj, 'label', geneSets, 'CSOA',
+                           runEFBenchmark=FALSE)
 ```
 
 The output of `runBenchmarkShuffle` can be used to create the same types of 
