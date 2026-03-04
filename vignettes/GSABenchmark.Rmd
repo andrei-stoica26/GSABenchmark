@@ -2,7 +2,7 @@
 title: "Introduction to GSABenchmark"
 author: "Andrei-Florian Stoica"
 package: GSABenchmark
-date: March 3, 2025
+date: March 4, 2025
 output: BiocStyle::html_document
 vignette: >
     %\VignetteIndexEntry{GSABenchmark}
@@ -76,7 +76,7 @@ First, we will take a look at the cell types found in this dataset:
 table(colData(scObj)$label)
 ```
 
-We will create gene sets for two cell types found in the data, using
+We will create gene sets for a cell type found in the data, using
 cell type markers from [PanglaoDB](https://www.panglaodb.se/markers.html):
 
 ```{r}
@@ -89,20 +89,8 @@ alphaMarkers <- c('GCG', 'TTR', 'PCSK2', 'FXYD5', 'LDB2', 'MAFB',
                   'PCSK1', 'PRRG2', 'IRX2', 'ALDH1A1','PEMT', 'SMIM24',
                   'F10', 'SCGN', 'SLC30A8')
 
-betaMarkers <- c('INS', 'IAPP', 'GJD2', 'PDX1', 'SLC2A2', 'NPY', 'MAFA', 
-                 'PFKFB2','HOPX', 'PAX6', 'MAFB', 'CASR', 'EDARADD', 
-                 'SCGB2A1', 'TGFBR3','ADCYAP1', 'SH3GL2', 'NEUROD1','ISL1', 
-                 'RGS16', 'SMAD9', 'SIX3','BMP5', 'PIR', 'STXBP5', 'DLK1', 
-                 'MEG3', 'GCGR', 'LMX1A', 'JPH3','CD40', 'HAMP','EZH1', 
-                 'NTRK1','FXYD2', 'RIMS1', 'EFNA5', 'NPTX2','PAX4', 'PCSK2', 
-                 'G6PC2', 'SLC30A8', 'PCSK1', 'SCGN', 'IGF2','SYT13', 'FFAR2', 
-                 'SIX2')
 
-
-geneSets <- setNames(list(alphaMarkers, 
-                          betaMarkers),
-                     c('alpha', 
-                       'beta'))
+geneSets <- setNames(list(alphaMarkers), 'alpha')
 ```
 
 **Note**: The gene set names cannot contain spaces or underscores, and must all
@@ -186,25 +174,9 @@ plots[[3]]
 ```
 
 The output of `runBenchmark` can also be used to create other plots. 
-The `geneSetRankPlots` function creates plots ranking the gene set analysis 
-methods for each gene set. We display one of these plots:
 
-```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
-plots <- geneSetRankPlots(smr)
-plots[[1]]
-```
-
-The `metricRankPlots` function creates plots ranking the gene set analysis 
-methods for each benchmark metric. Below, we display one of these plots:
-
-```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
-plots <- metricRankPlots(smr)
-plots[[5]]
-```
-
-We can also visualize the aggregate ranks of the methods using the 
-`aggregateRankPlot` function, which also displays the average rank obtained by
-each method:
+We will visualize the aggregate ranks of the methods using the 
+`aggregateRankPlot` function:
 
 ```{r, out.height='80%', out.width='80%', fig.height=5, fig.width=5}
 aggregateRankPlot(smr)

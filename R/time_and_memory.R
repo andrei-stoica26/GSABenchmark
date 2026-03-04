@@ -7,10 +7,7 @@
 #'
 #' @return A numeric value representing elapsed time.
 #'
-#' @examples
-#' timeExpr(sum(2, 3, 4))
-#'
-#' @export
+#' @keywords internal
 #'
 timeExpr <- function(expr, verbose=FALSE){
     elapsedTime <- as.numeric(system.time(expr)[3])
@@ -30,10 +27,7 @@ timeExpr <- function(expr, verbose=FALSE){
 #' @return A numeric vector containing the elapsed time, the memory usage and
 #' the peak memory usage.
 #'
-#' @examples
-#' timeMemoryExpr(sum(2, 3, 4))
-#'
-#' @export
+#' @noRd
 #'
 timeMemoryExpr <- function(expr, verbose=FALSE){
     startMem <- gc(verbose=FALSE, reset=TRUE)

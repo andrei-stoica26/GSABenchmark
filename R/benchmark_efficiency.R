@@ -18,7 +18,8 @@ NULL
 #' scObj <- qs2::qs_read(scoPath)
 #' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
 #' geneSets <- qs2::qs_read(gsPath)
-#' ef <- efficiencyBenchmark(scObj, 'label', geneSets, c('CSOA', 'Zscore'))
+#' ef <- efficiencyBenchmark(scObj, 'label', geneSets[1], 'CSOA',
+#' verbose=FALSE)
 #'
 #' @export
 #'
@@ -74,11 +75,7 @@ efficiencyBenchmark <- function(scObj,
 #'
 #' @return A data frame.
 #'
-#' @examples
-#' v <- c(2, 3, 4, 19, 15, 25, 32, 8)
-#' res <- tabulateVector(v, paste0('r', seq(4)), paste0('c', seq(2)))
-#'
-#' @export
+#' @noRd
 #'
 tabulateVector <- function(v,
                            rowNames,

@@ -41,6 +41,7 @@ scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
 scObj <- qs2::qs_read(scoPath)
 gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
 geneSets <- qs2::qs_read(gsPath)
-ef <- efficiencyBenchmark(scObj, 'label', geneSets, c('CSOA', 'Zscore'))
+ef <- efficiencyBenchmark(scObj, 'label', geneSets[1], 'CSOA',
+verbose=FALSE)
 
 }

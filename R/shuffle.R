@@ -136,14 +136,7 @@ runBenchmarkShuffle <- function(scObj,
 #'
 #' @return Genes vector after changes.
 #'
-#' @examples
-#' scePath <- system.file('extdata', 'sceObj.qs2', package='hammers')
-#' sceObj <- qs2::qs_read(scePath)
-#' genes <- c('Gene_0226', 'Gene_0210', 'Gene_0280', 'Gene_0202',
-#' 'Gene_0313', 'Gene_0101', 'Gene_0195')
-#' shuffleGenes(sceObj, genes, 0.3, 0.9)
-#'
-#' @export
+#' @noRd
 #'
 shuffleGenes <- function(scObj, genes, lossFrac, noiseFrac,
                          geneCountThresh = 10, seed = 1,

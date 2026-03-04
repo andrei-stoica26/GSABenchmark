@@ -33,12 +33,7 @@ messageMethod <- function(funStr, group, messageFun = message)
 #'
 #' @return Alignment score.
 #'
-#' @examples
-#' v <- c(2, 3, 6, 7, 8, 4, 12, 9, 10)
-#' w <- c(3, 4, 5, 6, 2, 7, 8, 13, 3)
-#' alignmentScore(v, w)
-#'
-#' @export
+#' @keywords internal
 #'
 alignmentScore <- function(v, w){
     if (length(v) != length(w))
@@ -55,12 +50,7 @@ alignmentScore <- function(v, w){
 #'
 #' @return Rank alignment score.
 #'
-#' @examples
-#' v <- c(2, 3, 6, 7, 8, 4, 12, 9, 10)
-#' w <- c(3, 4, 5, 6, 2, 7, 8, 13, 3)
-#' rankAlignmentScore(v, w)
-#'
-#' @export
+#' @noRd
 #'
 rankAlignmentScore <- function(v, w){
     if (length(v) != length(w))
@@ -191,18 +181,7 @@ removeSVCols <- function(df){
 #'
 #' @return A named character vector.
 #'
-#' @examples
-#' df <- data.frame(v = c(1, 2, 4, 5, 6),
-#' w = c(2, 3, 1, 5, 8),
-#' x = c(2, 8, 7, 1, 1),
-#' y = c(2, 3, 2, 2, 4),
-#' z = c(1, 9, 9, 7, 6))
-#' distMat <- as.matrix(stats::dist(df))
-#' rownames(distMat) <- c('v', 'w', 'x', 'y', 'z')
-#' colnames(distMat) <- c('v', 'w', 'x', 'y', 'z')
-#' nearestNeighbors(distMat)
-#'
-#' @export
+#' @noRd
 #'
 nearestNeighbors <- function(distMat)
     return(apply(distMat, 1, function(x) {
@@ -221,10 +200,8 @@ nearestNeighbors <- function(distMat)
 #' @param maxDist Maximum distance.
 #'
 #' @return A number between 0 and 1.
-#' @examples
-#' proximity(2, 3, 6)
 #'
-#' @export
+#' @noRd
 #'
 proximity <- function(x, y, maxDist)
     return(1 - euclidean(x, y) / maxDist)
@@ -241,10 +218,7 @@ proximity <- function(x, y, maxDist)
 #' @return A numeric values representing the cosine similarity of the two
 #' vectors.
 #'
-#' @examples
-#' numCosine(c(2, 3, 6), c(4, 3, 2))
-#'
-#' @export
+#' @noRd
 #'
 numCosine <- function(x, y = NULL)
     return(drop(cosine(x, y)))

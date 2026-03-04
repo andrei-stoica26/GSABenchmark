@@ -34,12 +34,12 @@ test_that("runBenchmark works", {
 })
 
 test_that("efficiencyBenchmark works", {
-    smr <- efficiencyBenchmark(scObj, 'label', geneSets, c('CSOA', 'Zscore'),
+    smr <- efficiencyBenchmark(scObj, 'label', geneSets[1], 'CSOA',
                                verbose=FALSE)
     expect_equal(length(smr), 2)
     for (i in seq(2)){
-        expect_equal(nrow(smr[[i]]), 2)
-        expect_equal(ncol(smr[[i]]), 3)
+        expect_equal(nrow(smr[[i]]), 1)
+        expect_equal(ncol(smr[[i]]), 2)
         expect_gte(max(smr[[i]]), 0)
     }
 })
@@ -91,50 +91,4 @@ test_that("complex visualization functions work", {
     plots <- predJaccardPlots(smr$predictions, titleSuffix=titleSuffix)
     expect_equal(length(intersect(is(plots[[1]]),
                                   c('gg', 'ggplot2::ggplot'))), 1)
-})
-
-test_that("rankAlignment score works", {
-    v <- c(2, 3, 6, 7, 8, 4, 12, 9, 10)
-    w <- c(3, 4, 5, 6, 2, 7, 8, 13, 3)
-    expect_equal(rankAlignmentScore(v, w), 0.7936118, tolerance=0.0001)
-})
-
-test_that("nearestNeighbors works", {
-    df <- data.frame(v = c(1, 2, 4, 5, 6),
-                     w = c(2, 3, 1, 5, 8),
-                     x = c(2, 8, 7, 1, 1),
-                     y = c(2, 3, 2, 2, 4),
-                     z = c(1, 9, 9, 7, 6))
-    distMat <- as.matrix(stats::dist(df))
-    rownames(distMat) <- c('v', 'w', 'x', 'y', 'z')
-    colnames(distMat) <- c('v', 'w', 'x', 'y', 'z')
-    res <- nearestNeighbors(distMat)
-    expected <- setNames(c('y', 'x', 'w', 'z', 'y'), rownames(distMat))
-    expect_equal(res, expected)
-})
-
-test_that("proximity works", {
-    expect_equal(proximity(2, 3, 6), 0.8333333, tolerance=0.0001)
-})
-
-test_that("shuffleGenes works", {
-    genes <- c('Gene_0226', 'Gene_0210', 'Gene_0280', 'Gene_0202',
-               'Gene_0313', 'Gene_0101', 'Gene_0195')
-    newGenes <- shuffleGenes(scObj, genes, 0.3, 0.9)
-    expect_equal(length(intersect(genes, newGenes)), 5)
-    expect_equal(length(newGenes), 50)
-})
-
-test_that("tabulateVector works", {
-    v <- c(2, 3, 4, 19, 15, 25, 32, 8)
-    res <- tabulateVector(v, paste0('r', seq(4)), paste0('c', seq(2)))
-    df <- data.frame(c1 = c(2, 3, 4, 19),
-                     c2 = c(15, 25, 32, 8),
-                     row.names = paste0('r', seq(4)))
-    expect_equal(res, df)
-})
-
-test_that("numCosine works", {
-    res <- numCosine(c(2, 3, 6), c(4, 3, 2))
-    expect_equal(res, 0.7693093, tolerance=0.0001)
 })

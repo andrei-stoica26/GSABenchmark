@@ -17,7 +17,4 @@ A numeric value representing elapsed time.
 \description{
 This function computes the time required to evaluate an expression.
 }
-\examples{
-timeExpr(sum(2, 3, 4))
-
-}
+\keyword{internal}

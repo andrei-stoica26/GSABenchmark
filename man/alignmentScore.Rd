@@ -18,9 +18,4 @@ Alignment score.
 This function calculates the alignment between two numeric vectors of the
 same lenght.
 }
-\examples{
-v <- c(2, 3, 6, 7, 8, 4, 12, 9, 10)
-w <- c(3, 4, 5, 6, 2, 7, 8, 13, 3)
-alignmentScore(v, w)
-
-}
+\keyword{internal}
