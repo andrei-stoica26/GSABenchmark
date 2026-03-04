@@ -18,14 +18,19 @@ NULL
 #'
 #' @keywords internal
 #'
-runGSVAMethod <- function(scObj, geneSets, method, invert = FALSE,
-                          filter = FALSE, ...){
+runGSVAMethod <- function(scObj,
+                          geneSets,
+                          method,
+                          slot = 'data',
+                          invert = FALSE,
+                          filter = FALSE,
+                          ...){
     allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
     if(filter)
-        mat <- scExpMat(scObj, 'data', allGenes) else
-            mat <- scExpMat(scObj, 'data')
+        mat <- scExpMat(scObj, slot, allGenes) else
+            mat <- scExpMat(scObj, slot)
 
     gsvaPar <- do.call(paste0(tolower(method), 'Param'),
                        list(mat, geneSets, ...))
@@ -50,16 +55,16 @@ runGSVAMethod <- function(scObj, geneSets, method, invert = FALSE,
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runGSVA(scObj, geneSets)
 #'
 #' @export
 #'
-runGSVA <- function(scObj, geneSets, ...)
-    return(runGSVAMethod(scObj, geneSets, 'GSVA', ...))
+runGSVA <- function(scObj, geneSets, slot = 'data', ...)
+    return(runGSVAMethod(scObj, geneSets, 'GSVA', slot, ...))
 
 #' Run PLAGE
 #'
@@ -72,16 +77,16 @@ runGSVA <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runPLAGE(scObj, geneSets)
 #'
 #' @export
 #'
-runPLAGE <- function(scObj, geneSets, ...)
-    return(runGSVAMethod(scObj, geneSets, 'PLAGE', TRUE, TRUE, ...))
+runPLAGE <- function(scObj, geneSets, slot = 'data', ...)
+    return(runGSVAMethod(scObj, geneSets, 'PLAGE', slot, TRUE, TRUE, ...))
 
 #' Run Zscore
 #'
@@ -94,13 +99,13 @@ runPLAGE <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runZscore(scObj, geneSets)
 #'
 #' @export
 #'
-runZscore <- function(scObj, geneSets, ...)
-    return(runGSVAMethod(scObj, geneSets, 'Zscore', FALSE, TRUE, ...))
+runZscore <- function(scObj, geneSets, slot = 'data', ...)
+    return(runGSVAMethod(scObj, geneSets, 'Zscore', slot, FALSE, TRUE, ...))

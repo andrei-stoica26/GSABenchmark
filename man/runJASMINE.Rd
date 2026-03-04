@@ -4,12 +4,19 @@
 \alias{runJASMINE}
 \title{Run JASMINE}
 \usage{
-runJASMINE(scObj, geneSets, method = c("oddsratio", "likelihood"))
+runJASMINE(
+  scObj,
+  geneSets,
+  slot = "data",
+  method = c("oddsratio", "likelihood")
+)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{geneSets}{A named list of gene sets.}
+
+\item{slot}{Gene expression slot.}
 
 \item{method}{One of 'oddsratio' and 'likelihood'.}
 }
@@ -26,10 +33,10 @@ The method's paper can be found at
 \code{https://doi.org/10.7554/eLife.71994}.
 }
 \examples{
-scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-scObj <- qs::qread(scoPath)
-gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-geneSets <- qs::qread(gsPath)
+scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+scObj <- qs2::qs_read(scoPath)
+gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+geneSets <- qs2::qs_read(gsPath)
 scObj <- runJASMINE(scObj, geneSets)
 
 }

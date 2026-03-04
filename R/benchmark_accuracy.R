@@ -85,14 +85,12 @@ globalBenchmark <- function(scObj,
 #' @keywords internal
 #'
 boundaryMCCBenchmark <- function(boundaryBenchmarkLL){
-    mccValues <- c()
     geneSetNames <- names(boundaryBenchmarkLL)
     gsaMethods <- names(boundaryBenchmarkLL[[1]])
-    for (setName in geneSetNames)
-        mccValues <- c(mccValues, vapply(boundaryBenchmarkLL[[setName]],
-                                         computeMCC, numeric(1)))
-    mccValues <- data.frame(matrix(mccValues, length(gsaMethods),
-                                 length(geneSetNames)))
+    mccValues <- as.data.frame(
+        do.call(cbind, lapply(geneSetNames, function(setName)
+            vapply(boundaryBenchmarkLL[[setName]],computeMCC, numeric(1)))))
+    rownames(mccValues) <- gsaMethods
     colnames(mccValues) <- geneSetNames
     mccValues <- addMethodInfo(mccValues, gsaMethods)
     return(mccValues)

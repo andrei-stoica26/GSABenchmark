@@ -24,8 +24,8 @@ This function plots a list of summary data frames with methods as rows,
 gene sets and the average of scores across all gene sets as columns.
 }
 \examples{
-sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-smr <- qs::qread(sPath)
+sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+smr <- qs2::qs_read(sPath)
 plots <- benchmarkPlots(smr[[1]])
 
 }

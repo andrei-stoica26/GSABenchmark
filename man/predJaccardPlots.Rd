@@ -34,8 +34,8 @@ A named list of ggplot objects.
 This function creates Jaccard tile plots for method binary predictions.
 }
 \examples{
-sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-smr <- qs::qread(sPath)
+sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+smr <- qs2::qs_read(sPath)
 plots <- predJaccardPlots(smr$predictions)
 
 }

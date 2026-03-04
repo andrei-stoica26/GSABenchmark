@@ -12,6 +12,7 @@ runMethodShuffle(
   loss = c(0, 0.2),
   noise = c(0, 0.2),
   doGrid = TRUE,
+  averageReplicates = TRUE,
   seeds = c(1, 2, 3),
   outputFun = identity
 )
@@ -31,6 +32,11 @@ runMethodShuffle(
 
 \item{doGrid}{Whether to run the methods for each loss-noise combination.}
 
+\item{averageReplicates}{Whether to average replicates. If \code{TRUE},
+a single set of scores will be returned for each loss-noise combination
+for which the method is run. If \code{FALSE}, distinct sets of scores will
+be returned for each replicate.}
+
 \item{seeds}{A numeric vector of random seeds passed
 to \code{hammers::shuffleGenes}. Its length determines the number of
 replicates.}
@@ -46,10 +52,10 @@ with the results of the runs stored as metadata columns.
 This function runs a gene set analysis method on shuffled gene sets.
 }
 \examples{
-scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-scObj <- qs::qread(scoPath)
-gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-geneSets <- qs::qread(gsPath)
+scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+scObj <- qs2::qs_read(scoPath)
+gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+geneSets <- qs2::qs_read(gsPath)
 scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA', 0.2, 0.2)
 
 }

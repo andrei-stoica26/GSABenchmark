@@ -8,7 +8,7 @@ methods.
 
 To install GSABenchmark, run the following R code:
 
-```
+```r
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
     
@@ -81,6 +81,6 @@ be recognized by GSABenchmark:
 the `gsaMethods` argument, the method needs to be referred to as `CustomMethod` 
 (no `run`).
 
-GSABenchmark min-max-normalizes the per-cell gene set analysis scores of all 
-supported methods, returning scores between 0 and 1. It is recommended that 
-user-defined methods return scores in the same range.
+**Note**: GSABenchmark min-max-normalizes the per-cell gene set analysis scores 
+of all supported methods, returning scores between 0 and 1. User-defined 
+methods must return scores in the same range.

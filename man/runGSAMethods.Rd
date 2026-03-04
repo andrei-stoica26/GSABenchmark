@@ -37,10 +37,10 @@ with the results of the runs stored as metadata columns.
 This function runs the gene set analysis methods.
 }
 \examples{
-scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-scObj <- qs::qread(scoPath)
-gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-geneSets <- qs::qread(gsPath)
+scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+scObj <- qs2::qs_read(scoPath)
+gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+geneSets <- qs2::qs_read(gsPath)
 scObj <- runGSAMethods(scObj, 'label', geneSets, c('CSOA', 'Zscore'))
 
 }

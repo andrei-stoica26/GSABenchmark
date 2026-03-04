@@ -1,3 +1,5 @@
+#' @importFrom abdiv euclidean
+#' @importFrom lsa cosine
 #' @importFrom methods is
 #' @importFrom stats cmdscale cor dist rnorm setNames
 #'
@@ -180,3 +182,71 @@ removeSVCols <- function(df){
     df <- df[, hasDistinctValues]
     return(df)
 }
+
+#' Get nearest neighbors from distance matrix
+#'
+#' This function gets the nearest neighbors from a distance matrix.
+#'
+#' @param distMat A distance matrix.
+#'
+#' @return A named character vector.
+#'
+#' @examples
+#' df <- data.frame(v = c(1, 2, 4, 5, 6),
+#' w = c(2, 3, 1, 5, 8),
+#' x = c(2, 8, 7, 1, 1),
+#' y = c(2, 3, 2, 2, 4),
+#' z = c(1, 9, 9, 7, 6))
+#' distMat <- as.matrix(stats::dist(df))
+#' rownames(distMat) <- c('v', 'w', 'x', 'y', 'z')
+#' colnames(distMat) <- c('v', 'w', 'x', 'y', 'z')
+#' nearestNeighbors(distMat)
+#'
+#' @export
+#'
+nearestNeighbors <- function(distMat)
+    return(apply(distMat, 1, function(x) {
+        names(x) <- colnames(distMat)
+        x <- x[x > 0]
+        return(names(x)[which.min(x)])
+    }))
+
+#' Compute proximity between two vectors based on Euclidean distance
+#'
+#' This functions computes proximity between two vectors based on Euclidean
+#' distance and an input maximum distance.
+#'
+#' @param x A numeric vector.
+#' @param y A numeric vector.
+#' @param maxDist Maximum distance.
+#'
+#' @return A number between 0 and 1.
+#' @examples
+#' proximity(2, 3, 6)
+#'
+#' @export
+#'
+proximity <- function(x, y, maxDist)
+    return(1 - euclidean(x, y) / maxDist)
+
+#' Calculate the cosine similarity of two vectors
+#'
+#' This function calculates the cosine similarity of two vectors.
+#'
+#' @param x A numeric vector or matrix.
+#' @param y A numeric vector of the same dimension as \code{x} if the latter
+#' is a vector. If \code{NULL}, the similarity matrix between all column
+#' vectors of \code{x} will be computed.
+#'
+#' @return A numeric values representing the cosine similarity of the two
+#' vectors.
+#'
+#' @examples
+#' numCosine(c(2, 3, 6), c(4, 3, 2))
+#'
+#' @export
+#'
+numCosine <- function(x, y = NULL)
+    return(drop(cosine(x, y)))
+
+

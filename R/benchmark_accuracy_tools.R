@@ -1,5 +1,6 @@
-#' @importFrom hammers centerOfMass checkGenes computeSilhouette metadataDF metadataNames nearestNeighbors normalizeSilhouette numCosine proximity safeMinmax scCol scPCAMat scExpMat shuffleGenes tabulateVector timeMemoryExpr
-#' @importFrom plyr count
+#' @importFrom hammers centerOfMass checkGenes computeSilhouette normalizeSilhouette safeMessage safeMinmax
+#' @importFrom dplyr count
+#' @importFrom scLang metadataDF metadataNames scCol scCol<- scExpMat scPCAMat
 #'
 NULL
 
@@ -41,7 +42,7 @@ extractCellScores <- function(scObj, labelCol, scoreCol, label){
 #' @noRd
 #'
 condenseRepeatedScores <- function(df){
-    denseDF <- plyr::count(df[, 2])
+    denseDF <- dplyr::count(df, df[, 2])
     denseDF$label <- vapply(denseDF[, 1], function(score)
         sum(df[, 1][which(df[, 2] == score)]), numeric(1))
     denseDF <- denseDF[, c(3, 1, 2)]

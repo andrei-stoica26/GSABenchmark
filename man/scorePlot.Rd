@@ -3,7 +3,7 @@
 \name{scorePlot}
 \alias{scorePlot}
 \title{Plot a data frame consisting of gene set analysis method scores
-This function plots data frame consisting of method scores with methods
+This function plots a data frame consisting of method scores with methods
 as rows, gene sets and the gene set average as columns.}
 \usage{
 scorePlot(
@@ -11,7 +11,8 @@ scorePlot(
   title = NULL,
   xLab = "Score",
   yLab = "Method",
-  palette = "Plasma",
+  isDecreasing = FALSE,
+  palette = "grDevices::Plasma",
   legendLab = "Gene set",
   pointSize = 1.5
 )
@@ -25,6 +26,11 @@ scorePlot(
 
 \item{yLab}{y axis label.}
 
+\item{isDecreasing}{Logical; whether the methods should be displayed on the
+plot in decreasing order of the obtained average scores. If \code{FALSE}
+(as default), the methods will be displayed in increasing order of the
+average scores.}
+
 \item{palette}{Color palette.}
 
 \item{legendLab}{Legend label.}
@@ -36,12 +42,12 @@ A ggplot object.
 }
 \description{
 Plot a data frame consisting of gene set analysis method scores
-This function plots data frame consisting of method scores with methods
+This function plots a data frame consisting of method scores with methods
 as rows, gene sets and the gene set average as columns.
 }
 \examples{
-sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-smr <- qs::qread(sPath)
+sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+smr <- qs2::qs_read(sPath)
 scorePlot(smr[[1]][[1]])
 
 }

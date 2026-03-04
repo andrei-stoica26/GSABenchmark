@@ -8,7 +8,6 @@ NULL
 #' This function is used to run \code{AddModuleScore}.
 #'
 #' @inheritParams runDecoupleRMethod
-#' @param slot Gene expression slot. Default is 'data'.
 #' @param pool The set from which features to be compared with signature genes
 #' are selected. Defaults to all features.
 #' @param nbin Number of bins of aggregate expression levels for pool features.
@@ -36,14 +35,13 @@ addModuleScoreHelper <- function(scObj,
     names(matCut) <- names(matAvg)
 
     scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
-        ctrlUse <- c()
-        for (gene in genes){
+        ctrlUse <- unlist(lapply(genes, function(gene){
             ctrlPop <- matCut[which(matCut == matCut[gene])]
             ctrlSample <- names(sample(ctrlPop,
                                        size=min(ctrl, length(ctrlPop)),
                                        replace=FALSE))
-            ctrlUse <- c(ctrlUse, ctrlSample)
-        }
+            return(ctrlSample)
+        }))
         ctrlUse <- unique(ctrlUse)
         featureScores <- Matrix::colMeans(mat[genes, , drop=FALSE])
         ctrlScores <- Matrix::colMeans(mat[ctrlUse, ])
@@ -69,10 +67,10 @@ addModuleScoreHelper <- function(scObj,
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runAddModuleScore(scObj, geneSets)
 #'
 #' @export
@@ -132,25 +130,25 @@ meanGeneRank <- function(cellVector, genes){
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runJASMINE(scObj, geneSets)
 #'
 #' @export
 #'
 runJASMINE <- function(scObj,
                        geneSets,
-
+                       slot = 'data',
                        method = c('oddsratio', 'likelihood')){
 
     allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
-    method <- match.arg(method, c('oddsratio', 'likelihood'))
+    method <- match.arg(method)
 
-    mat <- scExpMat(scObj, 'data')
+    mat <- scExpMat(scObj, slot)
     scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
         ranks <- apply(mat, 2, function(x) meanGeneRank(x, genes))
         ranks <- safeMinmax(ranks)
@@ -158,8 +156,8 @@ runJASMINE <- function(scObj,
         sigMat <- mat[genes,]
         complMat <- mat[setdiff(rownames(mat), genes), ]
 
-        sigGeneFreq <- apply(sigMat, 2, function(x) sum(x != 0))
-        complGeneFreq <- apply(complMat, 2, function(x) sum(x != 0))
+        sigGeneFreq <- colSums(sigMat != 0)
+        complGeneFreq <- colSums(complMat != 0)
 
         absentSigGeneFreq <- nrow(sigMat) - sigGeneFreq
         absentComplGeneFreq <- nrow(complMat) - complGeneFreq

@@ -1,7 +1,7 @@
 #' @importFrom ggplot2 aes cut_number element_text geom_point ggplot ggtitle labs scale_color_manual theme theme_minimal
 #' @importFrom ggrepel geom_text_repel
-#' @importFrom grDevices rainbow
 #' @importFrom henna classPlot correlationPlot densityPlot rankSummary rankPlot tilePlot
+#' @importFrom paletteer paletteer_c
 #' @importFrom reshape2 melt
 #' @importFrom rlang .data
 #'
@@ -9,13 +9,17 @@ NULL
 
 #' Plot a data frame consisting of gene set analysis method scores
 #
-#' This function plots data frame consisting of method scores with methods
+#' This function plots a data frame consisting of method scores with methods
 #' as rows, gene sets and the gene set average as columns.
 #'
 #' @param scoreDF A summary data frame.
 #' @param title Plot title.
 #' @param xLab x axis label.
 #' @param yLab y axis label.
+#' @param isDecreasing Logical; whether the methods should be displayed on the
+#' plot in decreasing order of the obtained average scores. If \code{FALSE}
+#' (as default), the methods will be displayed in increasing order of the
+#' average scores.
 #' @param palette Color palette.
 #' @param legendLab Legend label.
 #' @param pointSize Point size.
@@ -23,8 +27,8 @@ NULL
 #' @return A ggplot object.
 #'
 #' @examples
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' scorePlot(smr[[1]][[1]])
 #'
 #' @export
@@ -33,13 +37,15 @@ scorePlot <- function(scoreDF,
                       title = NULL,
                       xLab = 'Score',
                       yLab = 'Method',
-                      palette = 'Plasma',
+                      isDecreasing = FALSE,
+                      palette = 'grDevices::Plasma',
                       legendLab = 'Gene set',
                       pointSize = 1.5){
-    scoreDF <- scoreDF[order(scoreDF$avg), ]
+    scoreDF <- scoreDF[order(scoreDF$avg, decreasing=isDecreasing), ]
     longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF),
                                                 drop=FALSE]))
-    pal <- hcl.colors(length(colnames(scoreDF)), palette)
+    nColors <- length(colnames(scoreDF))
+    pal <- paletteer_c(palette, nColors)
     p <- ggplot(data=longDF) +
         geom_point(mapping=aes(x=.data[['value']],
                                y=.data[['Var1']],
@@ -65,8 +71,8 @@ scorePlot <- function(scoreDF,
 #' @return A ggplot object.
 #'
 #' @examples
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' timePlot(smr[[5]])
 #'
 #' @export
@@ -75,7 +81,7 @@ timePlot <- function(efBenchmark,
                      title = NULL,
                      xLab = 'Running time (s)',
                      ...)
-    return(scorePlot(efBenchmark$time, title, xLab, ...))
+    return(scorePlot(efBenchmark$time, title, xLab, isDecreasing=TRUE, ...))
 
 #' Plot a data frame consisting of gene set analysis method peak memory usage
 #
@@ -87,8 +93,8 @@ timePlot <- function(efBenchmark,
 #' @return A ggplot object.
 #'
 #' @examples
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' memoryPlot(smr[[5]])
 #'
 #' @export
@@ -97,7 +103,7 @@ memoryPlot <- function(efBenchmark,
                        title = NULL,
                        xLab = 'Peak memory usage (MiB)',
                        ...)
-    return(scorePlot(efBenchmark$space, title, xLab, ...))
+    return(scorePlot(efBenchmark$space, title, xLab, isDecreasing=TRUE, ...))
 
 #' Create an aggregate rank plot from a summary object
 #'
@@ -113,8 +119,8 @@ memoryPlot <- function(efBenchmark,
 #' @return A ggplot object.
 #'
 #' @examples
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' p <- aggregateRankPlot(smr)
 #'
 #' @export
@@ -148,8 +154,8 @@ aggregateRankPlot <- function(smr,
 #' @return A ggplot object.
 #'
 #' @examples
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' p <- ratioPlot(smr)
 #'
 #' @export

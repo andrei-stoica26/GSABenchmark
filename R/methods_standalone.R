@@ -16,18 +16,18 @@ NULL
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runPagoda2(scObj, geneSets)
 #'
 #' @export
 #'
-runPagoda2 <- function(scObj, geneSets, ...){
+runPagoda2 <- function(scObj, geneSets, slot = 'data', ...){
     allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
-    mat <- Matrix::t(scExpMat(scObj, 'data', densify=FALSE))
+    mat <- Matrix::t(scExpMat(scObj, slot, densify=FALSE))
 
     scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
         scores <- pagoda2::score.cells.puram(mat, genes, ...)
@@ -50,19 +50,19 @@ runPagoda2 <- function(scObj, geneSets, ...){
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runSingscore(scObj, geneSets)
 #'
 #' @export
 #'
-runSingscore <- function(scObj, geneSets, ...){
+runSingscore <- function(scObj, geneSets, slot = 'data', ...){
     allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
-    mat <- scExpMat(scObj, 'data')
+    mat <- scExpMat(scObj, slot)
     mat <- singscore::rankGenes(mat)
 
     scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
@@ -86,19 +86,19 @@ runSingscore <- function(scObj, geneSets, ...){
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runSiPSiC(scObj, geneSets)
 #'
 #' @export
 #'
-runSiPSiC <- function(scObj, geneSets, ...){
+runSiPSiC <- function(scObj, geneSets, slot = 'counts', ...){
     allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
-    mat <- scExpMat(scObj, 'counts', densify=FALSE)
+    mat <- scExpMat(scObj, slot, densify=FALSE)
 
     scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
         scores <- getPathwayScores(mat, genes, ...)[[2]]
@@ -121,19 +121,19 @@ runSiPSiC <- function(scObj, geneSets, ...){
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runVAM(scObj, geneSets)
 #'
 #' @export
 #'
-runVAM <- function(scObj, geneSets, ...){
+runVAM <- function(scObj, geneSets, slot = 'data', ...){
     allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
-    mat <- Matrix::t(scExpMat(scObj, 'data', allGenes))
+    mat <- Matrix::t(scExpMat(scObj, slot, allGenes))
     scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
         scores <- vam(mat[, genes], ...)$cdf.value
         return(scores)

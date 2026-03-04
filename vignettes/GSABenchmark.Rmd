@@ -1,8 +1,8 @@
 ---
-title: "GSABenchmark"
+title: "Introduction to GSABenchmark"
 author: "Andrei-Florian Stoica"
 package: GSABenchmark
-date: December 2, 2025
+date: March 3, 2025
 output: BiocStyle::html_document
 vignette: >
     %\VignetteIndexEntry{GSABenchmark}
@@ -62,7 +62,6 @@ scObj <- BaronPancreasData('human')
 GSABenchmark requires normalized and log-transformed data and PCA coordinates.
 We will use the functions `logNormCounts` from `scuttle` (loaded with `scater`)
 and runPCA from `scater` for these steps:
-
 
 ```{r}
 scObj <- logNormCounts(scObj)
@@ -134,7 +133,6 @@ We now run the four methods for each gene set:
 ```{r}
 scObj <- runGSAMethods(scObj, 'label', geneSets, gsaMethods)
 ```
-
 # Running the benchmark
 
 The benchmark is run in a single line of code. In this vignette, we will only 
@@ -263,8 +261,8 @@ determines the number of replicates.
 
 ```{r}
 scObj <- runMethodShuffle(scObj, 'label', geneSets, 'CSOA',
-                              loss=c(1/3, 2/3),
-                              noise=c(0.5),
+                              loss=1/3,
+                              noise=0.5,
                               seeds=c(20, 30))
 
 ```

@@ -19,7 +19,7 @@ runAddModuleScore(
 
 \item{geneSets}{A named list of gene sets.}
 
-\item{slot}{Gene expression slot. Default is 'data'.}
+\item{slot}{Gene expression slot.}
 
 \item{pool}{The set from which features to be compared with signature genes
 are selected. Defaults to all features.}
@@ -42,10 +42,10 @@ This function runs \code{AddModuleScore}.
 Reimplemented from \code{https://github.com/satijalab}.
 }
 \examples{
-scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-scObj <- qs::qread(scoPath)
-gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-geneSets <- qs::qread(gsPath)
+scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+scObj <- qs2::qs_read(scoPath)
+gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+geneSets <- qs2::qs_read(gsPath)
 scObj <- runAddModuleScore(scObj, geneSets)
 
 }

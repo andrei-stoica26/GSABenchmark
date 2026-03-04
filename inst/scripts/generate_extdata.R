@@ -1,9 +1,8 @@
 # A self-contained script to generate the data in extdata
 #
 createExtData <- function(){
-    if (requireNamespace(c('GSABenchmark', 'hammers', 'qs', 'scRNAseq',
-                           'scater', 'scuttle', 'Seurat'),
-                         quietly=TRUE)){
+    if (requireNamespace(c('GSABenchmark', 'hammers', 'qs2', 'scRNAseq',
+                           'scuttle', 'Seurat'))){
 
         scObj <- scRNAseq::BaronPancreasData('human')
         scObj <- scuttle::logNormCounts(scObj)
@@ -40,15 +39,17 @@ createExtData <- function(){
         ductalMarkers <- intersect(ductalMarkers, rownames(scObj))
         geneSets <- setNames(list(acinarMarkers, ductalMarkers),
                              c('acinar', 'ductal'))
-        qs::qsave(geneSets, 'inst/extdata/geneSets.qs')
+        qs2::qs_save(geneSets, 'inst/extdata/geneSets.qs2')
 
         gsaMethods <- GSABenchmark::supportedMethods()
         scObj <- GSABenchmark::runGSAMethods(scObj, 'label', geneSets,
                                              gsaMethods)
-        qs::qsave(scObj, 'inst/extdata/scObj.qs')
+        qs2::qs_save(scObj, 'inst/extdata/scObj.qs2')
 
         smr <- GSABenchmark::runBenchmark(scObj, 'label', geneSets,
                                           gsaMethods)
-        qs::qsave(smr, 'inst/extdata/smr.qs')
+        qs2::qs_save(smr, 'inst/extdata/smr.qs2')
     }
 }
+
+createExtData()

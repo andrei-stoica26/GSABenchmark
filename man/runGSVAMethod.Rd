@@ -4,7 +4,15 @@
 \alias{runGSVAMethod}
 \title{Run a gene set analysis method using \code{GSVA}}
 \usage{
-runGSVAMethod(scObj, geneSets, method, invert = FALSE, filter = FALSE, ...)
+runGSVAMethod(
+  scObj,
+  geneSets,
+  method,
+  slot = "data",
+  invert = FALSE,
+  filter = FALSE,
+  ...
+)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
@@ -12,6 +20,8 @@ runGSVAMethod(scObj, geneSets, method, invert = FALSE, filter = FALSE, ...)
 \item{geneSets}{A named list of gene sets.}
 
 \item{method}{Gene set analysis method.}
+
+\item{slot}{Gene expression slot.}
 
 \item{invert}{Whether to transform the scores from x to 1 - x.}
 

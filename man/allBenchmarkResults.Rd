@@ -66,13 +66,13 @@ straightforward choice, as it takes care of generating
 \code{normSilDF} and \code{dimMat}.
 }
 \examples{
-scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-scObj <- qs::qread(scoPath)
-gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-geneSets <- qs::qread(gsPath)
+scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+scObj <- qs2::qs_read(scoPath)
+gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+geneSets <- qs2::qs_read(gsPath)
 scObj <- hammers::computeSilhouette(scObj, 'label')
 normSilDF <- hammers::normalizeSilhouette(scObj, 'label')
-dimMat <- hammers::scPCAMat(scObj)
+dimMat <- scLang::scPCAMat(scObj)
 maxDist <- max(dist(dimMat))
 smr <- allBenchmarkResults(scObj, 'label', geneSets, c('CSOA', 'Zscore'),
 TRUE, normSilDF, dimMat, maxDist, runEFBenchmark=FALSE)

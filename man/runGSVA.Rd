@@ -4,12 +4,14 @@
 \alias{runGSVA}
 \title{Run GSVA}
 \usage{
-runGSVA(scObj, geneSets, ...)
+runGSVA(scObj, geneSets, slot = "data", ...)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{geneSets}{A named list of gene sets.}
+
+\item{slot}{Gene expression slot.}
 
 \item{...}{Additional parameters passed to \code{runGSVAMethod}.}
 }
@@ -21,10 +23,10 @@ column.
 This function runs \code{GSVA} using \code{GSVA}.
 }
 \examples{
-scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-scObj <- qs::qread(scoPath)
-gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-geneSets <- qs::qread(gsPath)
+scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+scObj <- qs2::qs_read(scoPath)
+gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+geneSets <- qs2::qs_read(gsPath)
 scObj <- runGSVA(scObj, geneSets)
 
 }

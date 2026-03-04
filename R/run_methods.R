@@ -20,29 +20,33 @@ NULL
 #' with the results of the runs stored as metadata columns.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runGSAMethods(scObj, 'label', geneSets, c('CSOA', 'Zscore'))
 #'
 #' @export
 #'
-runGSAMethods <- function(scObj, labelCol, geneSets, gsaMethods, infix = NULL,
+runGSAMethods <- function(scObj,
+                          labelCol,
+                          geneSets,
+                          gsaMethods,
+                          infix = NULL,
                           outputFun = silently_run){
     geneSetNames <- names(geneSets)
     checkSetNames(scObj, labelCol, geneSetNames)
+    slots <- expSlots(scObj)
     for (method in gsaMethods){
         message('Running ', method, '...')
         fun <- eval(as.name(paste0('run', method)))
         names(geneSets) <- paste0(method, infix, '_', geneSetNames)
-        scObj <- outputFun(fun(scObj, geneSets))
+        if (method == 'CSOA')
+            scObj <- outputFun(fun(scObj, geneSets)) else
+                scObj <- outputFun(fun(scObj, geneSets, slots[method]))
     }
     return(scObj)
 }
-
-v <- setNames(c(sum, mean), c('a', 'b'))
-v[[2]](c(2, 3))
 
 #' Show supported methods
 #'
@@ -59,3 +63,23 @@ supportedMethods <- function()
     return(c('AddModuleScore', 'AUCell', 'CSOA', 'GSVA', 'JASMINE', 'MDT',
              'MLM', 'ORA', 'Pagoda2', 'PLAGE', 'Singscore', 'SiPSiC',
              'ssGSEA', 'UCell', 'UDT', 'VAM', 'Zscore'))
+
+#' Show the default slot for each supported method
+#'
+#' This function shows the default slot for each supported method.
+#'
+#' @inheritParams extractCellScores
+#'
+#' @return A named character vector with the default slot for each supported
+#' method.
+#'
+#' @noRd
+#'
+expSlots <- function(scObj){
+    slot <- 'data'
+    if(is(scObj, 'SingleCellExperiment'))
+        slot <- 'logcounts'
+    v <- setNames(c(rep(slot, 11), 'counts', rep(slot, 5)),
+                  supportedMethods())
+    return(v)
+}

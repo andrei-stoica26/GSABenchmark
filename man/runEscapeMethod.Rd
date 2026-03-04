@@ -4,7 +4,7 @@
 \alias{runEscapeMethod}
 \title{Run a gene set analysis method using escape}
 \usage{
-runEscapeMethod(scObj, geneSets, method, ...)
+runEscapeMethod(scObj, geneSets, method, slot = "data", ...)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
@@ -12,6 +12,8 @@ runEscapeMethod(scObj, geneSets, method, ...)
 \item{geneSets}{A named list of gene sets.}
 
 \item{method}{Gene set analysis method.}
+
+\item{slot}{Gene expression slot.}
 
 \item{...}{Additional arguments passed to gene set analysis method.}
 }

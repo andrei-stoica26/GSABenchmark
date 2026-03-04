@@ -32,18 +32,15 @@ accuracyBenchmarkMultiple <- function(scObj,
 
     if(checkLabels)
         checkSetNames(scObj, labelCol, geneSetNames)
-    res <- setNames(lapply(seq_along(geneSetNames), function(i) {
-        setName <- geneSetNames[i]
+    res <- setNames(lapply(geneSetNames, function(setName) {
         if (verbose)
-            message('Running benchmark on gene set: ',
-                    geneSetNames[i], '...')
-        setRes <- setNames(lapply(seq_along(gsaMethods), function(j){
-            method <- gsaMethods[j]
+            message('Running benchmark on gene set: ', setName, '...')
+        setRes <- setNames(lapply(gsaMethods, function(method){
             scoreCol <- paste0(method, '_', setName)
             df <- benchmarkFun(scObj,
                                labelCol,
                                scoreCol,
-                               geneSetNames[i],
+                               setName,
                                checkLabel=FALSE,
                                ...)
             return(df)

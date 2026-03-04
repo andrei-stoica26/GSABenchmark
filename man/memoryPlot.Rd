@@ -27,8 +27,8 @@ This function plots data frame consisting of method peak memory usages with
 methods as rows, gene sets and the gene set average as columns.
 }
 \examples{
-sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-smr <- qs::qread(sPath)
+sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+smr <- qs2::qs_read(sPath)
 memoryPlot(smr[[5]])
 
 }

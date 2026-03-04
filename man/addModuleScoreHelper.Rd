@@ -18,7 +18,7 @@ addModuleScoreHelper(
 
 \item{geneSets}{A named list of gene sets.}
 
-\item{slot}{Gene expression slot. Default is 'data'.}
+\item{slot}{Gene expression slot.}
 
 \item{pool}{The set from which features to be compared with signature genes
 are selected. Defaults to all features.}

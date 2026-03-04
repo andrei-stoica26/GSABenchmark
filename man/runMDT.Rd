@@ -4,12 +4,14 @@
 \alias{runMDT}
 \title{Run MDT using decoupleR}
 \usage{
-runMDT(scObj, geneSets, ...)
+runMDT(scObj, geneSets, slot = "data", ...)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{geneSets}{A named list of gene sets.}
+
+\item{slot}{Gene expression slot.}
 
 \item{...}{Additional parameters passed to \code{runDecoupleRMethod}.}
 }
@@ -22,10 +24,10 @@ This function runs \code{MDT} using \code{decoupleR}.
 }
 \examples{
 if (requireNamespace("ranger", quietly=TRUE)){
-    scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-    scObj <- qs::qread(scoPath)
-    gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-    geneSets <- qs::qread(gsPath)
+    scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+    scObj <- qs2::qs_read(scoPath)
+    gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+    geneSets <- qs2::qs_read(gsPath)
     scObj <- runMDT(scObj, geneSets)
 }
 

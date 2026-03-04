@@ -11,8 +11,8 @@
 #' @return A list of ggplot objects.
 #'
 #' @examples
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' plots <- benchmarkPlots(smr[[1]])
 #'
 #' @export
@@ -64,8 +64,8 @@ benchmarkPlots <- function(smr,
 #' @return A list of ggplot objects.
 #'
 #' @examples
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' plots <- allBenchmarkPlots(smr)
 #'
 #' @export
@@ -74,9 +74,11 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
     p1 <- benchmarkPlots(smr$boundary, titleSuffix, ...)
     p2 <- setNames(list(scorePlot(smr$MCC$boundary,
                                   paste0('MCC with boundary threshold - ',
-                                         titleSuffix), ...),
+                                         titleSuffix),
+                                  ...),
                         scorePlot(smr$MCC$direct,
-                                  paste0('Comprehensive MCC - ', titleSuffix),
+                                  paste0('Comprehensive MCC - ',
+                                         titleSuffix),
                                   ...)), names(smr$MCC))
     p3 <- benchmarkPlots(smr$global, titleSuffix, ...)
 
@@ -104,8 +106,8 @@ allBenchmarkPlots <- function(smr, titleSuffix = NULL, ...){
 #' @return A named list of ggplot objects.
 #'
 #' @examples
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' plots <- geneSetRankPlots(smr)
 #'
 #' @export
@@ -137,8 +139,8 @@ geneSetRankPlots <- function(smr,
 #' @return A named list of ggplot objects.
 #'
 #' @examples
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' plots <- metricRankPlots(smr)
 #'
 #' @export
@@ -175,10 +177,10 @@ metricRankPlots <- function(smr,
 #' @return A named list of ggplot objects.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' plots <- mdsPlots(scObj, smr)
 #'
 #' @export
@@ -209,10 +211,10 @@ mdsPlots <- function(scObj,
 #' @return A named list of ggplot objects.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' plots <- corrPlots(scObj, smr)
 #'
 #' @export
@@ -243,8 +245,8 @@ corrPlots <- function(scObj,
 #' @return A named list of ggplot objects.
 #'
 #' @examples
-#' sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-#' smr <- qs::qread(sPath)
+#' sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+#' smr <- qs2::qs_read(sPath)
 #' plots <- predJaccardPlots(smr$predictions)
 #'
 #' @export

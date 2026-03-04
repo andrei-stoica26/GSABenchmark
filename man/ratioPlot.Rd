@@ -37,8 +37,8 @@ A ggplot object.
 This function creates a ratio rank plot for the method results.
 }
 \examples{
-sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-smr <- qs::qread(sPath)
+sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+smr <- qs2::qs_read(sPath)
 p <- ratioPlot(smr)
 
 }

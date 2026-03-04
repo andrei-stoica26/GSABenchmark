@@ -4,12 +4,14 @@
 \alias{runUDT}
 \title{Run UDT using decoupleR}
 \usage{
-runUDT(scObj, geneSets, ...)
+runUDT(scObj, geneSets, slot = "data", ...)
 }
 \arguments{
 \item{scObj}{A \code{Seurat} or \code{SingleCellExperiment} object.}
 
 \item{geneSets}{A named list of gene sets.}
+
+\item{slot}{Gene expression slot.}
 
 \item{...}{Additional parameters passed to \code{runDecoupleRMethod}.}
 }
@@ -22,10 +24,10 @@ This function runs \code{UDT} using \code{decoupleR}.
 }
 \examples{
 if (requireNamespace("rpart", quietly=TRUE)){
-    scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-    scObj <- qs::qread(scoPath)
-    gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-    geneSets <- qs::qread(gsPath)
+    scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+    scObj <- qs2::qs_read(scoPath)
+    gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+    geneSets <- qs2::qs_read(gsPath)
     scObj <- runUDT(scObj, geneSets)
     }
 

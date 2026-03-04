@@ -22,8 +22,8 @@ A list of ggplot objects.
 This function plots the complete list of benchmark summaries.
 }
 \examples{
-sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-smr <- qs::qread(sPath)
+sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+smr <- qs2::qs_read(sPath)
 plots <- allBenchmarkPlots(smr)
 
 }

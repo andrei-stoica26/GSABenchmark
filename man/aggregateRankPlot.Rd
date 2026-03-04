@@ -36,8 +36,8 @@ A ggplot object.
 This function creates an aggregate rank plot from a summary object.
 }
 \examples{
-sPath <- system.file('extdata', 'smr.qs', package='GSABenchmark')
-smr <- qs::qread(sPath)
+sPath <- system.file('extdata', 'smr.qs2', package='GSABenchmark')
+smr <- qs2::qs_read(sPath)
 p <- aggregateRankPlot(smr)
 
 }

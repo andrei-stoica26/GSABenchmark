@@ -9,6 +9,7 @@ NULL
 #'
 #' @inheritParams runGSAMethods
 #' @param method Gene set analysis method.
+#' @param slot Gene expression slot.
 #' @param ... Additional arguments passed to gene set analysis method.
 #'
 #' @return A single-cell expression object with the results saved as a metadata
@@ -16,11 +17,15 @@ NULL
 #'
 #' @keywords internal
 #'
-runDecoupleRMethod <- function(scObj, geneSets, method, ...){
+runDecoupleRMethod <- function(scObj,
+                               geneSets,
+                               method,
+                               slot = 'data',
+                               ...){
     allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
-    mat <- scExpMat(scObj, 'data')
+    mat <- scExpMat(scObj, slot)
     scoreDF <- do.call(cbind, lapply(geneSets, function(genes){
         funStr <- paste0('run_', tolower(method))
         inputDF <- data.frame(source='geneSet',
@@ -47,17 +52,17 @@ runDecoupleRMethod <- function(scObj, geneSets, method, ...){
 #'
 #' @examples
 #' if (requireNamespace("ranger", quietly=TRUE)){
-#'     scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#'     scObj <- qs::qread(scoPath)
-#'     gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#'     geneSets <- qs::qread(gsPath)
+#'     scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#'     scObj <- qs2::qs_read(scoPath)
+#'     gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#'     geneSets <- qs2::qs_read(gsPath)
 #'     scObj <- runMDT(scObj, geneSets)
 #' }
 #'
 #' @export
 #'
-runMDT <- function(scObj, geneSets, ...)
-    return(runDecoupleRMethod(scObj, geneSets, 'MDT', ...))
+runMDT <- function(scObj, geneSets, slot = 'data', ...)
+    return(runDecoupleRMethod(scObj, geneSets, 'MDT', slot, ...))
 
 #' Run MLM using decoupleR
 #'
@@ -70,16 +75,16 @@ runMDT <- function(scObj, geneSets, ...)
 #' metadata column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runMLM(scObj, geneSets)
 #'
 #' @export
 #'
-runMLM <- function(scObj, geneSets, ...)
-    return(runDecoupleRMethod(scObj, geneSets, 'MLM', ...))
+runMLM <- function(scObj, geneSets, slot = 'data', ...)
+    return(runDecoupleRMethod(scObj, geneSets, 'MLM', slot, ...))
 
 #' Run ORA using decoupleR
 #'
@@ -91,16 +96,16 @@ runMLM <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runORA(scObj, geneSets)
 #'
 #' @export
 #'
-runORA <- function(scObj, geneSets, ...)
-    return(runDecoupleRMethod(scObj, geneSets, 'ORA', ...))
+runORA <- function(scObj, geneSets, slot = 'data', ...)
+    return(runDecoupleRMethod(scObj, geneSets, 'ORA', slot, ...))
 
 #' Run UDT using decoupleR
 #'
@@ -113,15 +118,15 @@ runORA <- function(scObj, geneSets, ...)
 #'
 #' @examples
 #' if (requireNamespace("rpart", quietly=TRUE)){
-#'     scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#'     scObj <- qs::qread(scoPath)
-#'     gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#'     geneSets <- qs::qread(gsPath)
+#'     scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#'     scObj <- qs2::qs_read(scoPath)
+#'     gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#'     geneSets <- qs2::qs_read(gsPath)
 #'     scObj <- runUDT(scObj, geneSets)
 #'     }
 #'
 #' @export
 #'
-runUDT <- function(scObj, geneSets, ...)
-    return(runDecoupleRMethod(scObj, geneSets, 'UDT', ...))
+runUDT <- function(scObj, geneSets, slot = 'data', ...)
+    return(runDecoupleRMethod(scObj, geneSets, 'UDT', slot, ...))
 

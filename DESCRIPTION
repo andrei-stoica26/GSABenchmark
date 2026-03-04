@@ -1,7 +1,7 @@
 Package: GSABenchmark
 Type: Package
 Title: Tools for benchmarking single-cell gene set analysis methods
-Version: 0.99.1
+Version: 0.99.2
 Authors@R: person('Andrei-Florian', 'Stoica', 
     email='andreistoica@foxmail.com',
     role=c('aut','cre'),
@@ -12,25 +12,28 @@ Description: GSABenchmark is a package designed for benchmarking scRNA-seq gene
     supports 17 scGSA methods.
 License: MIT + file LICENSE
 Imports:
+    abdiv,
     CSOA,
     decoupleR,
+    dplyr,
     escape,
     fabR,
     ggplot2,
     ggrepel,
-    grDevices,
     GSVA,
     hammers,
     henna,
     jaccard,
+    lsa,
     Matrix,
     MLmetrics,
     methods,
     mltools,
     pagoda2,
-    plyr,
+    paletteer,
     reshape2,
     rlang,
+    scLang,
     singscore,
     SiPSiC,
     stringr,
@@ -43,7 +46,7 @@ Suggests:
     AUCell,
     BiocStyle,
     knitr,
-    qs,
+    qs2,
     ranger,
     rmarkdown,
     rpart,

@@ -14,11 +14,11 @@ NULL
 #'
 #' @keywords internal
 #'
-runEscapeMethod <- function(scObj, geneSets, method, ...){
+runEscapeMethod <- function(scObj, geneSets, method, slot = 'data', ...){
     allGenes <- Reduce(union, geneSets)
     checkGenes(scObj, allGenes)
 
-    mat <- scExpMat(scObj, 'data')
+    mat <- scExpMat(scObj, slot)
 
     scoreDF <- escape.matrix(mat, geneSets, method=method, ...)
     scoreDF <- apply(scoreDF, 2, safeMinmax)
@@ -39,17 +39,17 @@ runEscapeMethod <- function(scObj, geneSets, method, ...){
 #'
 #' @examples
 #' if (requireNamespace("AUCell", quietly=TRUE)){
-#'     scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#'     scObj <- qs::qread(scoPath)
-#'     gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#'     geneSets <- qs::qread(gsPath)
+#'     scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#'     scObj <- qs2::qs_read(scoPath)
+#'     gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#'     geneSets <- qs2::qs_read(gsPath)
 #'     scObj <- runAUCell(scObj, geneSets)
 #'     }
 #'
 #' @export
 #'
-runAUCell <- function(scObj, geneSets, ...)
-    return(runEscapeMethod(scObj, geneSets, 'AUCell', ...))
+runAUCell <- function(scObj, geneSets, slot = 'data', ...)
+    return(runEscapeMethod(scObj, geneSets, 'AUCell', slot, ...))
 
 #' Run ssGSEA
 #'
@@ -61,16 +61,16 @@ runAUCell <- function(scObj, geneSets, ...)
 #' column.
 #'
 #' @examples
-#' scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#' scObj <- qs::qread(scoPath)
-#' gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#' geneSets <- qs::qread(gsPath)
+#' scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#' scObj <- qs2::qs_read(scoPath)
+#' gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#' geneSets <- qs2::qs_read(gsPath)
 #' scObj <- runssGSEA(scObj, geneSets)
 #'
 #' @export
 #'
-runssGSEA <- function(scObj, geneSets, ...)
-    return(runEscapeMethod(scObj, geneSets, 'ssGSEA', ...))
+runssGSEA <- function(scObj, geneSets, slot = 'data', ...)
+    return(runEscapeMethod(scObj, geneSets, 'ssGSEA', slot, ...))
 
 #' Run UCell
 #'
@@ -83,14 +83,14 @@ runssGSEA <- function(scObj, geneSets, ...)
 #'
 #' @examples
 #' if (requireNamespace("UCell", quietly=TRUE)){
-#'     scoPath <- system.file('extdata', 'scObj.qs', package='GSABenchmark')
-#'     scObj <- qs::qread(scoPath)
-#'     gsPath <- system.file('extdata', 'geneSets.qs', package='GSABenchmark')
-#'     geneSets <- qs::qread(gsPath)
+#'     scoPath <- system.file('extdata', 'scObj.qs2', package='GSABenchmark')
+#'     scObj <- qs2::qs_read(scoPath)
+#'     gsPath <- system.file('extdata', 'geneSets.qs2', package='GSABenchmark')
+#'     geneSets <- qs2::qs_read(gsPath)
 #'     scObj <- runUCell(scObj, geneSets)
 #'     }
 #'
 #' @export
 #'
-runUCell <- function(scObj, geneSets, ...)
-    return(runEscapeMethod(scObj, geneSets, 'UCell', ...))
+runUCell <- function(scObj, geneSets, slot = 'data', ...)
+    return(runEscapeMethod(scObj, geneSets, 'UCell', slot, ...))

@@ -32,9 +32,7 @@ bindSummary <- function(smr, nAggDFs=0, nAvgCols=0){
 aggregateRanks <- function(smr,
                            rankMethod = c('min', 'average', 'first',
                                           'last', 'random', 'max')){
-    rankMethod <- match.arg(rankMethod,
-                            c('min', 'average', 'first',
-                              'last', 'random', 'max'))
+    rankMethod <- match.arg(rankMethod)
     df <- do.call(cbind, list(bindSummary(smr$boundary, 2, 1),
                               bindSummary(smr$MCC, 0, 1),
                               bindSummary(smr$global, 2, 1)))
