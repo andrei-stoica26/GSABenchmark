@@ -17,7 +17,8 @@ test_that("runMethodShuffle works", {
 })
 
 test_that("runBenchmark works", {
-    smr <- runBenchmark(scObj, 'label', geneSets, supportedMethods(), FALSE)
+    smr <- runBenchmark(scObj, 'label', geneSets, supportedMethods(),
+                        runEFBenchmark=FALSE)
     expect_equal(length(smr), 4)
     expect_equal(length(smr[[1]]), 8)
     expect_equal(length(smr[[2]]), 2)
