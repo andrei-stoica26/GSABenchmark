@@ -66,16 +66,20 @@ All methods can run on both `Seurat` and `SingleCellExperiment` objects.
 Users can also define their own gene set analysis methods to be assessed with 
 GSABenchmark. User-defined methods must meet the following criteria:
 
-- The name of the method starts with `run`.
+- The name of the method starts with `run`. For a method named `Method`,
+this argument would be named `runMethod`.
 - The first parameter is a `Seurat` or `SingleCellExperiment` object.
 - The second parameter is a list of character vectors representing gene sets.
-- The method returns an object of the same type as the first parameter, having
-cell scores in the metadata column denoted by the third parameter. 
+- The third parameter indicates the gene expression slot used by the method, 
+such as 'data', counts' or 'logcounts'.
+- The method returns an object of the same type as the first parameter, with
+result columns appended to the single-cell object metadata or coldata 
+and named using this format: `Method_GeneSet`.
 
 Additional parameters are allowed. For instance, this function heading would 
 be recognized by GSABenchmark: 
 
-`runCustomMethod(seuratObj, geneSets, colStr, tol = 0.2, verbose = TRUE)`. 
+`runCustomMethod(seuratObj, geneSets, 'data', tol = 0.2, verbose = TRUE)`. 
 
 **Note**: When passing the method name to a GSABenchmark function as part of 
 the `gsaMethods` argument, the method needs to be referred to as `CustomMethod` 

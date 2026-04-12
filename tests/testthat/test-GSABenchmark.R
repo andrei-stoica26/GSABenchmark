@@ -28,8 +28,8 @@ test_that("runBenchmark works", {
         temp <- unlist(smr[[i]])
         expect_equal(nrow(smr[[i]][[1]]), nMethods)
         expect_equal(ncol(smr[[i]][[1]]), 3)
-        expect_gte(min(temp), 0)
-        expect_lte(max(temp), 1)
+        expect_equal(min(min(temp), 0), 0, tolerance=0.0001)
+        expect_equal(max(max(temp), 1), 1, tolerance=0.0001)
     }
 })
 
