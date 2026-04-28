@@ -1,7 +1,7 @@
 Package: GSABenchmark
 Type: Package
 Title: Tools for benchmarking single-cell gene set analysis methods
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: person('Andrei-Florian', 'Stoica', 
     email='andreistoica@foxmail.com',
     role=c('aut','cre'),
