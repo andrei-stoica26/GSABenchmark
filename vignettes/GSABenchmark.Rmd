@@ -2,7 +2,7 @@
 title: "Introduction to GSABenchmark"
 author: "Andrei-Florian Stoica"
 package: GSABenchmark
-date: March 4, 2025
+date: June 24, 2026
 output: BiocStyle::html_document
 vignette: >
     %\VignetteIndexEntry{GSABenchmark}

@@ -23,6 +23,7 @@ NULL
 #' @param palette Color palette.
 #' @param legendLab Legend label.
 #' @param pointSize Point size.
+#' @param pointShape Point shape.
 #'
 #' @return A ggplot object.
 #'
@@ -38,9 +39,10 @@ scorePlot <- function(scoreDF,
                       xLab = 'Score',
                       yLab = 'Method',
                       isDecreasing = FALSE,
-                      palette = 'grDevices::Plasma',
+                      palette = 'grDevices::Dark 3',
                       legendLab = 'Gene set',
-                      pointSize = 1.5){
+                      pointSize = 1.5,
+                      pointShape = 19){
     scoreDF <- scoreDF[order(scoreDF$avg, decreasing=isDecreasing), ]
     longDF <- reshape2::melt(as.matrix(scoreDF [, -ncol(scoreDF),
                                                 drop=FALSE]))
@@ -50,7 +52,8 @@ scorePlot <- function(scoreDF,
         geom_point(mapping=aes(x=.data[['value']],
                                y=.data[['Var1']],
                                color=.data[['Var2']]),
-                   size=pointSize) +
+                   size=pointSize,
+                   shape=pointShape) +
         labs(x=xLab, y=yLab, color=legendLab, title=title) +
         theme_minimal() + scale_color_manual(values=pal,
                                              breaks=colnames(scoreDF)) +
@@ -80,8 +83,14 @@ scorePlot <- function(scoreDF,
 timePlot <- function(efBenchmark,
                      title = NULL,
                      xLab = 'Running time (s)',
+                     pointShape=17,
                      ...)
-    return(scorePlot(efBenchmark$time, title, xLab, isDecreasing=TRUE, ...))
+    return(scorePlot(efBenchmark$time,
+                     title,
+                     xLab,
+                     isDecreasing=TRUE,
+                     pointShape=pointShape,
+                     ...))
 
 #' Plot a data frame consisting of gene set analysis method peak memory usage
 #
@@ -102,8 +111,14 @@ timePlot <- function(efBenchmark,
 memoryPlot <- function(efBenchmark,
                        title = NULL,
                        xLab = 'Peak memory usage (MiB)',
+                       pointShape=17,
                        ...)
-    return(scorePlot(efBenchmark$space, title, xLab, isDecreasing=TRUE, ...))
+    return(scorePlot(efBenchmark$space,
+                     title,
+                     xLab,
+                     isDecreasing=TRUE,
+                     pointShape=pointShape,
+                     ...))
 
 #' Create an aggregate rank plot from a summary object
 #'

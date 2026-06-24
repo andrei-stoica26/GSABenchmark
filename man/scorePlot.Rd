@@ -12,9 +12,10 @@ scorePlot(
   xLab = "Score",
   yLab = "Method",
   isDecreasing = FALSE,
-  palette = "grDevices::Plasma",
+  palette = "grDevices::Dark 3",
   legendLab = "Gene set",
-  pointSize = 1.5
+  pointSize = 1.5,
+  pointShape = 19
 )
 }
 \arguments{
@@ -36,6 +37,8 @@ average scores.}
 \item{legendLab}{Legend label.}
 
 \item{pointSize}{Point size.}
+
+\item{pointShape}{Point shape.}
 }
 \value{
 A ggplot object.

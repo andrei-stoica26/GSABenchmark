@@ -6,7 +6,13 @@
 This function plots data frame consisting of method peak memory usages with
 methods as rows, gene sets and the gene set average as columns.}
 \usage{
-memoryPlot(efBenchmark, title = NULL, xLab = "Peak memory usage (MiB)", ...)
+memoryPlot(
+  efBenchmark,
+  title = NULL,
+  xLab = "Peak memory usage (MiB)",
+  pointShape = 17,
+  ...
+)
 }
 \arguments{
 \item{efBenchmark}{A list of dataframes generated
@@ -15,6 +21,8 @@ with \code{efficiencyBenchmark}.}
 \item{title}{Plot title.}
 
 \item{xLab}{x axis label.}
+
+\item{pointShape}{Point shape.}
 
 \item{...}{Additional parameters to be passed to \code{scorePlot}.}
 }
