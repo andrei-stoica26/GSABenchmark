@@ -1,5 +1,5 @@
 #' @importFrom MLmetrics AUC LogLoss PRAUC
-#' @importFrom mltools mcc replace_na
+#' @importFrom mlr3measures mcc
 #'
 NULL
 
@@ -150,5 +150,5 @@ computeGlobalMetrics <- function(df,
 computeMCC <- function(boundaryResDF, threshold = boundaryResDF[1, 2]){
     boundaryResDF <- boundaryResDF[, c(1, 2)]
     boundaryResDF$prediction <- as.numeric(boundaryResDF[, 2] >= threshold)
-    return(mltools::mcc(boundaryResDF[, 1], boundaryResDF[, 3]))
+    return(mcc(as.factor(boundaryResDF[, 1]), as.factor(boundaryResDF[, 3])))
 }

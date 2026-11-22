@@ -1,3 +1,7 @@
+#' @importFrom tidyr replace_na
+#'
+NULL
+
 #' Extract gene set results from a list of summary data frames
 #'
 #' This function extracts gene set results from a list of summary data frames.

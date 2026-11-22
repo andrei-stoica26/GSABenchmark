@@ -30,7 +30,7 @@ Imports:
     Matrix,
     MLmetrics,
     methods,
-    mltools,
+    mlr3measures,
     pagoda2,
     paletteer,
     reshape2,
@@ -40,6 +40,7 @@ Imports:
     SiPSiC,
     stringr,
     stats,
+    tidyr,
     VAM,
     withr
 Encoding: UTF-8

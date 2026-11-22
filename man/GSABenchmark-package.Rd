@@ -6,7 +6,7 @@
 \alias{GSABenchmark-package}
 \title{GSABenchmark: Tools for benchmarking single-cell gene set analysis methods}
 \description{
-GSABenchmark is a package designed for benchmarking scRNA-seq gene set analysis (scGSA) methods. It provides both traditional and novel benchmark metrics, as well as visualization tools. Currently, GSABenchmark supports 17 scGSA methods.
+GSABenchmark is a package designed for benchmarking scRNA-seq gene set analysis (scGSA) methods. It provides both traditional and novel benchmark metrics, as well as visualization tools. Currently, GSABenchmark supports 17 scGSA methods (AddModuleScore, AUCell, CSOA, GSVA, JASMINE, MDT, MLM, ORA, Pagoda2, PLAGE, Singscore, SiPSiC, ssGSEA, UCell, UDT, VAM, and Zscore).
 }
 \seealso{
 Useful links:
